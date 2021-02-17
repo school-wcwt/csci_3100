@@ -11,10 +11,8 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - cd to my-app and run `npm install` and `npm start`
 
 ### Command You may use with ***git***
-- You may update file using (you may want to do this every times as your groupmate might have updated something)
-```
-git pull
-```
+- You may update file using 'git pull' 
+- (you may want to do this every times as your groupmate might have updated something)
 - After all testing , you can use  `git status` to check all the modificed files and use `git add yourfile` to add them
 - You may also use `git add --all` to add all file in the waiting stage
 - After adding your modified file, use `git commit -m "your message" ` to conclude what you have updated
