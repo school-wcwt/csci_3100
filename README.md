@@ -6,7 +6,7 @@
 ### How to run me
 use the following code to download the file
 ```
-git clone 
+git clone git@github.com:school-wcwt/csci_3100.git
 ```
 - cd to my-app and run `npm install` and `npm start`
 
