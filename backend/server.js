@@ -119,3 +119,23 @@ var findEntity = entityID => {
         })
     })   
 };
+
+var addEntity = (data) => {
+    return new Promise((resolve, reject) => {
+        var ID = () => { return '_' + Math.random().toString(36).substr(2, 9); };
+        if (!data.type)      data.entityID = 'u'+data.username
+        else if (data.type)  data.entityID = 'd'+ID();
+        var newEntity = new Entity(data);
+        newEntity.save((err, savedEntity) => {
+            if (err) return reject(err);
+            if (!data.type)     var newSubentity = new User({entity: savedEntity._id})
+            else if (data.type) var newSubentity = new Rest({entity: savedEntity._id})
+            newSubentity.save((err) => {
+                if (err) return reject(err);
+                findEntity(entityID).then(savedEntity => {
+                    return resolve(savedEntity);
+                });
+            })
+        })
+    })
+}
