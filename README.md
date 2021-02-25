@@ -18,3 +18,7 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - After adding your modified file, use `git commit -m "your message" ` to conclude what you have updated
 - Finally use `git push` to upload file into github
 
+### application of ***Mongo*** (testing directly)
+- use `mongo` to open mongo db
+- `use csci3100` to switch schema
+
