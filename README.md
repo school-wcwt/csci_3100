@@ -25,8 +25,8 @@ mongo
 use csci3100;
 ```
 - Manipulating collections:
-`db.getCollectionNames()` returns all collections
-`db.<collection>.find() ` returns all data in collection
-`db.<collection>.findOne({param})` returns first data fitting param in collection
+  - `db.getCollectionNames()` returns all collections
+  - `db.<collection>.find() ` returns all data in collection
+  - `db.<collection>.findOne({param})` returns first data fitting param in collection
 - For more: https://docs.mongodb.com/manual/reference/method/https://docs.mongodb.com/manual/reference/method/
 
