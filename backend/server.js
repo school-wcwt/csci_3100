@@ -19,6 +19,7 @@ var EntitySchema = mongoose.Schema({
     type:      { type: Number, required: true }, // 0: User, 1: Restaurant
     name:      { type: String, required: true },
     username:  { type: String },
+    password:  { type: String, required: true },
     email:     { type: String },
     phone:     { type: String },
     status:    { type: String },
