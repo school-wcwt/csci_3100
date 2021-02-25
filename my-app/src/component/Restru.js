@@ -1,6 +1,6 @@
-import react from 'react'
+import React from 'react';
 
-function Rest() {
+function Restru() {
   return (
     <div>
         <h1>Hello world</h1>
@@ -8,4 +8,4 @@ function Rest() {
   );
 }
 
-export default Rest;
+export default Restru;
