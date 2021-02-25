@@ -68,13 +68,13 @@ var CommentSchema = mongoose.Schema({
     author:    { type: mongoose.Schema.Types.ObjectId, ref:'User', required: true },
     content:   { type: String },
     time:      { type: Date, required: true },
-})
+});
 
 var HashtagSchema = mongoose.Schema({
     tagID:     { type: String, required: true, unique: true },
     name:      { type: String, required: true },
     frequency: { type: Number, default: 0 },
-})
+});
 
 var Entity  = mongoose.model('Entity',  EntitySchema);
 var Rest    = mongoose.model('Rest',    RestSchema);
