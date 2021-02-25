@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import SimpleTabs from './component/Restru';
+import MainCarousel from './component/carousel/MainCarousel';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
     <SimpleTabs text = "hello"/>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
