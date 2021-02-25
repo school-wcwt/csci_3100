@@ -103,7 +103,7 @@ var findEntity = entityID => {
                         if (user != null) return resolve(user);
                     })
                 }
-                else if (!entity.type) {
+                else if (entity.type) {
                     Rest
                     .findOne({entity: entity._id})
                     .select({_id: 0, __v: 0})
