@@ -18,10 +18,12 @@ var EntitySchema = mongoose.Schema({
     entityID:  { type: String, required: true, unique: true },
     type:      { type: Number, required: true }, // 0: User, 1: Restaurant
     name:      { type: String, required: true },
+    username:  { type: String },
     email:     { type: String },
     phone:     { type: String },
     status:    { type: String },
     profPhoto: [{ type: String }],
+    openingHr: [[{ type: String }]],
     followed:  [{ type: mongoose.Schema.Types.ObjectId, ref:'User' }],
     post:      [{ type: mongoose.Schema.Types.ObjectId, ref:'Post' }],
 });
@@ -36,7 +38,6 @@ var UserSchema = mongoose.Schema({
 var RestSchema = mongoose.Schema({
     entity:    { type: mongoose.Schema.Types.ObjectId, ref:'Entity', required: true, unique: true },
     rating:    { type: Number, required: true, default: 0 },
-    openingHr: [[{ type: String }]],
     admin:     [{ type: mongoose.Schema.Types.ObjectId, ref:'User' }],
     resv:      [{ type: mongoose.Schema.Types.ObjectId, ref:'Resv' }],
 });
@@ -123,8 +124,8 @@ var findEntity = entityID => {
 var addEntity = (data) => {
     return new Promise((resolve, reject) => {
         var ID = () => { return '_' + Math.random().toString(36).substr(2, 9); };
-        if (!data.type)      data.entityID = 'u'+data.username
-        else if (data.type)  data.entityID = 'd'+ID();
+        if (!data.type)      var entityID = 'u'+data.username
+        else if (data.type)  var entityID = 'd'+ID();
         var newEntity = new Entity(data);
         newEntity.save((err, savedEntity) => {
             if (err) return reject(err);
@@ -137,5 +138,11 @@ var addEntity = (data) => {
                 });
             })
         })
+    })
+}
+
+var updateEntity = (data) => {
+    return new Promise((resolve, reject) => {
+        var 
     })
 }
