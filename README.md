@@ -8,7 +8,7 @@ use the following code to download the file
 ```
 git clone git@github.com:school-wcwt/csci_3100.git
 ```
-- cd to my-app and run `npm install` and `npm start`
+- cd to my-app and run `npm init` and `npm install` and `npm start`
 
 ### Command You may use with ***git***
 - You may update file using `git pull` 
