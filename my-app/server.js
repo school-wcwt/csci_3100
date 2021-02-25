@@ -86,34 +86,36 @@ var Hashtag = mongoose.model('Hashtag', HashtagSchema);
 
 // ========== Helper Functions ===============
 
-var findEntity = (entityID) => {
-    Entity
-    .findOne({entityID: entityID})
-    .exec((err, entity) => {
-        if (err) { return console.log(err); }
-        if (entity != null) {
-            if (!entity.type) {
-                User
-                .findOne({entity: entity._id})
-                .select({_id: 0, __v: 0})
-                .populate('entity', {_id: 0, __v: 0})
-                .exec((err, user) => {
-                    if (err) { return console.log(err); }
-                    if (user != null) return user;
-                })
+var findEntity = entityID => {
+    return new Promise((resolve, reject) => {
+        Entity
+        .findOne({entityID: entityID})
+        .exec((err, entity) => {
+            if (err) return reject(err);
+            if (entity != null) {
+                if (!entity.type) {
+                    User
+                    .findOne({entity: entity._id})
+                    .select({_id: 0, __v: 0})
+                    .populate('entity', {_id: 0, __v: 0})
+                    .exec((err, user) => {
+                        if (err) return reject(err);
+                        if (user != null) return resolve(user);
+                    })
+                }
+                else if (!entity.type) {
+                    Rest
+                    .findOne({entity: entity._id})
+                    .select({_id: 0, __v: 0})
+                    .populate('entity', {_id: 0, __v: 0})
+                    .exec((err, rest) => {
+                        if (err) return reject(err); 
+                        if (rest != null) return resolve(rest);
+                    })
+                }
+                return resolve(null); // if user/rest not found
             }
-            else if (!entity.type) {
-                Rest
-                .findOne({entity: entity._id})
-                .select({_id: 0, __v: 0})
-                .populate('entity', {_id: 0, __v: 0})
-                .exec((err, rest) => {
-                    if (err) { return console.log(err); }
-                    if (rest != null) return rest;
-                })
-            }
-            return null; // if user/rest not found
-        }
-        return null; // if entity not found
-    })
+            return resolve(null); // if entity not found
+        })
+    })   
 };
