@@ -4,7 +4,7 @@ var Rest = require('../models/Rest');
 
 module.exports = {
 
-    findEntity = (filter, entityOnly = 0, populate = 1, entitySelect = {__v: 0}, subentitySelect = {__v: 0}) => {
+    findEntity: (filter, entityOnly = 0, populate = 1, entitySelect = {__v: 0}, subentitySelect = {__v: 0}) => {
         return new Promise((resolve, reject) => {
             Entity
             .findOne(filter, entitySelect)
@@ -26,7 +26,7 @@ module.exports = {
         })   
     },
 
-    createEntity = data => {
+    createEntity: data => {
         var addEntity = data => {
             return new Promise((resolve, reject) => {
                 var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
@@ -66,7 +66,7 @@ module.exports = {
         })
     },
 
-    updateEntity = (filter, data) => {
+    updateEntity: (filter, data) => {
         return new Promise((resolve, reject) => {
             if (data.email != null) 
                 findEntity({email: data.email})
@@ -86,7 +86,7 @@ module.exports = {
         })
     },
 
-    deleteEntity = (filter) => {
+    deleteEntity: (filter) => {
         return new Promise((resolve, reject) => {
             Entity
             .findOneAndDelete(filter)

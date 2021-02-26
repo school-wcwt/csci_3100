@@ -2,7 +2,7 @@ var express = require('express');
 var {findEntity, createEntity, updateEntity, deleteEntity} = require('./user_func');
 var router = express.Router();
 
-app.get('/:userID', (req, res) => {
+router.get('/:userID', (req, res) => {
     findEntity({entityID: req.params.userID})
     .then(entity => {
         if (entity == null) res.status(202).send(null);
@@ -11,7 +11,7 @@ app.get('/:userID', (req, res) => {
     .catch(err => { res.status(400).send(err); })
 })
 
-app.post('/', (req, res) => {
+router.post('/', (req, res) => {
     createEntity(req.body)
     .then(createdEntity => res.status(201).send(createdEntity) )
     .catch(err => {
@@ -20,7 +20,7 @@ app.post('/', (req, res) => {
     })
 })
 
-app.put('/:userID', (req, res) => {
+router.put('/:userID', (req, res) => {
     updateEntity({entityID: req.params.userID}, req.body)
     .then(updatedEntity => res.status(200).send(updatedEntity))
     .catch(err => {
@@ -30,7 +30,7 @@ app.put('/:userID', (req, res) => {
     })
 })
 
-app.delete('/:userID', (req, res) => {
+router.delete('/:userID', (req, res) => {
     deleteEntity({entityID: req.params.userID})
     .then(deletedEntity => res.status(200).send(deletedEntity))
     .catch(err => {
