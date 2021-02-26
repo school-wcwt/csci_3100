@@ -8,7 +8,9 @@
     | entitySelect    | `SelectResolvable` | Y        | {__v: 0} | Select certain fields of the Entity. |
     | subentitySelect | `SelectResolvable` | Y        | {__v: 0} | Select certain fields of the Entity. |
     
-    *Remarks:* `Select` either exclusive (e.g. `{password:0}`) or inclusive (e.g. `{username:1, tag:1}`).
+    *Remarks:* 
+    - `SelectResolvable`: `Object | String | List`
+    - Either exclusive (e.g. `{password:0}`) or inclusive (e.g. `{username:1, tag:1}`).
 - **Returns:** `Promise<Entity>`
 
 ### addEntity(data)
