@@ -1,5 +1,5 @@
-### findEntity(filter, [entityOnly?], [populate?], [entitySelect], [subentitySelect])
-- Finds a single `Entity` in Entity and User/Rest. Returns `null` if not found. 0-1: all, 0-0: user/rest only, 1-0/1: entity only.
+#### findEntity(filter, [entityOnly?], [populate?], [entitySelect], [subentitySelect])
+- Finds a single `Entity` in Entity and User/Rest. 0-1: all, 0-0: user/rest only, 1-0/1: entity only.
 -   | Parameter       | Type               | Optional | Default  | Description |
     |:---------------:|:------------------:|:--------:|:--------:|-|
     | filter          | `Object`           |          |          | Filter of the entity to be searched. |
@@ -11,16 +11,16 @@
     *Remarks:* 
     - `SelectResolvable`: `Object | String | List`
     - Either exclusive (e.g. `{password:0}`) or inclusive (e.g. `{username:1, tag:1}`).
-- **Returns:** `Promise<Entity>`
+- **Returns:** `Promise<Entity>` or `Promise<null>`
 
-### addEntity(data)
+#### addEntity(data)
 - Creates an Entity and its corresponding User/Rest.
 -   | Parameter | Type     | Optional | Default | Description |
     |:---------:|:--------:|:--------:|:-------:|-|
     | data      | `Object` |          |         | Data of the entity to be created. |
 - **Returns:** `Promise<Entity>`
 
-### updateEntity(filter, data)
+#### updateEntity(filter, data)
 - Updates an Entity's info.
 -   | Parameter | Type     | Optional | Default | Description |
     |:---------:|:--------:|:--------:|:-------:|-|
@@ -28,7 +28,7 @@
     | data      | `Object` |          |         | Data of the entity to be updated. |
 - **Returns:** `Promise<{oldEntity, newEntity}>`
 
-### deleteEntity(filter)
+#### deleteEntity(filter)
 - Deletes an Entity and its corresponding User/Rest.
 -   | Parameter | Type     | Optional | Default | Description |
     |:---------:|:--------:|:--------:|:-------:|-|
