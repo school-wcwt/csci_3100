@@ -17,10 +17,11 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 var EntitySchema = mongoose.Schema({
     entityID:  { type: String, required: true, unique: true },
     type:      { type: Number, required: true }, // 0: User, 1: Restaurant
-    name:      { type: String, required: true },
-    username:  { type: String },
-    password:  { type: String, required: true },
-    email:     { type: String },
+    username:  { type: String, required: true }, // Rest: name without space
+    tag:       { type: Number, required: true },
+    email:     { type: String, required: true }, // User: email, Rest: mail/address
+    password:  { type: String },
+    name:      { type: String },
     phone:     { type: String },
     status:    { type: String },
     profPhoto: [{ type: String }],
@@ -88,12 +89,13 @@ var Hashtag = mongoose.model('Hashtag', HashtagSchema);
 
 // ========== Helper Functions ===============
 
-var findEntity = entityID => {
+var findEntity = param => {
     return new Promise((resolve, reject) => {
         Entity
-        .findOne({entityID: entityID})
+        .findOne(param)
         .exec((err, entity) => {
             if (err) return reject(err);
+            if (entity == null) return resolve(null);
             if (entity != null) {
                 if (!entity.type) {
                     User
@@ -102,6 +104,7 @@ var findEntity = entityID => {
                     .populate('entity', {_id: 0, __v: 0})
                     .exec((err, user) => {
                         if (err) return reject(err);
+                        if (user == null) return resolve(null);
                         if (user != null) return resolve(user);
                     })
                 }
@@ -112,38 +115,52 @@ var findEntity = entityID => {
                     .populate('entity', {_id: 0, __v: 0})
                     .exec((err, rest) => {
                         if (err) return reject(err); 
+                        if (rest == null) return resolve(null);
                         if (rest != null) return resolve(rest);
                     })
                 }
-                return resolve(null); // if user/rest not found
             }
-            return resolve(null); // if entity not found
         })
     })   
 };
 
-var addEntity = (data) => {
-    return new Promise((resolve, reject) => {
-        var ID = () => { return '_' + Math.random().toString(36).substr(2, 9); };
-        if (!data.type)      var entityID = 'u'+data.username
-        else if (data.type)  var entityID = 'd'+ID();
-        var newEntity = new Entity(data);
-        newEntity.save((err, savedEntity) => {
-            if (err) return reject(err);
-            if (!data.type)     var newSubentity = new User({entity: savedEntity._id})
-            else if (data.type) var newSubentity = new Rest({entity: savedEntity._id})
-            newSubentity.save((err) => {
+var addEntity = data => {
+    var addEntityIntoDB = data => {
+        return new Promise((resolve, reject) => {
+            var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
+            var tag = tagGen();
+            if (data.type) data.username = data.name.replace(/ /g, '');
+            var entityID = data.username + tag;
+            var newEntity = new Entity({entityID: entityID, tag: tag, ...data});
+            newEntity.save((err, savedEntity) => {
                 if (err) return reject(err);
-                findEntity(entityID).then(savedEntity => {
-                    return resolve(savedEntity);
-                });
+                if (!data.type)     var newSubentity = new User({entity: savedEntity._id})
+                else if (data.type) var newSubentity = new Rest({entity: savedEntity._id})
+                newSubentity.save((err) => {
+                    if (err) return reject(err);
+                    findEntity({entityID: entityID})
+                    .then(savedEntity => { return resolve(savedEntity); })
+                    .catch(err => { return reject(err) });
+                })
             })
         })
+    }
+    
+    return new Promise((resolve, reject) => {
+        findEntity({email: data.email})
+        .then(prevEntity => {
+            if (prevEntity != null) return reject(new Error('(E)Mail already in DB.'));
+            if (prevEntity == null) 
+                addEntityIntoDB(data)
+                .then(res => { return resolve(res) })
+                .catch(err => { return reject(err) });
+        })
+        .catch(err => { return reject(err) });
     })
 }
 
-var updateEntity = (data) => {
+/*var updateEntity = (data) => {
     return new Promise((resolve, reject) => {
         var 
     })
-}
+}*/
