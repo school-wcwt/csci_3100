@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleTabs( {text} ) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const tabPanelStyle = {backgroundColor:"#282c34",color:"rgb(255, 255, 255)"};
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -59,18 +59,18 @@ export default function SimpleTabs( {text} ) {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="What is mATE?" {...a11yProps(0)} />
+          <Tab label="Why is mATE?" {...a11yProps(1)} />
           <Tab label="Item Three" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} style = { tabPanelStyle } index={0}>
         {text}
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} style = { tabPanelStyle } index={1}>
         Item Two
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} style = { tabPanelStyle } index={2}>
         Item Three
       </TabPanel>
     </div>
