@@ -12,7 +12,7 @@ router.get('/:userID', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    createEntity(req.body)
+    createEntity(req.body.data)
     .then(createdEntity => res.status(201).send(createdEntity) )
     .catch(err => {
         if (err.message == '(E)Mail already in DB.') res.status(403).send(err);
@@ -21,7 +21,8 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:userID', (req, res) => {
-    updateEntity({entityID: req.params.userID}, req.body)
+    var filter = req.body.filter == null ? {entityID: req.params.userID} : req.body.filter;
+    updateEntity(filter, req.body.data)
     .then(updatedEntity => res.status(200).send(updatedEntity))
     .catch(err => {
         if (err.message == '(E)Mail already in DB.') res.status(403).send(err);
@@ -31,7 +32,8 @@ router.put('/:userID', (req, res) => {
 })
 
 router.delete('/:userID', (req, res) => {
-    deleteEntity({entityID: req.params.userID})
+    var filter = req.body.filter == null ? {entityID: req.params.userID} : req.body.filter;
+    deleteEntity(filter)
     .then(deletedEntity => res.status(200).send(deletedEntity))
     .catch(err => {
         if (err.message == 'Entity not found') res.status(404).send(err);
