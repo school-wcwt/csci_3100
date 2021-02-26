@@ -89,31 +89,28 @@ var Hashtag = mongoose.model('Hashtag', HashtagSchema);
 
 // ========== Helper Functions ===============
 
-var findEntity = param => {
+var findEntity = (filter, entityOnly = 0, populate = 1) => {
     return new Promise((resolve, reject) => {
         Entity
-        .findOne(param)
+        .findOne(filter)
         .exec((err, entity) => {
             if (err) return reject(err);
             if (entity == null) return resolve(null);
             if (entity != null) {
+                if (entityOnly) return resolve(entity);
                 if (!entity.type) {
-                    User
-                    .findOne({entity: entity._id})
-                    .select({_id: 0, __v: 0})
-                    .populate('entity', {_id: 0, __v: 0})
-                    .exec((err, user) => {
+                    let query = User.findOne({entity: entity._id})
+                    if (populate) query.populate('entity')
+                    query.exec((err, user) => {
                         if (err) return reject(err);
                         if (user == null) return resolve(null);
                         if (user != null) return resolve(user);
                     })
                 }
                 else if (entity.type) {
-                    Rest
-                    .findOne({entity: entity._id})
-                    .select({_id: 0, __v: 0})
-                    .populate('entity', {_id: 0, __v: 0})
-                    .exec((err, rest) => {
+                    let query = Rest.findOne({entity: entity._id})
+                    if (populate) query.populate('entity')
+                    query.exec((err, rest) => {
                         if (err) return reject(err); 
                         if (rest == null) return resolve(null);
                         if (rest != null) return resolve(rest);
@@ -159,8 +156,23 @@ var addEntity = data => {
     })
 }
 
-/*var updateEntity = (data) => {
+var updateEntity = (filter, data) => {
     return new Promise((resolve, reject) => {
-        var 
+        if (data.email != null) 
+            findEntity({email: data.email})
+            .then(entity => {
+                if (entity != null) return reject(new Error('New (e)mail already in DB.'));
+                if (entity == null)
+                    Entity
+                    .findOneAndUpdate(filter, data)
+                    .exec((err, oldEntity) => {
+                        if (err) return reject(err);
+                        if (oldEntity == null) return reject(new Error('Entity not found'));
+                        findEntity({entityID: oldEntity.entityID}, 1)
+                        .then(updatedEntity => { return resolve({oldEntity: oldEntity, updatedEntity: updatedEntity}) })
+                        .catch(err => { return reject(err) })
+                    })
+            })
     })
-}*/
+}
+
