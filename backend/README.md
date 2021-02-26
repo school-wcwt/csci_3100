@@ -1,37 +1,36 @@
-# findEntity(filter, [entityOnly?], [populate?])
+### findEntity(filter, [entityOnly?], [populate?], [entitySelect], [subentitySelect])
 - Parameter: 
-    - filter
-        - type: Object
-        - desc: Filter to search within Entity
-    - entityOnly
-        - type: Boolean
-        - default: 0
-        - desc: Whether to only find the Entity and not the User/Rest.
-    - populate
-        - type: Boolean
-        - default: 1
-        - desc: Whether to populate `entity` in User/Rest.
-- Desc: Find single `Entity` in Entity and User/Rest. Returns `null` if not found.
+    | Parameter       | Type                     | Optional | Default  | Description |
+    |-----------------|--------------------------|----------|----------|-|
+    | filter          | Object                   |          |          | Filter of the entity to be searched. |
+    | entityOnly      | Boolean                  | Y        | false    | Whether to find Entity only and not User/Rest. |
+    | populate        | Boolean                  | Y        | true     | Whether to populate `entity` within User/Rest. |
+    | entitySelect    | Object \| String \| List | Y        | {__v: 0} | Select certain fields of the Entity. Either all exclusive (e.g. `{password:0}`) or all inclusive (e.g. `{username:1, tag:1}`). |
+    | subentitySelect | Object \| String \| List | Y        | {__v: 0} | Select certain fields of the Entity. Either all exclusive (e.g. `{password:0}`) or all inclusive (e.g. `{username:1, tag:1}`). |
+- Desc: Finds a single `Entity` in Entity and User/Rest. Returns `null` if not found. 0-1: all, 0-0: user/rest only, 1-0/1: entity only.
 - Returns: Promise<Entity>
 
-# addEntity(data)
+### addEntity(data)
 - Parameter:
-    - data
-        - type: Object
-        - desc: The data to be created
-- Desc: Create an Entity and a corr. User/Rest.
+    | Parameter | Type   | Optional | Default | Description |
+    |-----------|--------|----------|---------|-|
+    | data      | Object |          |         | Data of the entity to be created. |
+- Desc: Creates an Entity and a corr. User/Rest.
 - Returns: Promise<Entity>
 
-# updateEntity(filter, data)
+### updateEntity(filter, data)
 - Parameter: 
-    - filter
-        - type: Object
-        - desc: Filter to the entity to be searched within Entity.
-    - data
-        - type: Object
-        - desc: The data to be modified
-- Desc: Update an Entity's info.
+    | Parameter | Type   | Optional | Default | Description |
+    |-----------|--------|----------|---------|-|
+    | filter    | Object |          |         | Filter of the entity to be updated. |
+    | data      | Object |          |         | Data of the entity to be updated. |
+- Desc: Updates an Entity's info.
 - Returns: Promise<{oldEntity, newEntity}>
 
-
-
+### deleteEntity(filter)
+- Parameter:
+    | Parameter | Type   | Optional | Default | Description |
+    |-----------|--------|----------|---------|-|
+    | filter    | Object |          |         | Filter of the entity to be deleted. |
+- Desc: Deletes an Entity and it's corr. User/Rest.
+- Returns: Promise<{deletedEntity, deletedSubentity}>
