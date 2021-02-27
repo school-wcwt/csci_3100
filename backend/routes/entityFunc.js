@@ -1,6 +1,24 @@
 var Entity = require('../models/Entity');
-var User = require('../models/User');
-var Rest = require('../models/Rest');
+var User   = require('../models/User');
+var Rest   = require('../models/Rest');
+
+var allUserPop = [
+    {
+        path: 'followingRest', 
+        select: 'entityID name profPhoto',
+        perDocumentLimit: 10
+    },
+    {
+        path: 'followingUser', 
+        select: 'entityID name profPhoto', 
+        perDocumentLimit: 10
+    },
+    {
+        path: 'groupList.content',
+        select: 'entityID name profPhoto',
+        perDocumentLimit:10
+    },
+]
 
 var findEntity = (filter, type = 0, option) => {
     var init = () => {
@@ -20,7 +38,7 @@ var findEntity = (filter, type = 0, option) => {
         if (type == 1) query.populate(opt.entityPop)
         query.exec((err, entity) => {
             if (err) return reject(err);
-            if (entity == null) return resolve(null);
+            if (entity == null) return reject(new Error('Entity not found.'));
             if (type == 1) return resolve(entity);
             var subquery = entity.type 
                 ? Rest.findOne({entity: entity._id}).select(opt.subentitySel)
@@ -29,7 +47,7 @@ var findEntity = (filter, type = 0, option) => {
             subquery.populate(opt.subentityPop);
             subquery.exec((err, subentity) => {
                 if (err) return reject(err);
-                if (subentity == null) return resolve(null);
+                if (subentity == null) return reject(new Error('Entity not found.'));
                 return resolve(subentity);
             })
         })
@@ -138,6 +156,7 @@ var deleteEntity = (filter) => {
 }
 
 module.exports = {
+    allUserPop,
     findEntity,
     findEntityID,
     createEntity,

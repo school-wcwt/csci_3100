@@ -3,7 +3,28 @@ var User   = require('../models/User');
 var Rest   = require('../models/Rest');
 var {findEntity, findEntityID} = require('./entityFunc');
 
-var updateFollow = (authorFilter, targetFilter, addFlag) => {
+var bcrypt = require('bcrypt');
+
+var auth = (filter, data) => {
+    return new Promise((resolve, reject) => {
+        Entity
+        .findOne(filter)
+        .exec((err, entity) => {
+            if (err) return reject(err);
+            if (entity.type || entity == null) return reject('Entity not found.');
+            bcrypt.compare(entity.password, data.password, (err, res) => {
+                if (err) return reject(err);
+                if (!res) return reject('Incorrect password.')
+                findEntity({entityID: entityID})
+                .then(loginedEntity => {
+                    return resolve(loginedEntity)
+                })
+            })
+        })
+    })
+}
+
+var updateFollow = (authorFilter, targetFilter, addFlag = 1) => {
     return new Promise((resolve, reject) => {
         findEntityID(authorFilter)
         .then(author => {
@@ -34,7 +55,7 @@ var updateFollow = (authorFilter, targetFilter, addFlag) => {
     })
 }
 
-var updateList = (authorFilter, listName, addFlag) => {
+var updateList = (authorFilter, listName, addFlag = 1) => {
     return new Promise((resolve, reject) => {
         findEntityID(authorFilter)
         .then(author => {
@@ -47,7 +68,7 @@ var updateList = (authorFilter, listName, addFlag) => {
                 if (err) throw err;
                 findEntity(
                     {entityID: oldUser.entityID}, 0,
-                    {subentityPop: {path: groupList.content, select: 'entityID'}}
+                    {subentityPop: {path: 'groupList.content', select: 'entityID'}}
                 )
                 .then(updatedEntity => { return resolve(updatedEntity) })
                 .catch(err => { throw err });
@@ -57,7 +78,7 @@ var updateList = (authorFilter, listName, addFlag) => {
     })
 }
 
-var updateListContent = (authorFilter, targetFilter, listName, addFlag) => {
+var updateListContent = (authorFilter, targetFilter, listName, addFlag = 1) => {
     return new Promise((resolve, reject) => {
         findEntityID(authorFilter)
         .then(author => {
@@ -87,6 +108,7 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag) => {
 }
 
 module.exports = {
+    auth,
     updateFollow,
     updateList,
     updateListContent,

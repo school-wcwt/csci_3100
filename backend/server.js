@@ -17,9 +17,11 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 // ========== Helper Functions ===============
 
-app.use('/user', require('./routes/user'))
+app.use('/entity', require('./routes/entity'));
+app.use('/user', require('./routes/user'));
 
-var userFunc = require('./routes/entityFunc');
+var entityFunc = require('./routes/entityFunc');
+var userFunc = require('./routes/userFunc');
 
 /*createEntity({
     type: 0,
@@ -30,9 +32,9 @@ var userFunc = require('./routes/entityFunc');
 }).then(e => console.log(e))
 .catch(err => console.error(err));*/
 
-/*findEntity({
+/*userFunc.findEntity({
     entityID: 'jonathanlph2#8546'
-}, 0, {entitySel: null, subentityPop: {path: 'followingUser', select: 'username tag'}})
+}, 0, {entitySel: null, subentityPop: userFunc.allUserPop})
 .then(e => console.log(e))
 .catch(err => console.error(err));*/
 
@@ -42,6 +44,10 @@ var userFunc = require('./routes/entityFunc');
 .then(e => console.log(e))
 .catch(err => console.error(err));*/
 
-userFunc.updateFollow({entityID: 'jonathanlph#4017'}, {entityID: 'jonathanlph2#8546'}, false)
+/*userFunc.updateFollow({entityID: 'jonathanlph#4017'}, {entityID: 'jonathanlph2#8546'}, false)
+.then(e => console.log(e))
+.catch(err => console.error(err))*/
+
+userFunc.updateList({entityID: 'jonathanlph#4017'}, 'favlist')
 .then(e => console.log(e))
 .catch(err => console.error(err))
