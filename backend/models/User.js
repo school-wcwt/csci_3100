@@ -5,7 +5,10 @@ var UserSchema = mongoose.Schema({
     entity:        { type: mongoose.Schema.Types.ObjectId, ref:'Entity', required: true, unique: true },
     followingRest: [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }],
     followingUser: [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }],
-    groupList:     [[{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }]],
+    groupList:     [{ 
+        name:    { type: String },
+        content: [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }]
+    }],
 });
 
 module.exports = mongoose.model('User', UserSchema);

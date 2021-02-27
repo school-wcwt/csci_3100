@@ -1,9 +1,9 @@
 var express = require('express');
-var {findEntity, createEntity, updateEntity, deleteEntity} = require('./user_func');
+var userFunc = require('./entityFunc');
 var router = express.Router();
 
-router.get('/:userID', (req, res) => {
-    findEntity({entityID: req.params.userID})
+router.get('/:entityID', (req, res) => {
+    userFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
         if (entity == null) res.status(202).send(null);
         if (entity != null) res.status(200).send(entity);
@@ -12,7 +12,7 @@ router.get('/:userID', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    createEntity(req.body.data)
+    userFunc.createEntity(req.body.data)
     .then(createdEntity => res.status(201).send(createdEntity) )
     .catch(err => {
         if (err.message == '(E)Mail already in DB.') res.status(403).send(err);
@@ -20,9 +20,9 @@ router.post('/', (req, res) => {
     })
 })
 
-router.put('/:userID', (req, res) => {
-    var filter = req.body.filter == null ? {entityID: req.params.userID} : req.body.filter;
-    updateEntity(filter, req.body.data)
+router.put('/:entityID', (req, res) => {
+    var filter = req.body.filter == null ? {entityID: req.params.entityID} : req.body.filter;
+    userFunc.updateEntity(filter, req.body.data)
     .then(updatedEntity => res.status(200).send(updatedEntity))
     .catch(err => {
         if (err.message == '(E)Mail already in DB.') res.status(403).send(err);
@@ -31,9 +31,9 @@ router.put('/:userID', (req, res) => {
     })
 })
 
-router.delete('/:userID', (req, res) => {
-    var filter = req.body.filter == null ? {entityID: req.params.userID} : req.body.filter;
-    deleteEntity(filter)
+router.delete('/:entityID', (req, res) => {
+    var filter = req.body.filter == null ? {entityID: req.params.entityID} : req.body.filter;
+    userFunc.deleteEntity(filter)
     .then(deletedEntity => res.status(200).send(deletedEntity))
     .catch(err => {
         if (err.message == 'Entity not found') res.status(404).send(err);

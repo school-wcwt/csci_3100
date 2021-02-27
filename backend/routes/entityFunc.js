@@ -21,21 +21,43 @@ var findEntity = (filter, type = 0, option) => {
         query.exec((err, entity) => {
             if (err) return reject(err);
             if (entity == null) return resolve(null);
-            if (entity != null) {
-                if (type == 1) return resolve(entity);
-                var subquery = entity.type 
-                    ? Rest.findOne({entity: entity._id}).select(opt.subentitySel)
-                    : User.findOne({entity: entity._id}).select(opt.subentitySel)
-                if (type == 0) subquery.populate({path: 'entity', select: opt.entitySel, populate: opt.entityPop})
-                subquery.populate(opt.subentityPop);
-                subquery.exec((err, subentity) => {
-                    if (err) return reject(err);
-                    if (subentity == null) return resolve(null);
-                    if (subentity != null) return resolve(subentity);
-                })
-            }
+            if (type == 1) return resolve(entity);
+            var subquery = entity.type 
+                ? Rest.findOne({entity: entity._id}).select(opt.subentitySel)
+                : User.findOne({entity: entity._id}).select(opt.subentitySel)
+            if (type == 0) subquery.populate({path: 'entity', select: opt.entitySel, populate: opt.entityPop})
+            subquery.populate(opt.subentityPop);
+            subquery.exec((err, subentity) => {
+                if (err) return reject(err);
+                if (subentity == null) return resolve(null);
+                return resolve(subentity);
+            })
         })
     })   
+}
+
+var findEntityID = (filter) => {
+    return new Promise((resolve, reject) => {
+        Entity
+        .findOne(filter)
+        .exec((err, entity) => {
+            if (err) return reject(err);
+            if (entity == null) return resolve(null);
+            var subquery = entity.type 
+                ? Rest.findOne({entity: entity._id})
+                : User.findOne({entity: entity._id})
+            subquery.exec((err, subentity) => {
+                if (err) return reject(err);
+                if (subentity == null) return resolve(null);
+                return resolve({
+                    entityID: entity.entityID,
+                    type: entity.type,
+                    entity_id: entity._id,
+                    subentity_id: subentity._id,
+                })
+            })
+        })
+    })
 }
 
 var createEntity = data => {
@@ -69,11 +91,10 @@ var createEntity = data => {
     return new Promise((resolve, reject) => {
         findEntity({email: data.email})
         .then(prevEntity => {
-            if (prevEntity != null) return reject(new Error('(E)Mail already in DB.'));
-            if (prevEntity == null) 
-                addEntity(data)
-                .then(res => { return resolve(res) })
-                .catch(err => { return reject(err) });
+            if (prevEntity != null) return reject(new Error('(E)Mail already in DB.')); 
+            addEntity(data)
+            .then(res => { return resolve(res) })
+            .catch(err => { return reject(err) });
         })
         .catch(err => { return reject(err) });
     })
@@ -85,16 +106,15 @@ var updateEntity = (filter, data) => {
             findEntity({email: data.email})
             .then(entity => {
                 if (entity != null) return reject(new Error('(E)Mail already in DB.'));
-                if (entity == null)
-                    Entity
-                    .findOneAndUpdate(filter, data)
-                    .exec((err, oldEntity) => {
-                        if (err) return reject(err);
-                        if (oldEntity == null) return reject(new Error('Entity not found.'));
-                        findEntity({entityID: oldEntity.entityID}, 1)
-                        .then(updatedEntity => { return resolve({oldEntity: oldEntity, updatedEntity: updatedEntity}) })
-                        .catch(err => { return reject(err) })
-                    })
+                Entity
+                .findOneAndUpdate(filter, data)
+                .exec((err, oldEntity) => {
+                    if (err) return reject(err);
+                    if (oldEntity == null) return reject(new Error('Entity not found.'));
+                    findEntity({entityID: oldEntity.entityID}, 1)
+                    .then(updatedEntity => { return resolve({oldEntity: oldEntity, updatedEntity: updatedEntity}) })
+                    .catch(err => { return reject(err) })
+                })
             })
     })
 }
@@ -117,4 +137,10 @@ var deleteEntity = (filter) => {
     })
 }
 
-module.exports = {findEntity, createEntity, updateEntity, deleteEntity}
+module.exports = {
+    findEntity,
+    findEntityID,
+    createEntity,
+    updateEntity,
+    deleteEntity
+}

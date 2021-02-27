@@ -19,7 +19,7 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 app.use('/user', require('./routes/user'))
 
-var {findEntity, createEntity, updateEntity, deleteEntity} = require('./routes/user_func');
+var userFunc = require('./routes/entityFunc');
 
 /*createEntity({
     type: 0,
@@ -35,3 +35,13 @@ var {findEntity, createEntity, updateEntity, deleteEntity} = require('./routes/u
 }, 0, {entitySel: null, subentityPop: {path: 'followingUser', select: 'username tag'}})
 .then(e => console.log(e))
 .catch(err => console.error(err));*/
+
+/*findEntityID({
+    entityID: 'jonathanlph2#8546'
+})
+.then(e => console.log(e))
+.catch(err => console.error(err));*/
+
+userFunc.updateFollow({entityID: 'jonathanlph#4017'}, {entityID: 'jonathanlph2#8546'}, false)
+.then(e => console.log(e))
+.catch(err => console.error(err))
