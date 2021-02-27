@@ -14,7 +14,7 @@ var EntitySchema = mongoose.Schema({
     profPhoto: [{ type: String }],
     openingHr: [[{ type: String }]],
     joinTime:  { type: Date },
-    followed:  [{ type: mongoose.Schema.Types.ObjectId, ref:'User' }],
+    followed:  [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }],
     post:      [{ type: mongoose.Schema.Types.ObjectId, ref:'Post' }],
 });
 
