@@ -23,15 +23,15 @@ app.use('/user', require('./routes/user'));
 var entityFunc = require('./routes/entityFunc');
 var userFunc = require('./routes/userFunc');
 
-/*createEntity({
+/*entityFunc.createEntity({
     type: 0,
     username: 'jonathanlph2',
     password: 'jonlam',
     name: 'Jonathan Lam',
     email: 'jonathan.lph2@hotmail.com',
 }).then(e => console.log(e))
-.catch(err => console.error(err));*/
-
+.catch(err => console.error(err));
+*/
 /*userFunc.findEntity({
     entityID: 'jonathanlph2#8546'
 }, 0, {entitySel: null, subentityPop: userFunc.allUserPop})
@@ -48,6 +48,6 @@ var userFunc = require('./routes/userFunc');
 .then(e => console.log(e))
 .catch(err => console.error(err))*/
 
-userFunc.updateList({entityID: 'jonathanlph#4017'}, 'favlist')
+userFunc.updateList({entityID: 'jonathanlph2#4956'}, 'favlist6', 0)
 .then(e => console.log(e))
 .catch(err => console.error(err))
