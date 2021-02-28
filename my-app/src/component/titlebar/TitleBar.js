@@ -65,7 +65,10 @@ export default function TitleBar( {text} ) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} style = { tabPanelStyle } index={0}>
-        {text}
+        <p>
+        mATE is a social networking dining application specifically designed for optimal restaurant sharing and communication experience. <br></br>
+        Combining restaurant searching functions and social networking functions into one.
+        </p>
       </TabPanel>
       <TabPanel value={value} style = { tabPanelStyle } index={1}>
         Item Two

@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import TitleBar from './component/TitleBar';
+import TitleBar from './component/titlebar/TitleBar';
 import MainCarousel from './component/carousel/MainCarousel';
-import App from './App';
+import ErrorPage from './ErrorPage';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <TitleBar text = "hello"/>
-    <App />
+    <ErrorPage />
   </React.StrictMode>,
   document.getElementById('root')
 );
