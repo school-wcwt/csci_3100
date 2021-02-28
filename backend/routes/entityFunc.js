@@ -38,7 +38,7 @@ var findEntity = (filter, type = 0, option) => {
         if (type == 1) query.populate(opt.entityPop)
         query.exec((err, entity) => {
             if (err) return reject(err);
-            if (entity == null) return reject(new Error('Entity not found.'));
+            if (entity == null) return resolve(null);
             if (type == 1) return resolve(entity);
             var subquery = entity.type 
                 ? Rest.findOne({entity: entity._id}).select(opt.subentitySel)
@@ -47,7 +47,7 @@ var findEntity = (filter, type = 0, option) => {
             subquery.populate(opt.subentityPop);
             subquery.exec((err, subentity) => {
                 if (err) return reject(err);
-                if (subentity == null) return reject(new Error('Entity not found.'));
+                if (subentity == null) return resolve(null);
                 return resolve(subentity);
             })
         })
@@ -109,7 +109,7 @@ var createEntity = data => {
     return new Promise((resolve, reject) => {
         findEntity({email: data.email})
         .then(prevEntity => {
-            if (prevEntity != null) return reject(new Error('(E)Mail already in DB.')); 
+            if (prevEntity != null) return reject(new Error('(E)Mail exists.')); 
             addEntity(data)
             .then(res => { return resolve(res) })
             .catch(err => { return reject(err) });
@@ -123,7 +123,7 @@ var updateEntity = (filter, data) => {
         if (data.email != null) 
             findEntity({email: data.email})
             .then(entity => {
-                if (entity != null) return reject(new Error('(E)Mail already in DB.'));
+                if (entity != null) return reject(new Error('(E)Mail exists.'));
                 Entity
                 .findOneAndUpdate(filter, data)
                 .exec((err, oldEntity) => {
