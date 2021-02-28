@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleTabs( {text} ) {
+export default function TitleBar( {text} ) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const tabPanelStyle = {backgroundColor:"#282c34",color:"rgb(255, 255, 255)"};
