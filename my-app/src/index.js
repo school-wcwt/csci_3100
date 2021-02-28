@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import TitleBar from './component/titlebar/TitleBar';
-import MainCarousel from './component/carousel/MainCarousel';
 import ErrorPage from './ErrorPage';
+import FirstPost from './pages/posts/first-post';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorPage />
+    <ErrorPage/>
   </React.StrictMode>,
   document.getElementById('root')
 );
