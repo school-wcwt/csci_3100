@@ -1,7 +1,7 @@
 var Entity = require('../models/Entity');
 var User   = require('../models/User');
-var GroupList = require('../models/GroupList');
 var {findEntity, findEntityID} = require('./entityFunc');
+var groupListFunc = require('./groupListFunc');
 
 var bcrypt = require('bcrypt');
 
@@ -43,65 +43,38 @@ var updateFollow = (authorFilter, targetFilter, addFlag = 1) => {
     })
 }
 
-var updateList = (authorFilter, listName, addFlag = 1) => {
-    var updateGroupList = (authorFilter, listName, addFlag) => {
-        return new Promise((resolve, reject) => {
-            (async () => { try {
-                var author = await findEntityID(authorFilter)
-                if (author == null) throw new Error('Entity not found.');
-                var groupList = await GroupList.findOne({author: author.entity_id, name: listName}).exec()
-                if (addFlag) {
-                    if (groupList != null) throw new Error('List exists.');
-                    let newList = new GroupList({
-                        name: listName,
-                        author: author.entity_id,
-                        content: [],
-                    })
-                    var savedList = await newList.save();
-                    return resolve({author: author, groupListID: savedList._id});
-                } else { 
-                    if (groupList == null) throw new Error('List does not exist.');
-                    var deletedList = await groupList.remove();
-                    return resolve({author: author, groupListID: deletedList._id}); 
-                }
-            } catch(err) { return reject(err) } })();
-        })
-    }
-    
+var updateList = (authorFilter, listName, addFlag = 1) => {   
     return new Promise((resolve, reject) => {
         (async () => { try {
-            var data = await updateGroupList(authorFilter, listName, addFlag)
+            var updatedGroupList = addFlag
+                ? await groupListFunc.createGroupList(authorFilter, listName)
+                : await groupListFunc.deleteGroupList(authorFilter, listName)
             var operation = addFlag ? '$push' : '$pull';
-            var oldUser = await User.findOneAndUpdate(
-                {entityID: data.author.entityID},
-                {[operation]: {'groupList': data.groupListID}}
+            await User.findOneAndUpdate(
+                {_id: updatedGroupList.author},
+                {[operation]: {'groupList': updatedGroupList._id}},
             ).exec()
-            var updatedEntity = await findEntity({entityID: oldUser.entityID})
+            var updatedEntity = await findEntity(authorFilter)
             return resolve(updatedEntity)
         } catch(err) { return reject(err) }})()
     })
 }
 
+var updateListName = (authorFilter, listName, newListName) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            await groupListFunc.updateGroupList(authorFilter, listName, newListName)
+            var updatedEntity = await findEntity(authorFilter)
+            return resolve(updatedEntity);
+        } catch(err) { return reject(err) } })();
+    })   
+}
+
 var updateListContent = (authorFilter, targetFilter, listName, addFlag = 1) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            var [author, target] = await Promise.all([
-                findEntityID(authorFilter), 
-                findEntityID(targetFilter),
-            ]);
-            if (author == null || target == null) throw new Error('Entity not found.');
-            var operation = addFlag ? '$push' : '$pull';
-            var oldGroupList = await GroupList.findOneAndUpdate(
-                {author: author.entity_id, name: listName},
-                {[operation]: {'content': target.entity_id}}
-            ).exec();
-            var updatedEntity = await findEntity(
-                {entityID: author.entityID}, 0,
-                {subentityPop: {path: 'groupList', select: 'name content'}
-                //    populate:  {path: 'content', select: 'entityID name profPhoto'}}
-                }
-            )
-            return resolve(updatedEntity)
+            var updatedGroupList = await groupListFunc.updateContent(authorFilter, targetFilter, listName, addFlag)
+            return resolve(updatedGroupList)
         } catch(err) { return reject(err) } })();
     })
 }
@@ -110,5 +83,6 @@ module.exports = {
     auth,
     updateFollow,
     updateList,
+    updateListName,
     updateListContent,
 }
