@@ -6,7 +6,7 @@ import TitleBar from './component/titlebar/';
 
 const TopHead = () => {
     return (
-    <header>
+    <header class = "header_main">
         <nav>
             <div class="row">
                 <img src={logo} alt="OmniFood logo" class="logo"/>
