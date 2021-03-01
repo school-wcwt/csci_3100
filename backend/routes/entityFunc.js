@@ -14,8 +14,13 @@ var allUserPop = [
         perDocumentLimit: 10
     },
     {
-        path: 'groupList.content',
-        select: 'entityID name profPhoto',
+        path: 'groupList',
+        select: 'name content',
+        populate: {
+            path: 'content',
+            select: 'entityID name profPhoto',
+            perDocumentLimit:10
+        },
         perDocumentLimit:10
     },
 ]
@@ -33,125 +38,106 @@ var findEntity = (filter, type = 0, option) => {
     }
 
     return new Promise((resolve, reject) => {
-        var opt = init();
-        var query = Entity.findOne(filter).select(opt.entitySel)
-        if (type == 1) query.populate(opt.entityPop)
-        query.exec((err, entity) => {
-            if (err) return reject(err);
+        (async () => { try { 
+            var opt = init();
+            // Entity
+            var query = Entity.findOne(filter).select(opt.entitySel);
+            if (type == 1) query.populate(opt.entityPop);
+            var entity = await query.exec()
             if (entity == null) return resolve(null);
             if (type == 1) return resolve(entity);
+            // User / Rest
             var subquery = entity.type 
                 ? Rest.findOne({entity: entity._id}).select(opt.subentitySel)
                 : User.findOne({entity: entity._id}).select(opt.subentitySel)
             if (type == 0) subquery.populate({path: 'entity', select: opt.entitySel, populate: opt.entityPop})
             subquery.populate(opt.subentityPop);
-            subquery.exec((err, subentity) => {
-                if (err) return reject(err);
-                if (subentity == null) return resolve(null);
-                return resolve(subentity);
-            })
-        })
+            var subentity = await subquery.exec() 
+            if (subentity == null) return resolve(null);
+            return resolve(subentity);
+        } catch(err) { return reject(err) }})();
     })   
 }
 
 var findEntityID = (filter) => {
     return new Promise((resolve, reject) => {
-        Entity
-        .findOne(filter)
-        .exec((err, entity) => {
-            if (err) return reject(err);
+        (async () => { try { 
+            var entity = Entity.findOne(filter).exec()
             if (entity == null) return resolve(null);
-            var subquery = entity.type 
-                ? Rest.findOne({entity: entity._id})
-                : User.findOne({entity: entity._id})
-            subquery.exec((err, subentity) => {
-                if (err) return reject(err);
-                if (subentity == null) return resolve(null);
-                return resolve({
-                    entityID: entity.entityID,
-                    type: entity.type,
-                    entity_id: entity._id,
-                    subentity_id: subentity._id,
-                })
+            var subentity = entity.type 
+                ? await Rest.findOne({entity: entity._id}).exec()
+                : await User.findOne({entity: entity._id}).exec()
+            if (subentity == null) return resolve(null);
+            return resolve({
+                entityID: entity.entityID,
+                type: entity.type,
+                entity_id: entity._id,
+                subentity_id: subentity._id,
             })
-        })
+        } catch(err) { return reject(err) }})(); 
     })
 }
 
 var createEntity = data => {
     var addEntity = data => {
         return new Promise((resolve, reject) => {
-            var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
-            if (data.type) data.username = data.name.replace(/ /g, '');
-            var tag = tagGen();
-            var entityID = data.username + '#' + tag;
-            var newEntity = new Entity({
-                entityID: entityID, 
-                tag: tag, 
-                joinTime: Date.now(),
-                ...data
-            });
-            newEntity.save((err, savedEntity) => {
-                if (err) return reject(err);
+            (async() => { try { 
+                var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
+                if (data.type) data.username = data.name.replace(/ /g, '');
+                var tag = tagGen();
+                var entityID = data.username + '#' + tag;
+                var newEntity = new Entity({
+                    entityID: entityID, 
+                    tag: tag, 
+                    joinTime: Date.now(),
+                    ...data
+                });
+                var savedEntity = await newEntity.save()
                 var newSubentity = data.type 
                     ? new Rest({entityID: entityID, entity: savedEntity._id})
                     : new User({entityID: entityID, entity: savedEntity._id});
-                newSubentity.save((err) => {
-                    if (err) return reject(err);
-                    findEntity({entityID: entityID})
-                    .then(savedEntity => { return resolve(savedEntity); })
-                    .catch(err => { return reject(err) });
-                })
-            })
+                await newSubentity.save()
+                var entity = await findEntity({entityID: entityID})
+                return resolve(entity);
+            } catch(err) { return reject(err) }})();
         })
     }
         
     return new Promise((resolve, reject) => {
-        findEntity({email: data.email})
-        .then(prevEntity => {
-            if (prevEntity != null) return reject(new Error('(E)Mail exists.')); 
-            addEntity(data)
-            .then(res => { return resolve(res) })
-            .catch(err => { return reject(err) });
-        })
-        .catch(err => { return reject(err) });
+        (async () => { try {
+            var prevEntity = await findEntity({email: data.email})
+            if (prevEntity != null) throw new Error('(E)Mail exists.'); 
+            var addedEntity = await addEntity(data);
+            return resolve(addedEntity);
+        } catch(err) { return reject(err) }})();
     })
 }
 
 var updateEntity = (filter, data) => {
     return new Promise((resolve, reject) => {
-        if (data.email != null) 
-            findEntity({email: data.email})
-            .then(entity => {
-                if (entity != null) return reject(new Error('(E)Mail exists.'));
-                Entity
-                .findOneAndUpdate(filter, data)
-                .exec((err, oldEntity) => {
-                    if (err) return reject(err);
-                    if (oldEntity == null) return reject(new Error('Entity not found.'));
-                    findEntity({entityID: oldEntity.entityID}, 1)
-                    .then(updatedEntity => { return resolve({oldEntity: oldEntity, updatedEntity: updatedEntity}) })
-                    .catch(err => { return reject(err) })
-                })
-            })
+        (async () => { try {
+            if (data.email != null) {
+                var entity = await findEntity({email: data.email})
+                if (entity != null) throw new Error('(E)Mail exists.');
+            }
+            var oldEntity = await Entity.findOneAndUpdate(filter, data).exec();
+            if (oldEntity == null) throw new Error('Entity not found.');
+            var updatedEntity = await findEntity({entityID: oldEntity.entityID}, 1);
+            return resolve({oldEntity: oldEntity, updatedEntity: updatedEntity});
+        } catch (err) { return reject(err) }})();
     })
 }
 
 var deleteEntity = (filter) => {
     return new Promise((resolve, reject) => {
-        Entity
-        .findOneAndDelete(filter)
-        .exec((err, deletedEntity) => {
-            if (err) return reject(err);
-            if (deletedEntity == null) return reject(new Error('Entity not found.'));
-            var query = deletedEntity.type 
-                ? Rest.findOneAndDelete({entity: deletedEntity._id})
-                : User.findOneAndDelete({entity: deletedEntity._id})
-            query.exec((err, deletedSubentity) => {
-                if (err) return reject(err);
-                return resolve({deletedEntity: deletedEntity, deletedSubentity: deletedSubentity});
-            })
-        })
+        (async() => { try { 
+            var deletedEntity = await Entity.findOneAndDelete(filter);
+            if (deletedEntity == null) throw new Error('Entity not found.');
+            var deletedSubentity = deletedEntity.type 
+                ? await Rest.findOneAndDelete({entity: deletedEntity._id}).exec()
+                : await User.findOneAndDelete({entity: deletedEntity._id}).exec();
+            return resolve({deletedEntity: deletedEntity, deletedSubentity: deletedSubentity});
+        } catch (err) { return reject(err) }})();
     })
 }
 

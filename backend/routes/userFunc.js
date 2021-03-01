@@ -1,6 +1,5 @@
 var Entity = require('../models/Entity');
 var User   = require('../models/User');
-var Rest   = require('../models/Rest');
 var GroupList = require('../models/GroupList');
 var {findEntity, findEntityID} = require('./entityFunc');
 
