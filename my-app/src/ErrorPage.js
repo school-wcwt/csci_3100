@@ -1,6 +1,6 @@
 import logo from './image/logo.png';
 import './App.css';
-import TitleBar from './component/titlebar/TitleBar';
+import TitleBar from './components/titlebar/TitleBar';
 
 
 
