@@ -1,6 +1,6 @@
 ### Entities Route
 
-#### GET entity/<entityID>
+#### GET entity/:entityID
 - Get data of an Entity and its its corresponding User/Rest of `entityID`.
 - **Body:** null
 - **Status Code**:
@@ -32,7 +32,7 @@ openingHr| [[String]] | | Restaurant's opening hour.
     - 400: Unknown error.
 - **Returns:** `User/Rest` with `Entity` and `groupList` populated.
 
-#### PUT entity/<entityID>
+#### PUT entity/:entityID
 - Edit an Entity of `entityID`.
 - **Body:** Object
 
@@ -53,7 +53,7 @@ Key           | Type   | Description
 oldEntity     | Object | Previous entity.
 updatedentity | Object | Updated entity.
 
-#### DELETE entity/<entityID>
+#### DELETE entity/:entityID
 - Delete an Entity of `entityID`.
 - **Body:** Object
 
@@ -90,7 +90,7 @@ password | Object | Yes | Hashed password (using `bcrypt`).
     - 400: Unknown error.
 - **Returns:** `User/Rest` with `Entity` and `groupList` populated.
 
-#### POST user/<entityID>/groupList
+#### POST user/:entityID/groupList
 - Add a GroupList and push it under User with `entityID`.
 - **Body:** Object
 
@@ -104,7 +104,7 @@ listName | Object | Yes | List name to be added.
     - 400: Unknown error.
 - **Returns:** `User` with `Entity` and `groupList` populated.
 
-#### DELETE user/<entityID>/groupList
+#### DELETE user/:entityID/groupList
 - Delete a GroupList and pull it under User with `entityID`.
 - **Body:** Object
 
@@ -118,7 +118,7 @@ listName | Object | Yes | List name to be deleted.
     - 400: Unknown error.
 - **Returns:** `User` with `Entity` and `groupList` populated.
 
-#### POST user/<entityID>/groupList/<listName>
+#### POST user/:entityID/groupList/:listName
 - Add a restaurant (Entity) into a user's list.
 - **Body**: Object
 
@@ -132,7 +132,7 @@ targetFilter | Object | Yes | Filter of the target (restaurant) to be added into
     - 400: Unknown error.
 - **Returns:** `User` with `Entity` and `groupList` populated.
 
-#### DELETE user/<entityID>/groupList/<listName>
+#### DELETE user/:entityID/groupList/:listName
 - Add a restaurant (Entity) into a user's list.
 - **Body**: Object
 
