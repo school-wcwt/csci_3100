@@ -4,7 +4,7 @@ var entityFunc = require('./entityFunc');
 var router = express.Router();
 
 router.post('/auth', (req, res) => {
-    userFunc.auth({entityID: req.body.entityID})
+    userFunc.auth(req.body.filter, req.body.password)
     .then(loginedEntity => res.status(200).send(loginedEntity))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).send(err)

@@ -5,12 +5,12 @@ var {findEntity, findEntityID} = require('./entityFunc');
 
 var bcrypt = require('bcrypt');
 
-var auth = (filter, data) => {
+var auth = (filter, password) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
             var entity = await Entity.findOne(filter).exec()
             if (entity.type || entity == null) throw new Error('Entity not found.');
-            var match = await bcrypt.compare(entity.password, data.password) 
+            var match = await bcrypt.compare(entity.password, password) 
             if (!match) throw new Error('Incorrect password.')
             var loginedEntity = await findEntity({entityID: entityID})
             return resolve(loginedEntity);
@@ -44,7 +44,7 @@ var updateFollow = (authorFilter, targetFilter, addFlag = 1) => {
 }
 
 var updateList = (authorFilter, listName, addFlag = 1) => {
-    var addGroupList = (authorFilter, listName, addFlag) => {
+    var updateGroupList = (authorFilter, listName, addFlag) => {
         return new Promise((resolve, reject) => {
             (async () => { try {
                 var author = await findEntityID(authorFilter)
@@ -70,13 +70,13 @@ var updateList = (authorFilter, listName, addFlag = 1) => {
     
     return new Promise((resolve, reject) => {
         (async () => { try {
-            var data = await addGroupList(authorFilter, listName, addFlag)
+            var data = await updateGroupList(authorFilter, listName, addFlag)
             var operation = addFlag ? '$push' : '$pull';
             var oldUser = await User.findOneAndUpdate(
                 {entityID: data.author.entityID},
                 {[operation]: {'groupList': data.groupListID}}
             ).exec()
-            var updatedEntity = await findEntity({entityID: oldUser.entityID}, 0)
+            var updatedEntity = await findEntity({entityID: oldUser.entityID})
             return resolve(updatedEntity)
         } catch(err) { return reject(err) }})()
     })
@@ -97,8 +97,9 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag = 1) => {
             ).exec();
             var updatedEntity = await findEntity(
                 {entityID: author.entityID}, 0,
-                {subentityPop: {path: 'groupList', select: 'name content', 
-                    populate:  {path: 'content', select: 'entityID name profPhoto'}}}
+                {subentityPop: {path: 'groupList', select: 'name content'}
+                //    populate:  {path: 'content', select: 'entityID name profPhoto'}}
+                }
             )
             return resolve(updatedEntity)
         } catch(err) { return reject(err) } })();

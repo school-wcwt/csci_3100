@@ -50,8 +50,11 @@ var findEntity = (filter, type = 0, option) => {
             var subquery = entity.type 
                 ? Rest.findOne({entity: entity._id}).select(opt.subentitySel)
                 : User.findOne({entity: entity._id}).select(opt.subentitySel)
-            if (type == 0) subquery.populate({path: 'entity', select: opt.entitySel, populate: opt.entityPop})
-            subquery.populate(opt.subentityPop);
+            if (type == 0) {
+                subquery
+                .populate({path: 'entity', select: opt.entitySel, populate: opt.entityPop})
+                .populate({path: 'groupList', select: 'name content'})
+            }            subquery.populate(opt.subentityPop);
             var subentity = await subquery.exec() 
             if (subentity == null) return resolve(null);
             return resolve(subentity);
@@ -83,7 +86,9 @@ var createEntity = data => {
         return new Promise((resolve, reject) => {
             (async() => { try { 
                 var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
-                if (data.type) data.username = data.name.replace(/ /g, '');
+                if (data.type) data.username == null 
+                    ? data.name.replace(/ /g, '') 
+                    : data.username.replace(/ /g, '');
                 var tag = tagGen();
                 var entityID = data.username + '#' + tag;
                 var newEntity = new Entity({

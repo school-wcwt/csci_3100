@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/:entityID', (req, res) => {
     entityFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
-        if (entity == null) res.status(204).send(err);
+        if (entity == null) res.status(204).send(null);
         res.status(200).send(entity)
     })
     .catch(err => { res.status(400).send(err); })
@@ -15,7 +15,7 @@ router.post('/new', (req, res) => {
     entityFunc.createEntity(req.body.data)
     .then(createdEntity => res.status(201).send(createdEntity) )
     .catch(err => {
-        if (err.message == '(E)Mail exists.') res.status(403).send(err);
+        if (err.message == '(E)Mail exists.') res.status(409).send(err);
         else res.status(400).send(err);
     })
 })

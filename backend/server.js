@@ -48,6 +48,6 @@ var userFunc = require('./routes/userFunc');
 .then(e => console.log(e))
 .catch(err => console.error(err))*/
 
-userFunc.updateList({entityID: 'jonathanlph2#4956'}, 'favlist6', 0)
+/*userFunc.updateList({entityID: 'jonathanlph2#4956'}, 'favlist6', 0)
 .then(e => console.log(e))
-.catch(err => console.error(err))
+.catch(err => console.error(err))*/

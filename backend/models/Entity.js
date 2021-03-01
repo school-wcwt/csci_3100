@@ -9,7 +9,7 @@ var EntitySchema = mongoose.Schema({
     password:  { type: String },
     name:      { type: String },
     phone:     { type: String },
-    status:    { type: String }, // User: Gender, Rest: Opening Status
+    status:    { type: String, default: '0' }, // User: Gender, Rest: Opening Status
     verified:  { type: String }, // User: Email verified, Rest: Claimed
     profPhoto: [{ type: String }],
     openingHr: [[{ type: String }]],
