@@ -1,9 +1,6 @@
-import logo from './image/logo.png';
+import logo from '../../image/logo.png';
 import './App.css';
-import TitleBar from './component/titlebar/TitleBar';
-
-
-
+import TitleBar from '../../component/titlebar/TitleBar';
 
 function Link_Word({message,link}){
   return (
