@@ -1,50 +1,51 @@
 import React from "react";
-import { Paper } from '@material-ui/core';
+import ReactDOM from "react-dom";
+import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({ 
-    paper_style: {
-        backgroundColor : "#fffff6",
-        opacity: "0.85",
-        flex: 1,
-        top: "-8%",
-        left: "49%",
-        width: "49%",
-        height: "64vh",
-        position: "relative",
-        [theme.breakpoints.up("lg")]: {
-            top: "-32%",
-            left: "52%",
-            width: "43%",
-            height: "79vh",
-        }},
-    
+    input_style:{
+    }
 }));
-const LoginForm = () => {
+
+
+
+const Input = ({ label, register, required }) => {
     const classes = useStyles();
     return (
-        <Paper className = {classes.paper_style} elevation={3} variant="outlined">
-            <form action="/reservation/create">
-            <label>
-                <p>author:</p>
-                <input type="text" name="author" />
-            </label>
-
-            <label>
-                <p>target: </p>
-                <input type="text" name="target" />
-            </label>
-            
-            <label>
-                <p>time:</p>
-                <input type="datetime-local" name="datetime"/>
-            </label>
-
-            <input type="submit" value="Submit" />
-            </form>
-
-        </Paper>
+    <>
+        <label>{label}</label>
+        <br/>
+        <input name={label} ref={register({ required })} className = {classes.input_style}/>
+        <br/>
+    </>
     );
 }
+
+// you can use React.forwardRef to pass the ref too
+const Select = React.forwardRef(({ label }, ref) => (
+  <>
+    <label>{label}</label>
+    <select name={label} ref={ref}>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+  </>
+));
+
+const LoginForm = () => {
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = data => {
+    console.log(JSON.stringify(data));
+  };
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input label="User Name" register={register} required />
+      <Input label="Password" register={register} required />
+      
+    </form>
+  );
+};
 
 export default LoginForm;

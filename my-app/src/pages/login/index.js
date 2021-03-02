@@ -3,7 +3,7 @@ import piazzaImg from "./image/pizza_bg.jpg";
 import imacImg from "./image/imac.png";
 import { makeStyles } from "@material-ui/core";
 import { Paper } from '@material-ui/core';
-import LoginForm from './component/loginForm/loginForm.js';
+import LoginPaper from './component/loginForm/loginPaper.js';
 
 
 const useStyles = makeStyles((theme) => ({ 
@@ -34,7 +34,7 @@ const Login = ()=>{
     return (
         <div className = {classes.bgImg}>
             <img src = {imacImg} className = {classes.imac_style}/>
-            <LoginForm/>
+            <LoginPaper/>
         </div>
 
     )
