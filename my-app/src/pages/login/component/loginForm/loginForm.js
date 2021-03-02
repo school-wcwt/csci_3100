@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
+//<input name={label} ref={register({ required })} className = {classes.input_style}/>
 const Input = ({ label, register, required }) => {
     const classes = useStyles();
     return (
@@ -29,6 +29,7 @@ const Input = ({ label, register, required }) => {
           className={classes.textField}
           margin="normal"
           variant="outlined"
+          ref={register({ required })}
         />
         <br/>
     </>
@@ -56,7 +57,7 @@ const LoginForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input label="User Name" register={register} required />
       <Input label="Password" register={register} required />
-      
+      <input type="submit"></input>
     </form>
   );
 };
