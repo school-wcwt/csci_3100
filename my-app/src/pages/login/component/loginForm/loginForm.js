@@ -10,11 +10,20 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 200,
+        width: "95%",
     },
 }));
 
-
+/*        <TextField
+          id="outlined-search"
+          label={label}
+          type="search"
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          inputRef={register({ required })}
+        />
+*/
 //<input name={label} ref={register({ required })} className = {classes.input_style}/>
 const Input = ({ label, register, required }) => {
     const classes = useStyles();
@@ -24,12 +33,13 @@ const Input = ({ label, register, required }) => {
         <br/>
         <TextField
           id="outlined-search"
-          label={label}
+          label = {label}
+          name = {label}
           type="search"
           className={classes.textField}
           margin="normal"
           variant="outlined"
-          ref={register({ required })}
+          inputRef={register({ required })}
         />
         <br/>
     </>
