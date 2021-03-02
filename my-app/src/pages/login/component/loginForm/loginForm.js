@@ -1,11 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles,TextField } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({ 
     input_style:{
-    }
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
 }));
 
 
@@ -16,7 +22,14 @@ const Input = ({ label, register, required }) => {
     <>
         <label>{label}</label>
         <br/>
-        <input name={label} ref={register({ required })} className = {classes.input_style}/>
+        <TextField
+          id="outlined-search"
+          label={label}
+          type="search"
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+        />
         <br/>
     </>
     );
