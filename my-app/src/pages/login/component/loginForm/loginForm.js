@@ -3,11 +3,11 @@ import axios from 'axios';
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
+//import cors from ;
 
+const db_host = Math.floor(Math.random() * 100) + 1;
 
 const useStyles = makeStyles((theme) => ({
-    input_style: {
-    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -15,23 +15,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-/*        <TextField
-          id="outlined-search"
-          label={label}
-          type="search"
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          inputRef={register({ required })}
-        />
-*/
 //<input name={label} ref={register({ required })} className = {classes.input_style}/>
 const Input = ({ label, register, required }) => {
     const classes = useStyles();
     return (
-<<<<<<< HEAD
     <>
-        <label>{label}</label>
         <br/>
         <TextField
           id="outlined-search"
@@ -45,24 +33,17 @@ const Input = ({ label, register, required }) => {
         />
         <br/>
     </>
-=======
-        <>
-            <label>{label}</label>
-            <br />
-            {/*<TextField
-                id="outlined-search"
-                label={label}
-                type="search"
-                className={classes.textField}
-                margin="normal"
-                variant="outlined"
-                ref={register({ required })}
-            />*/}
-            <input name={label} ref={register({ required })} className = {classes.input_style}/>
-            <br />
-        </>
->>>>>>> ac4801ca35bcc140b6e7e86e8db26005efa845b1
     );
+}
+
+const LoginShape = ({register})=>{
+    return (
+    <>
+        <Input label='Email' register={register} required />
+        <Input label='Password' register={register} required />
+    </>
+    );
+
 }
 
 // you can use React.forwardRef to pass the ref too
@@ -82,10 +63,10 @@ const LoginForm = () => {
         console.log(JSON.stringify(data));
         axios({
             method: 'get',
-            url: 'http://localhost:3100/entity/' + data.email,
+            url: `http://localhost:3100/entity/` + data.Email,
             data: {
-                filter: { email: data.email },
-                password: data.password
+                filter: { email: data.Email },
+                password: data.Password
             }
         })
         .then(res => {
@@ -98,9 +79,10 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='email' register={register} required />
-            <Input label='password' register={register} required />
-            <input type="submit"></input>
+            <Input label='Email' register={register} required />
+            <Input label='Password' register={register} required />
+            <input type="submit" value = "Log In"></input>
+            <input type="submit" value = "Register"></input>
         </form>
     );
 };
