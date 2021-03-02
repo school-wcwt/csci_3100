@@ -29,23 +29,6 @@ const useStyles = makeStyles((theme) => ({
 const Input = ({ label, register, required }) => {
     const classes = useStyles();
     return (
-<<<<<<< HEAD
-    <>
-        <label>{label}</label>
-        <br/>
-        <TextField
-          id="outlined-search"
-          label = {label}
-          name = {label}
-          type="search"
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          inputRef={register({ required })}
-        />
-        <br/>
-    </>
-=======
         <>
             <label>{label}</label>
             <br />
@@ -61,7 +44,6 @@ const Input = ({ label, register, required }) => {
             <input name={label} ref={register({ required })} className = {classes.input_style}/>
             <br />
         </>
->>>>>>> ac4801ca35bcc140b6e7e86e8db26005efa845b1
     );
 }
 
@@ -80,11 +62,20 @@ const LoginForm = () => {
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
         console.log(JSON.stringify(data));
+        /*(async () => {
+            try {
+                var res = await axios({
+                    // param
+                })
+                console.log(res)
+            } catch (err) { console.log(err) }
+        })()*/
         axios({
-            method: 'get',
-            url: 'http://localhost:3100/entity/' + data.email,
+            method: 'post',
+            baseURL: 'http://localhost:3100/',
+            url: '/user/auth',
             data: {
-                filter: { email: data.email },
+                filter: { entityID: data.entityID },
                 password: data.password
             }
         })
@@ -98,7 +89,7 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='email' register={register} required />
+            <Input label='entityID' register={register} required />
             <Input label='password' register={register} required />
             <input type="submit"></input>
         </form>
