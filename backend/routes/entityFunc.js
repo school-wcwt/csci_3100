@@ -90,7 +90,7 @@ var createEntity = data => {
                     ? data.name.replace(/ /g, '') 
                     : data.username.replace(/ /g, '');
                 var tag = tagGen();
-                var entityID = data.username + '#' + tag;
+                var entityID = data.username + '-' + tag;
                 var newEntity = new Entity({
                     entityID: entityID, 
                     tag: tag, 
