@@ -18,6 +18,8 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 // ========== Helper Functions ===============
 
+// http://localhost:3100/entity
+
 app.use('/entity', require('./routes/entity'));
 app.use('/user', require('./routes/user'));
 
@@ -26,16 +28,17 @@ var userFunc = require('./routes/userFunc');
 
 /*entityFunc.createEntity({
     type: 0,
-    username: 'tom',
-    password: 'tom',
-    name: 'Tom',
-    email: 'tom@hotmail.com',
-}).then(e => console.log(e))
+    username: 'Nick',
+    password: 'nick',
+    name: 'Nick ',
+    email: 'nick@hotmail.com',
+})
+.then(e => console.log(e))
 .catch(err => console.error(err));*/
 
-/*userFunc.findEntity({
-    entityID: 'jonathanlph2#8546'
-}, 0, {entitySel: null, subentityPop: userFunc.allUserPop})
+/*entityFunc.findEntity({
+    entityID: 'Nick-7816'
+}, 1)
 .then(e => console.log(e))
 .catch(err => console.error(err));*/
 

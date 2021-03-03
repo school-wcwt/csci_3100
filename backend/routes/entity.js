@@ -2,7 +2,7 @@ var express = require('express');
 var entityFunc = require('./entityFunc');
 var router = express.Router();
 
-router.get('/:entityID', (req, res) => {
+router.get('/:entityID', (req, res) => { 
     entityFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
         if (entity == null) res.status(204).send(null);

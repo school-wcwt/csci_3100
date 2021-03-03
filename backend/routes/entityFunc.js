@@ -26,6 +26,11 @@ var allUserPop = [
 ]
 
 var findEntity = (filter, type = 0, option) => {
+    /* type:
+        - 0 : All
+        - 1 : Entity
+        - 2 : Subentity
+    */
     var init = () => {
         var optionDef = {
             entitySel: {password: 0, __v: 0}, 
