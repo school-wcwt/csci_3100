@@ -61,12 +61,21 @@ const LoginForm = () => {
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
         console.log(JSON.stringify(data));
+        /*(async () => {
+            try {
+                var res = await axios({
+                    // param
+                })
+                console.log(res)
+            } catch (err) { console.log(err) }
+        })()*/
         axios({
-            method: 'get',
-            url: `http://localhost:3100/entity/` + data.Email,
+            method: 'post',
+            baseURL: 'http://localhost:3100/',
+            url: '/user/auth',
             data: {
-                filter: { email: data.Email },
-                password: data.Password
+                filter: { entityID: data.entityID },
+                password: data.password
             }
         })
         .then(res => {
@@ -79,10 +88,9 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='Email' register={register} required />
-            <Input label='Password' register={register} required />
-            <input type="submit" value = "Log In"></input>
-            <input type="submit" value = "Register"></input>
+            <Input label='entityID' register={register} required />
+            <Input label='password' register={register} required />
+            <input type="submit"></input>
         </form>
     );
 };

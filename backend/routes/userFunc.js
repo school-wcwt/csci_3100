@@ -12,7 +12,7 @@ var auth = (filter, password) => {
             if (entity.type || entity == null) throw new Error('Entity not found.');
             var match = await bcrypt.compare(entity.password, password) 
             if (!match) throw new Error('Incorrect password.')
-            var loginedEntity = await findEntity({entityID: entityID})
+            var loginedEntity = await findEntity({entityID: entity.entityID})
             return resolve(loginedEntity);
         } catch(err) { return reject(err) } })();
     })
