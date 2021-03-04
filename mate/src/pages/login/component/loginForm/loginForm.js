@@ -3,6 +3,8 @@ import axios from 'axios';
 import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 //import cors from ;
 
 const db_host = Math.floor(Math.random() * 100) + 1;
@@ -13,6 +15,16 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing.unit,
         width: "95%",
     },
+    buttom_style: {
+        margin: theme.spacing(1),
+        width: "95%",
+    },
+
+    extendedIcon: {
+        marginRight: theme.spacing(1),
+        color: "rgb(47, 79, 79)",
+    },
+
 }));
 
 //<input name={label} ref={register({ required })} className = {classes.input_style}/>
@@ -59,6 +71,7 @@ const Select = React.forwardRef(({ label }, ref) => (
 
 const LoginForm = () => {
     const { register, handleSubmit } = useForm();
+    const classes = useStyles();
     const onSubmit = data => {
         console.log(JSON.stringify(data));
         /*(async () => {
@@ -88,9 +101,11 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='entityID' register={register} required />
-            <Input label='password' register={register} required />
-            <input type="submit"></input>
+            <Input label='Email' register={register} required />
+            <Input label='Password' register={register} required />
+            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style}>Login</Button>
+            <Button variant="contained" size="large" color="primary" className={classes.buttom_style}>Register</Button>
+            
         </form>
     );
 };
