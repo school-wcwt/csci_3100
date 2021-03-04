@@ -87,11 +87,17 @@ const LoginForm = (props) => {
             <InputBox label='Password' type='password' register={register} required/>
             <input id="login_input" type="submit" style = {{display:"none"}}/>
             <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} onClick = {props.setPanel} component="span">Login</Button>
+                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
             </label>            
         </form>
             <label for = "go_register">
-                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
+                <Button 
+                    variant="contained" size="large" color="primary" 
+                    className={classes.buttom_style} 
+                    onClick = {props.changePanel} 
+                    component="span">
+                    Register
+                </Button>
             </label>
         </>
     );
