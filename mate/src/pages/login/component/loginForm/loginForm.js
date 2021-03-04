@@ -59,7 +59,6 @@ const Select = React.forwardRef(({ label }, ref) => (
 ));
 
 const LoginForm = () => {
-    
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
@@ -96,7 +95,7 @@ const LoginForm = () => {
             <Input label='Password' type='password' register={register} required/>
             <input id="login_input" type="submit" style = {{display:"none"}}/>
             <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
+                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} onClick='setPanel' component="span">Login</Button>
             </label>            
         </form>
             <label for = "go_register">

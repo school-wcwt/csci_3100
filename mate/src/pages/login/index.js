@@ -57,12 +57,16 @@ const useStyles = makeStyles((theme) => ({
 const Login = ()=>{
     const [panel] = React.useState(0);
     const classes = useStyles();
+    const setPanel = () => {
+        panel === !panel
+    }
     return (
         <div className = {classes.bgImg}>
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
                 <img src = {LogoImg} className = {classes.paper_logo}/>
-                {panel == 0 ? <LoginForm/> : null }
+                {panel == 0 ? <LoginForm
+                setPanel={setPanel} /> : null }
                 {panel == 1 ? <RegisterForm /> : null}
             </Paper>
         </div>
