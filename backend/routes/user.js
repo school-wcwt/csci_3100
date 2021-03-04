@@ -4,7 +4,6 @@ var entityFunc = require('./entityFunc');
 var router = express.Router();
 
 router.post('/auth', (req, res) => {
-    console.log(req.body);
     userFunc.auth(req.body.filter, req.body.password)
     .then(loginedEntity => res.status(200).send(loginedEntity))
     .catch(err => {
@@ -37,7 +36,7 @@ router.delete('/:userID/groupList', (req, res) => {
 router.get('/:userID/groupList/:listName', (req, res) => {
     entityFunc.findEntity({entityID: req.params.userID}, 2, {
         subentityPop: {
-            path: 'groupList.content', 
+            path: 'groupList', // TODO
             select: 'entityID name profPhoto',
             perDocumentLimit: 30,
         }
