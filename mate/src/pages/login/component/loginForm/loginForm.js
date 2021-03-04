@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //<input name={label} ref={register({ required })} className = {classes.input_style}/>
-const Input = ({ label, register, required }) => {
+const Input = ({ label, register, required,type }) => {
     const classes = useStyles();
     return (
     <>
@@ -37,7 +37,7 @@ const Input = ({ label, register, required }) => {
           id="outlined-search"
           label = {label}
           name = {label}
-          type="search"
+          type={type}
           className={classes.textField}
           margin="normal"
           variant="outlined"
@@ -46,16 +46,6 @@ const Input = ({ label, register, required }) => {
         <br/>
     </>
     );
-}
-
-const LoginShape = ({register})=>{
-    return (
-    <>
-        <Input label='Email' register={register} required />
-        <Input label='Password' register={register} required />
-    </>
-    );
-
 }
 
 // you can use React.forwardRef to pass the ref too
@@ -111,68 +101,19 @@ const LoginForm = () => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='Email' register={register} required />
-            <Input label='Password' register={register} required />
+            <Input label='Email' type='email' register={register} required />
+            <Input label='Password' type='password' register={register} required/>
             <input id="login_input" type="submit" style = {{display:"none"}}/>
             <label for="login_input">
                 <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
-            </label>
-            <input id="register_input" type="submit" style = {{display:"none"}}/>
-            <label for = "register_input">
+            </label>            
+        </form>
+            <label for = "go_register">
                 <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
             </label>
-        </form>
         </>
     );
 };
 
-const RegisterForm = () => {
-    const { register, handleSubmit } = useForm();
-    const classes = useStyles();
-    const onSubmit = data => {
-        console.log(JSON.stringify(data));
-        /*(async () => {
-            try {
-                var res = await axios({
-                    // param
-                })
-                console.log(res)
-            } catch (err) { console.log(err) }
-        })()*/
-        axios({
-            method: 'post',
-            baseURL: 'http://localhost:3100/',
-            url: '/user/auth',
-            data: {
-                filter: { entityID: data.entityID },
-                password: data.password
-            }
-        })
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    };
-
-    return (
-        <>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='First Name' register={register} required />
-            <Input label='Last Name' register={register} required />
-            <input id="login_input" type="submit" style = {{display:"none"}}/>
-            <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
-            </label>
-            <input id="register_input" type="submit" style = {{display:"none"}}/>
-            <label for = "register_input">
-                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
-            </label>
-            <button onClick={(e) => LoginForm('register')} />
-        </form>
-        </>
-    );
-};
 
 export default LoginForm;
