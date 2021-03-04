@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-//<input name={label} ref={register({ required })} className = {classes.input_style}/>
 const Input = ({ label, register, required,type }) => {
     const classes = useStyles();
     return (
@@ -58,15 +57,7 @@ const Select = React.forwardRef(({ label }, ref) => (
         </select>
     </>
 ));
-/*
-    {
-        this.state.screen === 'login' ?
-          <Login />
-          :
-          <SignUp />
-      }
-      <button onClick={(e) => this.handleButtonClick(e.target.value)} value='signup' />
-*/
+
 const LoginForm = () => {
     
     const { register, handleSubmit } = useForm();
