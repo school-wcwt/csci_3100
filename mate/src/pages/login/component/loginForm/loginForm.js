@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Input = ({ label, register, required,type }) => {
+const InputBox = ({ label, register, required,type }) => {
     const classes = useStyles();
     return (
     <>
@@ -58,19 +58,11 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
         console.log(JSON.stringify(data));
-        /*(async () => {
-            try {
-                var res = await axios({
-                    // param
-                })
-                console.log(res)
-            } catch (err) { console.log(err) }
-        })()*/
         axios({
             method: 'post',
             baseURL: 'http://localhost:3100/',
@@ -91,11 +83,11 @@ const LoginForm = () => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='Email' type='email' register={register} required />
-            <Input label='Password' type='password' register={register} required/>
+            <InputBox label='Email' type='email' register={register} required />
+            <InputBox label='Password' type='password' register={register} required/>
             <input id="login_input" type="submit" style = {{display:"none"}}/>
             <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} onClick='setPanel' component="span">Login</Button>
+                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} onClick = {props.setPanel} component="span">Login</Button>
             </label>            
         </form>
             <label for = "go_register">

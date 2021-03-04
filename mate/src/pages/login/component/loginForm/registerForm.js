@@ -92,7 +92,7 @@ const RegisterForm = () => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='Email' type='email' register={register} required />
+            <Input label='First Name' type='email' register={register} required />
             <Input label='Password' type='password' register={register} required/>
             <input id="login_input" type="submit" style = {{display:"none"}}/>           
         </form>
@@ -104,4 +104,4 @@ const RegisterForm = () => {
 };
 
 
-export default LoginForm;
+export default RegisterForm;

@@ -4,6 +4,7 @@ import imacImg from "./image/imac.png";
 import { makeStyles } from "@material-ui/core";
 import { Paper } from '@material-ui/core';
 import LoginForm from './component/loginForm/loginForm.js';
+import RegisterForm from './component/loginForm/registerForm.js';
 import LogoImg from './image/logo.png';
 
 
@@ -55,10 +56,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = ()=>{
-    const [panel] = React.useState(0);
+    var [panel] = React.useState(0);
     const classes = useStyles();
     const setPanel = () => {
-        panel === !panel
+        panel = 1
     }
     return (
         <div className = {classes.bgImg}>
