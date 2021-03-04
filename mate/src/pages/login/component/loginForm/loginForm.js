@@ -68,8 +68,17 @@ const Select = React.forwardRef(({ label }, ref) => (
         </select>
     </>
 ));
-
+/*
+    {
+        this.state.screen === 'login' ?
+          <Login />
+          :
+          <SignUp />
+      }
+      <button onClick={(e) => this.handleButtonClick(e.target.value)} value='signup' />
+*/
 const LoginForm = () => {
+    
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
@@ -100,13 +109,69 @@ const LoginForm = () => {
     };
 
     return (
+        <>
         <form onSubmit={handleSubmit(onSubmit)}>
             <Input label='Email' register={register} required />
             <Input label='Password' register={register} required />
-            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style}>Login</Button>
-            <Button variant="contained" size="large" color="primary" className={classes.buttom_style}>Register</Button>
-            
+            <input id="login_input" type="submit" style = {{display:"none"}}/>
+            <label for="login_input">
+                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
+            </label>
+            <input id="register_input" type="submit" style = {{display:"none"}}/>
+            <label for = "register_input">
+                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
+            </label>
         </form>
+        </>
+    );
+};
+
+const RegisterForm = () => {
+    const { register, handleSubmit } = useForm();
+    const classes = useStyles();
+    const onSubmit = data => {
+        console.log(JSON.stringify(data));
+        /*(async () => {
+            try {
+                var res = await axios({
+                    // param
+                })
+                console.log(res)
+            } catch (err) { console.log(err) }
+        })()*/
+        axios({
+            method: 'post',
+            baseURL: 'http://localhost:3100/',
+            url: '/user/auth',
+            data: {
+                filter: { entityID: data.entityID },
+                password: data.password
+            }
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+
+    return (
+        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Input label='First Name' register={register} required />
+            <Input label='Last Name' register={register} required />
+            <input id="login_input" type="submit" style = {{display:"none"}}/>
+            <label for="login_input">
+                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
+            </label>
+            <input id="register_input" type="submit" style = {{display:"none"}}/>
+            <label for = "register_input">
+                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
+            </label>
+            <button onClick={(e) => LoginForm('register')} />
+        </form>
+        </>
     );
 };
 
