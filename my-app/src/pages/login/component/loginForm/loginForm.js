@@ -94,7 +94,7 @@ const LoginForm = (props) => {
                 <Button 
                     variant="contained" size="large" color="primary" 
                     className={classes.buttom_style} 
-                    onClick = {props.changePanel} 
+                    onClick = {props.setPanel} 
                     component="span">
                     Register
                 </Button>
