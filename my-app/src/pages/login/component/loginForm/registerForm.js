@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const InputBox = ({ label, register, required,type }) => {
+const Input = ({ label, register, required,type }) => {
     const classes = useStyles();
     return (
     <>
@@ -58,11 +58,20 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
-const LoginForm = (props) => {
+const RegisterForm = () => {
+    
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
         console.log(JSON.stringify(data));
+        /*(async () => {
+            try {
+                var res = await axios({
+                    // param
+                })
+                console.log(res)
+            } catch (err) { console.log(err) }
+        })()*/
         axios({
             method: 'post',
             baseURL: 'http://localhost:3100/',
@@ -83,25 +92,16 @@ const LoginForm = (props) => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <InputBox label='Email' type='email' register={register} required />
-            <InputBox label='Password' type='password' register={register} required/>
-            <input id="login_input" type="submit" style = {{display:"none"}}/>
-            <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
-            </label>            
+            <Input label='First Name' type='email' register={register} required />
+            <Input label='Password' type='password' register={register} required/>
+            <input id="login_input" type="submit" style = {{display:"none"}}/>           
         </form>
             <label for = "go_register">
-                <Button 
-                    variant="contained" size="large" color="primary" 
-                    className={classes.buttom_style} 
-                    onClick = {props.changePanel} 
-                    component="span">
-                    Register
-                </Button>
+                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
             </label>
         </>
     );
 };
 
 
-export default LoginForm;
+export default RegisterForm;
