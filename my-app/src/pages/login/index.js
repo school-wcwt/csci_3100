@@ -11,8 +11,8 @@ import LogoImg from './image/logo.png';
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
         //backgroundImage: `linear-gradient(rgba(0, 0, 0,0.7),rgba(0, 0, 0,0.7)),url(${piazzaImg})`,
-        backgroundImage:　`url(${piazzaImg})`,
-        opacity: "0.95",
+        backgroundImage:　`linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url(${piazzaImg})`,
+        opacity: "1",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -63,9 +63,8 @@ const Login = ()=>{
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
                 <img src = {LogoImg} className = {classes.paper_logo}/>
-                {panel == 0 ? <LoginForm
-                setPanel={() => {setPanel(!panel)}} /> : null }
-                {panel == 1 ? <RegisterForm /> : null}
+                {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
+                {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
             </Paper>
         </div>
 

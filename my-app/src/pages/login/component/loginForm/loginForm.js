@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing.unit,
         width: "95%",
     },
+    main_buttom_style: {
+        margin: theme.spacing(1),
+        width: "95%",
+        height: "8vh",
+    },
     buttom_style: {
         margin: theme.spacing(1),
         width: "95%",
@@ -87,7 +92,7 @@ const LoginForm = (props) => {
             <InputBox label='Password' type='password' register={register} required/>
             <input id="login_input" type="submit" style = {{display:"none"}}/>
             <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span">Login</Button>
+                <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">Login</Button>
             </label>            
         </form>
             <label for = "go_register">

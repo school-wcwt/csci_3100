@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing.unit,
         width: "95%",
     },
+    main_buttom_style: {
+        margin: theme.spacing(1),
+        width: "95%",
+        height: "8vh",
+    },
     buttom_style: {
         margin: theme.spacing(1),
         width: "95%",
@@ -58,20 +63,12 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
     
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
         console.log(JSON.stringify(data));
-        /*(async () => {
-            try {
-                var res = await axios({
-                    // param
-                })
-                console.log(res)
-            } catch (err) { console.log(err) }
-        })()*/
         axios({
             method: 'post',
             baseURL: 'http://localhost:3100/',
@@ -92,13 +89,17 @@ const RegisterForm = () => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='First Name' type='email' register={register} required />
+            <Input label='User Name' type='username' register={register} required />
+            <Input label='Email' type='email' register={register} required />
             <Input label='Password' type='password' register={register} required/>
-            <input id="login_input" type="submit" style = {{display:"none"}}/>           
-        </form>
+            <input id="go_register" type="submit" style = {{display:"none"}}/>           
             <label for = "go_register">
-                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} component="span">Register</Button>
+                <Button variant="contained" size="large" color="primary" className={classes.main_buttom_style} 
+                component="span" >Join Us Now</Button>
+                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style}
+                component="span" onClick = {props.setPanel} >Cancel</Button>
             </label>
+        </form>
         </>
     );
 };
