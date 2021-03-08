@@ -46,7 +46,7 @@ var findEntity = (filter, type = 0, option) => {
         (async () => { try { 
             var opt = init();
             // Entity
-            var query = Entity.findOne(filter).select(opt.entitySel);
+            var query = await Entity.findOne(filter).select(opt.entitySel);
             if (type == 1) query.populate(opt.entityPop);
             var entity = await query.exec()
             if (entity == null) return resolve(null);
@@ -70,7 +70,7 @@ var findEntity = (filter, type = 0, option) => {
 var findEntityID = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            var entity = Entity.findOne(filter).exec()
+            var entity = await Entity.findOne(filter).exec()
             if (entity == null) return resolve(null);
             var subentity = entity.type 
                 ? await Rest.findOne({entity: entity._id}).exec()
