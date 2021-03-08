@@ -68,6 +68,7 @@ const LoginForm = (props) => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
+            
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}

@@ -52,7 +52,6 @@ const RegisterForm = (props) => {
             alert("Password not match, please check again");
             return 0;
         }
-        console.log(data.UserName+" " + data.Email + " " + data.Password + " " + data.PasswordCheck);
         axios({
             method: 'POST',
             baseURL: 'http://localhost:3100/',

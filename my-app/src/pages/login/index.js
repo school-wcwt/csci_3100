@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         top: "-6%",
         left: "49%",
         width: "49%",
-        height: "64vh",
+        height: "70vh",
         position: "relative",
         [theme.breakpoints.up("lg")]: {
             top: "-32%",
@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
         }},
 
     paper_logo:{
+        position: "relative",
         flex: 1,
         width: "27%",
-        position: "relative",
-        top: "5%",
+        top: "3%",
         left: "36%",
         opacity: "1",
     },
@@ -62,7 +62,7 @@ const Login = ()=>{
         <div className = {classes.bgImg}>
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
-                <img src = {LogoImg} className = {classes.paper_logo}/>
+                <img src = {LogoImg} className = {classes.paper_logo} style={{class:"center"}}/>
                 {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
                 {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
             </Paper>
