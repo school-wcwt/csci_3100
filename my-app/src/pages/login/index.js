@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
         flex: 1,
         width: "27%",
-        top: "3%",
+        top: "1%",
         left: "36%",
         opacity: "1",
     },
