@@ -60,7 +60,7 @@ const RegisterForm = (props) => {
                 type: 0,
                 username: data.UserName,
                 email: data.Email,
-                password: data.password
+                password: data.Password
             }
         })
         .then(res => {
