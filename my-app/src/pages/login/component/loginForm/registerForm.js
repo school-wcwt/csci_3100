@@ -11,8 +11,8 @@ const db_host = Math.floor(Math.random() * 100) + 1;
 
 const useStyles = makeStyles((theme) => ({
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
         width: "95%",
     },
     main_buttom_style: {
@@ -38,7 +38,7 @@ const Input = ({ label, register, required,type }) => {
     <>
         <br/>
         <TextField
-          id="outlined-search"
+          id={label}
           label = {label}
           name = {label}
           type={type}
@@ -70,12 +70,14 @@ const RegisterForm = (props) => {
     const onSubmit = data => {
         console.log(JSON.stringify(data));
         axios({
-            method: 'post',
+            method: 'POST',
             baseURL: 'http://localhost:3100/',
-            url: '/user/auth',
+            url: 'entity/new',
             data: {
-                filter: { entityID: data.entityID },
-                password: data.password
+                type: 0,
+                username: data.UserName,
+                email: data.Email,
+                password: data.password,
             }
         })
         .then(res => {
@@ -89,7 +91,8 @@ const RegisterForm = (props) => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='User Name' type='username' register={register} required />
+            
+            <Input label='UserName' type='username' register={register} required />
             <Input label='Email' type='email' register={register} required />
             <Input label='Password' type='password' register={register} required/>
             <input id="go_register" type="submit" style = {{display:"none"}}/>           

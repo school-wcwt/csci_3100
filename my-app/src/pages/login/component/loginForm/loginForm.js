@@ -11,8 +11,8 @@ const db_host = Math.floor(Math.random() * 100) + 1;
 
 const useStyles = makeStyles((theme) => ({
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
         width: "95%",
     },
     main_buttom_style: {
@@ -69,7 +69,7 @@ const LoginForm = (props) => {
     const onSubmit = data => {
         console.log(JSON.stringify(data));
         axios({
-            method: 'post',
+            method: 'POST',
             baseURL: 'http://localhost:3100/',
             url: '/user/auth',
             data: {
@@ -79,6 +79,7 @@ const LoginForm = (props) => {
         })
         .then(res => {
             console.log(res);
+            Window.alert("Register success")
         })
         .catch(err => {
             console.log(err);
