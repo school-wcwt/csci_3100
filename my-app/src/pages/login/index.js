@@ -6,7 +6,8 @@ import { Paper } from '@material-ui/core';
 import LoginForm from './component/loginForm/loginForm.js';
 import RegisterForm from './component/loginForm/registerForm.js';
 import LogoImg from './image/logo.png';
-
+import {IsLogin} from '../services/authService';
+import {Redirect} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
@@ -60,6 +61,7 @@ const Login = ()=>{
     const classes = useStyles();
     return (
         <div className = {classes.bgImg}>
+            {IsLogin()? <Redirect to={{ pathname: '/' }}/> : null }
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
                 <img src = {LogoImg} className = {classes.paper_logo} style={{class:"center"}}/>

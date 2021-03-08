@@ -1,12 +1,9 @@
 import React from "react";
 import axios from 'axios';
-import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import {Mongo_port} from '../../../../config';
-//import cors from ;
 
 const db_host = Math.floor(Math.random() * 100) + 1;
 
@@ -45,6 +42,7 @@ const Select = React.forwardRef(({ label }, ref) => (
 ));
 
 const LoginForm = (props) => {
+    
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
@@ -59,7 +57,6 @@ const LoginForm = (props) => {
         })
         .then(res => {
             console.log(res);
-            Window.alert("Register success")
         })
         .catch(err => {
             console.log(err);
