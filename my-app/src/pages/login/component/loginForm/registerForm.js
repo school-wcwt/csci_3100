@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 //import cors from ;
 
 const db_host = Math.floor(Math.random() * 100) + 1;
+axios.defaults.withCredentials = true
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -53,9 +54,10 @@ const RegisterForm = (props) => {
             return 0;
         }
         axios({
-            method: 'POST',
+            method: 'GET',
             baseURL: 'http://localhost:3100/',
-            url: 'entity/new',
+            url: 'entity/Nick-7816',
+            withCredentials: false,
             data: {
                 type: 0,
                 username: data.UserName,
