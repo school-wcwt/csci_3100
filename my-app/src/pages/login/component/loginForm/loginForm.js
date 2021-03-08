@@ -32,26 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const InputBox = ({ label, register, required,type }) => {
-    const classes = useStyles();
-    return (
-    <>
-        <br/>
-        <TextField
-          id="outlined-search"
-          label = {label}
-          name = {label}
-          type={type}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          inputRef={register({ required })}
-        />
-        <br/>
-    </>
-    );
-}
-
 // you can use React.forwardRef to pass the ref too
 const Select = React.forwardRef(({ label }, ref) => (
     <>
@@ -67,7 +47,6 @@ const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
-        console.log(JSON.stringify(data));
         axios({
             method: 'POST',
             baseURL: 'http://localhost:3100/',
@@ -85,12 +64,14 @@ const LoginForm = (props) => {
             console.log(err);
         })
     };
-
+     // data return name of [Email,Password]
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <InputBox label='Email' type='email' register={register} required />
-            <InputBox label='Password' type='password' register={register} required/>
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="Email" label = "Email" name = "Email" type="email" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="Password" label = "Password" name = "Password" type="password" />
             <input id="login_input" type="submit" style = {{display:"none"}}/>
             <label for="login_input">
                 <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">Login</Button>

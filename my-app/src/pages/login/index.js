@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paper_style: {
         backgroundColor : "rgb(255, 255, 255,0.85)",
         flex: 1,
-        top: "-8%",
+        top: "-6%",
         left: "49%",
         width: "49%",
         height: "64vh",
