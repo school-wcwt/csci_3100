@@ -54,9 +54,9 @@ const RegisterForm = (props) => {
             return 0;
         }
         axios({
-            method: 'GET',
+            method: 'POST',
             baseURL: 'http://localhost:3100/',
-            url: 'entity/Nick-7816',
+            url: 'entity/NEW',
             withCredentials: false,
             data: {
                 type: 0,
@@ -69,7 +69,7 @@ const RegisterForm = (props) => {
             console.log(res);
         })
         .catch(err => {
-            console.log(err);
+            console.log(err.message);
         })
     };
     // data return name of [UserName,Email,Password,PasswordCheck]
