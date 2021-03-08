@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import {Mongo_port} from '../../../../config';
 //import cors from ;
 
 
@@ -56,7 +57,7 @@ const RegisterForm = (props) => {
         }
         axios({
             method: 'POST',
-            baseURL: 'http://localhost:3100/',
+            baseURL: `http://localhost:${Mongo_port}/`,
             url: 'entity/NEW',
             withCredentials: false,
             data: {

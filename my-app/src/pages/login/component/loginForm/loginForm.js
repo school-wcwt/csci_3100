@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import {Mongo_port} from '../../../../config';
 //import cors from ;
 
 const db_host = Math.floor(Math.random() * 100) + 1;
@@ -49,7 +50,7 @@ const LoginForm = (props) => {
     const onSubmit = data => {
         axios({
             method: 'POST',
-            baseURL: 'http://localhost:3100/',
+            baseURL: `http://localhost:${Mongo_port}/`,
             url: '/user/auth',
             data: {
                 filter: { entityID: data.entityID },
