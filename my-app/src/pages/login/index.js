@@ -6,7 +6,8 @@ import { Paper } from '@material-ui/core';
 import LoginForm from './component/loginForm/loginForm.js';
 import RegisterForm from './component/loginForm/registerForm.js';
 import LogoImg from './image/logo.png';
-
+import {IsLogin} from '../services/authService';
+import {Redirect} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
@@ -23,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     paper_style: {
         backgroundColor : "rgb(255, 255, 255,0.85)",
         flex: 1,
-        top: "-8%",
+        top: "-6%",
         left: "49%",
         width: "49%",
-        height: "64vh",
+        height: "70vh",
         position: "relative",
         [theme.breakpoints.up("lg")]: {
             top: "-32%",
@@ -36,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
         }},
 
     paper_logo:{
+        position: "relative",
         flex: 1,
         width: "27%",
-        position: "relative",
-        top: "5%",
+        top: "1%",
         left: "36%",
         opacity: "1",
     },
@@ -60,9 +61,10 @@ const Login = ()=>{
     const classes = useStyles();
     return (
         <div className = {classes.bgImg}>
+            {IsLogin()? <Redirect to={{ pathname: '/' }}/> : null }
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
-                <img src = {LogoImg} className = {classes.paper_logo}/>
+                <img src = {LogoImg} className = {classes.paper_logo} style={{class:"center"}}/>
                 {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
                 {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
             </Paper>

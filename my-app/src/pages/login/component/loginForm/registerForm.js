@@ -5,14 +5,17 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import {Mongo_port} from '../../../../config';
 //import cors from ;
 
+
 const db_host = Math.floor(Math.random() * 100) + 1;
+axios.defaults.withCredentials = true
 
 const useStyles = makeStyles((theme) => ({
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
         width: "95%",
     },
     main_buttom_style: {
@@ -32,26 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Input = ({ label, register, required,type }) => {
-    const classes = useStyles();
-    return (
-    <>
-        <br/>
-        <TextField
-          id="outlined-search"
-          label = {label}
-          name = {label}
-          type={type}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          inputRef={register({ required })}
-        />
-        <br/>
-    </>
-    );
-}
-
 // you can use React.forwardRef to pass the ref too
 const Select = React.forwardRef(({ label }, ref) => (
     <>
@@ -68,30 +51,41 @@ const RegisterForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
-        console.log(JSON.stringify(data));
+        if (data.Password !== data.PasswordCheck) {
+            alert("Password not match, please check again");
+            return 0;
+        }
         axios({
-            method: 'post',
-            baseURL: 'http://localhost:3100/',
-            url: '/user/auth',
+            method: 'POST',
+            baseURL: `http://localhost:${Mongo_port}/`,
+            url: 'entity/NEW',
+            withCredentials: false,
             data: {
-                filter: { entityID: data.entityID },
-                password: data.password
+                type: 0,
+                username: data.UserName,
+                email: data.Email,
+                password: data.Password
             }
         })
         .then(res => {
             console.log(res);
         })
         .catch(err => {
-            console.log(err);
+            console.log(err.message);
         })
     };
-
+    // data return name of [UserName,Email,Password,PasswordCheck]
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input label='User Name' type='username' register={register} required />
-            <Input label='Email' type='email' register={register} required />
-            <Input label='Password' type='password' register={register} required/>
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="UserName" label = "UserName" name = "UserName" type="username" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="Email" label = "Email" name = "Email" type="email" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="Password" label = "Password" name = "Password" type="password" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />
             <input id="go_register" type="submit" style = {{display:"none"}}/>           
             <label for = "go_register">
                 <Button variant="contained" size="large" color="primary" className={classes.main_buttom_style} 
