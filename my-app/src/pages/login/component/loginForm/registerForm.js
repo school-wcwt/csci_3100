@@ -33,26 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Input = ({ label, register, required,type }) => {
-    const classes = useStyles();
-    return (
-    <>
-        <br/>
-        <TextField
-          id={label}
-          label = {label}
-          name = {label}
-          type={type}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          inputRef={register({ required })}
-        />
-        <br/>
-    </>
-    );
-}
-
 // you can use React.forwardRef to pass the ref too
 const Select = React.forwardRef(({ label }, ref) => (
     <>
@@ -69,7 +49,11 @@ const RegisterForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
-        console.log(JSON.stringify(data));
+        if (data.Password !== data.PasswordCheck) {
+            alert("Password not match, please check again");
+            return 0;
+        }
+        console.log(data.UserName+" " + data.Email + " " + data.Password + " " + data.PasswordCheck);
         axios({
             method: 'GET',
             baseURL: 'http://localhost:3100/',
@@ -79,7 +63,7 @@ const RegisterForm = (props) => {
                 type: 0,
                 username: data.UserName,
                 email: data.Email,
-                password: data.password,
+                password: data.Password
             }
         })
         .then(res => {
@@ -89,14 +73,18 @@ const RegisterForm = (props) => {
             console.log(err);
         })
     };
-
+    // data return name of [UserName,Email,Password,PasswordCheck]
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            
-            <Input label='UserName' type='username' register={register} required />
-            <Input label='Email' type='email' register={register} required />
-            <Input label='Password' type='password' register={register} required/>
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="UserName" label = "UserName" name = "UserName" type="username" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="Email" label = "Email" name = "Email" type="email" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="Password" label = "Password" name = "Password" type="password" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+            id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />
             <input id="go_register" type="submit" style = {{display:"none"}}/>           
             <label for = "go_register">
                 <Button variant="contained" size="large" color="primary" className={classes.main_buttom_style} 
