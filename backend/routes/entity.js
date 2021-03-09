@@ -13,7 +13,7 @@ router.get('/:entityID', (req, res) => {
 
 router.post('/new', (req, res) => {
     entityFunc.createEntity(req.body)
-    .then(createdEntity => res.status(201).send(createdEntity) )
+    .then(createdEntity => res.status(201).send(createdEntity))
     .catch(err => {
         if (err.message == '(E)Mail exists.') res.status(409).send(err);
         else res.status(400).send(err);

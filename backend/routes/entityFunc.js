@@ -1,6 +1,7 @@
-var Entity = require('../models/Entity');
-var User   = require('../models/User');
-var Rest   = require('../models/Rest');
+const Entity = require('../models/Entity');
+const User   = require('../models/User');
+const Rest   = require('../models/Rest');
+const bcrypt = require('bcrypt');
 
 var allUserPop = [
     {
@@ -46,7 +47,7 @@ var findEntity = (filter, type = 0, option) => {
         (async () => { try { 
             var opt = init();
             // Entity
-            var query = await Entity.findOne(filter).select(opt.entitySel);
+            var query = Entity.findOne(filter).select(opt.entitySel);
             if (type == 1) query.populate(opt.entityPop);
             var entity = await query.exec()
             if (entity == null) return resolve(null);
@@ -91,18 +92,24 @@ var createEntity = data => {
         return new Promise((resolve, reject) => {
             (async() => { try { 
                 var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
-                if (data.type) data.username == null 
-                    ? data.name.replace(/ /g, '') 
-                    : data.username.replace(/ /g, '');
+                // Rest: Adopt English name or otherwise adopt Chinese name as username
+                if (data.type) 
+                    var username = data.username != null 
+                        ? data.username.replace(/ /g, '-')
+                        : data.name.replace(/ /g, '-') 
+                else var username = data.username;
+                var hashedPassword = await bcrypt.hash(data.password, 10);
                 var tag = tagGen();
-                var entityID = data.username + '-' + tag;
-                var newEntity = new Entity({
+                var entityID = username + '-' + tag;
+                var savedEntity = await new Entity({
                     entityID: entityID, 
-                    tag: tag, 
+                    tag:      tag, 
                     joinTime: Date.now(),
-                    ...data
-                });
-                var savedEntity = await newEntity.save()
+                    ...data,
+                    username: username,
+                    password: hashedPassword
+                }).save();
+                // Save User/Rest
                 var newSubentity = data.type 
                     ? new Rest({entityID: entityID, entity: savedEntity._id})
                     : new User({entityID: entityID, entity: savedEntity._id});
