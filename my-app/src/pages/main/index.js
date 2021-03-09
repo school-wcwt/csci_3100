@@ -1,12 +1,12 @@
 import React from 'react';
 import PrimarySearchAppBar from './component/appBar/appBar.js';
 //import TopHead from './component/topHead/topHead.js';
-import Form from '../../component/email/Form';
+import {UserValidation} from '../../component/email/email';
 const Main = ()=>{
     return (
         <div>
             <PrimarySearchAppBar/>
-            <Form/>
+            <UserValidation UserName="Tom Wong" UserEmail = "a1336867016@gmail.com" PassCode = "I am The King"/>
         </div>        
     )
 }

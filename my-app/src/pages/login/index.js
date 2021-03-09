@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
             top: "-32%",
             left: "62%",
             width: "30%",
-            height: "79vh",
+            height: "80vh",
         }},
 
     paper_logo:{

@@ -6,6 +6,7 @@ import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {Mongo_port} from '../../../../config';
+import {UserValidation} from '../../../../component/email/email';
 //import cors from ;
 
 
@@ -68,7 +69,7 @@ const RegisterForm = (props) => {
             }
         })
         .then(res => {
-            console.log(res);
+            <UserValidation UserName={data.UserName} UserEmail = {data.Email} PassCode = "125"/>
         })
         .catch(err => {
             console.log(err.message);
