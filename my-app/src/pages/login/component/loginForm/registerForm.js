@@ -53,7 +53,7 @@ const InvalidData = (data)=>{
     if (data.Password !== data.PasswordCheck) { 
         alert("Password not match, please check again"); return true;}
     else if (data.Password.length < pw_min_length){
-        alert(`Please make sure password length at least ${pw_min_length}`); 
+        alert(`Please make sure password length at least ${pw_min_length} letters`); 
         return true;}
     else if (!valid_letter.test(data.Password)){
         alert(`Please make sure password letter contains 0-9,a-z,A-Z only`); return true;}
