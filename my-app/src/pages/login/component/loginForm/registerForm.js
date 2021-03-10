@@ -4,14 +4,13 @@ import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import {Mongo_baseURL} from '../../../../config';
 import {UserValidation} from '../../../../component/email/email';
 //import cors from ;
 
-
 const db_host = Math.floor(Math.random() * 100) + 1;
 axios.defaults.withCredentials = true
+
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -36,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
 // you can use React.forwardRef to pass the ref too
 const Select = React.forwardRef(({ label }, ref) => (
     <>
@@ -47,15 +47,29 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
+const InvalidData = (data)=>{
+    var valid_letter = /^[0-9a-zA-Z]+$/;
+    var pw_min_length = 5;
+    if (data.Password !== data.PasswordCheck) { 
+        alert("Password not match, please check again"); return true;}
+    else if (data.Password.length < pw_min_length){
+        alert(`Please make sure password length at least ${pw_min_length}`); 
+        return true;}
+    else if (!valid_letter.test(data.Password)){
+        alert(`Please make sure password letter contains 0-9,a-z,A-Z only`); return true;}
+    else if (!valid_letter.test(data.UserName)){
+        alert(`Please make sure User Name letter contains 0-9,a-z,A-Z only`); return true;}
+    return false;
+        
+}
+
 const RegisterForm = (props) => {
     
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
-        if (data.Password !== data.PasswordCheck) {
-            alert("Password not match, please check again");
-            return 0;
-        }
+        if (InvalidData(data)) return 0;
+
         axios({
             method: 'POST',
             baseURL: `${Mongo_baseURL}`,
@@ -79,14 +93,10 @@ const RegisterForm = (props) => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-            id="UserName" label = "UserName" name = "UserName" type="username" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-            id="Email" label = "Email" name = "Email" type="email" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-            id="Password" label = "Password" name = "Password" type="password" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-            id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="UserName" label = "UserName" name = "UserName" type="username" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Email" label = "Email" name = "Email" type="email" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Password" label = "Password" name = "Password" type="password" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />
             <input id="go_register" type="submit" style = {{display:"none"}}/>           
             <label for = "go_register">
                 <Button variant="contained" size="large" color="primary" className={classes.main_buttom_style} 

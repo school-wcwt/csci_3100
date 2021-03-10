@@ -71,20 +71,18 @@ const LoginForm = (props) => {
             id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Password" label = "Password" name = "Password" type="password" />
-            <input id="login_input" type="submit" style = {{display:"none"}}/>
-            <label for="login_input">
-                <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">Login</Button>
+            <input id="go_login" type="submit" style = {{display:"none"}}/>
+            <label for="go_login">
+                <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">
+                    Login
+                </Button>
             </label>            
-        </form>
             <label for = "go_register">
-                <Button 
-                    variant="contained" size="large" color="primary" 
-                    className={classes.buttom_style} 
-                    onClick = {props.setPanel} 
-                    component="span">
+                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
                     Register
                 </Button>
             </label>
+        </form>
         </>
     );
 };
