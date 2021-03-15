@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var PostSchema = mongoose.Schema({
     postID:       { type: String, required: true, unique: true },
+    type:         { type: String, required: true }, // Review
     author:       { type: mongoose.Schema.Types.ObjectId, ref:'Entity', required: true },
     target:       { type: mongoose.Schema.Types.ObjectId, ref:'Entity', required: true },
     content:      { type: String },
