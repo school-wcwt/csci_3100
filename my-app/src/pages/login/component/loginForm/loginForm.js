@@ -1,9 +1,8 @@
 import React from "react";
-import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
-import {Mongo_baseURL} from '../../../../config';
+import axios from '../../../../axiosConfig';
 import {ChangeUserState,IsLogin} from '../../../services/authService';
 import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
@@ -55,9 +54,7 @@ const LoginForm = (props) => {
         */
         axios({
             method: 'PUT',
-            baseURL: `${Mongo_baseURL}`,
             url: '/user/auth',
-            withCredentials: false,
             data: {
                 filter: { email: data.Email },
                 password: data.Password
@@ -112,21 +109,6 @@ const InvalidData = (data)=>{
         
 };
 
-/*
-const ValidationEmail = (data) => {
-    console.log("ined");
-    // data return name of [UserName,Email,Password,PasswordCheck]
-      return (
-          <form className="contact-form" onSubmit={send_validation_email}>
-          <input type="text" name="to_name" />
-          <input type="text" name="user_email" />
-          <input type="text" name="message" />
-          <input type="submit" value="Send" />
-        </form>
-      );
-  }
-*/
-
 
 const RegisterForm = (props) => {
     
@@ -141,18 +123,16 @@ const RegisterForm = (props) => {
     const onSubmit = data => {
         if (InvalidData(data)) return 0;
         console.log("user state before: "+IsLogin());
-        axios({
-            method: 'POST',
-            baseURL: `${Mongo_baseURL}`,
+        axios(
+            {method: 'POST',
             url: 'entity/NEW',
-            withCredentials: false,
             data: {
                 type: 0,
                 username: data.UserName,
                 email: data.Email,
                 password: data.Password
-            }
-        })
+            }}
+        )
         .then(res => {
             alert("Register sucess");
             send_validation_email(emaildata);
