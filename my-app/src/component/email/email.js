@@ -15,9 +15,20 @@ function sendEmail(e) {
       });
   }
 
+  function send_validation_email(e) {
+    e.preventDefault();
+    emailjs.sendForm("service_kigbdr9", "template_c4tbz8f", e.target, "user_kwKrThl3IGwRCEZNIF8Zc")
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+  }
+
+
 const UserValidation = ({UserName,UserEmail,PassCode}) => {
 	return (
-		<form className="contact-form" onSubmit={sendEmail}>
+		<form className="contact-form" onSubmit={send_validation_email}>
 		<input type="hidden" name="to_name" value = {UserName}/>
 		<input type="hidden" name="user_email" value = {UserEmail}/>
 		<input type="hidden" name="message" value = {PassCode}/>

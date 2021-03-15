@@ -54,15 +54,16 @@ const LoginForm = (props) => {
         }
         */
         axios({
-            method: 'POST',
+            method: 'PUT',
             baseURL: `${Mongo_baseURL}`,
             url: '/user/auth',
             data: {
-                filter: { entityID: data.entityID },
+                filter: { email: data.Email },
                 password: data.Password
             }
         })
         .then(res => {
+            console.log("Login sucess");
             console.log(res);
         })
         .catch(err => {

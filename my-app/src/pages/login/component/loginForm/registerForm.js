@@ -48,7 +48,7 @@ const Select = React.forwardRef(({ label }, ref) => (
 ));
 
 const InvalidData = (data)=>{
-    var valid_letter = /^[0-9a-zA-Z]+$/;
+    var valid_letter = /^[0-9a-zA-Z_]+$/;
     var pw_min_length = 5;
     if (data.Password !== data.PasswordCheck) { 
         alert("Password not match, please check again"); return true;}
@@ -62,6 +62,11 @@ const InvalidData = (data)=>{
     return false;
         
 }
+const EmailChecked = ({data})=>{
+    return (
+        <UserValidation UserName={data.UserName} UserEmail = {data.Email} PassCode = "125"/>
+    )
+}
 
 const RegisterForm = (props) => {
     
@@ -69,7 +74,8 @@ const RegisterForm = (props) => {
     const classes = useStyles();
     const onSubmit = data => {
         if (InvalidData(data)) return 0;
-
+        EmailChecked(data);
+        return 0;
         axios({
             method: 'POST',
             baseURL: `${Mongo_baseURL}`,
@@ -83,7 +89,7 @@ const RegisterForm = (props) => {
             }
         })
         .then(res => {
-            <UserValidation UserName={data.UserName} UserEmail = {data.Email} PassCode = "125"/>
+            console.log("Register sucess");
         })
         .catch(err => {
             console.log(err.message);
