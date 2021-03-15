@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import {Mongo_baseURL} from '../../../../config';
+import {ChangeUserState,dev_user_ac,dev_user_pw} from '../../../services/authService';
+
 
 const db_host = Math.floor(Math.random() * 100) + 1;
 
@@ -46,13 +48,18 @@ const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
+        /*
+        if (data.Email == dev_user_ac && data.Password==dev_user_pw){
+            return ChangeUserState(777);
+        }
+        */
         axios({
             method: 'POST',
             baseURL: `${Mongo_baseURL}`,
             url: '/user/auth',
             data: {
                 filter: { entityID: data.entityID },
-                password: data.password
+                password: data.Password
             }
         })
         .then(res => {
