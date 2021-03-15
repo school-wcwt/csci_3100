@@ -3,8 +3,7 @@ import piazzaImg from "./image/pizza_bg.jpg";
 import imacImg from "./image/imac.png";
 import { makeStyles } from "@material-ui/core";
 import { Paper } from '@material-ui/core';
-import LoginForm from './component/loginForm/loginForm.js';
-import RegisterForm from './component/loginForm/registerForm.js';
+import {LoginForm,RegisterForm,ValidationEmail} from './component/loginForm/loginForm.js';
 import LogoImg from './image/logo.png';
 import {IsLogin} from '../services/authService';
 import {Redirect} from 'react-router-dom';
@@ -65,9 +64,8 @@ const Login = ()=>{
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
                 <img src = {LogoImg} className = {classes.paper_logo} style={{class:"center"}}/>
-                {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
-                {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
-                
+                {panel == 0 ? <LoginForm setPanel={() => {setPanel(1)}} /> : null }
+                {panel == 1 ? <RegisterForm setPanel={() => {setPanel(0)}} toEmail={() => {setPanel(2)}} /> : null}
             </Paper>
         </div>
 

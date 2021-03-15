@@ -65,7 +65,7 @@ const InvalidData = (data)=>{
         
 };
 
-const RegisterForm = (props) => {
+const UserValidation = (props) => {
     
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
@@ -102,7 +102,7 @@ const RegisterForm = (props) => {
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="UserName" label = "UserName" name = "UserName" type="username" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Password" label = "Password" name = "Password" type="password" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "email" name = "PasswordCheck" type="password" />
             <input id="go_register" type="submit" style = {{display:"none"}}/>           
             <label for = "go_register">
                 <Button variant="contained" size="large" color="primary" className={classes.main_buttom_style} 
@@ -116,4 +116,4 @@ const RegisterForm = (props) => {
 };
 
 
-export {RegisterForm};
+export default UserValidation;
