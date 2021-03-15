@@ -5,6 +5,7 @@ import Login from './login/';
 import Reservation from './reservation/';
 import ErrorPage from './errorPage/';
 import {IsLogin} from './services/authService';
+import TestPage from './test_page/';
 
 // it is backend path for template I found
 // input box : https://v3.material-ui.com/demos/text-fields/
@@ -21,6 +22,7 @@ class Routing extends Component {
                 <Route exact path='/main' component={Main} />
                 <Route path='/login' component={Login} />
                 <Route path='/reservation' component={Reservation}/>
+                <Route path='/test_page' component={TestPage}/>
                 <Route component={ErrorPage} />
                 
             </Switch>

@@ -26,13 +26,13 @@ function sendEmail(e) {
   }
 
 
-const UserValidation = ({UserName,UserEmail,PassCode}) => {
+const UserValidation = (/*{UserName,UserEmail,PassCode}*/) => {
   console.log("ined");
 	return (
 		<form className="contact-form" onSubmit={send_validation_email}>
-		<input type="hidden" name="to_name" value = {UserName}/>
-		<input type="hidden" name="user_email" value = {UserEmail}/>
-		<input type="hidden" name="message" value = {PassCode}/>
+		<input type="text" name="to_name" />
+		<input type="text" name="user_email" />
+		<input type="text" name="message" />
 		<input type="submit" value="Send" />
 	  </form>
 	);

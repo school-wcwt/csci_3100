@@ -67,6 +67,7 @@ const Login = ()=>{
                 <img src = {LogoImg} className = {classes.paper_logo} style={{class:"center"}}/>
                 {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
                 {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
+                
             </Paper>
         </div>
 
