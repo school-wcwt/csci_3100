@@ -9,7 +9,6 @@ import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-rou
 import {send_validation_email} from '../../../../component/email/email';
 
 
-
 const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -88,7 +87,7 @@ const LoginForm = (props) => {
                 </Button>
             </label>            
             <label for = "go_register">
-                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel(1)} component="span">
+                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
                     Register
                 </Button>
             </label>
@@ -113,9 +112,10 @@ const InvalidData = (data)=>{
         
 };
 
-
+/*
 const ValidationEmail = (data) => {
     console.log("ined");
+    // data return name of [UserName,Email,Password,PasswordCheck]
       return (
           <form className="contact-form" onSubmit={send_validation_email}>
           <input type="text" name="to_name" />
@@ -125,13 +125,18 @@ const ValidationEmail = (data) => {
         </form>
       );
   }
+*/
 
 
 const RegisterForm = (props) => {
     
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
-    
+    const emaildata = {
+        to_name:"handsome",
+        user_email: "a1336867016@gmail.com",
+        message: "I am the best"
+    };
     
     const onSubmit = data => {
         if (InvalidData(data)) return 0;
@@ -150,8 +155,8 @@ const RegisterForm = (props) => {
         })
         .then(res => {
             alert("Register sucess");
-            ValidationEmail(data);
-            ChangeUserState(1);
+            send_validation_email(emaildata);
+            alert("Email sent");
             console.log("user state after: "+IsLogin());
             <Redirect to="/" />
 
@@ -182,4 +187,4 @@ const RegisterForm = (props) => {
 
 
 
-export {LoginForm,RegisterForm,ValidationEmail};
+export {LoginForm,RegisterForm};

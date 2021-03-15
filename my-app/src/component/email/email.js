@@ -15,9 +15,9 @@ function sendEmail(e) {
       });
   }
 
-  function send_validation_email(e) {
-    e.preventDefault();
-    emailjs.sendForm("service_kigbdr9", "template_c4tbz8f", e.target, "user_kwKrThl3IGwRCEZNIF8Zc")
+  function send_validation_email(data) {
+    console.log(data);
+    emailjs.send("service_kigbdr9", "template_c4tbz8f", data, "user_kwKrThl3IGwRCEZNIF8Zc")
       .then((result) => {
           console.log(result.text);
       }, (error) => {
@@ -26,15 +26,10 @@ function sendEmail(e) {
   }
 
 
-const UserValidation = (/*{UserName,UserEmail,PassCode}*/) => {
+const UserValidation = ({UserName,UserEmail,PassCode}) => {
   console.log("ined");
 	return (
-		<form className="contact-form" onSubmit={send_validation_email}>
-		<input type="text" name="to_name" />
-		<input type="text" name="user_email" />
-		<input type="text" name="message" />
-		<input type="submit" value="Send" />
-	  </form>
+    0
 	);
 }
 export {UserValidation,send_validation_email};
