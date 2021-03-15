@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import {Mongo_baseURL} from '../../../../config';
-import {UserValidation} from '../../../../component/email/email';
+import {UserValidation,send_validation_email} from '../../../../component/email/email';
 //import cors from ;
 
 const db_host = Math.floor(Math.random() * 100) + 1;
@@ -61,11 +61,17 @@ const InvalidData = (data)=>{
         alert(`Please make sure User Name letter contains 0-9,a-z,A-Z only`); return true;}
     return false;
         
-}
-const EmailChecked = ({data})=>{
-    return (
-        <UserValidation UserName={data.UserName} UserEmail = {data.Email} PassCode = "125"/>
-    )
+};
+//        
+const EmailChecked = (data)=>{
+    console.log("Start");
+    const dataset = {
+        to_name: data.UserName,
+        user_email: data.Email,
+        message: "123"
+    };
+    send_validation_email(dataset);
+    console.log("End");
 }
 
 const RegisterForm = (props) => {

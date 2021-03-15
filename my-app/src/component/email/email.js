@@ -16,7 +16,7 @@ function sendEmail(e) {
   }
 
   function send_validation_email(e) {
-    e.preventDefault();
+    //e.preventDefault();
     emailjs.sendForm("service_kigbdr9", "template_c4tbz8f", e.target, "user_kwKrThl3IGwRCEZNIF8Zc")
       .then((result) => {
           console.log(result.text);
@@ -27,6 +27,7 @@ function sendEmail(e) {
 
 
 const UserValidation = ({UserName,UserEmail,PassCode}) => {
+  console.log("ined");
 	return (
 		<form className="contact-form" onSubmit={send_validation_email}>
 		<input type="hidden" name="to_name" value = {UserName}/>
@@ -36,4 +37,4 @@ const UserValidation = ({UserName,UserEmail,PassCode}) => {
 	  </form>
 	);
 }
-export {UserValidation};
+export {UserValidation,send_validation_email};
