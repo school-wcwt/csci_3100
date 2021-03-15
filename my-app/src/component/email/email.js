@@ -16,7 +16,7 @@ function sendEmail(e) {
   }
 
   function send_validation_email(e) {
-    //e.preventDefault();
+    e.preventDefault();
     emailjs.sendForm("service_kigbdr9", "template_c4tbz8f", e.target, "user_kwKrThl3IGwRCEZNIF8Zc")
       .then((result) => {
           console.log(result.text);

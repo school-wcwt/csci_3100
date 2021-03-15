@@ -57,6 +57,7 @@ const LoginForm = (props) => {
             method: 'PUT',
             baseURL: `${Mongo_baseURL}`,
             url: '/user/auth',
+            withCredentials: false,
             data: {
                 filter: { email: data.Email },
                 password: data.Password

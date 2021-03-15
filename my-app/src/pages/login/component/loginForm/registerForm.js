@@ -1,11 +1,13 @@
 import React from "react";
 import axios from 'axios';
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import {Mongo_baseURL} from '../../../../config';
 import {UserValidation,send_validation_email} from '../../../../component/email/email';
+import {ChangeUserState,IsLogin} from '../../../services/authService';
 //import cors from ;
 
 const db_host = Math.floor(Math.random() * 100) + 1;
@@ -62,17 +64,6 @@ const InvalidData = (data)=>{
     return false;
         
 };
-//        
-const EmailChecked = (data)=>{
-    console.log("Start");
-    const dataset = {
-        to_name: data.UserName,
-        user_email: data.Email,
-        message: "123"
-    };
-    send_validation_email(dataset);
-    console.log("End");
-}
 
 const RegisterForm = (props) => {
     
@@ -80,8 +71,7 @@ const RegisterForm = (props) => {
     const classes = useStyles();
     const onSubmit = data => {
         if (InvalidData(data)) return 0;
-        EmailChecked(data);
-        return 0;
+        console.log("user state before: "+IsLogin());
         axios({
             method: 'POST',
             baseURL: `${Mongo_baseURL}`,
@@ -95,7 +85,11 @@ const RegisterForm = (props) => {
             }
         })
         .then(res => {
-            console.log("Register sucess");
+            alert("Register sucess");
+            ChangeUserState(1);
+            console.log("user state after: "+IsLogin());
+            <Redirect to="/" />
+
         })
         .catch(err => {
             console.log(err.message);

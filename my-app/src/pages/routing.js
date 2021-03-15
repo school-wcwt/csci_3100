@@ -18,13 +18,16 @@ class Routing extends Component {
           <div>
             <Switch>
                 <Route exact path='/' component={Main} />
+                <Route exact path='/main' component={Main} />
                 <Route path='/login' component={Login} />
                 <Route path='/reservation' component={Reservation}/>
-                <Route path='/error' component={ErrorPage} />
                 <Route component={ErrorPage} />
+                
             </Switch>
           </div>
+          <>
           {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
+          </>
         </Router>
       );
     }
