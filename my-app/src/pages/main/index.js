@@ -111,7 +111,22 @@ return(
 
 
 
-const Feed= (props)=>{
+const Feed= (para)=>{
+  const rest=para.props.rest;
+  const hashtag_list= para.props.hashtag;
+  console.log('------------');
+  console.log(para);
+
+const hashtag_section= hashtag_list.map((hashtag)=>
+<Col xs="2"> {hashtag.name}</Col>
+);
+
+
+//const listItems = numbers.map((number) =>
+ // <li>{number}</li>
+//);
+
+
 return(
 <Container>
 <Row>
@@ -126,14 +141,12 @@ return(
     <Col>     
         <Row>
               <Col>
-                <nobr><div><div className={styles.user}>User</div>
+                <nobr><div><div className={styles.user}>{rest.author}</div>
             <div className={styles.timetext}> posted on 16/3/2021</div>
             </div></nobr>
             at <div className={styles.user}> Restaurant</div>
             </Col>
-            <Col align='right'>bell</Col>
       </Row>
-
       <Row>
         <Col xs="2.9"><img src={'../../image/icon2.PNG'} />
           <img src="./resources/img/1.jpg"/>
@@ -145,23 +158,20 @@ return(
       </Row>
 
       <Row>       
-         <Col xs="2">Hash Tag 1</Col>
-        <Col xs="2">HashTag 2 </Col>
-        <Col xs="2">HashTag 3 </Col>
-        <Col xs="2">HashTag 4 </Col>
-        <Col xs="2">HashTag 5 </Col>
-        <Col xs="2">HashTag 6 </Col>
-        <Col xs="2">HashTag 7 </Col>
-        <Col xs="2">HashTag 8 </Col>
+      {hashtag_section}
+
       </Row>
 
-      <Row>I go to school by bus</Row>
+      <Row>{rest.comment}</Row>
       <Row> ----------------</Row>
       <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
       <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
       <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
-      
+      <div className={styles.addBottomPad}></div>
+      <div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
+
 </Col>
+    <Col xs="1">Bell</Col>
 </Row>
 </Container>
 )
@@ -268,18 +278,58 @@ const Feed2 = (props) => {
 
 
 const Main = ()=>{
+  const greeting = 'Welcome to React';
+  const namelist= ['a','b','c'];
+  //list of objects
+  const restaurant_list= [{"author": 'a1', "comment":'comment1' },{"author": 'a2', "comment":'comment2' }];
+  const hashtag_list= [
+    [{"name": 'h1.1', "frequency":11 },{"name": 'h1.2', "frequency":22}],
+
+    [{"name": 'h2.1', "frequency":11 },{"name": 'h2.2', "frequency":22}]
+
+];
+var feed_components=[];
+  var i=2;
+  console.log("All:");
+  console.log(hashtag_list);
+  var list=[];
+  for (i=0;i<restaurant_list.length;i++){
+    console.log('hashtag_list'+i);
+    console.log(hashtag_list[i]);
+    var rest=restaurant_list[i];
+    var hashtag= hashtag_list[i];
+    var list= {rest,hashtag};
+    console.log('list:');
+    console.log(list);
+    feed_components.push(<Feed props={list} />);
+
+
+
+  //  list.push({rest,hashtag});
+   // console.log('list:');
+  //  console.log(list);
+
+  }
+  //const feed_components=   <Feed props={list} />
+
+// var feed_components=[];
+//feed_components.push( <div>hihi</div>);
+ // feed_components.push(<div>byebye</div>);
     return (
         <div>
-           
            <Topbar />
-           <Feed />
+           {feed_components}
+          
         </div>        
     )
 }
-
 export default Main;
 //  <ShoppingList /> 
 //<Part2 />
 //<TopHead />
 //<Topbar />
+//
+
+
+
 //

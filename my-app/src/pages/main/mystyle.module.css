@@ -17,10 +17,6 @@
   background-color: purple;
 }
 
-.nav-pills-active{
-
-}
-
 .user{
   color:lightcoral;
   font-size: large;
@@ -67,6 +63,6 @@ color:grey;
   columns: 2 auto;
 }
 
-.addPad{
+.addBottomPad{
   padding-bottom: 10em;
 }
