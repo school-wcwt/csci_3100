@@ -34,17 +34,15 @@ router.delete('/:userID/groupList', (req, res) => {
 })
 
 router.get('/:userID/groupList/:listName', (req, res) => {
-    entityFunc.findEntity({entityID: req.params.userID}, 2, {
-        subentityPop: {
-            path: 'groupList', // TODO
-            select: 'entityID name profPhoto',
-            perDocumentLimit: 30,
-        }
-    }).then(entity => res.status(200).send(entity))
-    .catch(err => {
-        if (err.message == 'Entity not found.') res.status(404).send(err)
-        else res.status(400).send(err)
+    groupListFunc.findGroupList({
+        name:   req.params.listName,
+        author: req.params.userID
     })
+    .then(groupList => {
+        if (groupList == null) res.status(204).send(entity)
+        else res.status(200).send(entity)
+    })
+    .catch(err => { res.status(400).send(err) })
 })
 
 router.post('/:userID/groupList/:listName', (req, res) => {
@@ -52,7 +50,7 @@ router.post('/:userID/groupList/:listName', (req, res) => {
         {entityID: req.params.userID}, 
         req.body.targetFilter,
         req.params.listName,
-        true
+        true // Add entity to list
     ).then(updatedEntity => res.status(200).send(updatedEntity))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).send(err)
@@ -65,7 +63,7 @@ router.delete('/:userID/groupList/:listName', (req, res) => {
         {entityID: req.params.userID}, 
         req.body.targetFilter,
         req.params.listName,
-        false
+        false // Delete entity from list
     ).then(updatedEntity => res.status(200).send(updatedEntity))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).send(err)

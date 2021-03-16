@@ -1,4 +1,4 @@
-var userState = 777; // -1 not login in, 0 user, 1 rest, 777 is admin
+var userState = 0; // -1 not login in, 0 user, 1 rest, 777 is admin
 const dev_user_ac = "mateWelcome@gmail.com";
 const dev_user_pw = "P@ssw0rd";
 

@@ -91,13 +91,18 @@ var createEntity = data => {
     var addEntity = data => {
         return new Promise((resolve, reject) => {
             (async() => { try { 
-                var tagGen = () => { return '' + Math.random().toString().substr(2, 4); };
                 // Rest: Adopt English name or otherwise adopt Chinese name as username
                 if (data.type) 
                     var username = data.username != null 
                         ? data.username.replace(/ /g, '-')
                         : data.name.replace(/ /g, '-') 
                 else var username = data.username;
+                var tagGen = () => { 
+                    let tag = '' + Math.random().toString().slice(2, 4); 
+                    let entity = await Entity.find({username: username, tag: tag}).exec()
+                    if (entity == null) return tag;
+                    else return tagGen();
+                };
                 var hashedPassword = await bcrypt.hash(data.password, 10);
                 var tag = tagGen();
                 var entityID = username + '-' + tag;
@@ -155,6 +160,21 @@ var deleteEntity = (filter) => {
                 : await User.findOneAndDelete({entity: deletedEntity._id}).exec();
             return resolve({deletedEntity: deletedEntity, deletedSubentity: deletedSubentity});
         } catch (err) { return reject(err) }})();
+    })
+}
+
+// ---------- Functional -----------
+
+var addPost = (authorFilter, targetFilter, data) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            const createdPost = await postFunc.createPost(authorFilter, targetFilter, data);
+            const query = {'$push': {post: {'$each': [createdPost._id], '$position': 0}}};
+            await Entity.findOneAndUpdate(authorFilter, query)
+            if (data.type) await Entity.findOneAndUpdate(targetFilter, query);
+            const updatedEntity = await findEntity(authorFilter); 
+            return resolve(updatedEntity);
+        } catch(err) { return reject(err) } })();
     })
 }
 

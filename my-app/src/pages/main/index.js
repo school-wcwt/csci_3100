@@ -41,7 +41,7 @@ const Part2 = () => {
                 2
         </div>
     );
-}
+};
 
 const Topbar = () => {
   return(

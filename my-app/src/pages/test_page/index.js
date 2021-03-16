@@ -17,7 +17,7 @@ const TestPage = ()=>{
     }
     return (
         <div>
-            <send_validation_email data = {emaildata}/>
+            Hello
         </div>        
     )
 }
