@@ -4,8 +4,8 @@ const { findEntityID } = require("./entityFunc")
 var findComment = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            var comment = await Comment.find(filter).populate({path: 'author', select: 'name'}).exec()
-            if (comment == null) return resolve(null);
+            var comment = await Comment.find(filter)
+                .populate('author', 'entityID username tag name profPhoto').exec()
             return resolve(comment)
         } catch(err) { return reject(err) }})(); 
     })
@@ -20,23 +20,43 @@ var createComment = (authorFilter, postFilter, content) => {
             ]);
             if (author == null) throw new Error('Entity not found.');
             if (post == null) throw new Error('Post not found.');
-            var comment = await new Comment({
+            var newComment = await new Comment({
+                commentID: `${author.entityID}-${Date.now()}`,
                 author:    author.entity_id,
+                target:    post._id,
                 content:   content,
                 time:      Date.now(),
-                target:    post._id
             }).save()
+            var savedComment = await findComment({_id: newComment._id})
+            return resolve(savedComment);
+        } catch (err) { return reject(err) }})()
+    })
+}
 
-            var commentCheck = await findComment(comment)
+// OBSOLETE
+var updateComment = (filter, data) => {
+    return new Promise((resolve, reject) => {
+        (async() => { try {
+            const comment = await Comment.findOneAndUpate(filter, data, {new: true}).exec();
+            if (comment == null) throw new Error('Comment not found.');
+            return resolve(comment);
+        } catch (err) { return reject(err) }})()
+    })
+}
 
-            return resolve(commentCheck);
+var deleteComment = (filter) => {
+    return new Promise((resolve, reject) => {
+        (async() => { try {
+            const comment = await Comment.findOneAndDelete(filter).exec();
+            if (comment == null) throw new Error('Comment not found.');
+            return resolve(comment);
         } catch (err) { return reject(err) }})()
     })
 }
 
 module.exports = {
     findComment,
-    updateComment,
+    createComment,
+    //updateComment,
     deleteComment,
-    createComment
 }

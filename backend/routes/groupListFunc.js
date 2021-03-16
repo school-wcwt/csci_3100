@@ -5,7 +5,7 @@ var findGroupList = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
             var groupList = await GroupList.find(filter)
-                .populate('content', 'entityID name profPhoto')
+                .populate('content', 'entityID username tag name profPhoto')
             return resolve(groupList)
         } catch (err) { return reject(err) }})()
     })
