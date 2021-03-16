@@ -1,0 +1,72 @@
+.bigblue {
+  color: DodgerBlue;
+  padding: 40px;
+  font-family: Arial;
+  text-align: center;
+}
+
+.nav-link{
+  color:red;
+}
+.nav-item{
+  background-color: red;
+}
+
+.my_navlink-active{
+  color:purple;
+  background-color: purple;
+}
+
+.nav-pills-active{
+
+}
+
+.user{
+  color:lightcoral;
+  font-size: large;
+  display:inline;
+}
+
+.timetext{
+display:inline;
+color:grey;
+}
+
+.nav-link.active{
+  background-color: green;
+}
+
+.my_bottom{
+  margin-bottom: 30em;
+
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 10%;
+}
+
+.right {
+  width: 90%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.container {
+  columns: 2 auto;
+}
+
+.addPad{
+  padding-bottom: 10em;
+}

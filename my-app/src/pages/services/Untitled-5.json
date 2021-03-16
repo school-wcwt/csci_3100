@@ -1,0 +1,10 @@
+{
+    "instantMongo": {
+        "connections": [
+            {
+                "name": "csci3100",
+                "uri": "localhost"
+            }
+        ]
+    }
+}
