@@ -10,7 +10,7 @@ var auth = (filter, password) => {
         (async () => { try {
             var entity = await Entity.findOne(filter).exec()
             if (entity.type || entity == null) throw new Error('Entity not found.');
-            var match = await bcrypt.compare(password,entity.password)
+            var match = await bcrypt.compare(password, entity.password)
             if (!match) throw new Error('Incorrect password.')
             var loginedEntity = await findEntity({entityID: entity.entityID})
             return resolve(loginedEntity);
