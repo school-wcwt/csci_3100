@@ -47,21 +47,19 @@ const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
-        /*
-        if (data.Email == dev_user_ac && data.Password==dev_user_pw){
-            return ChangeUserState(777);
-        }
-        */
-        axios({
-            method: 'PUT',
+        console.log(data.Email);
+        console.log(data.Password);
+        axios(
+            {
+            method: 'POST',
             url: '/user/auth',
             data: {
-                filter: { email: data.Email },
-                password: data.Password
+                filter: {email: data.Email},
+                password: data.Password 
             }
         })
         .then(res => {
-            console.log("Login sucess");
+            alert("Login sucess");
             console.log(res);
         })
         .catch(err => {
@@ -136,7 +134,7 @@ const RegisterForm = (props) => {
         .then(res => {
             alert("Register sucess");
             send_validation_email(emaildata);
-            alert("Email sent");
+            alert("Email sent to " + data.Email);
             console.log("user state after: "+IsLogin());
             <Redirect to="/" />
 

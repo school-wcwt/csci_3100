@@ -8,7 +8,7 @@ const part1 = () => {
 
         </html>
     );
-}
+};
 
 const part2 = () => {
     return (
@@ -16,7 +16,7 @@ const part2 = () => {
 
         </html>
     );
-}
+};
 
 const test = () => {
     return (
@@ -24,7 +24,7 @@ const test = () => {
             test
         </div>
     )
-}
+};
 
 const Main = ()=>{
     return (
