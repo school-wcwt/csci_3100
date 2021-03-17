@@ -1,7 +1,7 @@
 import {Navbar,Form,Button,FormControl,Nav} from 'react-bootstrap';
 import logo from '../../../image/icon2.PNG';
 import PageviewRoundedIcon from '@material-ui/icons/PageviewRounded';<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-
+// material ui icon for reference https://material-ui.com/api/icon/
 
 
 function NAVbar(){
