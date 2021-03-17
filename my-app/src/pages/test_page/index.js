@@ -1,13 +1,8 @@
 import React from 'react';
 import {send_validation_email} from '../../component/email/email.js';
+import {ChangeUserState,IsLogin,Set_userobj} from '../services/authService';
+import MainCarousel from '../../component/carousel/MainCarousel'
 
-
-/*
-          <input type="text" name="to_name" />
-          <input type="text" name="user_email" />
-          <input type="text" name="message" />
-          <input type="submit" value="Send" />
-*/
 
 const TestPage = ()=>{
     const emaildata = {
@@ -15,10 +10,9 @@ const TestPage = ()=>{
         user_email: "a1336867016@gmail.com",
         message: "I am the best"
     }
+    console.log(IsLogin());
     return (
-        <div>
-            Hello
-        </div>        
+        <MainCarousel/>       
     )
 }
 

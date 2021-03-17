@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import axios from '../../../../axiosConfig';
-import {ChangeUserState,IsLogin} from '../../../services/authService';
+import {ChangeUserState,IsLogin,Set_userobj} from '../../../services/authService';
 import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
 
@@ -47,8 +47,6 @@ const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const onSubmit = data => {
-        console.log(data.Email);
-        console.log(data.Password);
         axios(
             {
             method: 'POST',
@@ -60,7 +58,11 @@ const LoginForm = (props) => {
         })
         .then(res => {
             alert("Login sucess");
-            console.log(res);
+            ChangeUserState("user");
+            console.log("User state: " + IsLogin());
+            Set_userobj(res);
+            console.log(props.setPanel);
+            console.log("After redirect");
         })
         .catch(err => {
             console.log(err);
@@ -120,7 +122,6 @@ const RegisterForm = (props) => {
     
     const onSubmit = data => {
         if (InvalidData(data)) return 0;
-        console.log("user state before: "+IsLogin());
         axios(
             {method: 'POST',
             url: 'entity/NEW',
@@ -135,7 +136,6 @@ const RegisterForm = (props) => {
             alert("Register sucess");
             send_validation_email(emaildata);
             alert("Email sent to " + data.Email);
-            console.log("user state after: "+IsLogin());
             <Redirect to="/" />
 
         })

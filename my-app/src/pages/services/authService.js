@@ -1,7 +1,5 @@
-var userState = 0; // -1 not login in, 0 user, 1 rest, 777 is admin
-const dev_user_ac = "mateWelcome@gmail.com";
-const dev_user_pw = "P@ssw0rd";
-
+var userState = -1; // -1 not login in, 0 user, 1 rest, 777 is admin
+var userobj = {};
 const IsLogin = () => {
     if (userState==-1)
         return false;
@@ -9,9 +7,17 @@ const IsLogin = () => {
         return true;
 }
 
-const ChangeUserState = ({newstate}) => {
-    userState = newstate;
+const ChangeUserState = (newstate) => {
+    if (newstate == "user" || newstate == 0)
+        userState = 0;
+    else if (newstate == "rest" || newstate == 1)
+        userState = 1;
     return true;
+};
+
+const Set_userobj = (obj) => {
+    userobj = obj;
 }
 
-export {IsLogin,ChangeUserState,dev_user_ac,dev_user_pw}
+
+export {IsLogin,ChangeUserState,Set_userobj}

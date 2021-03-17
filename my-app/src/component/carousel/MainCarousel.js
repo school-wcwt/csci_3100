@@ -1,25 +1,28 @@
 import Carousel from "react-material-ui-carousel";
 import React from "react";
 import _ from "lodash";
-import image1 from "../../image/logo.png";
-import image2 from "../../image/logo.png";
-import image3 from "../../image/logo.png";
+//import image1 from "./img/1.jpg";
+//import image2 from "../../image/logo.png";
+//import image3 from "../../image/logo.png";
 import { withStyles } from "@material-ui/core";
+
+var image_set = ["./img/2.jpg","./img/1.jpg","./img/3.jpg"];
+
 
 const CAROUSEL_BANNERS = [
   {
     priority: 2,
-    src: image1,
+    src: image_set[0],
     href: "https://www.flyingmilktea.com/nation-of-elves",
   },
   {
     priority: 1,
-    src: image2,
+    src: image_set[1],
     href: "https://www.flyingmilktea.com/interprint-discount/",
   },
   {
     priority: 0,
-    src: image3,
+    src: image_set[2],
     href: "https://www.flyingmilktea.com/scarlet-print-discount/",
   },
 ];
@@ -59,6 +62,7 @@ const MainCarousel = withStyles((theme) => ({
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAQAAABeK7cBAAAAC0lEQVR42mNkAAIAAAoAAv/lxKUAAAAASUVORK5CYII=";
   const indicatorContainerStyle = {position:"relative",top:"-40px",zIndex: 1,}
   const activatedotStyle = {color: "rgb(46, 172, 235)",}
+  console.log(image_set[1]);
     return (
     <div>
       <Carousel 

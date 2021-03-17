@@ -2,11 +2,11 @@ import React from 'react';
 import PrimarySearchAppBar from './component/appBar/appBar.js';
 //import TopHead from './component/topHead/topHead.js';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button ,Form, FormControl, Container, Row, Col} from 'react-bootstrap';
-import { makeStyles, StepLabel } from "@material-ui/core";
+import { makeStyles, StepLabel,CardMedia,Card,Grid  } from "@material-ui/core";
 import styles from './mystyle.module.css'; 
-
 //import  {ReactComponent as Logo } from '../../image/logo.png';
 import logo from '../../image/icon2.PNG'; // Tell webpack this JS file uses this image
+import SingleShowList from './component/gridList/gridList';
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 //---------------------------------------------
 
@@ -15,6 +15,18 @@ const useStyles = makeStyles((theme) => ({
   navbars:{
     backgroundColor: 'lightcoral',
     color:"white"
+  },
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+  grid_style:{
+    height: "100",
+    width: "150",
+    float: "left",
+    
   }
 }));
 
@@ -112,11 +124,30 @@ return(
 
 
 const Feed= (para)=>{
+  const classes = useStyles();
   const rest=para.props.rest;
   const hashtag_list= para.props.hashtag;
   console.log('------------');
   console.log(para);
+  //var image_set = [`./rescources/img/logo.png`,`./rescources/img/2.jpg`,`./rescources/img/1.jpg`];
+  var mytileData = [
+    {
+       img: "./img/1.jpg",
+       title: 'Image3',
+       author: 'author',
+    },
+    {
+      img: "./img/1.jpg",
+      title: 'Image2',
+      author: 'author2',
+    },
+    {
+      img: "./img/1.jpg",
+      title: 'Image2',
+      author: 'author2',
+    },
 
+];
 const hashtag_section= hashtag_list.map((hashtag)=>
 <Col xs="2"> {hashtag.name}</Col>
 );
@@ -125,7 +156,6 @@ const hashtag_section= hashtag_list.map((hashtag)=>
 //const listItems = numbers.map((number) =>
  // <li>{number}</li>
 //);
-
 
 return(
 <Container>
@@ -148,8 +178,8 @@ return(
             </Col>
       </Row>
       <Row>
-        <Col xs="2.9"><img src={'../../image/icon2.PNG'} />
-          <img src="./resources/img/1.jpg"/>
+        <SingleShowList tileData = {mytileData}/>
+        <Col xs="2.9">
         </Col>
         <Col xs="2.9"><img src= {logo} height="100" width="150" alt="mATE." className=" float-left" id="icon"></img></Col>
         <Col xs="2.9"><img src= {logo} height="100" width="150" alt="mATE." className=" float-left" id="icon"></img></Col>

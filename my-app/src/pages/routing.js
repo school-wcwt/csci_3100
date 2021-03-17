@@ -12,6 +12,7 @@ import TestPage from './test_page/';
 
 // -1 not login in ,0 user, 1 rest
 // For Testing purpose, if you want to go specific page without permission, go ./services/authService and set userState to admin
+//{IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
 class Routing extends Component {
     render() {
       return (
@@ -28,7 +29,7 @@ class Routing extends Component {
             </Switch>
           </div>
           <>
-          {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
+          
           </>
         </Router>
       );
