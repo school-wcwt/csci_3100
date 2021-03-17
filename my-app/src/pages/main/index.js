@@ -7,6 +7,7 @@ import styles from './mystyle.module.css';
 //import  {ReactComponent as Logo } from '../../image/logo.png';
 import logo from '../../image/icon2.PNG'; // Tell webpack this JS file uses this image
 import SingleShowList from './component/gridList/gridList';
+import NAVbar from "./component/nav.js";
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 //---------------------------------------------
 
@@ -348,6 +349,7 @@ var feed_components=[];
  // feed_components.push(<div>byebye</div>);
     return (
         <div>
+           <NAVbar/>
            <Topbar />
            {feed_components}
           
