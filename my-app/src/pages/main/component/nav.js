@@ -1,7 +1,5 @@
 import {Navbar,Form,Button,FormControl,Nav} from 'react-bootstrap';
 import logo from '../../../image/icon2.PNG';
-import PageviewRoundedIcon from '@material-ui/icons/PageviewRounded';<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-// material ui icon for reference https://material-ui.com/api/icon/
 
 
 function NAVbar(){
@@ -20,7 +18,7 @@ function NAVbar(){
     <Form inline>
       <div className="mx-auto row">
       <FormControl type="text" placeholder="Search" className="col-8"/>
-      <Button variant="outline-secondary"><PageviewRoundedIcon color = "secondary"/></Button>
+      <Button variant="outline-secondary"><i className="fa fa-search"></i></Button>
       </div>
     </Form>
     </Navbar.Collapse>
