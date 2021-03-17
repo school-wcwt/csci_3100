@@ -176,10 +176,10 @@ var feed_components=[];
 // var feed_components=[];
 //feed_components.push( <div>hihi</div>);
  // feed_components.push(<div>byebye</div>);
+ //<Topbar />
     return (
         <div>
            <NAVbar/>
-
            {feed_components}
           
         </div>        
