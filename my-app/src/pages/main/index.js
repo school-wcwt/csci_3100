@@ -7,6 +7,7 @@ import { makeStyles, StepLabel,CardMedia,Card,Grid  } from "@material-ui/core";
 //import  {ReactComponent as Logo } from '../../image/logo.png';
 import logo from '../../image/icon2.PNG'; // Tell webpack this JS file uses this image
 import SingleShowList from './component/gridList/gridList';
+import MediaCard from './component/cardMedia/cardMedia';
 import NAVbar from "./component/nav.js";
 //<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 //---------------------------------------------
@@ -111,6 +112,7 @@ return(
       </Row>
       <Row>
         <SingleShowList tileData = {mytileData}/>
+        <MediaCard image_path = {folder + image_set[0]}/>
         <Col xs="2.9">
         </Col>
         <Col xs="2.9"><img src= {logo} height="100" width="150" alt="mATE." className=" float-left" id="icon"></img></Col>
