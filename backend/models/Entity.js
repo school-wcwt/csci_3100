@@ -10,7 +10,7 @@ var EntitySchema = mongoose.Schema({
     name:      { type: String },
     phone:     { type: String },
     status:    { type: String, default: '0' }, // User: Gender, Rest: Opening Status
-    verified:  { type: String }, // User: Email verified, Rest: Claimed
+    verified:  { type: Number, default: '0', required: true}, // 0: Not-verified/claimed,
     profPhoto: [{ type: String }],
     openingHr: [[{ type: String }]],
     joinTime:  { type: Date },
