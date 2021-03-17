@@ -33,12 +33,12 @@ app.listen(3100);
     type: 1,
     email: '15 Shatin',
 }).then(res => console.log(res))*/
-
+/*
 postFunc.createPost({entityID: 'tom_wong-9190'}, {entityID: 'MyRest-6758'}, {
     type: 1,
     content: 'hello',
     hashtag: ['Good-Rest', 'Japan'],
 }).then(res => console.log(res));
-
+*/
 /*tagFunc.useTags([], ['Japan', 'Chinese'])
 .then(res => console.log(res));*/
