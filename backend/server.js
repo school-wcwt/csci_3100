@@ -26,7 +26,7 @@ var userFunc = require('./routes/userFunc');
 const postFunc = require('./routes/postFunc');
 const tagFunc = require('./routes/hashtagFunc');
 
-app.listen(3100);
+app.listen(3200);
 
 /*entityFunc.createEntity({
     username: 'MyRest',

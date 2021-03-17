@@ -3,15 +3,15 @@ import PrimarySearchAppBar from './component/appBar/appBar.js';
 //import TopHead from './component/topHead/topHead.js';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button ,Form, FormControl, Container, Row, Col} from 'react-bootstrap';
 import { makeStyles, StepLabel,CardMedia,Card,Grid  } from "@material-ui/core";
-import styles from './mystyle.module.css'; 
+//import styles from './mystyle.module.css'; 
 //import  {ReactComponent as Logo } from '../../image/logo.png';
 import logo from '../../image/icon2.PNG'; // Tell webpack this JS file uses this image
 import SingleShowList from './component/gridList/gridList';
 import NAVbar from "./component/nav.js";
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+//<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 //---------------------------------------------
 
-/*const useStyles = makeStyles((theme) => ({ 
+const useStyles = makeStyles((theme) => ({ 
   navbars:{
     backgroundColor: 'lightcoral',
     color:"white"
@@ -27,8 +27,21 @@ import NAVbar from "./component/nav.js";
     width: "150",
     float: "left",
     
+  },
+  user_style:{
+    color:"lightcoral",
+    fontSize: "large",
+    display:"inline",
+  },
+  timetext:{
+    display:"inline",
+    color:"grey",
+    },
+  addBottomPad:{
+    paddingBottom: "10em"
   }
-}));*/
+}));
+
 
 //------------------------------------
 
@@ -42,7 +55,7 @@ import NAVbar from "./component/nav.js";
 
 
 const Feed= (para)=>{
-  //const classes = useStyles();
+  const classes = useStyles();
   const rest=para.props.rest;
   const hashtag_list= para.props.hashtag;
   console.log('------------');
@@ -90,10 +103,10 @@ return(
     <Col>     
         <Row>
               <Col>
-                <nobr><div><div className={styles.user}>{rest.author}</div>
-            <div className={styles.timetext}> posted on 16/3/2021</div>
+                <nobr><div><div className={classes.user_style}>{rest.author}</div>
+            <div className={classes.timetext}> posted on 16/3/2021</div>
             </div></nobr>
-            at <div className={styles.user}> Restaurant</div>
+            at <div className={classes.user_style}> Restaurant</div>
             </Col>
       </Row>
       <Row>
@@ -116,7 +129,7 @@ return(
       <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
       <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
       <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
-      <div className={styles.addBottomPad}></div>
+      <div className={classes.addBottomPad}></div>
       <div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
 
 </Col>
