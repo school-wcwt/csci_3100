@@ -347,10 +347,10 @@ var feed_components=[];
 // var feed_components=[];
 //feed_components.push( <div>hihi</div>);
  // feed_components.push(<div>byebye</div>);
+ //<Topbar />
     return (
         <div>
            <NAVbar/>
-           <Topbar />
            {feed_components}
           
         </div>        

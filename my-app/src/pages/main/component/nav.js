@@ -1,6 +1,9 @@
 import {Navbar,Form,Button,FormControl,Nav} from 'react-bootstrap';
 import logo from '../../../image/icon2.PNG';
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+import PageviewRoundedIcon from '@material-ui/icons/PageviewRounded';<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+
+
 function NAVbar(){
     return(
 <>
@@ -17,7 +20,7 @@ function NAVbar(){
     <Form inline>
       <div className="mx-auto row">
       <FormControl type="text" placeholder="Search" className="col-8"/>
-      <Button variant="outline-secondary"  className="col-2"><i className="fa fa-search"></i></Button>
+      <Button variant="outline-secondary"><PageviewRoundedIcon color = "secondary"/></Button>
       </div>
     </Form>
     </Navbar.Collapse>
