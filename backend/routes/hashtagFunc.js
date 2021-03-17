@@ -1,4 +1,4 @@
-const Tag = require("../models/Post")
+const Tag = require("../models/Hashtag")
 
 var findTag = (filter) => {
     return new Promise((resolve, reject) => {
@@ -9,10 +9,11 @@ var findTag = (filter) => {
     })
 }
 
+// OBSOLETE
 var createTag = (data) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            const tag = await findTag({name: data.name});
+            const tag = await findTag(data);
             if (tag != null) return reject("Tag exists.");
             const newTag = await new Tag({name: data.name}).save()
             return resolve(tag);
@@ -48,7 +49,7 @@ var fetchTagID = (filter) => {
         (async() => { try {
             var tag = await findTag(filter);
             if (tag == null) {
-                const addedTag = await createTag(filter);
+                const addedTag = await new Tag(filter).save();
                 return resolve(addedTag._id)
             } else return resolve(tag._id);
         } catch (err) { return reject(err) }})()
@@ -68,16 +69,16 @@ var fetchTagsID = (names) => {
     })
 }
 
-var useTag = (oldTags = [], newTags = []) => {
+var useTags = (oldTags = [], newTags = []) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
             var newTagsID = await fetchTagsID(newTags);
-            for (newTag of newTags) {
-                if (!oldTags.include(newTag)) // if old ones does not include (i.e. Used)
+            for (newTag of newTagsID) {
+                if (!oldTags.includes(newTag)) // if old ones does not include (i.e. Used)
                     await Tag.findOneAndUpdate({_id: newTag}, {'$inc': {frequency: 1}})
             }
             for (oldTag of oldTags) {
-                if (!newTags.include(oldTag)) { // if new ones does not include (i.e. Removed)
+                if (!newTags.includes(oldTag)) { // if new ones does not include (i.e. Removed)
                     await Tag.findOneAndUpdate({_id: oldTag}, {'$inc': {frequency: -1}});
                     /* 
                     // Delete if frequency == 0
@@ -95,8 +96,9 @@ var useTag = (oldTags = [], newTags = []) => {
 
 module.exports = {
     findTag,
-    createTag,
-    updateTag,
+    //createTag,
+    //updateTag,
     deleteTag,
-    useTag,
+    fetchTagsID,
+    useTags,
 }

@@ -1,7 +1,7 @@
 const Post = require("../models/Post")
 const Comment = require("../models/Comment")
 const { findEntityID } = require("./entityFunc")
-const { useTag } = require("./hashtagFunc")
+const { useTags } = require("./hashtagFunc")
 
 var findPost = (filter) => {
     return new Promise((resolve, reject) => {
@@ -21,21 +21,22 @@ var createPost = (authorFilter, targetFilter, data) => {
         (async() => { try {
             // Fetch author, target _id
             const [author, target] = await Promise.all([
-                findEntity(authorFilter, 1), 
+                findEntityID(authorFilter), 
                 findEntityID(targetFilter)
             ]);
             if (author == null) throw new Error('Entity not found.');
             if (target == null) throw new Error('Post not found.');
             // Fetch tags _id
-            const hashtag = await useTag([], data.hashtag)
+            var hashtag = data.hashtag != null
+                ? await useTags([], data.hashtag) : [];
             // Save post
             const savedPost = await new Post({
                 postID: `${author.entityID}-${Date.now()}`,
-                author: author._id,
+                author: author.entity_id,
                 target: target.entity_id,
                 createdTime: Date.now(),
+                ...data,
                 hashtag: hashtag,
-                ...data
             }).save()
             return resolve(savedPost);
         } catch (err) { return reject(err) }})()
@@ -50,7 +51,7 @@ var updatePost = (filter, data) => {
             if (post == null) throw new Error('Entity not found.');
             // Fetch hashtag
             if (data.hashtag != null) {
-                const hashtag = await useTag(post.hashtag, data.hashtag)
+                const hashtag = await useTags(post.hashtag, data.hashtag)
                 data.hashtag = hashtag;
             }
             // Change modifiedTime

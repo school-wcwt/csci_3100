@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
 var HashtagSchema = mongoose.Schema({
-    //tagID:     { type: String, required: true, unique: true },
     name:      { type: String, required: true, unique: true },
     frequency: { type: Number, default: 0 },
 });
