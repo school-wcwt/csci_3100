@@ -129,25 +129,26 @@ const Feed= (para)=>{
   const hashtag_list= para.props.hashtag;
   console.log('------------');
   console.log(para);
-  //var image_set = [`./rescources/img/logo.png`,`./rescources/img/2.jpg`,`./rescources/img/1.jpg`];
+  var folder = "./img/feed_all/";
+  var image_set = ["1.jpg","2.jpg","3.jpg"];
   var mytileData = [
     {
-       img: "./img/1.jpg",
-       title: 'Image3',
+       img: folder + image_set[0],
+       title: 'Image0',
        author: 'author',
     },
     {
-      img: "./img/1.jpg",
-      title: 'Image2',
+      img: folder + image_set[1],
+      title: 'Image1',
       author: 'author2',
     },
     {
-      img: "./img/1.jpg",
+      img: folder + image_set[2],
       title: 'Image2',
       author: 'author2',
     },
 
-];
+  ];
 const hashtag_section= hashtag_list.map((hashtag)=>
 <Col xs="2"> {hashtag.name}</Col>
 );
