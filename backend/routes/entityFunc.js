@@ -88,6 +88,18 @@ var findEntityID = (filter) => {
 }
 
 var createEntity = data => {
+    var tagGen = (username) => { 
+        return new Promise((resolve, reject) => {
+            let tag = '' + Math.random().toString().slice(2, 6); 
+            Entity.findOne({username: username, tag: tag}).exec()
+            .then(entity => {
+                if (entity == null) return resolve(tag);
+                else tagGen();
+            })
+            .catch(err => { return reject(err) })
+        })
+    };
+
     var addEntity = data => {
         return new Promise((resolve, reject) => {
             (async() => { try { 
@@ -97,15 +109,11 @@ var createEntity = data => {
                         ? data.username.replace(/ /g, '-')
                         : data.name.replace(/ /g, '-') 
                 else var username = data.username;
-                var tagGen = () => { 
-                    let tag = '' + Math.random().toString().slice(2, 4); 
-                    let entity = await Entity.find({username: username, tag: tag}).exec()
-                    if (entity == null) return tag;
-                    else return tagGen();
-                };
-                var hashedPassword = await bcrypt.hash(data.password, 10);
-                var tag = tagGen();
+                var tag = await tagGen(username);
                 var entityID = username + '-' + tag;
+                var hashedPassword = data.type 
+                    ? null
+                    : await bcrypt.hash(data.password, 10);
                 var savedEntity = await new Entity({
                     entityID: entityID, 
                     tag:      tag, 
