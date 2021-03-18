@@ -3,6 +3,16 @@ const GroupList = require("../models/GroupList")
 var findGroupList = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
+            var groupList = await GroupList.findOne(filter)
+                .populate('content', 'entityID username tag name profPhoto')
+            return resolve(groupList)
+        } catch (err) { return reject(err) }})()
+    })
+}
+
+var findGroupLists = (filter) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try {
             var groupList = await GroupList.find(filter)
                 .populate('content', 'entityID username tag name profPhoto')
             return resolve(groupList)
@@ -20,35 +30,14 @@ var findGroupList = (filter) => {
 var createGroupList = (props, name) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            var existList = await GroupList.findOne({author: props.author, name: name})
-            if (existList != null) throw new Error('List exists.')
+            var list = await GroupList.findOne({...props, name: name})
+            if (list != null) throw new Error('List exists.')
             var savedList = await new GroupList({
                 ...props,
-                name: listName,
+                name: name,
                 content: [],
             }).save()
             return resolve(savedList);
-        } catch (err) { return reject(err) }})()
-    })
-}
-
-/**
- * Update name or author of GroupList.
- * @param {Object} filter
- * @param {ObjectId} filter.author
- * @param {string} filter.name
- * @param {Object} data
- * @param {boolean} addFlag
- * @returns 
- */
-var updateGroupList = (filter, data) => {
-    return new Promise((resolve, reject) => {
-        (async() => { try {
-            var updatedGroupList = await GroupList.findOneAndUpdate(
-                filter, data, {new: true}
-            ).populate('content', 'entityID username tag name profPhoto').exec()
-            if (updatedGroupList == null) throw new Error('List not found.');
-            return resolve(updatedGroupList)
         } catch (err) { return reject(err) }})()
     })
 }
@@ -69,28 +58,31 @@ var updateGroupList = (filter, data) => {
     })
 }
 
-
 /**
- * Add or remove content of GroupList.
+ * Update a GroupList.
  * @param {Object} filter
  * @param {ObjectId} filter.author
  * @param {string} filter.name
- * @param {Object} props 
- * @param {ObjectId} props.target
- * @param {boolean} addFlag
+ * @param {Object} [props] 
+ * @param {ObjectId} [props.target]
+ * @param {boolean} [props.addFlag]
+ * @param {Object} [data]
  * @returns 
  */
-var updateContent = (filter, props, addFlag = true) => {
+var updateGroupList = (filter, props = null, data = null) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            var operation = addFlag ? '$push' : '$pull';
+            var updateQuery = {};
+            if (data != null) updateQuery.$set = data;
+            if (props != null) 
+                props.addFlag 
+                    ? updateQuery.$push.content = props.target
+                    : updateQuery.$pull.content = props.target;
             var updatedGroupList = await GroupList.findOneAndUpdate(
-                filter,
-                {[operation]: {'content': props.target}},
-                {new: true}
-            ).populate('content', 'entityID name profPhoto').exec();
+                filter, updateQuery, {new: true}
+            ).populate('content', 'entityID username tag name profPhoto').exec()
             if (updatedGroupList == null) throw new Error('List not found.');
-            return resolve(updatedGroupList);
+            return resolve(updatedGroupList)
         } catch (err) { return reject(err) }})()
     })
 }
@@ -99,6 +91,5 @@ module.exports = {
     findGroupList,
     createGroupList,
     updateGroupList,
-    updateContent,
     deleteGroupList
 }

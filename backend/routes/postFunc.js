@@ -106,7 +106,7 @@ var updatePost = (filter, props = null, data = null) => {
         (async () => { try { 
             // Search existing entity
             const post = await Post.findOne(filter).exec();
-            if (post == null) throw new Error('Entity not found.');
+            if (post == null) throw new Error('Post not found.');
             // Query 
             var updateQuery = {$push: {modifiedTime: Date.now()}}
             if (data != null) {

@@ -43,7 +43,6 @@ var createComment = (props, authorEntityID, content) => {
     })
 }
 
-// OBSOLETE
 var updateComment = (filter, data) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
@@ -76,7 +75,7 @@ var deleteComments = (filter) => {
 module.exports = {
     findComment,
     createComment,
-    //updateComment,
+    updateComment,
     deleteComment,
     deleteComments,
 }
