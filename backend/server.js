@@ -25,20 +25,11 @@ var entityFunc = require('./routes/entityFunc');
 var userFunc = require('./routes/userFunc');
 const postFunc = require('./routes/postFunc');
 const tagFunc = require('./routes/hashtagFunc');
+const commentFunc = require('./routes/commentFunc');
 
-app.listen(3200);
+app.listen(3100);
 
-/*entityFunc.createEntity({
-    username: 'MyRest',
-    type: 1,
-    email: '15 Shatin',
-}).then(res => console.log(res))*/
-/*
-postFunc.createPost({entityID: 'tom_wong-9190'}, {entityID: 'MyRest-6758'}, {
-    type: 1,
-    content: 'hello',
-    hashtag: ['Good-Rest', 'Japan'],
-}).then(res => console.log(res));
-*/
-/*tagFunc.useTags([], ['Japan', 'Chinese'])
-.then(res => console.log(res));*/
+//tom_wong-9190 60506e3e9d24911e1dcc0fe8
+//MyRest        6051acd99dea5f25e689e720
+
+

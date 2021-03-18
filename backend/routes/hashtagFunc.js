@@ -9,25 +9,22 @@ var findTag = (filter) => {
     })
 }
 
-// OBSOLETE
-var createTag = (data) => {
+var findTags = (filter) => {
     return new Promise((resolve, reject) => {
-        (async() => { try {
-            const tag = await findTag(data);
-            if (tag != null) return reject("Tag exists.");
-            const newTag = await new Tag({name: data.name}).save()
-            return resolve(tag);
-        } catch (err) { return reject(err) }})()
+        (async () => { try { 
+            const tags = await Tag.find(filter).exec()
+            return resolve(tags);
+        } catch(err) { return reject(err) }})(); 
     })
 }
 
-// OBSOLETE
-var updateTag = (filter, data) => {
+var findOrCreateTag = (data) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            const updatedTag = await Tag.findOneAndUpdate(filter, data).exec();
-            if (tag != null) return reject("Tag exists.");
-            return resolve(updatedTag);
+            const tag = await findTag(data);
+            if (tag != null) return resolve(tag);
+            const newTag = await new Tag(data).save()
+            return resolve(newTag);
         } catch (err) { return reject(err) }})()
     })
 }
@@ -44,61 +41,68 @@ var deleteTag = (filter) => {
 
 // -------- Use tags ---------
 
-var fetchTagID = (filter) => {
-    return new Promise((resolve, reject) => {
-        (async() => { try {
-            var tag = await findTag(filter);
-            if (tag == null) {
-                const addedTag = await new Tag(filter).save();
-                return resolve(addedTag._id)
-            } else return resolve(tag._id);
-        } catch (err) { return reject(err) }})()
-    })
-}
-
-var fetchTagsID = (names) => {
-    return new Promise((resolve, reject) => {
-        (async() => { try {
-            var tagsID = [];
-            for (tagName of names) {
-                let tag = await fetchTagID({name: tagName})
-                tagsID.push(tag._id);
-            }
-            return resolve(tagsID)
-        } catch (err) { return reject(err) }})()
-    })
-}
-
-var useTags = (oldTags = [], newTags = []) => {
-    return new Promise((resolve, reject) => {
-        (async() => { try {
-            var newTagsID = await fetchTagsID(newTags);
-            for (newTag of newTagsID) {
-                if (!oldTags.includes(newTag)) // if old ones does not include (i.e. Used)
-                    await Tag.findOneAndUpdate({_id: newTag}, {'$inc': {frequency: 1}})
-            }
-            for (oldTag of oldTags) {
-                if (!newTags.includes(oldTag)) { // if new ones does not include (i.e. Removed)
-                    await Tag.findOneAndUpdate({_id: oldTag}, {'$inc': {frequency: -1}});
-                    /* 
-                    // Delete if frequency == 0
-                    let tag = await Tag.findOne({_id: oldTag});
-                    tag.frequency--;
-                    if (tag.frequency == 0) await deleteTag({_id: oldTag});
-                    else await tag.save();
-                    */ 
+/**
+ * 
+ * @param {Object} props 
+ * @param {ObjectId} props.target Target (Rest) Entity _id.
+ * @param {ObjectId[]} oldTags Previously stored hashtags _id.
+ * @param {ObjectId[]} newTags New replacing hashtags _id.
+ * @returns {Promise<ObjectId[]>} List of hashtag _id. 
+ */
+var useTags = (props, oldTagsID = [], newTagsName = []) => {
+    var fetchTagsID = (props, names) => {
+        return new Promise((resolve, reject) => {
+            (async() => { try {
+                var tagsID = [];
+                for (tagName of names) {
+                    let tag = await findOrCreateTag({name: tagName, ...props})
+                    tagsID.push(tag._id);
                 }
+                return resolve(tagsID)
+            } catch (err) { return reject(err) }})()
+        })
+    }
+    return new Promise((resolve, reject) => {
+        (async() => { try {
+            var newTagsID = await fetchTagsID(props, newTagsName);
+            var newTags = newTagsID.map(id => id.toString());
+            var oldTags = oldTagsID.map(id => id.toString());
+            var addTags = newTags.filter(newTag => !oldTags.includes(newTag));
+            var delTags = oldTags.filter(oldTag => !newTags.includes(oldTag));
+            for (addTag of addTags) 
+                await Tag.updateOne({_id: addTag}, {$inc: {frequency: 1}}).exec();
+            for (delTag of delTags) {
+                let tag = await Tag.findOneAndUpdate({_id: delTag}, {$inc: {frequency: -1}}, {new: true}).exec();
+                if (tag.frequency == 0) await deleteTag({_id: delTag});
             }
-            return resolve(newTagsID);
+            return resolve(newTags);
         } catch (err) { return reject(err) }})()
     })
 }
 
 module.exports = {
-    findTag,
-    //createTag,
-    //updateTag,
-    deleteTag,
-    fetchTagsID,
+    findTags,
     useTags,
+}
+
+// ------ OBSOLETE functions ------
+var createTag = (data) => {
+    return new Promise((resolve, reject) => {
+        (async() => { try {
+            const tag = await findTag(data);
+            if (tag != null) return resolve(tag);
+            const newTag = await new Tag(data).save()
+            return resolve(newTag);
+        } catch (err) { return reject(err) }})()
+    })
+}
+
+var updateTag = (filter, data) => {
+    return new Promise((resolve, reject) => {
+        (async() => { try {
+            const updatedTag = await Tag.findOneAndUpdate(filter, data).exec();
+            if (updatedTag != null) return reject("Tag exists.");
+            return resolve(updatedTag);
+        } catch (err) { return reject(err) }})()
+    })
 }

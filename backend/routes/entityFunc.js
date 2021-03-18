@@ -173,18 +173,7 @@ var deleteEntity = (filter) => {
 
 // ---------- Functional -----------
 
-var addPost = (authorFilter, targetFilter, data) => {
-    return new Promise((resolve, reject) => {
-        (async () => { try { 
-            const createdPost = await postFunc.createPost(authorFilter, targetFilter, data);
-            const query = {'$push': {post: {'$each': [createdPost._id], '$position': 0}}};
-            await Entity.findOneAndUpdate(authorFilter, query)
-            if (data.type) await Entity.findOneAndUpdate(targetFilter, query);
-            const updatedEntity = await findEntity(authorFilter); 
-            return resolve(updatedEntity);
-        } catch(err) { return reject(err) } })();
-    })
-}
+
 
 module.exports = {
     allUserPop,

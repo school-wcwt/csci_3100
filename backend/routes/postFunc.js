@@ -1,9 +1,31 @@
 const Post = require("../models/Post")
-const Comment = require("../models/Comment")
-const { findEntityID } = require("./entityFunc")
 const { useTags } = require("./hashtagFunc")
+const { deleteComments } = require('./commentFunc');
 
+/**
+ * Find multiple posts. Comments and Likes are NOT populated.
+ * @param {Object} filter 
+ * @returns 
+ */
 var findPost = (filter) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            const post = await Post.findOne(filter)
+            .populate('author', 'entityID username tag name profPhoto')
+            .populate('target', 'entityID username tag name profPhoto')
+            .populate('hashtag', 'name')
+            .exec();
+            return resolve(post);
+        } catch(err) { return reject(err) }})(); 
+    })
+}
+
+/**
+ * Find multiple posts. Comments and Likes are NOT populated.
+ * @param {Object} filter 
+ * @returns 
+ */
+ var findPosts = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             const post = await Post.find(filter)
@@ -16,86 +38,107 @@ var findPost = (filter) => {
     })
 }
 
-var createPost = (authorFilter, targetFilter, data) => {
+/**
+ * Create a new post.
+ * @param {Object} props 
+ * @param {ObjectId} props.author
+ * @param {ObjectId} props.target
+ * @param {string} authorEntityID
+ * @param {Object} data 
+ * @returns 
+ */
+var createPost = (props, authorEntityID, data) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            // Fetch author, target _id
-            const [author, target] = await Promise.all([
-                findEntityID(authorFilter), 
-                findEntityID(targetFilter)
-            ]);
-            if (author == null) throw new Error('Entity not found.');
-            if (target == null) throw new Error('Post not found.');
-            // Fetch tags _id
-            var hashtag = data.hashtag != null
-                ? await useTags([], data.hashtag) : [];
-            // Save post
-            const savedPost = await new Post({
-                postID: `${author.entityID}-${Date.now()}`,
-                author: author.entity_id,
-                target: target.entity_id,
-                createdTime: Date.now(),
+            var newPost = new Post({
+                postID: `${authorEntityID}-${Date.now()}`,
+                ...props,
                 ...data,
-                hashtag: hashtag,
-            }).save()
+                createdTime: Date.now(),
+            })
+            // Fetch tags _id
+            if (data.hashtag != null) {
+                var hashtag = await useTags(
+                    {...props, post: newPost._id},
+                    [], data.hashtag, 
+                )
+                newPost.hashtag = hashtag;
+            }
+            // Save post
+            await newPost.save();
+            const savedPost = findPost({_id: newPost._id});
             return resolve(savedPost);
         } catch (err) { return reject(err) }})()
     })
 }
 
-var updatePost = (filter, data) => {
-    return new Promise((resolve, reject) => {
-        (async () => { try { 
-            // Search existing entity
-            const post = await Post.findOne(filter).exec();
-            if (post == null) throw new Error('Entity not found.');
-            // Fetch hashtag
-            if (data.hashtag != null) {
-                const hashtag = await useTags(post.hashtag, data.hashtag)
-                data.hashtag = hashtag;
-            }
-            // Change modifiedTime
-            data.modifiedTime = post.modifiedTime;
-            data.modifiedTime.push(Date.now());
-            // Update post
-            const updatedPost = await Post.findOneAndUpdate(filter, data).exec();
-            return resolve(updatedPost);
-        } catch(err) { return reject(err) }})(); 
-    })
-}
-
-var deletePost = (filter) => {
+/**
+ * Deletes a post and its respective comments. Modify relative tags.
+ * @param {Object} filter
+ * @returns {Promise<Object>} A promise with a deleted Post.
+ */
+ var deletePost = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             const deletedPost = await Post.findOneAndDelete(filter).exec();
             if (deletedPost == null) throw new Error('Post not found.');
+            await Promise.all([
+                deleteComments({post: deletedPost._id}),
+                useTags({ target: deletedPost.target }, deletedPost.hashtag, [])
+            ])
             return resolve(deletedPost);
         } catch(err) { return reject(err) }})(); 
     })
 }
 
-var likePost = () => {
+/**
+ * Updates a post.
+ * @param {Object} filter 
+ * @param {Object} [props]
+ * @param {ObjectId} [props.like] Entity _id of the initiate user.
+ * @param {ObjectId} [props.comment] Entity _id of the initiate user.
+ * @param {ObjectId} [props.addFlag]
+ * @param {Object} [data] Rest of update data (NOT including like or comment).
+ * @returns 
+ */
+var updatePost = (filter, props = null, data = null) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            // TODO 
+            // Search existing entity
+            const post = await Post.findOne(filter).exec();
+            if (post == null) throw new Error('Entity not found.');
+            // Query 
+            var updateQuery = {$push: {modifiedTime: Date.now()}}
+            if (data != null) {
+                updateQuery.$set = {...data};
+                if (data.hashtag != null) {
+                    var hashtag = await useTags({target: post.target}, post.hashtag, data.hashtag)
+                    updateQuery.$set.hashtag = hashtag
+                }
+            }
+            if (props != null && props.like != null) 
+                props.addFlag 
+                    ? updateQuery.$push.like = {$each: [props.like], $position: 0}
+                    : updateQuery.$pull.like = props.like;
+            if (props != null && props.comment != null)
+                props.addFlag 
+                    ? updateQuery.$push.comment = {$each: [props.comment], $position: 0}
+                    : updateQuery.$pull.comment = props.comment;
+            console.log(updateQuery);
+            // Update post
+            await Post.updateOne(filter, updateQuery).exec();
+            const updatedPost = await findPost({_id: post._id});
+            return resolve(updatedPost);
         } catch(err) { return reject(err) }})(); 
     })
 }
 
-var commentPost = () => {
-    return new Promise((resolve, reject) => {
-        (async () => { try { 
-            // TODO 
-        } catch(err) { return reject(err) }})(); 
-    })
-}
 
 
 module.exports = {
     findPost,
+    findPosts,
     createPost,
     updatePost,
     deletePost,
-    likePost,
-    commentPost
 }

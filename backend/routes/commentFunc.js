@@ -1,5 +1,14 @@
 const Comment = require("../models/Comment")
-const { findEntityID } = require("./entityFunc")
+
+var findComment = (filter) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var comment = await Comment.findOne(filter)
+                .populate('author', 'entityID username tag name profPhoto').exec()
+            return resolve(comment)
+        } catch(err) { return reject(err) }})(); 
+    })
+}
 
 var findComment = (filter) => {
     return new Promise((resolve, reject) => {
@@ -11,19 +20,20 @@ var findComment = (filter) => {
     })
 }
 
-var createComment = (authorFilter, postFilter, content) => {
+/**
+ * Create a comment.
+ * @param {Object} props 
+ * @param {ObjectId} props.author
+ * @param {ObjectId} props.post
+ * @param {string} authorEntityID
+ * @param {string} content
+ */
+var createComment = (props, authorEntityID, content) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            var [author, post] = await Promise.all([
-                findEntityID(authorFilter), 
-                findPost(postFilter),
-            ]);
-            if (author == null) throw new Error('Entity not found.');
-            if (post == null) throw new Error('Post not found.');
             var newComment = await new Comment({
-                commentID: `${author.entityID}-${Date.now()}`,
-                author:    author.entity_id,
-                target:    post._id,
+                commentID: `${authorEntityID}-${Date.now()}`,
+                ...props,
                 content:   content,
                 time:      Date.now(),
             }).save()
@@ -54,9 +64,19 @@ var deleteComment = (filter) => {
     })
 }
 
+var deleteComments = (filter) => {
+    return new Promise((resolve, reject) => {
+        (async() => { try {
+            const delCount = await Comment.deleteMany(filter).exec();
+            return resolve(delCount);
+        } catch (err) { return reject(err) }})()
+    })
+}
+
 module.exports = {
     findComment,
     createComment,
     //updateComment,
     deleteComment,
+    deleteComments,
 }
