@@ -25,6 +25,10 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - Finally use `git push` to upload file into github
 - If you make and error and want to recover the whole project, you can run `git reset --hard`
 
+### How to trace back version
+- use `git log --oneline` to see which version you would like to re-trace and copy the id
+- use `git checkout yourid` to review the previous version
+
 ### What if you just want to test but do not want to ruin the git folder ?
 - Actually you can have a set of copied file and do any testing and commit without affacting the main site
 - Step 1: Create a new branch  by `git checkout -b NewBranchName`
