@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import Routing from './pages/routing.js';
 //import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components';
 

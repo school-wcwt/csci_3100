@@ -1,17 +1,19 @@
 import React from 'react';
 //import PrimarySearchAppBar from './component/appBar/appBar.js';
 //import TopHead from './component/topHead/topHead.js';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button ,Form, FormControl, Container, Row, Col} from 'react-bootstrap';
-import { makeStyles, StepLabel,CardMedia,Card,Grid  } from "@material-ui/core";
+import { Carousel, Container, Row, Col } from 'react-bootstrap';
+//import { makeStyles, StepLabel,CardMedia,Card,Grid  } from "@material-ui/core";
 //import styles from './mystyle.module.css'; 
 //import  {ReactComponent as Logo } from '../../image/logo.png';
-import logo from '../../../../image/icon2.PNG'; // Tell webpack this JS file uses this image
-import SingleShowList from '../../component/gridList/gridList';
-import MediaCard from '../../component/cardMedia/cardMedia';
+//import logo from '../img/icon2.png'; // Tell webpack this JS file uses this image
+import icon from '../user.png';
+
+//import SingleShowList from '../../component/gridList/gridList';
+//import MediaCard from '../../component/cardMedia/cardMedia';
 //<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 //---------------------------------------------
 
-const useStyles = makeStyles((theme) => ({ 
+/*const useStyles = makeStyles((theme) => ({ 
   navbars:{
     backgroundColor: 'lightcoral',
     color:"white"
@@ -40,12 +42,12 @@ const useStyles = makeStyles((theme) => ({
   addBottomPad:{
     paddingBottom: "10em"
   }
-}));
+}));*/
 
 
 //------------------------------------
 
-  //const styles =useStyles();
+//const styles =useStyles();
 
 //k
 //<img src={imgs[0]}/>
@@ -53,107 +55,150 @@ const useStyles = makeStyles((theme) => ({
 //https://reactstrap.github.io/components/layout/
 
 
-const Feed_proc1= (para)=>{
-  const classes = useStyles();
-  const rest=para.props.rest;
-  const hashtag_list= para.props.hashtag;
-  var folder = "./img/feed_all/";
-  var image_set = ["1.jpg","2.jpg","3.jpg"];
-  var mytileData = [
-    {
-       img: folder + image_set[0],
-       title: 'Image0',
-       author: 'author',
-    },
-    {
-      img: folder + image_set[1],
-      title: 'Image1',
-      author: 'author2',
-    },
-    {
-      img: folder + image_set[2],
-      title: 'Image2',
-      author: 'author2',
-    },
+const Feed_proc1 = (para) => {
+    //const classes = useStyles();
+    const rest = para.props.rest;
+    const hashtag_list = para.props.hashtag;
+    var folder = "./img/feed_all/";
+    var image_set = ["1.jpg", "2.jpg", "3.jpg"];
+    /* var mytileData = [
+         {
+             img: folder + image_set[0],
+             title: 'Image0',
+             author: 'author',
+         },
+         {
+             img: folder + image_set[1],
+             title: 'Image1',
+             author: 'author2',
+         },
+         {
+             img: folder + image_set[2],
+             title: 'Image2',
+             author: 'author2',
+         },
+ 
+     ];*/
+    const hashtag_section = hashtag_list.map((hashtag) =>
+        <Col> {hashtag.name}</Col>
+    );
 
-  ];
-const hashtag_section= hashtag_list.map((hashtag)=>
-<Col xs="2"> {hashtag.name}</Col>
-);
+
+    return (
+        <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral" }}>
+            <Row>
+                <Col xs="2">
+                    <Row><img src={icon} height="60" width="60" alt="mATE." className="mx-auto my-2"></img></Row>
+                    <Row><i className="fa fa-ellipsis-h mx-auto my-2" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row>
+                    <Row><i className="fa fa-heart-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row>
+                    <Row><i className="fa fa-comment-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row>
+                </Col>
+
+                <Col xs="8" className="px-5">
+                    <Row className="mt-4">
+                        <div><span style={{ color: "LightCoral", fontWeight: "800" }}>{rest.author}</span> posted on 16/3/2021 at <span style={{ color: "LightCoral", fontWeight: "800" }}>Restaurant</span></div>
+                    </Row>
+
+                    <Row className="my-3 ml-4">{rest.comment}</Row>
+
+                    <Row className="mb-4">
+
+                        <Carousel fade className="w-100">
+                            <Carousel.Item style={{ height: "auto", maxHeight: "350px" }}>
+                                <img
+                                    className="d-block w-100"
+                                    src={folder + image_set[0]}
+                                    alt="First slide"
+                                />
+                                <Carousel.Caption>
+                                    <p>Dish1</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+
+                            <Carousel.Item style={{ height: "auto", maxHeight: "350px" }}>
+                                <img
+                                    className="d-block w-100"
+                                    src={folder + image_set[1]}
+                                    alt="Second slide"
+                                />
+                                <Carousel.Caption>
+                                    <p>Dish2</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+
+                            <Carousel.Item style={{ height: "auto", maxHeight: "350px" }}>
+                                <img
+                                    className="d-block w-100"
+                                    src={folder + image_set[2]}
+                                    alt="Third slide"
+                                />
+                                <Carousel.Caption>
+                                    <p>Dish3</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                        </Carousel>
 
 
-return(
-<Container>
-<Row>
-    <Col xs="1">
-      <Row>Icon</Row>
-      <Row>      <Col xs="1">
-        <Row>dots</Row>
-        <Row>Heart</Row>
-        <Row>Talk</Row>
-      </Col>     </Row>
-    </Col>
-    <Col>     
-        <Row>
-              <Col>
-                <nobr><div><div className={classes.user_style}>{rest.author}</div>
-            <div className={classes.timetext}> posted on 16/3/2021</div>
-            </div></nobr>
-            at <div className={classes.user_style}> Restaurant</div>
-            </Col>
-      </Row>
-      <Row>
-        <SingleShowList tileData = {mytileData}/>
-        <MediaCard image_path = {folder + image_set[0]}/>
-        <Col xs="2.9">
-        </Col>
-        <Col xs="2.9"><img src= {logo} height="100" width="150" alt="mATE." className=" float-left" id="icon"></img></Col>
-        <Col xs="2.9"><img src= {logo} height="100" width="150" alt="mATE." className=" float-left" id="icon"></img></Col>
-        <Col xs="2.9"><img src= {logo} height="100" width="180" alt="mATE." className=" float-left" id="icon"></img></Col>
-        <Col xs="2.9"><img src= {logo} height="100" width="150" alt="mATE." className=" float-left" id="icon"></img></Col>
-      </Row>
+                    </Row>
 
-      <Row>       
-      {hashtag_section}
 
-      </Row>
+                    <Row className="mb-4">
+                        <a href="#" className="badge mr-2 text-light" style={{ backgroundColor: "LightCoral" }}>{hashtag_section[0]}</a>
+                        <a href="#" className="badge mr-2 text-light" style={{ backgroundColor: "LightCoral" }}>{hashtag_section[1]}</a>
+                    </Row>
 
-      <Row>{rest.comment}</Row>
-      <Row> ----------------</Row>
-      <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
-      <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
-      <Row><Col xs="1">Icon</Col><Col xs="1">Username</Col> <Col>Me too!</Col></Row>
-      <div className={classes.addBottomPad}></div>
-      <div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
+                    <Row>
+                        <Col xs="1" className="m-auto">
+                            <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
+                        </Col>
+                        <Col xs="2" className="m-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User1</span></Col>
+                        <Col xs="9" className="m-auto">3.141592653589793238462643383279502884197169399375105820974944592307816406286 208998628034825342117067982148086513282306647093844609550582231725359408128481</Col>
+                    </Row>
 
-</Col>
-    <Col xs="1">Bell</Col>
-</Row>
-</Container>
-)
+                    <Row>
+                        <Col xs="1" className="m-auto">
+                            <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
+                        </Col>
+                        <Col xs="2" className="m-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User2</span></Col>
+                        <Col xs="9" className="m-auto">Me too!</Col>
+                    </Row>
+
+                    <Row>
+                        <Col xs="1" className="m-auto">
+                            <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
+                        </Col>
+                        <Col xs="2" className="m-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User3</span></Col>
+                        <Col xs="9" className="m-auto">Me too!</Col>
+                    </Row>
+
+                </Col>
+                <Col xs="2"><Row><i className="fa fa-bell-o mx-auto my-4" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row></Col>
+            </Row>
+        </Container>
+    )
 
 }
 
-function Feed(){
-  const greeting = 'Welcome to React';
-  const namelist= ['a','b','c'];
-  //list of objects
-  const restaurant_list= [{"author": 'a1', "comment":'comment1' },{"author": 'a2', "comment":'comment2' }];
-  const hashtag_list= [
-    [{"name": 'h1.1', "frequency":11 },{"name": 'h1.2', "frequency":22}],
+function Feed() {
+    //const greeting = 'Welcome to React';
+    //const namelist= ['a','b','c'];
+    //list of objects
+    const restaurant_list = [{ "author": 'User_A', "comment": 'I am Gbond_A. This restaurant is good.' }, { "author": 'User_B', "comment": 'I am Gbond_B. This restaurant is Bad.' }];
+    const hashtag_list = [
+        [{ "name": '#hashtag1_1', "frequency": 11 }, { "name": '#hashtag1_2', "frequency": 22 }],
 
-    [{"name": 'h2.1', "frequency":11 },{"name": 'h2.2', "frequency":22}]
-];
-  var feed_components=[];
-  var i=2;
-  var list=[];
-  for (i=0;i<restaurant_list.length;i++){
-    var rest=restaurant_list[i];
-    var hashtag= hashtag_list[i];
-    var list= {rest,hashtag};
-    feed_components.push(<Feed_proc1 props={list} />);
-  }
-  return feed_components;
+        [{ "name": '#hashtag2_1', "frequency": 11 }, { "name": '#hashtag2_2', "frequency": 22 }]
+    ];
+    var feed_components = [];
+    var i = 2;
+    var list = [];
+    for (i = 0; i < restaurant_list.length; i++) {
+        var rest = restaurant_list[i];
+        var hashtag = hashtag_list[i];
+        var list = { rest, hashtag };
+        feed_components.push(<Feed_proc1 props={list} />);
+    }
+    return feed_components;
 }
 
 export default Feed;
