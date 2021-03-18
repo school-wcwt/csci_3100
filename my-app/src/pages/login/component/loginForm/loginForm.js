@@ -6,7 +6,7 @@ import axios from '../../../../axiosConfig';
 import {ChangeUserState,IsLogin,Set_userobj} from '../../../services/authService';
 import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
-
+import {Navbar,Form,FormControl,Nav} from 'react-bootstrap';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         color: "rgb(47, 79, 79)",
     },
+    welcome_message:{
+        color: "LightCoral", 
+        fontWeight:800
+    }
     
 }));
 
@@ -79,13 +83,14 @@ const LoginForm = (props) => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
-            
+            <Nav className={classes.welcome_message} >Welcome Back to mATE</Nav>
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Password" label = "Password" name = "Password" type="password" />
             <input id="go_login" type="submit" style = {{display:"none"}}/>
             <label for="go_login">
+                
                 <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">
                     Login
                 </Button>
@@ -101,16 +106,17 @@ const LoginForm = (props) => {
 };
 
 const InvalidData = (data)=>{
-    var valid_letter = /^[0-9a-zA-Z_]+$/;
+    var valid_letter_name = /^[0-9a-zA-Z_-]+$/;
+    var valid_letter_pw = /^[0-9a-zA-Z]+$/;
     var pw_min_length = 5;
     if (data.Password !== data.PasswordCheck) { 
         alert("Password not match, please check again"); return true;}
     else if (data.Password.length < pw_min_length){
         alert(`Please make sure password length at least ${pw_min_length} letters`); 
         return true;}
-    else if (!valid_letter.test(data.Password)){
+    else if (!valid_letter_pw.test(data.Password)){
         alert(`Please make sure password letter contains 0-9,a-z,A-Z only`); return true;}
-    else if (!valid_letter.test(data.UserName)){
+    else if (!valid_letter_name.test(data.UserName)){
         alert(`Please make sure User Name letter contains 0-9,a-z,A-Z only`); return true;}
     return false;
         
