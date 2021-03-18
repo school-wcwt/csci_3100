@@ -1,36 +1,51 @@
 ### Entities Route
 
 #### GET entity/:entityID
-- Get data of an Entity and its its corresponding User/Rest of `entityID`.
+- Get data of an Entity.
 - **Body:** null
 - **Status Code**:
     - 200: Entity found.
     - 204: Entity not found.
     - 400: Unknown error.
-- **Returns:** `User/Rest` with `Entity` and `groupList` populated, or; `null` if not found
+- **Returns:** `Entity` (`[U]` with `groupList` populated), or; `null` if not found
 
-
-#### POST entity/new
-- Add a new Entity and its corresponding User/Rest into DB.
+#### POST entity/
+- Get data of multiple Entities.
 - **Body:** Object
 
 Key      | Type   | Required | Description
 :-------:|:------:|:---:|--|
-type     | Number | Yes | 0: User, 1: Restaurant.
-username | String | Yes | Username or restaurant's english name (\*1).
-email    | String | Yes | Email or restaurant's address.
-password | Hash   |     | Hashed password (using `bcrypt`).
-name     | String |     | Name or restaurant's chinese name (\*1).
-phone    | String |     | Phone number.
-status   | String |     | Gender or Restaurant's opening status.
-openingHr| [[String]] | | Restaurant's opening hour.
+filter   | Object | Yes | Entities filter. 
 
-*\*1*: Preferrably both names, otherwise chinese name will be used as username.
+- **Status Code**:
+    - 200: Entity found.
+    - 204: Entity not found.
+    - 400: Unknown error.
+- **Returns:** `Entity` (`[U]` with `groupList` populated), or; `null` if not found
+
+#### POST entity/new
+- Create a new Entity.
+- **Body:** Object
+
+Key      | Type     | Required | Description
+:-------:|:--------:|:---:|--|
+type     | String   | Yes | `'User'` or `'Rest'`.
+username | String   | Yes | Username or restaurant's english name.
+password | String   | Yes | [`User`] Password.
+email    | String   | Yes | [`User`] Email.
+address  | String   | Yes | [`Rest`] Address.
+name     | String   |     | Name or restaurant's chinese name.
+phone    | String   |     | Phone number.
+profPhoto| [String] |     | Link to profile photo(s).
+gender   | String   |     | [`User`] Gender
+status   | String   |     | [`Rest`] Opening status.
+openingHr|[[String]]|     | [`Rest`] Opening hours.
+
 - **Status Code**:
     - 201: Entity created.
-    - 409: (E)Mail already exists in DB.
+    - 409: Email already exists in DB.
     - 400: Unknown error.
-- **Returns:** `User/Rest` with `Entity` and `groupList` populated.
+- **Returns:** `Entity` (`[U]` with `groupList` populated)
 
 #### PUT entity/:entityID
 - Edit an Entity of `entityID`.
@@ -38,20 +53,15 @@ openingHr| [[String]] | | Restaurant's opening hour.
 
 Key      | Type   | Required | Description
 :-------:|:------:|:---:|--|
-data     | Object | Yes | Key-value pair(s) of the edit. Ref: Entity.
-filter   | Object |     | Filter for searching the entity. Default as `entityID` in URL. Ref: Entity.
+data     | Object | Yes | Edit content.
+filter   | Object |     | Entity filter. Default as `entityID`
 
 - **Status Code**:
     - 200: Entity updated.
     - 404: Entity not found.
-    - 409: (E)Mail already exists in DB. (Only on updating emails.
+    - 409: Email already exists in DB. (Only on updating emails.)
     - 400: Unknown error.
-- **Returns:** Object
-
-Key           | Type   | Description
-:------------:|:------:|--|
-oldEntity     | Object | Previous entity.
-updatedentity | Object | Updated entity.
+- **Returns:** `Entity` (`[U]` with `groupList` populated)
 
 #### DELETE entity/:entityID
 - Delete an Entity of `entityID`.
@@ -59,20 +69,15 @@ updatedentity | Object | Updated entity.
 
 Key      | Type   | Required | Description
 :-------:|:------:|:---:|--|
-filter   | Object |     | Filter for searching the entity. Default as `entityID` in URL. Ref: Entity. 
+filter   | Object |     | Entity filter. Default as `entityID`.
 
 - **Status Code**:
     - 200: Entity deleted.
     - 404: Entity not found.
     - 400: Unknown error.
-- **Returns:** Object
+- **Returns:** `Entity`
 
-Key             | Type   | Description
-:--------------:|:------:|--|
-deletedEntity   | Object | Deleted entity. Ref: Entity.
-deltedSubentity | Object | Deleted subeneity. Ref: User/Rest. 
-
-##
+### User Routes
 
 #### POST user/auth
 - Authenticate (log in) an user.
@@ -80,72 +85,222 @@ deltedSubentity | Object | Deleted subeneity. Ref: User/Rest.
 
 Key      | Type   | Required | Description
 :-------:|:------:|:---:|--|
-filter   | Object | Yes | Filter for searching the entity. Preferrably `email` or `entityID`.
-password | Object | Yes | Hashed password (using `bcrypt`).
+filter   | Object | Yes | Entity filter. Preferrably `email` or `entityID`.
+password | String | Yes | Password.
 
 - **Status Code**:
     - 200: Authentication success.
     - 403: Authentication failed. Incorrect Password.
     - 404: Entity not found.
     - 400: Unknown error.
-- **Returns:** `User/Rest` with `Entity` and `groupList` populated.
+- **Returns:** `Entity` with `groupList` populated.
 
-#### POST user/:entityID/groupList
+#### PATCH user/:entityID/follow/:entityID
+- Follow or unfollow an Entity.
+- **Body:** Object
+
+Key          | Type    | Required | Description
+:-----------:|:-------:|:---:|--|
+addFlag      | Boolean | Yes | Whether to add or delete a follow.
+authorFilter | Object  |     | Author (user) filter. Default as `entityID`.
+targetFilter | Object  |     | Target (entity) filter. Default as `entityID`.
+
+- **Status Code**:
+    - 200: Success.
+    - 404: Entity not found.
+    - 400: Unknown error.
+- **Returns:** `Entity` with `groupList` populated.
+
+### GroupLists
+
+#### GET user/:entityID/groupList/:listName
+- Get content of a list `listName` under User with `entityID`.
+- **Body:** None
+- **Status Code**:
+    - 200: GroupList found.
+    - 204: GroupList not found.
+    - 400: Unknown error.
+- **Returns:** `GroupList` with `content` populated, or `null` if not found
+
+#### POST user/:entityID/groupList/:listName
 - Add a GroupList and push it under User with `entityID`.
 - **Body:** Object
 
 Key      | Type   | Required | Description
 :-------:|:------:|:---:|--|
-listName | Object | Yes | List name to be added.
+filter   | Object |  | Entity filter. Default as `entityID`.
+listName | String |  | List name. Default as `listName`.
 
 - **Status Code**:
     - 201: Success.
     - 404: Entity not found.
+    - 409: List with same name exists.
     - 400: Unknown error.
-- **Returns:** `User` with `Entity` and `groupList` populated.
+- **Returns:** `Entity` with `groupList` populated
 
-#### DELETE user/:entityID/groupList
+#### DELETE user/:entityID/groupList/:listName
 - Delete a GroupList and pull it under User with `entityID`.
 - **Body:** Object
 
 Key      | Type   | Required | Description
 :-------:|:------:|:---:|--|
-listName | Object | Yes | List name to be deleted.
+filter   | Object |  | Entity filter. Default as `entityID`.
+listName | String |  | List name. Default as `listName`.
 
 - **Status Code**:
     - 200: Success.
-    - 404: Entity not found.
+    - 404: Entity/List not found.
     - 400: Unknown error.
-- **Returns:** `User` with `Entity` and `groupList` populated.
+- **Returns:** `Entity` with `groupList` populated
 
-#### POST user/:entityID/groupList/:listName
-- Add a restaurant (Entity) into a user's list.
+#### PUT user/:entityID/groupList/:listName
+- Edit a GroupList (NOT include content).
 - **Body**: Object
 
-Key          | Type   | Required | Description
-:-----------:|:------:|:---:|--|
-targetFilter | Object | Yes | Filter of the target (restaurant) to be added into the list. 
+Key      | Type   | Required | Description
+:-------:|:------:|:---:|--|
+data     | Object | Yes | Data to be updated.
+filter   | Object |     | Entity filter. Default as `entityID`.
+listName | String |     | List name. Default as `listName`.
 
 - **Status Code**:
     - 200: Success.
-    - 404: Entity not found.
+    - 404: Entity/List not found.
     - 400: Unknown error.
-- **Returns:** `User` with `Entity` and `groupList` populated.
+- **Returns:** `GroupList` with `content` populated
 
-#### DELETE user/:entityID/groupList/:listName
-- Add a restaurant (Entity) into a user's list.
+#### PATCH user/:entityID/groupList/:listName
+- Add/Delete a restaurant into/in a GroupList.
 - **Body**: Object
 
-Key          | Type   | Required | Description
-:-----------:|:------:|:---:|--|
-targetFilter | Object | Yes | Filter of the target (restaurant) to be added into the list. 
+Key          | Type    | Required | Description
+:-----------:|:-------:|:---:|--|
+targetFilter | Object  | Yes | Target (restaurant) filter. 
+addFlag      | Boolean | Yes | Whether to add or delete.
+authorFilter | Object  |     | Author (user) filter. Default as `entityID`.
+listName     | String  |     | List name. Default as `listName`.
 
 - **Status Code**:
     - 200: Success.
+    - 404: Entity/List not found.
+    - 400: Unknown error.
+- **Returns:** `GroupList` with `content` populated
+
+### Posts / Comment / Like
+
+#### POST user/:entityID/post/new
+- Add a new Post.
+- **Body:** Object
+
+Key          | Type    | Required | Description
+:-----------:|:-------:|:---:|--|
+targetFilter | Object  | Yes | Target (restaurant) filter. 
+data         | Object  | Yes | Data to be added.
+- type       | Number  | Yes | 0: Check-in, 1: Review 
+- content    | String  | Yes | Content of the post.
+- rating     | Number  | Yes | [`Review`] Rating between 0-10. 
+- hashtag    | String  |     | Embedded hashtag(s).
+- photo      | [String]|     | Link to attached photo(s).
+authorFilter | Object  |     | Author (user) filter. Default as `entityID`.
+
+- **Status Code**:
+    - 201: Success.
     - 404: Entity not found.
     - 400: Unknown error.
-- **Returns:** `User` with `Entity` and `groupList` populated.
+- **Returns:** `Post` with `author`, `target`, and `hashtag` populated
+
+#### DELETE user/post/:postID
+- Delete a Post, delete attached comments, and update related tags.
+- **Body:** Object
+
+Key      | Type   | Required | Description
+:-------:|:------:|:---:|--|
+filter   | Object |     | Post filter. Default as `postID`.
+
+- **Status Code**:
+    - 200: Success.
+    - 404: Post/Comment/Tag not found.
+    - 400: Unknown error.
+- **Returns:** `Post`
 
 
+#### PUT user/post/:postID
+- Edit a post.
+- **Body:** Object
+
+Key      | Type   | Required | Description
+:-------:|:------:|:---:|--|
+data     | Object | Yes | Data used to modify.
+filter   | Object |     | Post filter. Default as `postID`.
+
+- **Status Code**:
+    - 200: Success.
+    - 404: Post not found.
+    - 400: Unknown error.
+- **Returns:** `Post` with `author`, `target`, and `hashtag` populated
 
 
+#### PATCH user/:entityID/post/:postID/like
+- Like a post.
+- **Body:** Object
+
+Key          | Type    | Required | Description
+:-----------:|:-------:|:---:|--|
+addFlag      | Boolean | Yes | Whether to add or delete a like.
+authorFilter | Object  |     | Author (user) filter. Default as `entityID`.
+postFilter   | Object  |     | Post filter. Default as `postID`.
+
+- **Status Code**:
+    - 200: Success.
+    - 404: Post/Entity not found.
+    - 400: Unknown error.
+- **Returns:** `Post` with `author`, `target`, and `hashtag` populated
+
+
+#### POST user/:entityID/post/:postID/comment/new
+- Add a new comment and append it to a Post.
+- **Body:** Object
+
+Key          | Type    | Required | Description
+:-----------:|:-------:|:---:|--|
+data         | Object  | Yes | Data to be added.
+- content    | String  | Yes | Content of the comment.
+authorFilter | Object  |     | Author (user) filter. Default as `entityID`.
+postFilter   | Object  |     | Post filter. Default as `postID`.
+
+- **Status Code**:
+    - 201: Success.
+    - 404: Post/Entity not found.
+    - 400: Unknown error.
+- **Returns:** `Post` with `author`, `target`, and `hashtag` populated
+
+
+#### DELETE user/:entityID/post/:postID/comment/:commentID
+- Delete a comment and remove it from a Post.
+- **Body:** Object
+
+Key      | Type   | Required | Description
+:-------:|:------:|:---:|--|
+filter   | Object |     | Comment filter. Default as `commentID`.
+
+- **Status Code**:
+    - 200: Success.
+    - 404: Post/Comment not found.
+    - 400: Unknown error.
+- **Returns:** `Post` with `author`, `target`, and `hashtag` populated
+
+
+#### PUT user/:entityID/post/:postID/comment/:commentID
+- Edit a comment.
+- **Body:** Object
+
+Key      | Type   | Required | Description
+:-------:|:------:|:---:|--|
+data     | Object | Yes | Data used to modify.
+filter   | Object |     | Comment filter. Default as `commentID`.
+
+- **Status Code**:
+    - 200: Success.
+    - 404: Post/Comment not found.
+    - 400: Unknown error.
+- **Returns:** `Post` with `author`, `target`, and `hashtag` populated
