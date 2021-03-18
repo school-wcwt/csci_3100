@@ -1,11 +1,13 @@
 var mongoose = require('mongoose');
+var Entity = require('./Entity');
 
 var UserSchema = mongoose.Schema({
-    entityID:      { type: String, required: true, unique: true },
-    entity:        { type: mongoose.Schema.Types.ObjectId, ref:'Entity', required: true, unique: true },
-    followingRest: [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }],
-    followingUser: [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }],
+    email:     { type: String, required: true, unique: true },
+    password:  { type: String, required: true },
+    gender:    { type: String },
+    followingRest: [{ type: mongoose.Schema.Types.ObjectId, ref:'Rest' }],
+    followingUser: [{ type: mongoose.Schema.Types.ObjectId, ref:'User' }],
     groupList:     [{ type: mongoose.Schema.Types.ObjectId, ref:'GroupList' }],
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = Entity.discriminator('User', UserSchema);

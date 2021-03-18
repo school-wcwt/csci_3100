@@ -29,7 +29,9 @@ const commentFunc = require('./routes/commentFunc');
 
 app.listen(3100);
 
-//tom_wong-9190 60506e3e9d24911e1dcc0fe8
-//MyRest        6051acd99dea5f25e689e720
+//jon-0571         60533f9e6019086c692576a9
+//jon-rest2-6053   60533f7de94b6f6bc1a40599
 
-
+/*postFunc.createPost({author: '60533f9e6019086c692576a9', target: '60533f7de94b6f6bc1a40599'}, 'jon-0571', {
+    type: 1, content: 'Fuck me', hashtag: ['Japan', 'OK-la']
+}).then(res => console.log(res));*/

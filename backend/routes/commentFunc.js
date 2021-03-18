@@ -34,8 +34,8 @@ var createComment = (props, authorEntityID, content) => {
             var newComment = await new Comment({
                 commentID: `${authorEntityID}-${Date.now()}`,
                 ...props,
-                content:   content,
-                time:      Date.now(),
+                content: content,
+                time:    Date.now(),
             }).save()
             var savedComment = await findComment({_id: newComment._id})
             return resolve(savedComment);

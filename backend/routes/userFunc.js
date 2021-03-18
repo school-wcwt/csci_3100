@@ -1,6 +1,4 @@
-var Entity = require('../models/Entity');
-var User   = require('../models/User');
-var {findEntity, findEntityID} = require('./entityFunc');
+var {findEntity} = require('./entityFunc');
 const postFunc = require('./postFunc');
 const commentFunc = require('./commentFunc');
 var groupListFunc = require('./groupListFunc');
@@ -10,7 +8,7 @@ var bcrypt = require('bcrypt');
 var auth = (filter, password) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
-            var entity = await Entity.findOne(filter).exec()
+            var entity = await findEntity(filter, {select: ''}).exec()
             if (entity.type || entity == null) throw new Error('Entity not found.');
             var match = await bcrypt.compare(password, entity.password)
             if (!match) throw new Error('Incorrect password.')
@@ -26,13 +24,13 @@ var createPost = (authorFilter, targetFilter, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             var [author, target] = await Promise.all([
-                findEntityID(authorFilter), 
-                findEntityID(targetFilter)
+                findEntity(authorFilter), 
+                findEntity(targetFilter)
             ]);
             if (author == null || target == null) throw new Error('Entity not found.');
             const newPost = await postFunc.createPost({
-                author: author.entity_id, 
-                target: target.entity_id
+                author: author._id, 
+                target: target._id
             }, author.entityID, data)
             return resolve(newPost);
         } catch(err) { return reject(err) } })();
@@ -62,7 +60,7 @@ var deletePost = (filter) => {
 var likePost = (postFilter, authorFilter, addFlag = true) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            var author = await findEntityID(authorFilter);
+            var author = await findEntity(authorFilter);
             if (author == null) throw new Error('Entity not found.');
             var updatedPost = await postFunc.updatePost(
                 postFilter, {like: author._id, addFlag: addFlag});
@@ -75,12 +73,12 @@ var commentPost = (postFilter, authorFilter, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             var [author, post] = await Promise.all([
-                findEntityID(authorFilter),
+                findEntity(authorFilter),
                 postFunc.findPost(postFilter),
             ]);
             if (author == null || post == null) throw new Error('Entity not found.');
             var comment = await commentFunc.createComment(
-                {author: author.entity_id, post: post._id}, 
+                {author: author._id, post: post._id}, 
                 author.entityID, data);
             var updatedPost = await postFunc.updatePost(
                 postFilter, {comment: comment._id, addFlag: true}, null);
@@ -168,8 +166,8 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag = 1) => {
 
 module.exports = {
     auth,
-    updateFollow,
+    /*updateFollow,
     updateList,
     updateListName,
-    updateListContent,
+    updateListContent,*/
 }

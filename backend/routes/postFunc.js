@@ -59,7 +59,7 @@ var createPost = (props, authorEntityID, data) => {
             // Fetch tags _id
             if (data.hashtag != null) {
                 var hashtag = await useTags(
-                    {...props, post: newPost._id},
+                    {target: props.target},
                     [], data.hashtag, 
                 )
                 newPost.hashtag = hashtag;

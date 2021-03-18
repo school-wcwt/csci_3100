@@ -1,11 +1,12 @@
 var mongoose = require('mongoose');
+var Entity = require('./Entity');
 
 var RestSchema = mongoose.Schema({
-    entityID:  { type: String, required: true, unique: true },
-    entity:    { type: mongoose.Schema.Types.ObjectId, ref:'Entity', required: true, unique: true },
+    address:   { type: String, required: true },
+    openingHr: [[{ type: String }]],
     rating:    { type: Number, required: true, default: 0 },
-    admin:     [{ type: mongoose.Schema.Types.ObjectId, ref:'Entity' }],
+    admin:     [{ type: mongoose.Schema.Types.ObjectId, ref:'User' }],
     resv:      [{ type: mongoose.Schema.Types.ObjectId, ref:'Resv' }],
 });
 
-module.exports = mongoose.model('Rest', RestSchema);
+module.exports = Entity.discriminator('Rest', RestSchema);

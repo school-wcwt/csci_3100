@@ -1,5 +1,4 @@
 const GroupList = require("../models/GroupList")
-const { findEntityID } = require("./entityFunc")
 
 var findGroupList = (filter) => {
     return new Promise((resolve, reject) => {
