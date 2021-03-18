@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-rou
 import {send_validation_email} from '../../../../component/email/email';
 
 
+
 const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -16,12 +17,18 @@ const useStyles = makeStyles((theme) => ({
     },
     main_buttom_style: {
         margin: theme.spacing(1),
-        width: "95%",
         height: "8vh",
+        width: theme.spacing(55),
+        [theme.breakpoints.up("lg")]: {
+            width: theme.spacing(68),
+        }
     },
     buttom_style: {
         margin: theme.spacing(1),
-        width: "95%",
+        width: theme.spacing(55),
+        [theme.breakpoints.up("lg")]: {
+            width: theme.spacing(68),
+        }
     },
 
     extendedIcon: {
@@ -82,7 +89,7 @@ const LoginForm = (props) => {
                 <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">
                     Login
                 </Button>
-            </label>            
+            </label>   
             <label for = "go_register">
                 <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
                     Register
