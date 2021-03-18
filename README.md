@@ -8,7 +8,13 @@ use the following code to download the file
 ```
 git clone git@github.com:school-wcwt/csci_3100.git
 ```
-- cd to my-app and run `npm init` and `npm install` and `npm start`
+### Run Frontend
+- cd to my-app and run `npm init` and `npm install` and `npm start` (It is for frontend)
+### Run backend
+- Check `/my-app/src/axiosConfig.js` file and see the ***Mongo_port*** 
+- Check `/backend/server.js` file and see the `app.listen` , the port should be the same as ***Mongo_port***
+- run `node server.js` in /backend
+- In VScode terminal, there is PORTS, add this port to it 
 
 ### Commands you may use with ***git***
 - You may update file using `git pull` 
@@ -17,7 +23,7 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - You can either use `git add yourfile` to add them or `git add --all` to add all file in the waiting stage
 - After adding your modified file, use `git commit -m "your message" ` to conclude what you have updated
 - Finally use `git push` to upload file into github
-- If you make and error and wawnt to recover the whole project, you can run `git reset --hard`
+- If you make and error and want to recover the whole project, you can run `git reset --hard`
 
 ### What if you just want to test but do not want to ruin the git folder ?
 - Actually you can have a set of copied file and do any testing and commit without affacting the main site
