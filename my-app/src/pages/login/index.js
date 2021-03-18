@@ -54,10 +54,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 }));
-
+//{IsLogin()? <Redirect to={{ pathname: '/' }}/>:null}
 const Login = ()=>{
     var [panel, setPanel] = React.useState(0);
-    if (IsLogin())   <Redirect to={{ pathname: '/' }}/>
     const classes = useStyles();
     return (        
         <div className = {classes.bgImg}>
@@ -65,8 +64,6 @@ const Login = ()=>{
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
                 <img src = {LogoImg} className = {classes.paper_logo} style={{class:"center"}}/>
                 {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
-                {IsLogin()? <Redirect to={{ pathname: '/' }}/>:null}
-                {console.log("outed")}
                 {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
             </Paper>
         </div>
