@@ -66,7 +66,7 @@ router.put('/:userID/groupList/:listName', (req, res) => {
 router.patch('/:userID/groupList/:listName', (req, res) => {
     var authorFilter = req.body.authorFilter == null ? {entityID: req.params.userID} : req.body.authorFilter;
     var listName = req.body.listName == null ? req.params.listName : req.body.listName;
-    userFunc.updateListContent(filter, req.body.targetFilter, listName, req.body.addFlag)
+    userFunc.updateListContent(authorFilter, req.body.targetFilter, listName, req.body.addFlag)
     .then(updatedGroupList => res.status(200).send(updatedGroupList))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).send(err)

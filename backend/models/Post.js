@@ -5,7 +5,7 @@ var PostSchema = mongoose.Schema({
     type:         { type: Number, required: true }, // 0: Check-in, 1: Review
     author:       { type: mongoose.Schema.Types.ObjectId, ref:'User', required: true },
     target:       { type: mongoose.Schema.Types.ObjectId, ref:'Rest', required: true },
-    content:      { type: String },
+    content:      { type: String, required: true },
     photo:        [{ type: String }],
     createdTime:  { type: Date, required: true },
     modifiedTime: [{ type: Date }],
