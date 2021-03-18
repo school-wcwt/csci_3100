@@ -38,7 +38,8 @@ var createPost = (authorFilter, targetFilter, data) => {
             if (data.type == 1) // Review
                 await entityFunc.updateEntity(
                     {_id: target._id}, 
-                    {$push: {post: {$each: [newPost._id], $position: 0}}})
+                    { $inc:  {rating: data.rating},
+                      $push: {post: {$each: [newPost._id], $position: 0}} })
             return resolve(newPost);
         } catch(err) { return reject(err) } })();
     })
@@ -54,7 +55,8 @@ var deletePost = (filter) => {
             if (deletedPost.type == 1)
                 await entityFunc.updateEntity(
                     {_id: deletedPost.target},
-                    {$pull: {post: deletedPost._id}})
+                    { $inc:  {rating: -data.rating},
+                      $pull: {post: deletedPost._id} })
             return resolve(deletedPost);
         } catch(err) { return reject(err) } })();
     })

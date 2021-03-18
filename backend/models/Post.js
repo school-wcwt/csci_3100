@@ -9,6 +9,7 @@ var PostSchema = mongoose.Schema({
     photo:        [{ type: String }],
     createdTime:  { type: Date, required: true },
     modifiedTime: [{ type: Date }],
+    rating:       { type: Number },
     hashtag:      [{ type: mongoose.Schema.Types.ObjectId, ref:'Hashtag' }],
     like:         [{ type: mongoose.Schema.Types.ObjectId, ref:'User' }],
     comment:      [{ type: mongoose.Schema.Types.ObjectId, ref:'Comment' }],
