@@ -15,7 +15,7 @@ router.post('/new', (req, res) => {
     entityFunc.createEntity(req.body)
     .then(createdEntity => res.status(201).send(createdEntity))
     .catch(err => {
-        if (err.message == '(E)Mail exists.') res.status(409).send(err);
+        if (err.message == 'Email exists.') res.status(409).send(err);
         else res.status(400).send(err);
     })
 })
@@ -25,7 +25,7 @@ router.put('/:entityID', (req, res) => {
     entityFunc.updateEntity(filter, req.body.data)
     .then(updatedEntity => res.status(200).send(updatedEntity))
     .catch(err => {
-        if (err.message == '(E)Mail exists.') res.status(409).send(err);
+        if (err.message == 'Email exists.') res.status(409).send(err);
         else if (err.message == 'Entity not found.') res.status(404).send(err);
         else res.status(400).send(err);
     })
@@ -39,6 +39,15 @@ router.delete('/:entityID', (req, res) => {
         if (err.message == 'Entity not found.') res.status(404).send(err);
         else res.status(400).send(err);
     })
+})
+
+router.post('/', (req, res) => {
+    entityFunc.findEntities(req.body.filter)
+    .then(entities => {
+        if (entities == null) res.status(204).send(null);
+        res.status(200).send(entities)        
+    })
+    .catch(err => { res.status(400).send(err); })
 })
 
 module.exports = router;
