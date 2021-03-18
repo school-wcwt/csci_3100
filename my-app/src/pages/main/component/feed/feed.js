@@ -85,18 +85,20 @@ const Feed_proc1 = (para) => {
 
 
     return (
-        <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral" }}>
+        <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral" ,fontSize: "1.3vw"}}>
             <Row>
-                <Col xs="2">
-                    <Row><img src={icon} height="60" width="60" alt="mATE." className="mx-auto my-2"></img></Row>
-                    <Row><i className="fa fa-ellipsis-h mx-auto my-2" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row>
-                    <Row><i className="fa fa-heart-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row>
-                    <Row><i className="fa fa-comment-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row>
+                <Col xs="1">
+                    <Row><img src={icon}  alt="mATE." className="mx-auto my-2 img-fluid"></img></Row>
+                    <Row><i className="fa fa-ellipsis-h mx-auto my-2" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
+                    <Row><i className="fa fa-heart-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
+                    <Row><i className="fa fa-comment-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
+                    <Row><i className="fa fa-bell-o mx-auto my-3" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
                 </Col>
 
-                <Col xs="8" className="px-5">
+                <Col xs="10" className="pl-5">
                     <Row className="mt-4">
-                        <div><span style={{ color: "LightCoral", fontWeight: "800" }}>{rest.author}</span> posted on 16/3/2021 at <span style={{ color: "LightCoral", fontWeight: "800" }}>Restaurant</span></div>
+                        <div><span style={{ color: "LightCoral", fontWeight: "800" }}>{rest.author}</span> posted on 16/3/2021 at <span style={{ color: "LightCoral", fontWeight: "800" }}>Restaurant</span>
+                        </div>
                     </Row>
 
                     <Row className="my-3 ml-4">{rest.comment}</Row>
@@ -104,7 +106,7 @@ const Feed_proc1 = (para) => {
                     <Row className="mb-4">
 
                         <Carousel fade className="w-100">
-                            <Carousel.Item style={{ height: "auto", maxHeight: "350px" }}>
+                            <Carousel.Item style={{ height: "auto"}}>
                                 <img
                                     className="d-block w-100"
                                     src={folder + image_set[0]}
@@ -115,7 +117,7 @@ const Feed_proc1 = (para) => {
                                 </Carousel.Caption>
                             </Carousel.Item>
 
-                            <Carousel.Item style={{ height: "auto", maxHeight: "350px" }}>
+                            <Carousel.Item style={{ height: "auto"}}>
                                 <img
                                     className="d-block w-100"
                                     src={folder + image_set[1]}
@@ -126,7 +128,7 @@ const Feed_proc1 = (para) => {
                                 </Carousel.Caption>
                             </Carousel.Item>
 
-                            <Carousel.Item style={{ height: "auto", maxHeight: "350px" }}>
+                            <Carousel.Item style={{ height: "auto"}}>
                                 <img
                                     className="d-block w-100"
                                     src={folder + image_set[2]}
@@ -148,31 +150,31 @@ const Feed_proc1 = (para) => {
                     </Row>
 
                     <Row>
-                        <Col xs="1" className="m-auto">
+                        <Col xs="1" className="my-auto">
                             <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
                         </Col>
-                        <Col xs="2" className="m-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User1</span></Col>
-                        <Col xs="9" className="m-auto">3.141592653589793238462643383279502884197169399375105820974944592307816406286 208998628034825342117067982148086513282306647093844609550582231725359408128481</Col>
+                        <Col xs="2" className="my-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User1</span></Col>
+                        <Col xs="8" className="my-auto"><p style={{overflowWrap: "break-word"}}>3.141592653589793238462643383279502884197169399375105820974944592307816406286 208998628034825342117067982148086513282306647093844609550582231725359408128481</p></Col>
                     </Row>
 
                     <Row>
-                        <Col xs="1" className="m-auto">
+                        <Col xs="1" className="my-auto">
                             <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
                         </Col>
-                        <Col xs="2" className="m-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User2</span></Col>
-                        <Col xs="9" className="m-auto">Me too!</Col>
+                        <Col xs="2" className="my-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User2</span></Col>
+                        <Col xs="8" className="my-auto">Me too!</Col>
                     </Row>
 
                     <Row>
-                        <Col xs="1" className="m-auto">
+                        <Col xs="1" className="my-auto">
                             <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
                         </Col>
-                        <Col xs="2" className="m-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User3</span></Col>
-                        <Col xs="9" className="m-auto">Me too!</Col>
+                        <Col xs="2" className="my-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>User3</span></Col>
+                        <Col xs="8" className="my-auto">Me too!</Col>
                     </Row>
 
                 </Col>
-                <Col xs="2"><Row><i className="fa fa-bell-o mx-auto my-4" style={{ color: "LightCoral", fontSize: "25px" }}></i></Row></Col>
+
             </Row>
         </Container>
     )
