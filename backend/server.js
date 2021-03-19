@@ -30,7 +30,7 @@ app.use('/user',
     //checkAuth, 
     require('./routes/user'));
 
-app.listen(require('../port'));
+app.listen(require('../my-app/src/port'));
 
 /*require('./routes/entityFunc').createEntity({
     username: 'jon-rest',
