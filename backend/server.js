@@ -4,6 +4,8 @@ var app = express();
 var cors = require('cors');
 app.use(cors());
 
+require('dotenv').config();
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -18,7 +20,10 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 // http://localhost:3100/entity
 
-app.use('/entity', require('./routes/entity'));
-app.use('/user', require('./routes/user'));
+const checkAuth = require('./middleware/checkAuth');
+
+app.use('/', require('./routes/auth'));
+app.use('/entity', checkAuth, require('./routes/entity'));
+app.use('/user',   checkAuth, require('./routes/user'));
 
 app.listen(3100);

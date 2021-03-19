@@ -5,7 +5,7 @@ var groupListFunc = require('./groupListFunc');
 
 var bcrypt = require('bcrypt');
 
-var auth = (filter, password) => {
+/*var auth = (filter, password) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
             var entity = await entityFunc.findEntity(filter, {select: ''}).exec()
@@ -16,7 +16,7 @@ var auth = (filter, password) => {
             return resolve(loginedEntity);
         } catch(err) { return reject(err) } })();
     })
-}
+}*/
 
 // ------ User Post Function ------
 
