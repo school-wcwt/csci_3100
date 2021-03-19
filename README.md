@@ -12,10 +12,8 @@ git clone git@github.com:school-wcwt/csci_3100.git
 ### Run Frontend
 - cd to my-app and run `npm init` and `npm install` and `npm start` (It is for frontend)
 ### Run backend
-- Check `/my-app/src/axiosConfig.js` file and see the ***Mongo_port*** 
-- Check `/backend/server.js` file and see the `app.listen` , the port should be the same as ***Mongo_port***
-- run `node server.js` in /backend
-- In VScode terminal, there is PORTS, add this port to it 
+- Check `/my-app/src/port.js` file and see the ***Mongo_port*** 
+- Run `node server.js` in `/backend`
 
 ### Commands you may use with ***git***
 - You may update file using `git pull` 
