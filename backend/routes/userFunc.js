@@ -1,22 +1,7 @@
 const entityFunc = require('./entityFunc');
 const postFunc = require('./postFunc');
 const commentFunc = require('./commentFunc');
-var groupListFunc = require('./groupListFunc');
-
-var bcrypt = require('bcrypt');
-
-/*var auth = (filter, password) => {
-    return new Promise((resolve, reject) => {
-        (async () => { try {
-            var entity = await entityFunc.findEntity(filter, {select: ''}).exec()
-            if (entity.type || entity == null) throw new Error('Entity not found.');
-            var match = await bcrypt.compare(password, entity.password)
-            if (!match) throw new Error('Incorrect password.')
-            var loginedEntity = await entityFunc.findEntity({entityID: entity.entityID})
-            return resolve(loginedEntity);
-        } catch(err) { return reject(err) } })();
-    })
-}*/
+const groupListFunc = require('./groupListFunc');
 
 // ------ User Post Function ------
 
@@ -80,7 +65,7 @@ var createList = (authorFilter, listName) => {
             if (author == null) throw new Error('Entity not found.')
             var addedGroupList = await groupListFunc.createGroupList({author: author._id}, listName)
             var updatedEntity = await entityFunc.updateEntity(
-                {_id: author._id},
+                {_id: author._id, type: 'User'},
                 {$push: {groupList: addedGroupList._id}});
             return resolve(updatedEntity)
         } catch(err) { return reject(err) }})()
@@ -94,7 +79,7 @@ var deleteList = (authorFilter, listName) => {
             if (author == null) throw new Error('Entity not found.')
             var deletedGroupList = await groupListFunc.deleteGroupList({author: author._id, name: listName})
             var updatedEntity = await entityFunc.updateEntity(
-                {_id: author._id},
+                {_id: author._id, type: 'User'},
                 {$pull: {groupList: deletedGroupList._id}})
             return resolve(updatedEntity)
         } catch(err) { return reject(err) }})()
@@ -192,16 +177,16 @@ var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
                 entityFunc.findEntity(targetFilter)
             ]);
             if (author == null || target == null) throw new Error('Entity not found.');
-            var followType  = target.type == 'User' ? 'followingUser': 'followingRest';
+            var followType  = target.type == 'User' ? 'followingUser' : 'followingRest';
             var operation   = addFlag ? '$push' : '$pull';
             var [updatedAuthor, _] = await Promise.all([
                 entityFunc.updateEntity(
-                    {_id: author._id}, 
-                    { [operation]: {[followType]: target.entity_id} }
+                    {_id: author._id, type: 'User'}, 
+                    { [operation]: {[followType]: target._id} }
                 ),
                 entityFunc.updateEntity(
                     {_id: target._id}, 
-                    { [operation]: {'followed':   author.entity_id} }
+                    { [operation]: {followed: author._id} }
                 )
             ])
             return resolve(updatedAuthor);
