@@ -1,6 +1,4 @@
 const Entity = require('../models/Entity');
-const User   = require('../models/User');
-const Rest   = require('../models/Rest');
 const bcrypt = require('bcrypt');
 
 var tagGen = (username) => { 

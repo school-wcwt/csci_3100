@@ -30,4 +30,17 @@ app.use('/user',
     //checkAuth, 
     require('./routes/user'));
 
-app.listen(3101);
+app.listen(require('../port'));
+
+/*require('./routes/entityFunc').createEntity({
+    username: 'jon-rest',
+    type: 'Rest',
+    address: '15 Shatin'
+}).then(res => console.log(res));
+
+require('./routes/entityFunc').createEntity({
+    username: 'jon',
+    type: 'User',
+    email: 'jon@test.com',
+    password: 'jonlam'
+}).then(res => console.log(res));*/
