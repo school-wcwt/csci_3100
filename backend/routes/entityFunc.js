@@ -1,4 +1,6 @@
 const Entity = require('../models/Entity');
+const User = require('../models/User')
+const Rest = require('../models/Rest');
 const bcrypt = require('bcrypt');
 
 var tagGen = (username) => { 
@@ -61,6 +63,7 @@ var createEntity = (data) => {
             }
             newEntity.tag = await tagGen(data.username);
             newEntity.entityID = `${data.username}-${newEntity.tag}`;
+            console.log(newEntity)
             var addedEntity = await Entity.create(newEntity);
             var savedEntity = await findEntity({_id: addedEntity._id})
             return resolve(savedEntity);

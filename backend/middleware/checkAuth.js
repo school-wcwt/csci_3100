@@ -8,7 +8,10 @@ var checkAuth = (req, res, next) => {
         jwt.verify(token, config.jwtSecret, (err, decoded) => {
             if (!decoded) return res.status(403).json({message: 'Auth token not supplied.'})
             if (err) return res.status(403).json({message: 'Invalid token.'})
-            else next();
+            else {
+                res.locals.user = decoded
+                next();
+            }
         })
     }
 };

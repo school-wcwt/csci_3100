@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt');
 var express = require('express');
 var router = express.Router();
 
-var createJWT = (email, entityID, duration) => {
-    const payload = { email, entityID, duration };
+var createJWT = (entityID, entity_id, duration) => {
+    const payload = { entityID, entity_id, duration };
     return jwt.sign(payload, config.jwtSecret, {
         expiresIn: duration
     });
@@ -29,8 +29,12 @@ var auth = (filter, password) => {
 router.post('/auth', (req, res) => {
     (async () => { try {
         var loginedEntity = await auth(req.body.filter, req.body.password);
-        let access_token = createJWT(loginedEntity.email, loginedEntity.entityID, 3600);
+        let access_token = createJWT(
+            loginedEntity.entityID, 
+            loginedEntity._id, 
+            3600);
         let decoded = await jwt.verify(access_token, config.jwtSecret)
+        console.log(decoded)
         if (decoded) {console.log(decoded);res.status(200).json({
             token: access_token,
             message: loginedEntity
