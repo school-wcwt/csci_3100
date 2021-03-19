@@ -136,13 +136,14 @@ const RegisterForm = (props) => {
     
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
-    const emaildata = {
-        to_name: data.UserName,
-        user_email: data.Email,
-        message: "Still in Testing"
-    };
+    
     
     const onSubmit = data => {
+        const emaildata = {
+            to_name: data.UserName,
+            user_email: data.Email,
+            message: "Still in Testing"
+        };
         if (InvalidData(data)) return 0;
         axios(
             {method: 'POST',
