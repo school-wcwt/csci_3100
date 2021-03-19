@@ -194,18 +194,17 @@ var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
             if (author == null || target == null) throw new Error('Entity not found.');
             var followType  = target.type == 'User' ? 'followingUser': 'followingRest';
             var operation   = addFlag ? '$push' : '$pull';
-            await Promise.all([
-                Entity.updateOne(
+            var [updatedAuthor, _] = await Promise.all([
+                entityFunc.updateEntity(
                     {_id: author._id}, 
                     { [operation]: {[followType]: target.entity_id} }
-                ).exec(),
-                Entity.updateOne(
+                ),
+                entityFunc.updateEntity(
                     {_id: target._id}, 
                     { [operation]: {'followed':   author.entity_id} }
-                ).exec(),
+                )
             ])
-            var updatedEntity = await entityFunc.findEntity({_id: author._id});
-            return resolve(updatedEntity);
+            return resolve(updatedAuthor);
         } catch(err) { return reject(err) } })();
     })
 }
