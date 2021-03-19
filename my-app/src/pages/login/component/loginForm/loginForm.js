@@ -137,9 +137,9 @@ const RegisterForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const emaildata = {
-        to_name:"handsome",
-        user_email: "a1336867016@gmail.com",
-        message: "I am the best"
+        to_name: data.UserName,
+        user_email: data.Email,
+        message: "Still in Testing"
     };
     
     const onSubmit = data => {
