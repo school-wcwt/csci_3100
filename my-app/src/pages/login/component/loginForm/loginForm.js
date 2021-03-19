@@ -74,7 +74,7 @@ const LoginForm = (props) => {
         axios(
             {
             method: 'POST',
-            url: '/user/auth',
+            url: 'auth',
             data: {
                 filter: {email: data.Email},
                 password: data.Password 
@@ -146,7 +146,7 @@ const RegisterForm = (props) => {
         if (InvalidData(data)) return 0;
         axios(
             {method: 'POST',
-            url: 'entity/NEW',
+            url: 'new',
             data: {
                 type: 0,
                 username: data.UserName,

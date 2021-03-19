@@ -26,7 +26,7 @@ var findEntity = (filter, opt = null) => {
             var entity = await Entity.findOne(filter)
             .select(option.select)
             .populate(option.populate)
-            .exec()
+            .exec();
             return resolve(entity);
         } catch(err) { return reject(err) }})();
     })

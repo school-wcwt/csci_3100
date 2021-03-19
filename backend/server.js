@@ -23,7 +23,11 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 const checkAuth = require('./middleware/checkAuth');
 
 app.use('/', require('./routes/auth'));
-app.use('/entity', checkAuth, require('./routes/entity'));
-app.use('/user',   checkAuth, require('./routes/user'));
+app.use('/entity', 
+    //checkAuth, 
+    require('./routes/entity'));
+app.use('/user', 
+    //checkAuth, 
+    require('./routes/user'));
 
-app.listen(3100);
+app.listen(3101);

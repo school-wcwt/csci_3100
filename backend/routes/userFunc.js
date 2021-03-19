@@ -211,7 +211,7 @@ var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
 }
 
 module.exports = {
-    auth,
+    //auth,
     createPost,
     deletePost,
     updatePost,

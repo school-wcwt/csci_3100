@@ -16,8 +16,8 @@ var createJWT = (email, entityID, duration) => {
 var auth = (filter, password) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
-            var entity = await entityFunc.findEntity(filter, {select: ''}).exec()
-            if (entity.type || entity == null) throw new Error('Entity not found.');
+            var entity = await entityFunc.findEntity(filter, {select: ''});
+            if (entity.type == 'Rest' || entity == null) throw new Error('Entity not found.');
             var match = await bcrypt.compare(password, entity.password)
             if (!match) throw new Error('Incorrect password.')
             var loginedEntity = await entityFunc.findEntity({entityID: entity.entityID})
@@ -27,14 +27,14 @@ var auth = (filter, password) => {
 }
 
 router.post('/auth', (req, res) => {
-    (async() => { try {
+    (async () => { try {
         var loginedEntity = await auth(req.body.filter, req.body.password);
         let access_token = createJWT(loginedEntity.email, loginedEntity.entityID, 3600);
         let decoded = await jwt.verify(access_token, config.jwtSecret)
-        if (decoded) res.status(200).json({
+        if (decoded) {console.log(decoded);res.status(200).json({
             token: access_token,
             message: loginedEntity
-        })
+        })}
     } catch (err) {
         if (err.message == 'Entity not found.') res.status(404).json(err)
         else if (err.message == 'Incorrect password.') res.status(403).json(err)
