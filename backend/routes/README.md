@@ -1,3 +1,45 @@
+### Auth Routes
+
+#### POST auth/
+- Authenticate (log in) an user.
+- **Body:** Object
+
+Key      | Type   | Required | Description
+:-------:|:------:|:---:|--|
+filter   | Object | Yes | Entity filter. Preferrably `email` or `entityID`.
+password | String | Yes | Password.
+
+- **Status Code**:
+    - 200: Authentication success.
+    - 403: Authentication failed. Incorrect Password.
+    - 404: Entity not found.
+    - 400: Unknown error.
+- **Returns:** `Entity` with `groupList` populated.
+
+#### POST register
+- Create a new Entity.
+- **Body:** Object
+
+Key      | Type     | Required | Description
+:-------:|:--------:|:---:|--|
+type     | String   | Yes | `'User'` or `'Rest'`.
+username | String   | Yes | Username or restaurant's english name.
+password | String   | Yes | [`User`] Password.
+email    | String   | Yes | [`User`] Email.
+address  | String   | Yes | [`Rest`] Address.
+name     | String   |     | Name or restaurant's chinese name.
+phone    | String   |     | Phone number.
+profPhoto| [String] |     | Link to profile photo(s).
+gender   | String   |     | [`User`] Gender
+status   | String   |     | [`Rest`] Opening status.
+openingHr|[[String]]|     | [`Rest`] Opening hours.
+
+- **Status Code**:
+    - 201: Entity created.
+    - 409: Email already exists in DB.
+    - 400: Unknown error.
+- **Returns:** `Entity` (`[U]` with `groupList` populated)
+
 ### Entities Route
 
 #### GET entity/:entityID
@@ -22,30 +64,6 @@ filter   | Object | Yes | Entities filter.
     - 204: Entity not found.
     - 400: Unknown error.
 - **Returns:** `Entity` (`[U]` with `groupList` populated), or; `null` if not found
-
-#### POST entity/new
-- Create a new Entity.
-- **Body:** Object
-
-Key      | Type     | Required | Description
-:-------:|:--------:|:---:|--|
-type     | String   | Yes | `'User'` or `'Rest'`.
-username | String   | Yes | Username or restaurant's english name.
-password | String   | Yes | [`User`] Password.
-email    | String   | Yes | [`User`] Email.
-address  | String   | Yes | [`Rest`] Address.
-name     | String   |     | Name or restaurant's chinese name.
-phone    | String   |     | Phone number.
-profPhoto| [String] |     | Link to profile photo(s).
-gender   | String   |     | [`User`] Gender
-status   | String   |     | [`Rest`] Opening status.
-openingHr|[[String]]|     | [`Rest`] Opening hours.
-
-- **Status Code**:
-    - 201: Entity created.
-    - 409: Email already exists in DB.
-    - 400: Unknown error.
-- **Returns:** `Entity` (`[U]` with `groupList` populated)
 
 #### PUT entity/:entityID
 - Edit an Entity of `entityID`.
@@ -78,22 +96,6 @@ filter   | Object |     | Entity filter. Default as `entityID`.
 - **Returns:** `Entity`
 
 ### User Routes
-
-#### POST user/auth
-- Authenticate (log in) an user.
-- **Body:** Object
-
-Key      | Type   | Required | Description
-:-------:|:------:|:---:|--|
-filter   | Object | Yes | Entity filter. Preferrably `email` or `entityID`.
-password | String | Yes | Password.
-
-- **Status Code**:
-    - 200: Authentication success.
-    - 403: Authentication failed. Incorrect Password.
-    - 404: Entity not found.
-    - 400: Unknown error.
-- **Returns:** `Entity` with `groupList` populated.
 
 #### PATCH user/:entityID/follow/:entityID
 - Follow or unfollow an Entity.

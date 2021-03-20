@@ -1,10 +1,11 @@
-const entityFunc = require('./entityFunc');
-const config = require('../config');
+var express = require('express');
+var router = express.Router();
+
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 
-var express = require('express');
-var router = express.Router();
+const entityFunc = require('../functions/entityFunc');
+const config = require('../config');
 
 var createJWT = (entityID, entity_id, duration) => {
     const payload = { entityID, entity_id, duration };

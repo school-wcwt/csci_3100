@@ -1,6 +1,7 @@
 var express = require('express');
-var entityFunc = require('./entityFunc');
 var router = express.Router();
+
+const entityFunc = require('../functions/entityFunc');
 
 router.get('/:entityID', (req, res) => { 
     entityFunc.findEntity({entityID: req.params.entityID})

@@ -1,8 +1,8 @@
 var express = require('express');
-var userFunc = require('./userFunc');
-var groupListFunc = require('./groupListFunc');
 var router = express.Router();
 
+const userFunc = require('../functions/userFunc');
+const groupListFunc = require('../functions/groupListFunc');
 
 // ======= GroupList =========
 
