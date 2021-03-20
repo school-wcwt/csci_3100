@@ -1,4 +1,29 @@
-### Auth Routes
+# All avaliable routes
+
+* Auth 
+    * [`POST` auth](#post-auth)
+    * [`POST` register](#post-register)
+* Entity 
+    * [`GET` entity/:entityID](#get-entityentityid) 
+    * [`POST` entity](#post-entity)
+    * [`PUT` entity/:entityID](#put-entityentityid)
+    * [`DELETE` entity/:entityID](#delete-entityentityid)
+* User
+    * [`PATCH` user/:entityID/follow/:entityID](#patch-userentityidfollowentityid)
+    * [`GET` user/:entityID/grouplist/:listName](#get-userentityidgrouplistlistname)
+    * [`POST` user/:entityID/grouplist/:listName](#post-userentityidgrouplistlistname)
+    * [`DELETE` user/:entityID/grouplist/:listName](#post-userentityidgrouplistlistname)
+    * [`PUT` user/:entityID/grouplist/:listName](#put-userentityidgrouplistlistname)
+    * [`PATCH` user/:entityID/grouplist/:listName](#patch-userentityidgrouplistlistname)
+    * [`POST` user/:entityID/post/new](#post-userentityidpostnew)
+    * [`DELETE` user/post/:postID](#delete-userpostpostid)
+    * [`PUT` user/post/:postID](#put-userpostpostid)
+    * [`PATCH` user/:entityID/post/:postID/like](#patch-userentityidpostpostidlike)
+    * [`POST` user/:entityID/post/:postID/comment/new](#post-userentityidpostpostidcommentnew)
+    * [`DELETE` user/:entityID/post/:postID/comment/:commentID](#delete-userentityidpostpostidcommentcommentid)
+    * [`PUT` user/:entityID/post/:postID/comment/:commentID](#put-userentityidpostpostidcommentcommentid)
+
+## Auth Routes
 
 #### POST auth/
 - Authenticate (log in) an user.
@@ -40,7 +65,7 @@ openingHr|[[String]]|     | [`Rest`] Opening hours.
     - 400: Unknown error.
 - **Returns:** `Entity` (`[U]` with `groupList` populated)
 
-### Entities Route
+## Entity Routes
 
 #### GET entity/:entityID
 - Get data of an Entity.
@@ -95,7 +120,7 @@ filter   | Object |     | Entity filter. Default as `entityID`.
     - 400: Unknown error.
 - **Returns:** `Entity`
 
-### User Routes
+## User Routes
 
 #### PATCH user/:entityID/follow/:entityID
 - Follow or unfollow an Entity.
@@ -112,6 +137,8 @@ targetFilter | Object  |     | Target (entity) filter. Default as `entityID`.
     - 404: Entity not found.
     - 400: Unknown error.
 - **Returns:** `Entity` with `groupList` populated.
+
+- - - -
 
 ### GroupLists
 
@@ -187,6 +214,8 @@ listName     | String  |     | List name. Default as `listName`.
     - 404: Entity/List not found.
     - 400: Unknown error.
 - **Returns:** `GroupList` with `content` populated
+
+- - - -
 
 ### Posts / Comment / Like
 
