@@ -30,7 +30,8 @@ app.use('/user',
     //checkAuth, 
     require('./routes/user'));
 
-const PORT = require('./config').backendPort
+//const PORT = require('./config').backendPort
+const PORT=3102;
 app.listen(PORT);
 
 /*require('./routes/entityFunc').createEntity({
