@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-rou
 import {send_validation_email} from '../../../../component/email/email';
 import {Navbar,Form,FormControl,Nav} from 'react-bootstrap';
 
+import history from "../../../history";
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -62,13 +63,12 @@ const go_login = () =>{
         <Switch>
             <Redirect to = "/"/>
         </Switch>
-        
     );
-    
 }
 
 const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
+    const [redirect, setRedirect] = React.useState(0);
     const classes = useStyles();
     const onSubmit = data => {
         axios(
@@ -86,7 +86,8 @@ const LoginForm = (props) => {
         .catch(err => {
             console.log(err);
             console.log("Error state");
-            <Link to="/main"> text </Link>
+            history.push('/login')
+            setRedirect(1);
         })
     };
      // data return name of [Email,Password]
@@ -110,6 +111,7 @@ const LoginForm = (props) => {
                 </Button>
             </label>
         </form>
+        {redirect ? <Redirect to="/main"/> : null};
         </>
     );
 };
