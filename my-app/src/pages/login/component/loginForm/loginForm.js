@@ -84,7 +84,6 @@ const LoginForm = (props) => {
       }, []);
 
     const onSubmit = data => {
-<<<<<<< HEAD
         axios(
             {
             method: 'POST',
@@ -106,29 +105,6 @@ const LoginForm = (props) => {
             history.push('/main')
             setRedirect(1);
         })
-=======
-            setLoading(true);
-            axios(
-                {
-                method: 'POST',
-                url: 'auth',
-                data: {
-                    filter: {email: data.Email},
-                    password: data.Password 
-                }
-            })
-            .then(res => {
-                alert("Login sucess");
-            })
-            .catch(err => {
-                console.log(err);
-                console.log("Error state");
-                ChangeUserState("user");
-                history.push('/login')
-                setRedirect(1);
-            })
-        
->>>>>>> 0869b4da4a519e8625ec843566fddf333dc376ba
     };
 
     //<label for="go_login">
