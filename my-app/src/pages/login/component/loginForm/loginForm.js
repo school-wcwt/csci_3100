@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { makeStyles, TextField } from "@material-ui/core";
+import { makeStyles, TextField,CircularProgress  } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import axios from '../../../../axiosConfig';
 import {ChangeUserState,IsLogin,Set_userobj} from '../../../services/authService';
@@ -43,7 +43,15 @@ const useStyles = makeStyles((theme) => ({
         padding: "2%",
         paddingLeft:"5%",
 
-    }
+    },
+    buttonProgress:  {
+        margin: theme.spacing(1),
+        position: "relative",
+        width: theme.spacing(1),
+        [theme.breakpoints.up("lg")]: {
+            width: theme.spacing(1),
+        }
+    },
     
 }));
 
@@ -58,58 +66,65 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
-const go_login = () =>{
-    return (
-        <Switch>
-            <Redirect to = "/"/>
-        </Switch>
-    );
-}
 
 const LoginForm = (props) => {
     const { register, handleSubmit } = useForm();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
     const [redirect, setRedirect] = React.useState(0);
     const classes = useStyles();
+    const timer = React.useRef();
+    React.useEffect(() => {
+        return () => {
+          clearTimeout(timer.current);
+        };
+      }, []);
+
     const onSubmit = data => {
-        axios(
-            {
-            method: 'POST',
-            url: 'auth',
-            data: {
-                filter: {email: data.Email},
-                password: data.Password 
-            }
-        })
-        .then(res => {
-            alert("Login sucess");
-        })
-        .catch(err => {
-            console.log(err);
-            console.log("Error state");
-            history.push('/login')
-            setRedirect(1);
-        })
+            setLoading(true);
+            axios(
+                {
+                method: 'POST',
+                url: 'auth',
+                data: {
+                    filter: {email: data.Email},
+                    password: data.Password 
+                }
+            })
+            .then(res => {
+                alert("Login sucess");
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("Error state");
+                ChangeUserState("user");
+                history.push('/login')
+                setRedirect(1);
+            })
+        
     };
+
+    //<label for="go_login">
      // data return name of [Email,Password]
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
+        <div  style = {{textAlign: "center"}}>
             <Nav className={classes.welcome_message} >Welcome Back to mATE! We Hope All of You Can Enjoy the Food</Nav>
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Password" label = "Password" name = "Password" type="password" />
-            <input id="go_login" type="submit" style = {{display:"none"}}/>
-            <label for="go_login">
-                <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">
+            
+                <Button variant="contained" type="submit" size="large" color="secondary" onClick={onSubmit} className={classes.main_buttom_style} component="span">
                     Login
                 </Button>
-            </label>   
-            <label for = "go_register">
-                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+            
+                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} isLoading  = "true" component="span">
                     Register
                 </Button>
-            </label>
+                </div> 
         </form>
         {redirect ? <Redirect to="/main"/> : null};
         </>
@@ -135,19 +150,22 @@ const InvalidData = (data)=>{
 
 
 const RegisterForm = (props) => {
-    
     const { register, handleSubmit } = useForm();
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
     const [redirect, setRedirect] = React.useState(0);
     const classes = useStyles();
+    const timer = React.useRef();
     
     
     const onSubmit = data => {
+        if (InvalidData(data)) return 0;
+        setLoading(true);
         const emaildata = {
             to_name: data.UserName,
             user_email: data.Email,
             message: "Still in Testing"
         };
-        if (InvalidData(data)) return 0;
         axios(
             {method: 'POST',
             url: 'new',
@@ -174,17 +192,17 @@ const RegisterForm = (props) => {
     return (
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
+        <div  style = {{textAlign: "center"}}>
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="UserName" label = "UserName" name = "UserName" type="username" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Password" label = "Password" name = "Password" type="password" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />
-            <input id="go_register" type="submit" style = {{display:"none"}}/>           
-            <label for = "go_register">
-                <Button variant="contained" size="large" color="primary" className={classes.main_buttom_style} 
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />        
+                <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} 
                 component="span" >Join Us Now</Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
                 <Button variant="contained" size="large" color="secondary" className={classes.buttom_style}
                 component="span" onClick = {props.setPanel} >Cancel</Button>
-            </label>
+        </div>
         </form>
         </>
     );

@@ -22,6 +22,7 @@ class Routing extends Component {
     render() {
       return (
       <Router history={history}>
+          {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
           <div>
             <Switch>
                 <Route exact path='/' component={Main} />
