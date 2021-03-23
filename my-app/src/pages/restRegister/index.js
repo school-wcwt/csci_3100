@@ -140,7 +140,7 @@ const RestForm = (props) => {
             console.log("Rest register sucess");
         })
     };
-
+    console.log("Cookies in rest register is  " + document.cookie);
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
         <Nav className={classes.welcome_message} >Welcome to Create a new Restaurant. Please Fill in the Following Information</Nav>

@@ -14,7 +14,7 @@ import DiscoverPage from './discover_page/';
 
 // -1 not login in ,0 user, 1 rest
 // For Testing purpose, if you want to go specific page without permission, go ./services/authService and set userState to admin
-//{IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
+//
 
 import history from "./history";
 
@@ -22,7 +22,7 @@ class Routing extends Component {
     render() {
       return (
       <Router history={history}>
-          auth();
+          {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
           <div>
             <Switch>
                 <Route exact path='/' component={Main} />

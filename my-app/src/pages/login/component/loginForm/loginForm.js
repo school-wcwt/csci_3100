@@ -67,6 +67,7 @@ const Select = React.forwardRef(({ label }, ref) => (
 ));
 
 const LoginForm = (props) => {
+    document.cookie = "empty";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useState();
@@ -84,7 +85,6 @@ const LoginForm = (props) => {
 
     const onSubmit = data => {
         setLoading(true);
-        document.cookie = "0"
         history.push('/main')
             setRedirect(1);
         axios(
@@ -103,9 +103,10 @@ const LoginForm = (props) => {
         .catch(err => {
             console.log(err);
             console.log("Error state");
-            history.push('/main')
             document.cookie = "user";
             setRedirect(1);
+            history.push('/main');
+            
         })
     };
 
