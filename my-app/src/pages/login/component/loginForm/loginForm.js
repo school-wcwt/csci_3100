@@ -9,7 +9,7 @@ import {send_validation_email} from '../../../../component/email/email';
 import {Navbar,Form,FormControl,Nav} from 'react-bootstrap';
 
 import history from "../../../history";
-
+import state from "../../../userState";
 const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -86,7 +86,10 @@ const LoginForm = (props) => {
         .catch(err => {
             console.log(err);
             console.log("Error state");
-            history.push('/login')
+            state.state = 1;
+            console.log(state.state);
+
+            history.push('/main')
             setRedirect(1);
         })
     };
