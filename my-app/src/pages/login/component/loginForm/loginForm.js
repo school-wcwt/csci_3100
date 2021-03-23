@@ -137,6 +137,7 @@ const InvalidData = (data)=>{
 const RegisterForm = (props) => {
     
     const { register, handleSubmit } = useForm();
+    const [redirect, setRedirect] = React.useState(0);
     const classes = useStyles();
     
     
@@ -161,7 +162,8 @@ const RegisterForm = (props) => {
             alert("Register sucess");
             send_validation_email(emaildata);
             alert("Email sent to " + data.Email);
-            <Redirect to="/" />
+            history.push('/login')
+            setRedirect(1);
 
         })
         .catch(err => {

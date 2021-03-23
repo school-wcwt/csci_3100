@@ -1,16 +1,27 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { makeStyles,TextField } from "@material-ui/core";
-import { Paper } from '@material-ui/core';
+import { Paper,makeStyles,TextField } from "@material-ui/core";
 import bg_img from './img/8.jpg';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import axios from '../../axiosConfig';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-
-
-
+/*
+import Autocomplete from '@material-ui/lab/Autocomplete';
+const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },]
+function ComboBox() {
+    return (
+      <Autocomplete
+        id="combo-box-demo"
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        style={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+      />
+    );
+  }
+*/
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
         //backgroundImage: `linear-gradient(rgba(0, 0, 0,0.7),rgba(0, 0, 0,0.7)),url(${piazzaImg})`,
@@ -48,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     main_buttom_style: {
         margin: theme.spacing(1),
         height: "8vh",
-        width: theme.spacing(55),
+        width: "95%",
         [theme.breakpoints.up("lg")]: {
             width: theme.spacing(68),
         }
@@ -116,9 +127,9 @@ const RestForm = (props) => {
         <Nav className={classes.welcome_message} >Welcome to Create a new Restaurant. Please Fill in the Following Information</Nav>
         <TextBox label = "Restaurant Name" dataName ="restName" register = {register}/>
         <TextBox label = "Contact Number" dataName ="phone" register = {register}/>
-        <TextBox label = "address" dataName ="address" register = {register}/>
+        <TextBox label = "Region" dataName ="address_region" register = {register}/>
+        <TextBox label = "Location" dataName ="address_Location" register = {register}/>
         <TextBox label = "Your First Rating for this Restaurant (0 To 5)" dataName ="likes" type = "number" register = {register}/>
-        
         <input id="go_login" type="submit" style = {{display:"none"}}/>
         <label for="go_login">
             <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">
