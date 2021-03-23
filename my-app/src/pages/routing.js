@@ -4,7 +4,7 @@ import Main from './main/';
 import Login from './login/';
 import Reservation from './reservation/';
 import ErrorPage from './errorPage/';
-import {IsLogin} from './services/authService';
+import {IsLogin,auth} from './services/authService';
 import TestPage from './test_page/';
 import RestRegister from './restRegister/';
 import Followers from './followers_page/';
@@ -22,7 +22,7 @@ class Routing extends Component {
     render() {
       return (
       <Router history={history}>
-          {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
+          auth();
           <div>
             <Switch>
                 <Route exact path='/' component={Main} />

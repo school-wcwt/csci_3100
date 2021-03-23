@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 import { Paper } from '@material-ui/core';
 import {LoginForm,RegisterForm} from './component/loginForm/loginForm.js';
 import LogoImg from './image/logo.png';
-import {IsLogin} from '../services/authService';
+import {IsLogin,auth} from '../services/authService';
 import {Redirect} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({ 
@@ -54,12 +54,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 }));
-//{IsLogin()? <Redirect to={{ pathname: '/' }}/>:null}
+
 const Login = ()=>{
     var [panel, setPanel] = React.useState(0);
     const classes = useStyles();
-
-    return (        
+    auth();
+    return (     
+             
         <div className = {classes.bgImg}>
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">

@@ -73,7 +73,6 @@ const LoginForm = (props) => {
     
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
     const [redirect, setRedirect] = React.useState(0);
     const classes = useStyles();
     const timer = React.useRef();
@@ -84,9 +83,8 @@ const LoginForm = (props) => {
       }, []);
 
     const onSubmit = data => {
+        setLoading(true);
         document.cookie = "0"
-        console.log(document.cookie)
-        document.cookie = "1"
         history.push('/main')
             setRedirect(1);
         axios(
@@ -99,14 +97,14 @@ const LoginForm = (props) => {
             }
         })
         .then(res => {
+            document.cookie = "user";
             alert("Login sucess");
         })
         .catch(err => {
             console.log(err);
             console.log("Error state");
-            
-
             history.push('/main')
+            document.cookie = "user";
             setRedirect(1);
         })
     };
@@ -122,16 +120,15 @@ const LoginForm = (props) => {
             id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
             id="Password" label = "Password" name = "Password" type="password" />
-            
-                <Button variant="contained" type="submit" size="large" color="secondary" onClick={onSubmit} className={classes.main_buttom_style} component="span">
-                    Login
-                </Button>
-                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-            
-                <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} isLoading  = "true" component="span">
-                    Register
-                </Button>
-                </div> 
+            <Button variant="contained" type="submit" size="large" color="secondary" onClick={onSubmit} className={classes.main_buttom_style} component="span">
+                Login
+            </Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+        
+            <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} isLoading  = "true" component="span">
+                Register
+            </Button>
+            </div> 
         </form>
         {redirect ? <Redirect to="/main"/> : null};
         </>
