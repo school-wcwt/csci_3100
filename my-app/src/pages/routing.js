@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import {React, Component,useState } from 'react';
 import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import Main from './main/';
 import Login from './login/';
@@ -18,10 +18,11 @@ import DiscoverPage from './discover_page/';
 
 import history from "./history";
 
-class Routing extends Component {
+class Routing extends Component { 
     render() {
       return (
       <Router history={history}>
+          {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
           <div>
             <Switch>
                 <Route exact path='/' component={Main} />

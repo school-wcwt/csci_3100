@@ -1,4 +1,4 @@
-var userState = -1; // -1 not login in, 0 user, 1 rest, 777 is admin
+var userState = 77; // -1 not login in, 0 user, 1 rest, 777 is admin
 var userobj = {};
 const IsLogin = () => {
     if (userState==-1)
