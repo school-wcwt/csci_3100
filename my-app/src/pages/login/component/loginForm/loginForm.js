@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { makeStyles, TextField,CircularProgress  } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
@@ -66,8 +66,11 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
-
 const LoginForm = (props) => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [user, setUser] = useState();
+    
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);

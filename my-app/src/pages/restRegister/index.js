@@ -102,6 +102,25 @@ const TextBox = ({label,dataName,type,register}) => {
 const RestForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
+    const currencies = [
+        {
+          value: 'USD',
+          label: '$',
+        },
+        {
+          value: 'EUR',
+          label: '€',
+        },
+        {
+          value: 'BTC',
+          label: '฿',
+        },
+        {
+          value: 'JPY',
+          label: '¥',
+        },
+      ];
+
     const onSubmit = data => {
         axios(
             {
