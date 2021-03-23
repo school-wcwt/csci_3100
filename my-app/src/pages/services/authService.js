@@ -10,7 +10,7 @@ const IsLogin = () => {
 
 const auth = () =>{
     console.log("state is " + IsLogin());
-    console.log("cookies is " + document.cookie.split(";")[1].replace(/\s/g, "") );
+    console.log("cookies is " + document.cookie.split(";")[1]);
     if (IsLogin())
         history.push('/main');
     else
