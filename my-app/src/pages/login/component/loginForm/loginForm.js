@@ -84,6 +84,11 @@ const LoginForm = (props) => {
       }, []);
 
     const onSubmit = data => {
+        document.cookie = "0"
+        console.log(document.cookie)
+        document.cookie = "1"
+        history.push('/main')
+            setRedirect(1);
         axios(
             {
             method: 'POST',
@@ -99,8 +104,7 @@ const LoginForm = (props) => {
         .catch(err => {
             console.log(err);
             console.log("Error state");
-            state.state = 1;
-            console.log(state.state);
+            
 
             history.push('/main')
             setRedirect(1);

@@ -14,7 +14,8 @@ import NAVbar from "./component/nav.js";
 import state from "../userState";
 
 const Main = () => {
-    console.log(state.state);
+ 
+    console.log(document.cookie);
     return (
         <div>
             <div className="pt-5">
