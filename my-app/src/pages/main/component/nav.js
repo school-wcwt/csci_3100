@@ -15,6 +15,7 @@ function NAVbar(){
     <Nav.Link href="#create" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Create</Nav.Link>
     <Nav.Link href="restregister" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Creata Restaurant</Nav.Link>
     <Nav.Link href="#setting" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Setting</Nav.Link>
+    <Nav.Link href="userprofile" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>My Account</Nav.Link>
     </Nav>
     <Form inline>
       <div className="mx-auto row">
