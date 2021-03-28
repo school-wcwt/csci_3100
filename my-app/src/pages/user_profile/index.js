@@ -33,7 +33,7 @@ function load_my_data(EntitiesID){
         Followers: 1000, // !
         PostNumber: 10, // !
         lastestLoginTime: "24 April 2021", // !
-        BigImagePath: "/img/user_image/handsome1.jpg"
+        BigImagePath: "/img/user_image/handsome1.jpg" // !
     };
     return mydataset;
 }
@@ -74,7 +74,7 @@ const UserHeading  = () => {
 const PostArea =()=> {
     return (
         <div className="pt-5">
-            <h1>It is my post Area</h1>
+            <h1>It is my post Area for entities {mydataset.UserID}</h1>
         </div>
     )
 }

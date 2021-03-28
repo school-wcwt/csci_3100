@@ -20,16 +20,17 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         height: "8vh",
         width: theme.spacing(55),
-        [theme.breakpoints.up("lg")]: {
+        [theme.breakpoints.up("xl")]: {
             width: theme.spacing(68),
-        }
+        },
     },
     buttom_style: {
         margin: theme.spacing(1),
         width: theme.spacing(55),
-        [theme.breakpoints.up("lg")]: {
+        [theme.breakpoints.up("xl")]: {
             width: theme.spacing(68),
         }
+        
     },
 
     extendedIcon: {
@@ -66,6 +67,30 @@ const Select = React.forwardRef(({ label }, ref) => (
     </>
 ));
 
+const Login_DataBase = (data)=>{
+    console.log("Process on Login in");
+    axios(
+        {
+        method: 'POST',
+        url: 'auth',
+        data: {
+            filter: {email: data.Email},
+            password: data.Password 
+        }
+    })
+    .then(res => {
+        document.cookie = "user";
+        alert("Login sucess");
+        history.push('/main');
+    })
+    .catch(err => {
+        console.log(err);
+        alert("Login Error");
+        document.cookie = "user";
+        history.push('/main');
+    })
+};
+
 const LoginForm = (props) => {
     document.cookie = "empty";
     const [username, setUsername] = useState("");
@@ -85,29 +110,8 @@ const LoginForm = (props) => {
 
     const onSubmit = data => {
         setLoading(true);
-        history.push('/main')
-            setRedirect(1);
-        axios(
-            {
-            method: 'POST',
-            url: 'auth',
-            data: {
-                filter: {email: data.Email},
-                password: data.Password 
-            }
-        })
-        .then(res => {
-            document.cookie = "user";
-            alert("Login sucess");
-        })
-        .catch(err => {
-            console.log(err);
-            console.log("Error state");
-            document.cookie = "user";
-            setRedirect(1);
-            history.push('/main');
-            
-        })
+        Login_DataBase(data);
+        setLoading(false);
     };
 
     //<label for="go_login">
@@ -185,13 +189,15 @@ const RegisterForm = (props) => {
             alert("Register sucess");
             send_validation_email(emaildata);
             alert("Email sent to " + data.Email);
-            history.push('/login')
+            Login_DataBase(data);
             setRedirect(1);
+            
 
         })
         .catch(err => {
             console.log(err.message);
         })
+        setLoading(false);
     };
     // data return name of [UserName,Email,Password,PasswordCheck]
     return (

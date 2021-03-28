@@ -3,14 +3,12 @@ import history from '../history';
 
 const IsLogin = () => {
     const state = document.cookie.split("; ")[1];
-    if (state == "user" || state == "rest" ||true)
+    if (state == "user" || state == "rest")
         return true;
     return false;
 }
 
 const auth = () =>{
-    console.log("state is " + IsLogin());
-    console.log("cookies is " + document.cookie.split(";")[1]);
     if (IsLogin())
         history.push('/main');
     else
