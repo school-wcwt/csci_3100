@@ -6,7 +6,7 @@ import axios from '../../../../axiosConfig';
 import {ChangeUserState,IsLogin,Set_userobj} from '../../../services/authService';
 import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
-import {Navbar,Form,FormControl,Nav} from 'react-bootstrap';
+import {Nav} from 'react-bootstrap';
 
 import history from "../../../history";
 import state from "../../../userState";
