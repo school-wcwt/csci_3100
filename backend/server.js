@@ -32,6 +32,7 @@ app.use('/user',
 
 const PORT = require('./config').backendPort
 //const PORT=3102;
+console.log('----------port:'+PORT+'-----------');
 app.listen(PORT);
 
 /*require('./routes/entityFunc').createEntity({
