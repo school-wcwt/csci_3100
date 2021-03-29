@@ -46,7 +46,7 @@ var createComment = (props, authorEntityID, content) => {
 var updateComment = (filter, data) => {
     return new Promise((resolve, reject) => {
         (async() => { try {
-            const comment = await Comment.findOneAndUpate(filter, data, {new: true}).exec();
+            const comment = await Comment.findOneAndUpdate(filter, data, {new: true}).exec();
             if (comment == null) throw new Error('Comment not found.');
             return resolve(comment);
         } catch (err) { return reject(err) }})()

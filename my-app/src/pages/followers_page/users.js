@@ -168,6 +168,61 @@ const Users= ()=>{
         )
     }
 
+    const CommentDelete =()=>{
+        const [entity4, setEntity4] = useState(null);
+        const change_post= async ()=>{
+            alert(' triggered')
+            try{
+                var entityID= "user2-4935"
+                var postID= "user2-4935-1617031432521"
+                var commentID = "user2-4935-1617037667361"
+                var entity4 = await userFn.comment_delete(entityID, postID, commentID);
+                setEntity4(entity4)
+            }
+            catch(err){
+                console.log(err)
+                console.log('---------------')
+            }
+        }
+
+        return (
+        <div>
+            <h1>comment_delete</h1>
+            <button onClick= {()=>{change_post()}}>post_entity
+            </button>
+        </div>
+        )
+    }
+
+    const CommentEdit =()=>{
+        const [entity4, setEntity4] = useState(null);
+        const change_post= async ()=>{
+            alert(' triggered')
+            try{
+                //? need to chnage
+                var entityID = "user2-4935";
+                var postID = "user2-4935-1617031432521"                
+                var filter= {"commentID":"user2-4935-1617037667520"}
+                var edit_data={
+                    "content":      "edit-comment",
+                };
+                var entity4 = await userFn.comment_edit(entityID, postID, filter,edit_data);
+                setEntity4(entity4)
+            }
+            catch(err){
+                console.log(err)
+                console.log('---------------')
+            }
+        }
+
+        return (
+        <div>
+            <h1>comment_edit</h1>
+            <button onClick= {()=>{change_post()}}>post_entity
+            </button>
+        </div>
+        )
+    }
 //condition ? true : false
   return (
 <div>
@@ -178,6 +233,8 @@ const Users= ()=>{
   <PostLike></PostLike>
 
   <CommentCreate></CommentCreate>
+  <CommentDelete></CommentDelete>
+  <CommentEdit></CommentEdit>
 </div>
       )
 }
