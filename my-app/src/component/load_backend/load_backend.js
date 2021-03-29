@@ -19,12 +19,7 @@ class LoadBackend extends React.Component {
     this.follow = this.follow.bind(this);
    // this.post_entity=this.post_entity.bind(this);
   }
-  shout(){
-    alert('shouting');
-  }
-  static f1(){
-    alert('working');
-  }
+
 //GET entity/:entityID
   get_entity(entityID){
     console.log('load');
@@ -44,6 +39,8 @@ class LoadBackend extends React.Component {
         console.log('error');
     })
   }
+
+
 //POST entity/
   post_entity(fil){
    console.log('post');
@@ -73,65 +70,65 @@ class LoadBackend extends React.Component {
   }
 
 //PUT entity/:entityID
-edit_entity(entityID,edit_data){
+  edit_entity(entityID,edit_data){
 
-  console.log('entityID:'+entityID);
-  console.log('edit_data:'+edit_data);
-  edit_data=JSON.parse(edit_data);
-  //fil={"entityID": "jon-1428"};
- //fil={};
-   return axios({
-     method: 'PUT',
-     url: '/entity/'+entityID,
-     data:{
-       data:edit_data
-     },
-     withCredentials: false,
-   })
-   .then ( res =>{
-     console.log('sucess');
-       console.log(res);
-      this.setState({entity: res.data});
-   })
-   .catch(err => {
-       console.log(err.message);
-       console.log('error');
-   })
- }
-
-
+    console.log('entityID:'+entityID);
+    console.log('edit_data:'+edit_data);
+    edit_data=JSON.parse(edit_data);
+    //fil={"entityID": "jon-1428"};
+  //fil={};
+    return axios({
+      method: 'PUT',
+      url: '/entity/'+entityID,
+      data:{
+        data:edit_data
+      },
+      withCredentials: false,
+    })
+    .then ( res =>{
+      console.log('sucess');
+        console.log(res);
+        this.setState({entity: res.data});
+    })
+    .catch(err => {
+        console.log(err.message);
+        console.log('error');
+    })
+  }
 
 //PATCH user/:entityID/follow/:entityID
-follow(userID, followID){
-//  userID= "mkmk-1921";
- // followID= "jon-rest-3413";
-  console.log('patch');
-  console.log('UserID:'+userID);
-  console.log('followID:'+followID);
- // fil=JSON.parse(edit_data);
-  //fil={"entityID": "jon-1428"};
- //fil={};
-   return axios({
-     method: 'PATCH',
-     url: 'user/'+userID+'/follow/'+followID,
-     withCredentials: false,
-   })
-   .then ( res =>{
-     console.log('sucess');
-       console.log(res);
-    //  this.setState({entity: res.data});
-   })
-   .catch(err => {
-       console.log(err.message);
-       console.log('error');
-   })
- }
+  follow(userID, followID){
+  //  userID= "mkmk-1921";
+  // followID= "jon-rest-3413";
+    console.log('patch');
+    console.log('UserID:'+userID);
+    console.log('followID:'+followID);
+  // fil=JSON.parse(edit_data);
+    //fil={"entityID": "jon-1428"};
+  //fil={};
+    return axios({
+      method: 'PATCH',
+      url: 'user/'+userID+'/follow/'+followID,
+      withCredentials: false,
+    })
+    .then ( res =>{
+      console.log('sucess');
+        console.log(res);
+      //  this.setState({entity: res.data});
+    })
+    .catch(err => {
+        console.log(err.message);
+        console.log('error');
+    })
+  }
 
 
+  
 
- handleChange(event) {
-  this.setState({value: event.target.value});
-}
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  } 
 
 
 

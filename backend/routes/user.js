@@ -116,7 +116,7 @@ router.patch('/:userID/post/:postID/like', (req, res) => {
 router.post('/:userID/post/:postID/comment/new', (req, res) => {
     var postFilter = req.body.postFilter == null ? {postID: req.params.postID} : req.body.postFilter;
     var authorFilter = req.body.authorFilter == null ? {entityID: req.params.userID} : req.body.authorFilter;
-    userFunc.likePost(postFilter, authorFilter, req.body.data)
+    userFunc.createComment(postFilter, authorFilter, req.body.data)
     .then(updatedPost => res.status(201).json(updatedPost))
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Entity not found.') 
