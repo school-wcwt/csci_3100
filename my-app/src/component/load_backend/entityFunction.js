@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
-
+//GET entity/:entityID
 const getEntity= (entityID)=>{
   return new Promise((resolve,reject)=>{
     axios({
@@ -21,8 +21,6 @@ const getEntity= (entityID)=>{
   })
 }
 
-
-  
 //POST entity/
 const post_entity = (fil)=>{
  // fil=JSON.parse(fil);
@@ -51,32 +49,6 @@ const post_entity = (fil)=>{
 }
 
 
-//PATCH user/:entityID/follow/:entityID
-const follow = (userID, followID)=>{
-    userID= "jon-rest-1296";
-    followID= "jon-rest-1296";
-    console.log('patch');
-    console.log('UserID:'+userID);
-    console.log('followID:'+followID);
-  return new Promise((resolve,reject)=>{
-    axios({
-      method: 'PATCH',
-      url: 'user/'+userID+'/follow/'+followID,
-      withCredentials: false,
-    })
-    .then ( res =>{
-      console.log('sucess');
-      console.log(res);
-    })
-    .catch(err => {
-        console.log(err.message);
-        console.log('error');
-    })
-  })
-}
-
-
-
 //PUT entity/:entityID
 const edit_entity = (entityID,edit_data)=>{
 
@@ -97,7 +69,6 @@ const edit_entity = (entityID,edit_data)=>{
     .then ( res =>{
       console.log('sucess');
         console.log(res);
-        this.setState({entity: res.data});
     })
     .catch(err => {
         console.log(err.message);
@@ -105,8 +76,32 @@ const edit_entity = (entityID,edit_data)=>{
     })
   })
 }
-export {getEntity,
+
+
+const delete_entity= (entityID)=>{
+  return new Promise((resolve,reject)=>{
+    axios({
+      method: 'DELETE',
+      url: '/entity/'+entityID,
+      withCredentials: false,
+    })
+    .then ( res =>{
+        console.log('sucess');
+        return resolve(res)
+    })
+    .catch(err => {
+        console.log('error');
+        return reject(err)
+    })
+  })
+}
+
+
+
+
+export {
+  getEntity,
   post_entity,
   edit_entity,
-  follow
+  delete_entity,
 }

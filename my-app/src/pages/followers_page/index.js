@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 
 const entityFn = require("../../component/load_backend/entityFunction");
 
-
 /*
  class Followers1 extends LoadBackend{
     constructor(props) {
@@ -120,7 +119,7 @@ const Followers= ()=>{
     const [entity2, setEntity2] = useState(null);
     const change_post= async ()=>{
       try{
-        var entity2 = await entityFn.post_entity({"entityID": "the22re"});
+        var entity2 = await entityFn.post_entity({"entityID": "user2-4935"});
         setEntity2(entity2)
       }
       catch(err){
@@ -128,17 +127,34 @@ const Followers= ()=>{
         console.log('---------------')
       }
     }
+/*
+    var a=[]
+    
+    if (entity2!=null){
+      entity2.data.map((single)=>{
+    a.push(single.entityID)
+      }
+    )}
+    console.log(a)
+    
+    console.log(a)
+    
+
+    var a=[1,2,3]
+    var a=["username1-8759", "user2-4935", "jon-rest-1296"];
+    */
+
+
     return (
       <div>
-        <h1>Post entity</h1>
+        <h1>Post All entity</h1>
         <button onClick= {()=>{change_post()}}>post_entity
         </button>
-        <p>count ={entity2!= null ? entity2.data[0].entityID : ''}</p>
+        <p>count ={entity2!=null ? entity2.data.map(sinEnt=>{return (<p>{sinEnt.entityID}</p>)}) : ''}</p>
       </div>
 
     )
   }
-
 
   const Edit_entity =()=>{
     const [entity3, setEntity3] = useState(null);
@@ -156,11 +172,32 @@ const Followers= ()=>{
         <h1>Edit entity</h1>
         <button onClick= {()=>{change_post()}}>post_entity
         </button>
-        <p>count ={entity3!= null ? entity3.data[0].entityID : ''}</p>
+        <p>count ={entity3 ? entity3.data[0].entityID : ''}</p>
       </div>
     )
   }
 
+
+
+  const Delete_entity =()=>{
+    const [entity3, setEntity3] = useState(null);
+    const change_post= async ()=>{
+      try{
+        var entity3 = await entityFn.delete_entity("username1-8759");
+      }
+      catch(err){
+        console.log(err)
+        console.log('---------------')
+      }
+    }
+    return (
+      <div>
+        <h1>Delete entity</h1>
+        <button onClick= {()=>{change_post()}}>post_entity
+        </button>
+      </div>
+    )
+  }
 
 
   const Follow_entity =()=>{
@@ -192,6 +229,7 @@ const Followers= ()=>{
   <Get_entity></Get_entity>
   <Post_entity></Post_entity>
   <Edit_entity></Edit_entity>
+  <Delete_entity></Delete_entity>
   <Follow_entity></Follow_entity>
 </div>
       )
