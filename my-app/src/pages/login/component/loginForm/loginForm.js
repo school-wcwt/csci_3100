@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField,CircularProgress  } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import axios from '../../../../axiosConfig';
-import {ChangeUserState,IsLogin,Set_userobj} from '../../../services/authService';
 import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
 import {Nav} from 'react-bootstrap';
@@ -69,6 +68,8 @@ const Select = React.forwardRef(({ label }, ref) => (
 
 const Login_DataBase = (data)=>{
     console.log("Process on Login in");
+    document.cookie = "user";
+    history.push('/main');
     axios(
         {
         method: 'POST',

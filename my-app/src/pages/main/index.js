@@ -1,5 +1,6 @@
 import React from 'react';
 import Feed from "./component/feed/feed.js";
+import {Auth} from '../services/authService';
 //import PrimarySearchAppBar from './component/appBar/appBar.js';
 //import TopHead from './component/topHead/topHead.js';
 //import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Button ,Form, FormControl, Container, Row, Col} from 'react-bootstrap';
@@ -14,8 +15,7 @@ import NAVbar from "./component/nav.js";
 import state from "../userState";
 
 const Main = () => {
- 
-    console.log(document.cookie);
+    Auth(); // if not login, redirect it to login page
     return (
         <div>
             <div className="pt-5">

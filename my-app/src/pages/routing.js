@@ -1,10 +1,10 @@
 import {React, Component,useState } from 'react';
-import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
+import {  Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import Main from './main/';
 import Login from './login/';
 import Reservation from './reservation/';
 import ErrorPage from './errorPage/';
-import {IsLogin} from './services/authService';
+import {Auth} from './services/authService';
 import TestPage from './test_page/';
 import RestRegister from './restRegister/';
 import Followers from './followers_page/';
@@ -15,7 +15,7 @@ import UserProfilePage from './user_profile/';
 
 // -1 not login in ,0 user, 1 rest
 // For Testing purpose, if you want to go specific page without permission, go ./services/authService and set userState to admin
-//
+// {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
 
 import history from "./history";
 
@@ -23,7 +23,6 @@ class Routing extends Component {
     render() {
       return (
       <Router history={history}>
-          {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
           <div>
             <Switch>
                 <Route exact path='/' component={Main} />
@@ -38,9 +37,6 @@ class Routing extends Component {
                 <Route component={ErrorPage} />
             </Switch>
           </div>
-          <>
-          
-          </>
         </Router>
       );
     }

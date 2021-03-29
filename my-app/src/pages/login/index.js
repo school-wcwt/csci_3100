@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 import { Paper } from '@material-ui/core';
 import {LoginForm,RegisterForm} from './component/loginForm/loginForm.js';
 import LogoImg from './image/logo.png';
-import {IsLogin,auth} from '../services/authService';
+import {Auth} from '../services/authService';
 import {Redirect} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({ 
@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 const Login = ()=>{
     var [panel, setPanel] = React.useState(0);
     const classes = useStyles();
-    auth();
     return (     
              
         <div className = {classes.bgImg}>
