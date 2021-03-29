@@ -10,6 +10,7 @@ const IsLogin = () => {
 }
 
 const Auth = () =>{
+    console.log("I am in and state is " + IsLogin());
     if (!IsLogin())
         history.push('./login');
 }

@@ -93,7 +93,6 @@ const Login_DataBase = (data)=>{
 };
 
 const LoginForm = (props) => {
-    document.cookie = "empty";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useState();

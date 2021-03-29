@@ -12,6 +12,7 @@ import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import {Container} from 'react-bootstrap';
+import {Auth} from '../services/authService';
 
 
 var mydataset;
@@ -131,6 +132,8 @@ const PostArea =()=> {
     )
 }
 const UserProfilePage = () =>{
+    console.log("My cookie in user profile " + console.log(document.cookie));
+    Auth();
     const pageID  = useParams();
     load_my_data(pageID.EntitiesID);
     return(
