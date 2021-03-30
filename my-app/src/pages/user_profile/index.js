@@ -13,6 +13,7 @@ import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import {Container} from 'react-bootstrap';
 import {Auth} from '../services/authService';
+import Feed from '../main/component/feed/feed';
 
 
 var mydataset;
@@ -127,7 +128,7 @@ const UserHeading  = () => {
 const PostArea =()=> {
     return (
         <div className="pt-5">
-            <h1>It is my post Area for entities {mydataset.UserID}</h1>
+            <Feed postID/>
         </div>
     )
 }
