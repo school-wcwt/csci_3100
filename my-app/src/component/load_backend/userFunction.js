@@ -185,9 +185,36 @@ const comment_delete = (entityID, postID, commentID) =>{
             url: 'user/'+entityID+'/post/'+postID+'/comment/'+commentID,
             withCredentials: false,
         })
-        .then ( res =>{
+        .then (res =>{
             console.log('sucess');
             console.log(res);
+            return resolve(res)
+        })
+        .catch(err => {
+            console.log(err.message);
+            console.log('error');
+            return reject(err)
+        })
+    })
+}
+
+
+//PUT user/:entityID/post/:postID/comment/:commentID
+const comment_edit = (entityID, postID, filter,edit_data) =>{
+    var commentID="pls_enter"
+    var postID= "pls_enter"
+    return new Promise((resolve,reject)=>{
+        axios({
+            method: 'PUT',
+            url: 'user/'+entityID+'/post/'+postID+'/comment/'+commentID,
+            data:{
+                filter: filter,
+                data:edit_data
+            },
+            withCredentials: false,
+        })
+        .then ( res =>{
+            console.log('sucess');
             return resolve(res)
         })
         .catch(err => {
@@ -209,6 +236,7 @@ export {
 
 
     comment_create,
-    comment_delete
+    comment_delete,
+    comment_edit
 }
   
