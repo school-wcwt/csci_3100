@@ -117,6 +117,7 @@ const LoginForm = (props) => {
     //<label for="go_login">
      // data return name of [Email,Password]
     return (
+        /*
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
         <div  style = {{textAlign: "center"}}>
@@ -137,6 +138,25 @@ const LoginForm = (props) => {
         </form>
         {redirect ? <Redirect to="/main"/> : null};
         </>
+        */
+        <div  style = {{textAlign: "center"}}>
+        <Nav className={classes.welcome_message} >Welcome Back to mATE! We Hope All of You Can Enjoy the Food</Nav>
+        <form onSubmit={handleSubmit(onSubmit)}>    
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+                id="Email" label = "Email" name = "Email" type="email" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+                id="Password" label = "Password" name = "Password" type="password" />
+            <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} type="submit" >
+                Login
+            </Button>            
+        </form>
+        {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+        
+        <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} isLoading  = "true" component="span">
+            Register
+        </Button>
+        {redirect ? <Redirect to="/main"/> : null};
+        </div> 
     );
 };
 
