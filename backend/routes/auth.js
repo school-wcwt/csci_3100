@@ -35,8 +35,7 @@ router.post('/auth', (req, res) => {
             loginedEntity._id, 
             3600);
         let decoded = await jwt.verify(access_token, config.jwtSecret)
-        console.log(decoded)
-        if (decoded) {console.log(decoded);res.status(200).json({
+        if (decoded) {res.status(200).json({
             token: access_token,
             message: loginedEntity
         })}
