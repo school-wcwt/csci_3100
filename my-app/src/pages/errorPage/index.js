@@ -7,7 +7,6 @@ function Link_Word({message,link}){
     <a
     className="App-link"
     href={link}
-    target="_blank"
     
   >
     {message}

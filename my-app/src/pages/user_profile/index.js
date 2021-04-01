@@ -54,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
+// google drive: https://drive.google.com/drive/folders/1HDCkRRA1zYwjAEwEMjK1xJTmOrcN59oh?usp=sharing
+// BigImagePath: "/img/user_image/handsome1.jpg" // !
 
 function load_my_data(EntitiesID){
     //["Followed Resturant","Likes","Post Number","Follower"];
@@ -128,7 +129,13 @@ const UserHeading  = () => {
 const PostArea =()=> {
     return (
         <div className="pt-5">
-            <Feed postID/>
+            <Grid container spacing={1}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={6}>
+                <Feed/>
+            </Grid>
+            </Grid>
+            
         </div>
     )
 }

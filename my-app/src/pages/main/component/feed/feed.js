@@ -59,6 +59,7 @@ const Feed_proc1 = (para) => {
     //const classes = useStyles();
     const rest = para.props.rest;
     const hashtag_list = para.props.hashtag;
+    const img_link = 'https://drive.google.com/drive/folders/1-D2QkmDO38M0eB-qHGDdUryxBIj8Jhkw?usp=sharing';
     var folder = "./img/feed_all/";
     var image_set = ["1.jpg", "2.jpg", "3.jpg"];
     /* var mytileData = [
