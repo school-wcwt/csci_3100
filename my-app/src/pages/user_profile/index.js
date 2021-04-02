@@ -146,7 +146,7 @@ const UserProfilePage = () =>{
     const pageID  = useParams();
     load_my_data(pageID.EntitiesID);
     return(
-    <div className="pt-5" style ={{backgroundColor: "#F5F5DC"}}>
+    <div className="pt-5" >
         <Navbar/>
         <UserHeading/>
         <PostArea/>

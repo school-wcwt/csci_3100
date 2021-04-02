@@ -7,6 +7,7 @@ import { Carousel, Container, Row, Col } from 'react-bootstrap';
 //import  {ReactComponent as Logo } from '../../image/logo.png';
 //import logo from '../img/icon2.png'; // Tell webpack this JS file uses this image
 import icon from '../user.png';
+import Paper from '@material-ui/core/Paper';
 
 //import SingleShowList from '../../component/gridList/gridList';
 //import MediaCard from '../../component/cardMedia/cardMedia';
@@ -199,7 +200,9 @@ function Feed() {
         var rest = restaurant_list[i];
         var hashtag = hashtag_list[i];
         var list = { rest, hashtag };
-        feed_components.push(<Feed_proc1 props={list} />);
+        feed_components.push(
+                <Feed_proc1 props={list} />
+        );
     }
     return feed_components;
 }
