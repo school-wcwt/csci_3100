@@ -11,6 +11,7 @@ import Followers from './followers_page/';
 import Users from './followers_page/users.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
+import '../component/css/background.css';
 // it is backend path for template I found
 // input box : https://v3.material-ui.com/demos/text-fields/
 

@@ -5,7 +5,7 @@ import logo from '../../../image/icon2.PNG';
 function NAVbar(){
     return(
 <>
-  <Navbar collapseOnSelect expand="md" bg="light" fixed="top">
+  <Navbar collapseOnSelect expand="md" bg="dark" fixed="top">
     <Navbar.Brand href="#home"><img src={logo} height="50" width="150" alt="mATE." className=" float-left" id="icon"/></Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
