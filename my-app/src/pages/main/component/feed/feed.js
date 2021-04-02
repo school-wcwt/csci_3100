@@ -57,34 +57,17 @@ import Paper from '@material-ui/core/Paper';
 
 
 const Feed_proc1 = (para) => {
-    //const classes = useStyles();
-    const rest = para.props.rest;
-    const hashtag_list = para.props.hashtag;
+    const data = {
+        PostOwner: "User Post Owner",
+        PostDate: "16/3/2021",
+        RestaurantName: "Restaurant",
+        PostHeader: "I am Gbond_A. This restaurant is good.",
+        hashtag_list: [{ "name": '#Yummy', "frequency": 11 }, { "name": '#Juicy', "frequency": 22 }],
+        image_set: ["1.jpg", "2.jpg", "3.jpg"],
+        image_descript:["Dish1","Dish2","Dish3"],
+    }
     const img_link = 'https://drive.google.com/drive/folders/1-D2QkmDO38M0eB-qHGDdUryxBIj8Jhkw?usp=sharing';
-    var folder = "./img/feed_all/";
-    var image_set = ["1.jpg", "2.jpg", "3.jpg"];
-    /* var mytileData = [
-         {
-             img: folder + image_set[0],
-             title: 'Image0',
-             author: 'author',
-         },
-         {
-             img: folder + image_set[1],
-             title: 'Image1',
-             author: 'author2',
-         },
-         {
-             img: folder + image_set[2],
-             title: 'Image2',
-             author: 'author2',
-         },
- 
-     ];*/
-    const hashtag_section = hashtag_list.map((hashtag) =>
-        <Col> {hashtag.name}</Col>
-    );
-
+    const folder = "./img/feed_all/";
 
     return (
         <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral" ,fontSize: "1.3vw"}}>
@@ -99,56 +82,35 @@ const Feed_proc1 = (para) => {
 
                 <Col xs="10" className="pl-5">
                     <Row className="mt-4">
-                        <div><span style={{ color: "LightCoral", fontWeight: "800" }}>{rest.author}</span> posted on 16/3/2021 at <span style={{ color: "LightCoral", fontWeight: "800" }}>Restaurant</span>
+                        <div><span style={{ color: "LightCoral", fontWeight: "800" }}>{data.PostOwner}</span> posted on {data.PostDate} at <span style={{ color: "LightCoral", fontWeight: "800" }}>{data.RestaurantName}</span>
                         </div>
                     </Row>
 
-                    <Row className="my-3 ml-4">{rest.comment}</Row>
+                    <Row className="my-3 ml-4">{data.PostHeader}</Row>
 
                     <Row className="mb-4">
-
                         <Carousel fade className="w-100">
+                        { 
+                        data.image_set.map( 
+                        (image,idx) => 
                             <Carousel.Item style={{ height: "auto"}}>
-                                <img
-                                    className="d-block w-100"
-                                    src={folder + image_set[0]}
-                                    alt="First slide"
-                                />
-                                <Carousel.Caption>
-                                    <p>Dish1</p>
-                                </Carousel.Caption>
+                                <img className="d-block w-100" src={folder + image} alt = {data.image_descript[idx]} />
+                                <Carousel.Caption> <p>{data.image_descript[idx]}</p> </Carousel.Caption>
                             </Carousel.Item>
-
-                            <Carousel.Item style={{ height: "auto"}}>
-                                <img
-                                    className="d-block w-100"
-                                    src={folder + image_set[1]}
-                                    alt="Second slide"
-                                />
-                                <Carousel.Caption>
-                                    <p>Dish2</p>
-                                </Carousel.Caption>
-                            </Carousel.Item>
-
-                            <Carousel.Item style={{ height: "auto"}}>
-                                <img
-                                    className="d-block w-100"
-                                    src={folder + image_set[2]}
-                                    alt="Third slide"
-                                />
-                                <Carousel.Caption>
-                                    <p>Dish3</p>
-                                </Carousel.Caption>
-                            </Carousel.Item>
+                        )
+                        }
                         </Carousel>
-
-
                     </Row>
 
-
                     <Row className="mb-4">
-                        <a href="#" className="badge mr-2 text-light" style={{ backgroundColor: "LightCoral" }}>{hashtag_section[0]}</a>
-                        <a href="#" className="badge mr-2 text-light" style={{ backgroundColor: "LightCoral" }}>{hashtag_section[1]}</a>
+                        {
+                        data.hashtag_list.map( 
+                            (hashtag,idx) =>
+                            <a href={"#" + idx} className="badge mr-2 text-light" style={{ backgroundColor: "LightCoral" }}>
+                                <Col> {hashtag.name}</Col>
+                            </a>
+                        )
+                        }
                     </Row>
 
                     <Row>

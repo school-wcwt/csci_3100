@@ -9,6 +9,14 @@ import {Nav} from 'react-bootstrap';
 
 import history from "../../../history";
 import state from "../../../userState";
+
+const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return "Error here";
+    }
+  };
 const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -57,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Login_DataBase = (data)=>{
     console.log("Process on Login in");
-    document.cookie = "user";
     axios(
         {
         method: 'POST',
@@ -68,7 +75,7 @@ const Login_DataBase = (data)=>{
         }
     })
     .then(res => {
-        document.cookie = res;
+        document.cookie = parseJwt(res);
         alert("Login sucess");
         history.push('/main');
     })
