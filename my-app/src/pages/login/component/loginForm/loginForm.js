@@ -3,13 +3,9 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField,CircularProgress  } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import axios from '../../../../axiosConfig';
-import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
 import {Nav} from 'react-bootstrap';
-
 import history from "../../../history";
-import state from "../../../userState";
-import jwt_decode from "jwt-decode";
 
 const parseJwt = (token) => {
     try {
@@ -77,12 +73,7 @@ const Login_DataBase = (data)=>{
         }
     })
     .then(res => {
-        //document.cookie = jwt_decode(res.token);
-        console.log("My res " + res);
-        console.log("My res data " + res.data);
-        console.log("My res data token " + res.data.token);
-        console.log("My res data token decode " +jwt_decode(res.data.token));
-        console.log(jwt_decode(res.data.token));
+        document.cookie = "state=" + res.data.token;
         alert("Login sucess");
         history.push('/main');
     })
@@ -109,7 +100,7 @@ const InvalidData = (data)=>{
 };
 
 const LoginForm = (props) => {
-    document.cookie = "empty";
+    document.cookie = "state=empty"
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = React.useState(false);
     const classes = useStyles();

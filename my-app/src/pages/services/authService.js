@@ -1,6 +1,5 @@
 import history from '../history';
-import {Redirect} from 'react-router-dom'
-//var userState = document.cookie.split("; ")[1];
+import jwt_decode from "jwt-decode";
 
 const IsLogin = () => {
     const state = document.cookie.split("; ")[1];
@@ -15,4 +14,16 @@ const Auth = () =>{
         history.push('./login');
 }
 
-export {IsLogin,Auth}
+
+const GetToken = () =>{
+    return document.cookie
+        .split('; ')
+        .find(row => row.startsWith('state='))
+        .split('=')[1];
+};
+
+const GetUserObj = () =>{
+    return jwt_decode(GetToken());
+}
+
+export {Auth,GetToken,GetUserObj}

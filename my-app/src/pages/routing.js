@@ -4,7 +4,6 @@ import Main from './main/';
 import Login from './login/';
 import Reservation from './reservation/';
 import ErrorPage from './errorPage/';
-import {Auth} from './services/authService';
 import TestPage from './test_page/';
 import RestRegister from './restRegister/';
 import Followers from './followers_page/';
