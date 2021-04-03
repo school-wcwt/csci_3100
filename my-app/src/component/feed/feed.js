@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';
-import icon from '../user.png';
+import icon from './user.png';
 import Paper from '@material-ui/core/Paper';
 
 const DataLoader = (postid) =>{
@@ -21,9 +21,10 @@ const DataLoader = (postid) =>{
 const Post = (postid) => {
     const data = DataLoader(postid);
     const img_link = 'https://drive.google.com/drive/folders/1-D2QkmDO38M0eB-qHGDdUryxBIj8Jhkw?usp=sharing';
-    const folder = "./img/feed_all/";
+    const folder = "/img/feed_all/";
 
     return (
+        
         <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral" ,fontSize: "1.3vw"}}>
             <Row>
                 <Col xs="1">
@@ -56,7 +57,7 @@ const Post = (postid) => {
                         </Carousel>
                     </Row>
 
-                    <Row className="mb-4">
+                    <Row className="mb-4" >
                         {
                         data.hashtag_list.map( 
                             (hashtag,idx) =>
@@ -73,11 +74,12 @@ const Post = (postid) => {
                                 <img src={icon} height="30" width="30" alt="mATE." className="mx-auto my-2"></img>
                             </Col>
                             <Col xs="2" className="my-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>{comment_item.name}</span></Col>
-                            <Col xs="8" className="my-auto"><p style={{overflowWrap: "break-word"}}>{comment_item.content}</p></Col>
+                            <Col xs="8" className="my-auto"><p style={{overflowWrap: "break-word" , margin: "3%"}}>{comment_item.content}</p></Col>
                             </Row>
                         )  
                         }
                 </Col>
+                
             </Row>
         </Container>
     )
@@ -91,4 +93,4 @@ function Feed() {
     )
 }
 
-export default Feed;
+export {Feed,Post};

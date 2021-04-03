@@ -13,7 +13,7 @@ import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import {Container} from 'react-bootstrap';
 import {Auth} from '../services/authService';
-import Feed from '../main/component/feed/feed';
+import {Post} from '../../component/feed/feed';
 
 
 
@@ -133,7 +133,7 @@ const PostArea =()=> {
             <Grid container spacing={1}>
             <Grid item xs={4}></Grid>
             <Grid item xs={6}>
-                <Feed/>
+                <Post/>
             </Grid>
             </Grid>
             
