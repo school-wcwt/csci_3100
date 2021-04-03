@@ -9,6 +9,7 @@ import {Nav} from 'react-bootstrap';
 
 import history from "../../../history";
 import state from "../../../userState";
+import jwt_decode from "jwt-decode";
 
 const parseJwt = (token) => {
     try {
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     extendedIcon: {
         marginRight: theme.spacing(1),
         color: "rgb(47, 79, 79)",
+
     },
     welcome_message:{
         color: "LightCoral", 
@@ -75,7 +77,12 @@ const Login_DataBase = (data)=>{
         }
     })
     .then(res => {
-        document.cookie = parseJwt(res);
+        //document.cookie = jwt_decode(res.token);
+        console.log("My res " + res);
+        console.log("My res data " + res.data);
+        console.log("My res data token " + res.data.token);
+        console.log("My res data token decode " +jwt_decode(res.data.token));
+        console.log(jwt_decode(res.data.token));
         alert("Login sucess");
         history.push('/main');
     })
