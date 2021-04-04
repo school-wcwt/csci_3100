@@ -3,34 +3,15 @@ var router = express.Router();
 
 const entityFunc = require('../functions/entityFunc');
 
+// Unauthorized Queries
+
 router.get('/:entityID', (req, res) => { 
     entityFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
         if (entity == null) res.status(204).json(null);
         res.status(200).json(entity)
     })
-    .catch(err => { res.status(400).json(err); })
-})
-
-router.put('/:entityID', (req, res) => {
-    var filter = req.body.filter == null ? {entityID: req.params.entityID} : req.body.filter;
-    entityFunc.updateEntity(filter, req.body.data)
-    .then(updatedEntity => res.status(200).json(updatedEntity))
-    .catch(err => {
-        if (err.message == 'Email exists.') res.status(409).json(err);
-        else if (err.message == 'Entity not found.') res.status(404).json(err);
-        else res.status(400).json(err);
-    })
-})
-
-router.delete('/:entityID', (req, res) => {
-    var filter = req.body.filter == null ? {entityID: req.params.entityID} : req.body.filter;
-    entityFunc.deleteEntity(filter)
-    .then(deletedEntity => res.status(200).json(deletedEntity))
-    .catch(err => {
-        if (err.message == 'Entity not found.') res.status(404).json(err);
-        else res.status(400).json(err);
-    })
+    .catch(err => res.status(500).json(err))
 })
 
 router.post('/', (req, res) => {
@@ -39,7 +20,45 @@ router.post('/', (req, res) => {
         if (entities == null) res.status(204).json(null);
         res.status(200).json(entities)        
     })
-    .catch(err => { res.status(400).json(err); })
+    .catch(err => res.status(500).json(err))
+})
+
+// Authorized Queries
+
+router.post('/new', (req, res) => {
+    res.redirect('/register');
+})
+
+router.put('/', (req, res) => {
+    var filter = {entityID: req.locals.entityID};
+    entityFunc.updateEntity(filter, req.body.data)
+    .then(updatedEntity => res.status(200).json(updatedEntity))
+    .catch(err => {
+        if (err.message == 'Email exists.') res.status(409).json(err);
+        else if (err.message == 'Entity not found.') res.status(404).json(err);
+        else res.status(500).json(err);
+    })
+})
+
+router.delete('/', (req, res) => {
+    var filter = {entityID: req.locals.entityID};
+    entityFunc.deleteEntity(filter)
+    .then(deletedEntity => res.status(200).json(deletedEntity))
+    .catch(err => {
+        if (err.message == 'Entity not found.') res.status(404).json(err);
+        else res.status(500).json(err);
+    })
+})
+
+router.patch('/follow/:entityID', (req, res) => {
+    var authorFilter = {entityID: res.locals.entityID};
+    var targetFilter = {entityID: req.params.entityID};
+    userFunc.updateFollow(authorFilter, targetFilter, req.body.addFlag)
+    .then(updatedEntity => res.status(200).json(updatedEntity))
+    .catch(err => {
+        if (err.message == 'Entity not found.') res.status(404).json(err.message)
+        else res.status(500).json(err.message)
+    })
 })
 
 module.exports = router;
