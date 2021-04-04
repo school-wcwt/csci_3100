@@ -12,7 +12,7 @@ router.get('/:postID', (req, res) => {
         if (post == null) res.status(204).json(post)
         res.status(200).json(post)
     })
-    .catch(err => res.status(400).json(err.message))
+    .catch(err => res.status(500).json(err.message))
 })
 
 router.post('/', (req, res) => {
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
         if (posts == null) res.status(204).json(posts)
         res.status(200).json(posts)
     })
-    .catch(err => res.status(400).json(err.message))    
+    .catch(err => res.status(500).json(err.message))    
 })
 
 // Authorized Queries
@@ -33,7 +33,7 @@ router.post('/new', (req, res) => {
     .then(newPost => res.status(201).json(newPost))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -48,7 +48,7 @@ router.delete('/:postID', (req, res) => {
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Comment not found.' || err.message == 'Tag not found.') 
             res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -62,7 +62,7 @@ router.put('/:postID', (req, res) => {
     .then(updatedPost => res.status(200).json(updatedPost))
     .catch(err => {
         if (err.message == 'Post not found.') res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -75,7 +75,7 @@ router.patch('/like/:postID', (req, res) => {
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Entity not found.') 
             res.status(404).json(err)
-        else res.status(400).json(err)
+        else res.status(500).json(err)
     })
 })
 

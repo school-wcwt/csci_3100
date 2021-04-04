@@ -11,7 +11,7 @@ router.get('/:entityID', (req, res) => {
         if (entity == null) res.status(204).json(null);
         res.status(200).json(entity)
     })
-    .catch(err => res.status(400).json(err))
+    .catch(err => res.status(500).json(err))
 })
 
 router.post('/', (req, res) => {
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
         if (entities == null) res.status(204).json(null);
         res.status(200).json(entities)        
     })
-    .catch(err => res.status(400).json(err))
+    .catch(err => res.status(500).json(err))
 })
 
 // Authorized Queries
@@ -36,7 +36,7 @@ router.put('/', (req, res) => {
     .catch(err => {
         if (err.message == 'Email exists.') res.status(409).json(err);
         else if (err.message == 'Entity not found.') res.status(404).json(err);
-        else res.status(400).json(err);
+        else res.status(500).json(err);
     })
 })
 
@@ -46,7 +46,7 @@ router.delete('/', (req, res) => {
     .then(deletedEntity => res.status(200).json(deletedEntity))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err);
-        else res.status(400).json(err);
+        else res.status(500).json(err);
     })
 })
 
@@ -57,7 +57,7 @@ router.patch('/follow/:entityID', (req, res) => {
     .then(updatedEntity => res.status(200).json(updatedEntity))
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 

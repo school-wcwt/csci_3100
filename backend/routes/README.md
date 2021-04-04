@@ -46,8 +46,9 @@ password | String | Yes | Password.
     - 200: Authentication success.
     - 403: Authentication failed. Incorrect Password.
     - 404: Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` with `groupList` populated.
+
 
 #### POST auth/register
 - Register a new entity.
@@ -70,10 +71,12 @@ openingHr|[[String]]|     | [`Rest`] Opening hours.
 - **Status Code:**
     - 201: Entity created.
     - 409: Email already exists in DB.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` (`[U]` with `groupList` populated)
 
+
 ## Entity Routes
+
 
 #### GET entity/:entityID
 - Get data of an Entity.
@@ -81,8 +84,9 @@ openingHr|[[String]]|     | [`Rest`] Opening hours.
 - **Status Code:**
     - 200: Entity found.
     - 204: Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` (`[U]` with `groupList` populated), or; `null` if not found
+
 
 #### POST entity/
 - Get data of multiple Entities.
@@ -95,11 +99,13 @@ filter   | Object | Yes | Entities filter.
 - **Status Code:**
     - 200: Entity found.
     - 204: Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` (`[U]` with `groupList` populated), or; `null` if not found
+
 
 #### POST entity/new
 - Register a new entity. Redirect to [`auth/register`](#post-authregister)
+
 
 #### DELETE entity/
 - Delete an Entity.
@@ -107,8 +113,9 @@ filter   | Object | Yes | Entities filter.
 - **Status Code:**
     - 200: Entity deleted.
     - 404: Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity`
+
 
 #### PUT entity/
 - Edit an Entity.
@@ -122,7 +129,7 @@ data     | Object | Yes | Edit content.
     - 200: Entity updated.
     - 404: Entity not found.
     - 409: Email already exists in DB. (Only on updating emails.)
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` (`[U]` with `groupList` populated)
 
 
@@ -137,10 +144,12 @@ addFlag      | Boolean | Yes | Whether to add or delete a follow.
 - **Status Code:**
     - 200: Success.
     - 404: Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` with `groupList` populated.
 
+
 ## Grouplist Routes
+
 
 #### GET grouplist/:entityID/:listName
 - Get content of a list `listName` under User with `entityID`.
@@ -148,8 +157,9 @@ addFlag      | Boolean | Yes | Whether to add or delete a follow.
 - **Status Code:**
     - 200: GroupList found.
     - 204: GroupList not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `GroupList` with `content` populated, or `null` if not found
+
 
 #### POST grouplist/
 - Get content of multiple lists.
@@ -162,8 +172,9 @@ filter   | Object | Yes | Posts filter.
 - **Status Code:**
     - 200: GroupList(s) found.
     - 204: GroupList(s) not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post`(s) with `author`, `target`, `hashtag`, and 3 `comment`s populated; `null` if not found.
+
 
 #### POST grouplist/new
 - Add a GroupList and push it under requesting User.
@@ -177,8 +188,9 @@ listName | String | Yes | Name of the new list.
     - 201: Success.
     - 404: Entity not found.
     - 409: List with same name exists.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` with `groupList` populated
+
 
 #### DELETE grouplist/:listName
 - Delete a GroupList and pull it under requesting User.
@@ -186,8 +198,9 @@ listName | String | Yes | Name of the new list.
 - **Status Code:**
     - 200: Success.
     - 404: Entity/List not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Entity` with `groupList` populated
+
 
 #### PUT grouplist/:listName
 - Edit a GroupList (NOT include content).
@@ -200,8 +213,9 @@ data     | Object | Yes | Data to be updated.
 - **Status Code:**
     - 200: Success.
     - 404: Entity/List not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `GroupList` with `content` populated
+
 
 #### PATCH groupList/content/:listName
 - Add/Delete a restaurant into/in a GroupList.
@@ -215,10 +229,12 @@ addFlag      | Boolean | Yes | Whether to add or delete.
 - **Status Code:**
     - 200: Success.
     - 404: Entity/List not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `GroupList` with `content` populated
 
+
 ## Post Routes
+
 
 #### GET post/:postID
 - Get data of a post.
@@ -226,8 +242,9 @@ addFlag      | Boolean | Yes | Whether to add or delete.
 - **Status Code:**
     - 200: Post found.
     - 204: Post not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, `hashtag`, and 3 `comment`s populated; `null` if not found.
+
 
 #### POST post/
 - Get data of multiple posts.
@@ -240,8 +257,9 @@ filter   | Object | Yes | Posts filter.
 - **Status Code:**
     - 200: Post(s) found.
     - 204: Post(s) not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post`(s) with `author`, `target`, `hashtag`, and 3 `comment`s populated; `null` if not found.
+
 
 #### POST post/new
 - Add a new Post.
@@ -251,17 +269,18 @@ Key          | Type     | Required | Description
 :-----------:|:--------:|:---:|--|
 targetFilter | Object   | Yes | Target (restaurant) filter. 
 data         | Object   | Yes | Data to be added.
-- type       | Number   | Yes | 0: Check-in, 1: Review 
-- content    | String   | Yes | Content of the post.
-- rating     | Number   | Yes | [`Review`] Rating between 0-10. 
-- hashtag    | String   |     | Embedded hashtag(s).
-- photo      | [String] |     | Link to attached photo(s).
+\- type      | Number   | Yes | 0: Check-in, 1: Review 
+\- content   | String   | Yes | Content of the post.
+\- rating    | Number   | Yes | [`Review`] Rating between 0-10. 
+\- hashtag   | String   |     | Embedded hashtag(s).
+\- photo     | [String] |     | Link to attached photo(s).
 
 - **Status Code:**
     - 201: Success.
     - 404: Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, `hashtag`, and 3 `comment`s populated.
+
 
 #### DELETE post/:postID
 - Delete a Post, delete attached comments, and update related tags.
@@ -269,7 +288,7 @@ data         | Object   | Yes | Data to be added.
 - **Status Code:**
     - 200: Success.
     - 404: Post/Comment/Tag not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post`
 
 
@@ -284,7 +303,7 @@ data     | Object | Yes | Data used to modify.
 - **Status Code:**
     - 200: Success.
     - 404: Post not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, `hashtag`, and 3 `comment`s populated.
 
 
@@ -299,10 +318,12 @@ addFlag      | Boolean | Yes | Whether to add or delete a like.
 - **Status Code:**
     - 200: Success.
     - 404: Post/Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, `hashtag`, and 3 `comment`s populated.
 
+
 ## Comment Routes
+
 
 #### GET comment/:commentID
 - Get data of a comment.
@@ -310,8 +331,9 @@ addFlag      | Boolean | Yes | Whether to add or delete a like.
 - **Status Code:**
     - 200: Comment found.
     - 204: Comment not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Comment` with `author` populated; `null` if not found.
+
 
 #### POST comment/
 - Get data of multiple comments.
@@ -324,7 +346,7 @@ filter   | Object | Yes | Comments filter.
 - **Status Code:**
     - 200: Comment(s) found.
     - 204: Comment(s) not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Comment`(s) with `author` populated; `null` if not found.
 
 
@@ -341,7 +363,7 @@ data         | Object  | Yes | Data to be added.
 - **Status Code:**
     - 201: Success.
     - 404: Post/Entity not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, and `hashtag` populated
 
 
@@ -351,7 +373,7 @@ data         | Object  | Yes | Data to be added.
 - **Status Code:**
     - 200: Success.
     - 404: Post/Comment not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, and `hashtag` populated
 
 
@@ -366,5 +388,5 @@ data     | Object | Yes | Data used to modify.
 - **Status Code:**
     - 200: Success.
     - 404: Post/Comment not found.
-    - 400: Unknown error.
+    - 500: Unknown error.
 - **Returns:** `Post` with `author`, `target`, and `hashtag` populated

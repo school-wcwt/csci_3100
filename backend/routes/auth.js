@@ -42,7 +42,7 @@ router.post('/login', (req, res) => {
     } catch (err) {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
         else if (err.message == 'Incorrect password.') res.status(403).json(err.message)
-        else res.status(400).json(err.message);
+        else res.status(500).json(err.message);
     }})()
 })
 
@@ -51,7 +51,7 @@ router.post('/register', (req, res) => {
     .then(createdEntity => res.status(201).json(createdEntity))
     .catch(err => {
         if (err.message == 'Email exists.') res.status(409).json(err.message);
-        else res.status(400).json(err.message);
+        else res.status(500).json(err.message);
     })
 })
 

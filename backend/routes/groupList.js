@@ -15,7 +15,7 @@ router.get('/:entityID/:listName', (req, res) => {
         if (groupList == null) res.status(204).json(groupList)
         else res.status(200).json(groupList)
     })
-    .catch(err => { res.status(400).json(err.message) })
+    .catch(err => { res.status(500).json(err.message) })
 })
 
 router.post('/', (req, res) => {
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
         if (groupLists == null) res.status(204).json(groupLists)
         else res.status(200).json(groupLists)
     })
-    .catch(err => { res.status(400).json(err.message) })
+    .catch(err => { res.status(500).json(err.message) })
 })
 
 router.post('/new', (req, res) => {
@@ -36,7 +36,7 @@ router.post('/new', (req, res) => {
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
         else if (err.message == 'List exists.') res.status(409).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -49,7 +49,7 @@ router.delete('/:listName', (req, res) => {
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
         else if (err.message == 'List not found.') res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -62,7 +62,7 @@ router.put('/:listName', (req, res) => {
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
         else if (err.message == 'List not found.') res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -75,7 +75,7 @@ router.patch('/content/:listName', (req, res) => {
     .catch(err => {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
         else if (err.message == 'List not found.') res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 

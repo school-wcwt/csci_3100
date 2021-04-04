@@ -12,7 +12,7 @@ router.get('/:commentID', (req, res) => {
         if (comment == null) res.status(204).json(comment);
         res.status(200).json(comment);
     })
-    .catch(err => res.status(400).json(err.message))
+    .catch(err => res.status(500).json(err.message))
 })
 
 router.post('/', (req, res) => {
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
         if (comments == null) res.status(204).json(comments);
         res.status(200).json(comments);
     })
-    .catch(err => res.status(400).json(err.message))   
+    .catch(err => res.status(500).json(err.message))   
 })
 
 // Authorized Queries
@@ -33,7 +33,7 @@ router.post('/new', (req, res) => {
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Entity not found.') 
             res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -47,7 +47,7 @@ router.delete('/:commentID', (req, res) => {
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Comment not found.') 
             res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
@@ -61,7 +61,7 @@ router.put('/:commentID', (req, res) => {
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Comment not found.') 
             res.status(404).json(err.message)
-        else res.status(400).json(err.message)
+        else res.status(500).json(err.message)
     })
 })
 
