@@ -10,6 +10,7 @@ import Followers from './followers_page/';
 import Users from './followers_page/users.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
+import CreatePost from './createPost';
 import '../component/css/background.css';
 // it is backend path for template I found
 // input box : https://v3.material-ui.com/demos/text-fields/
@@ -31,6 +32,7 @@ class Routing extends Component {
                 <Route path='/login' component={Login} />
                 <Route path='/reservation' component={Reservation}/>
                 <Route path='/test_page' component={TestPage}/>
+                <Route path='/createPost' component={CreatePost}/>
                 <Route path='/restRegister' component={RestRegister}/>
                 <Route path='/followers' component={Followers}/>
                 <Route path='/users' component={Users}/>
