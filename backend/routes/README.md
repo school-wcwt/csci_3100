@@ -1,8 +1,8 @@
 # All avaliable routes
 
 * Auth 
-    * [`POST` auth/login](#post-authlogin)
-    * [`POST` auth/register](#post-authregister)
+    * [`POST` login](#post-login)
+    * [`POST` register](#post-register)
 * Entity 
     * [`GET`    entity/:entityID](#get-entityentityid) 
     * [`POST`   entity/](#post-entity)
@@ -33,7 +33,7 @@
 
 ## Auth Routes
 
-#### POST auth/login
+#### POST login
 - Authenticate (log in) an user.
 - **Body:** 
 
@@ -50,7 +50,7 @@ password | String | Yes | Password.
 - **Returns:** `Entity` with `groupList` populated.
 
 
-#### POST auth/register
+#### POST register
 - Register a new entity.
 - **Body:** 
 
@@ -104,7 +104,7 @@ filter   | Object | Yes | Entities filter.
 
 
 #### POST entity/new
-- Register a new entity. Redirect to [`auth/register`](#post-authregister)
+- Register a new entity. Redirect to [`register`](#post-authregister)
 
 
 #### DELETE entity/

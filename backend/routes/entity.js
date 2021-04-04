@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
 // Authorized Queries
 
 router.post('/new', (req, res) => {
-    res.redirect('/auth/register');
+    res.redirect('/register');
 })
 
 router.put('/', (req, res) => {
