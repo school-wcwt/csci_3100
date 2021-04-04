@@ -14,6 +14,14 @@ var findPost = (filter) => {
             .populate('author', 'entityID username tag name profPhoto')
             .populate('target', 'entityID username tag name profPhoto')
             .populate('hashtag', 'name')
+            .populate({
+                path:'comment',
+                perDocumentLimit: 3,
+                populate: {
+                    path: 'author',
+                    select: 'entityID username tag name profPhoto'
+                }
+            })
             .exec();
             return resolve(post);
         } catch(err) { return reject(err) }})(); 
@@ -32,6 +40,14 @@ var findPost = (filter) => {
             .populate('author', 'entityID username tag name profPhoto')
             .populate('target', 'entityID username tag name profPhoto')
             .populate('hashtag', 'name')
+            .populate({
+                path:'comment',
+                perDocumentLimit: 3,
+                populate: {
+                    path: 'author',
+                    select: 'entityID username tag name profPhoto'
+                }
+            })
             .exec();
             return resolve(post);
         } catch(err) { return reject(err) }})(); 

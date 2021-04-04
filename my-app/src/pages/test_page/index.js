@@ -6,7 +6,7 @@ const TestPage = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState()
 
-  const handleSubmit = async e => {
+  /*const handleSubmit = async e => {
     e.preventDefault();
     const user = { username, password };
     // send the username and password to the server
@@ -19,7 +19,19 @@ const TestPage = () => {
     // store the user in localStorage
     localStorage.setItem('user', response.data)
     console.log(response.data)
-  };
+  };*/
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    axios({
+        method: 'PUT',
+        url: 'http://localhost:3102/jon-2571/',
+        data: {
+          data: {name: 'Jon Lam'}
+        }
+      }).then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
 
 // if there's a user show the message below
   if (user) {

@@ -89,6 +89,7 @@ var updateGroupList = (filter, props = null, data = null) => {
 
 module.exports = {
     findGroupList,
+    findGroupLists,
     createGroupList,
     updateGroupList,
     deleteGroupList

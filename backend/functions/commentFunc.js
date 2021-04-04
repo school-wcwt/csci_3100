@@ -10,7 +10,7 @@ var findComment = (filter) => {
     })
 }
 
-var findComment = (filter) => {
+var findComments = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             var comment = await Comment.find(filter)
@@ -74,6 +74,7 @@ var deleteComments = (filter) => {
 
 module.exports = {
     findComment,
+    findComments,
     createComment,
     updateComment,
     deleteComment,

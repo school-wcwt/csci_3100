@@ -22,17 +22,15 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 const checkAuth = require('./middleware/checkAuth');
 
-app.use('/', require('./routes/auth'));
-app.use('/entity', 
-    //checkAuth, 
-    require('./routes/entity'));
-app.use('/user', 
-    //checkAuth, 
-    require('./routes/user'));
+app.use('/',                     require('./routes/auth'));
+app.use('/entity',    checkAuth, require('./routes/entity'));
+app.use('/grouplist', checkAuth, require('./routes/groupList'));
+app.use('/post',      checkAuth, require('./routes/post'));
+app.use('/comment',   checkAuth, require('./routes/comment'));
+
 
 const PORT = require('./config').backendPort
-//const PORT=3102;
-console.log('----------port:'+PORT+'-----------');
+console.log(`----------Port: ${PORT}-----------`);
 app.listen(PORT);
 
 /*require('./routes/entityFunc').createEntity({
