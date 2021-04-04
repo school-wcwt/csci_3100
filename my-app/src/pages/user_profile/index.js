@@ -15,6 +15,7 @@ import {Post} from '../../component/feed/feed';
 import {GetUserObj} from '../services/authService';
 
 
+
 var mydataset;
 
 // ! means not null when get data
@@ -58,8 +59,9 @@ const useStyles = makeStyles((theme) => ({
 
 function load_my_data(EntitiesID){
     //["Followed Resturant","Likes","Post Number","Follower"];
+    const user_obj = GetUserObj();
     mydataset = {
-        UserID: EntitiesID,
+        UserID: user_obj.EntitiesID,
         UserName: "Tom Wong", // !
         Email: "1155109240@gmail.com", // !
         Favourite_Rest: 5, // !
@@ -130,7 +132,11 @@ const PostArea =()=> {
             <Grid container spacing={1}>
             <Grid item xs={4}></Grid>
             <Grid item xs={6}>
+
+            <Paper elevation={3} >
                 <Post/>
+            </Paper>
+               
             </Grid>
             </Grid>
             
@@ -138,7 +144,6 @@ const PostArea =()=> {
     )
 }
 const UserProfilePage = () =>{
-    console.log("My cookie in user profile " + console.log(document.cookie));
     const pageID  = useParams();
     load_my_data(pageID.EntitiesID);
     return(

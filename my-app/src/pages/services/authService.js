@@ -1,29 +1,28 @@
 import history from '../history';
 import jwt_decode from "jwt-decode";
 
-const IsLogin = () => {
-    const state = document.cookie.split("; ")[1];
-    if (state != "empty")
-        return true;
-    return false;
-}
-
-const Auth = () =>{
-    console.log("I am in and state is " + IsLogin());
-    if (!IsLogin())
-        history.push('./login');
-}
-
-
 const GetToken = () =>{
-    return document.cookie
-        .split('; ')
-        .find(row => row.startsWith('state='))
-        .split('=')[1];
+    var tmp = document.cookie.split('; ');
+    if (tmp == undefined) return "";
+    var tmp = tmp.find(row => row.startsWith('state='));
+    if (tmp == undefined) return "";
+    return tmp.split('=')[1];
+
 };
 
 const GetUserObj = () =>{
-    return jwt_decode(GetToken());
+    const token = GetToken();
+    if (token == "") return "";
+    return jwt_decode(token);
 }
 
-export {Auth,GetToken,GetUserObj}
+const Auth = () =>{
+    if (GetToken() == "" || GetToken() == "empty" )
+        history.push('./login');
+}
+
+const PrintUserObj = () =>{
+    console.log("log in authservice: " + JSON.stringify(GetUserObj()) + "\n");
+}
+
+export {Auth,GetToken,GetUserObj,PrintUserObj}
