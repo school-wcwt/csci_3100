@@ -12,11 +12,11 @@ function NAVbar(){
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="text-center mx-auto">
-    <Nav.Link as={Link} to="/main" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Home</Nav.Link>
-    <Nav.Link as={Link} to="/discover" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Discover</Nav.Link>
-    <Nav.Link as={Link} to="/create" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Create Post</Nav.Link>
-    <Nav.Link as={Link} to="/restregister" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>Create Restaurant</Nav.Link>
-    <Nav.Link as={Link} to="/userprofile/{entitiesID}" className="mr-xl-5 mr-md-4" style={{color: "LightCoral", fontWeight:800}}>My Account</Nav.Link>
+    <Nav.Link as={Link} to="/main" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Home</Nav.Link>
+    <Nav.Link as={Link} to="/discover" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Discover</Nav.Link>
+    <Nav.Link as={Link} to="/create" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Create Post</Nav.Link>
+    <Nav.Link as={Link} to="/restregister" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Create Restaurant</Nav.Link>
+    <Nav.Link as={Link} to="/userprofile/{entitiesID}" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>My Account</Nav.Link>
     </Nav>
     <Form inline>
       <div className="mx-auto row">
