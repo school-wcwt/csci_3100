@@ -4,13 +4,13 @@ import Main from './main/';
 import Login from './login/';
 import Reservation from './reservation/';
 import ErrorPage from './errorPage/';
-import {Auth} from './services/authService';
 import TestPage from './test_page/';
 import RestRegister from './restRegister/';
 import Followers from './followers_page/';
 import Users from './followers_page/users.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
+import '../component/css/background.css';
 // it is backend path for template I found
 // input box : https://v3.material-ui.com/demos/text-fields/
 

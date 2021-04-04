@@ -18,6 +18,7 @@
     "file-loader": "^6.1.1",
     "history": "^4.10.1",
     "jaaulde-cookies": "^3.0.6",
+    "jwt-decode": "^3.1.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.1",
@@ -26,6 +27,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "styled-components": "^5.2.1",
+    "swap": "^0.0.3",
+    "swup": "^2.0.14",
     "url-loader": "^4.1.1",
     "web-vitals": "^1.1.0"
   },

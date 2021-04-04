@@ -1,64 +1,37 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from 'react';
+import {makeStyles,Grid,Paper} from '@material-ui/core';
+const useStyles = makeStyles((theme) => ({
+}));
 
-const TestPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState()
 
-  /*const handleSubmit = async e => {
-    e.preventDefault();
-    const user = { username, password };
-    // send the username and password to the server
-    const response = await axios.post(
-      "http://blogservice.herokuapp.com/api/login",
-      user
-    );
-    // set the state of the user
-    setUser(response.data)
-    // store the user in localStorage
-    localStorage.setItem('user', response.data)
-    console.log(response.data)
-  };*/
+/*
+html, body {
+  width: 100%;
+  height:100%;
+}
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    axios({
-        method: 'PUT',
-        url: 'http://localhost:3102/jon-2571/',
-        data: {
-          data: {name: 'Jon Lam'}
-        }
-      }).then(res => console.log(res))
-      .catch(err => console.log(err))
-  }
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
 
-// if there's a user show the message below
-  if (user) {
-    return <div>{user.name} is loggged in</div>;
-  }
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+*/
 
-  // if there's no user, show the login form
+const Testpage = () => {
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username: </label>
-      <input
-        type="text"
-        value={username}
-        placeholder="enter a username"
-        onChange={({ target }) => setUsername(target.value)}
-      />
-      <div>
-        <label htmlFor="password">password: </label>
-        <input
-          type="password"
-          value={password}
-          placeholder="enter a password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
-  );
-};
-export default TestPage;
+    <h1>4545</h1>
+  )
+}
+export default Testpage;

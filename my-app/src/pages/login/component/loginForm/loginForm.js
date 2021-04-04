@@ -3,12 +3,17 @@ import { useForm } from "react-hook-form";
 import { makeStyles, TextField,CircularProgress  } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import axios from '../../../../axiosConfig';
-import { BrowserRouter as Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import {send_validation_email} from '../../../../component/email/email';
 import {Nav} from 'react-bootstrap';
-
 import history from "../../../history";
-import state from "../../../userState";
+
+const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return "Error here";
+    }
+  };
 const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -35,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     extendedIcon: {
         marginRight: theme.spacing(1),
         color: "rgb(47, 79, 79)",
+
     },
     welcome_message:{
         color: "LightCoral", 
@@ -55,21 +61,8 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-// you can use React.forwardRef to pass the ref too
-const Select = React.forwardRef(({ label }, ref) => (
-    <>
-        <label>{label}</label>
-        <select name={label} ref={ref}>
-            <option value="20">20</option>
-            <option value="30">30</option>
-        </select>
-    </>
-));
-
 const Login_DataBase = (data)=>{
     console.log("Process on Login in");
-    document.cookie = "user";
-    history.push('/main');
     axios(
         {
         method: 'POST',
@@ -80,84 +73,13 @@ const Login_DataBase = (data)=>{
         }
     })
     .then(res => {
-        document.cookie = "user";
+        document.cookie = "state=" + res.data.token;
         alert("Login sucess");
         history.push('/main');
     })
     .catch(err => {
         console.log(err);
-        alert("Login Error");
-        document.cookie = "user";
-        history.push('/main');
     })
-};
-
-const LoginForm = (props) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, setUser] = useState();
-    
-    const { register, handleSubmit } = useForm();
-    const [loading, setLoading] = React.useState(false);
-    const [redirect, setRedirect] = React.useState(0);
-    const classes = useStyles();
-    const timer = React.useRef();
-    React.useEffect(() => {
-        return () => {
-          clearTimeout(timer.current);
-        };
-      }, []);
-
-    const onSubmit = data => {
-        setLoading(true);
-        Login_DataBase(data);
-        setLoading(false);
-    };
-
-    //<label for="go_login">
-     // data return name of [Email,Password]
-    return (
-        /*
-        <>
-        <form onSubmit={handleSubmit(onSubmit)}>
-        <div  style = {{textAlign: "center"}}>
-            <Nav className={classes.welcome_message} >Welcome Back to mATE! We Hope All of You Can Enjoy the Food</Nav>
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-            id="Email" label = "Email" name = "Email" type="email" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-            id="Password" label = "Password" name = "Password" type="password" />
-            <Button variant="contained" type="submit" size="large" color="secondary" onClick={onSubmit} className={classes.main_buttom_style} component="span">
-                Login
-            </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-        
-            <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} isLoading  = "true" component="span">
-                Register
-            </Button>
-            </div> 
-        </form>
-        {redirect ? <Redirect to="/main"/> : null};
-        </>
-        */
-        <div  style = {{textAlign: "center"}}>
-        <Nav className={classes.welcome_message} >Welcome Back to mATE! We Hope All of You Can Enjoy the Food</Nav>
-        <form onSubmit={handleSubmit(onSubmit)}>    
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-                id="Email" label = "Email" name = "Email" type="email" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-                id="Password" label = "Password" name = "Password" type="password" />
-            <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} type="submit" >
-                Login
-            </Button>            
-        </form>
-        {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-        
-        <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} isLoading  = "true" component="span">
-            Register
-        </Button>
-        {redirect ? <Redirect to="/main"/> : null};
-        </div> 
-    );
 };
 
 const InvalidData = (data)=>{
@@ -177,14 +99,49 @@ const InvalidData = (data)=>{
         
 };
 
+const LoginForm = (props) => {
+    document.cookie = "state=empty"
+    const { register, handleSubmit } = useForm();
+    const [loading, setLoading] = React.useState(false);
+    const classes = useStyles();
+    const timer = React.useRef();
+    React.useEffect(() => {
+        return () => {
+          clearTimeout(timer.current);
+        };
+      }, []);
+
+    const onSubmit = data => {
+        setLoading(true);
+        Login_DataBase(data);
+    };
+
+    return (
+        <div  style = {{textAlign: "center"}}>
+        <Nav className={classes.welcome_message} >Welcome Back to mATE! We Hope All of You Can Enjoy the Food</Nav>
+        <form onSubmit={handleSubmit(onSubmit)}>    
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+                id="Email" label = "Email" name = "Email" type="email" />
+            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+                id="Password" label = "Password" name = "Password" type="password" />
+            <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} type="submit" >
+                Login
+            </Button>            
+        </form>
+        {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+        <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
+            Register
+        </Button>
+        </div> 
+    );
+};
+
+
 
 const RegisterForm = (props) => {
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
-    const [redirect, setRedirect] = React.useState(0);
     const classes = useStyles();
-    const timer = React.useRef();
     
     
     const onSubmit = data => {
@@ -210,14 +167,12 @@ const RegisterForm = (props) => {
             send_validation_email(emaildata);
             alert("Email sent to " + data.Email);
             Login_DataBase(data);
-            setRedirect(1);
             
 
         })
         .catch(err => {
             console.log(err.message);
         })
-        setLoading(false);
     };
     // data return name of [UserName,Email,Password,PasswordCheck]
     return (

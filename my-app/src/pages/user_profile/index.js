@@ -11,9 +11,8 @@ import ForumIcon from '@material-ui/icons/Forum';
 import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
-import {Container} from 'react-bootstrap';
-import {Auth} from '../services/authService';
-import Feed from '../main/component/feed/feed';
+import {Post} from '../../component/feed/feed';
+import {GetUserObj} from '../services/authService';
 
 
 var mydataset;
@@ -90,7 +89,6 @@ const HeaderPaper = ({title,number,color,icon}) =>{
             <div className = {classes.Number_title}>
                 <Nav >{number}</Nav>
             </div>
-            
             </Paper>
         </Button>
 
@@ -132,7 +130,7 @@ const PostArea =()=> {
             <Grid container spacing={1}>
             <Grid item xs={4}></Grid>
             <Grid item xs={6}>
-                <Feed/>
+                <Post/>
             </Grid>
             </Grid>
             
@@ -141,11 +139,10 @@ const PostArea =()=> {
 }
 const UserProfilePage = () =>{
     console.log("My cookie in user profile " + console.log(document.cookie));
-    Auth();
     const pageID  = useParams();
     load_my_data(pageID.EntitiesID);
     return(
-    <div className="pt-5" style ={{backgroundColor: "#F5F5DC"}}>
+    <div className="pt-5" >
         <Navbar/>
         <UserHeading/>
         <PostArea/>
