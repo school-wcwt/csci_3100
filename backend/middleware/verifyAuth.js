@@ -5,13 +5,11 @@ const Auth = require('../models/Auth');
 var access = (req, res, next) => {
     (async() => { try {
         //let token = req.headers['authorization'];
-        let toekn = req.cookies.access_token;
+        let token = req.cookies.access_token;
         if (!token) return res.status(403).json('Access token not supplied.')
         //if (token.startsWith('Bearer ')) token = token.slice(7, token.length);
-        let [decoded, entity] = await Promise.all([
-            jwt.verify(token, config.accessSecret),
-            Auth.findOne({entity: decoded.entity_id}).exec()
-        ])
+        let decoded = await jwt.verify(token, config.accessSecret)
+        let entity = await Auth.findOne({entity: decoded.entity_id}).exec()
         if (entity.accessToken == '') return res.status(403).json('Invalid access token.') 
         await Auth.updateOne({entity: decoded.entity_id}, {refreshToken: decoded.parentRT})
         res.locals.user = decoded;

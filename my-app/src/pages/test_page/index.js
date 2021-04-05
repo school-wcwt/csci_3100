@@ -68,11 +68,24 @@ const Testpage = () => {
     .catch(err => console.log(err))
   }
 
+  function callTest(e) {
+    e.preventDefault();
+    axios({
+      method: 'GET',
+      url: 'http://localhost:3104/entity/jon-9073',
+      withCredentials: true,
+      //data: {filter: {entityID: 'jon-9073'}, password: 'jonlam'}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
   return (
     <>
     <button onClick={handleLogin}>Login</button>
     <button onClick={handleRefresh}>Refresh</button>
     <button onClick={handleLogout}>Logout</button>
+    <button onClick={callTest}>Test</button>
     </>
   )
 }
