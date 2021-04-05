@@ -5,21 +5,15 @@ import axios from '../../axiosConfig';
 
 //PATCH user/:entityID/follow/:entityID
 const follow = (userID, followID)=>{
-    userID= "user2-4935";
-    followID= "user2-4935";
-    console.log('patch');
-    console.log('UserID:'+userID);
-    console.log('followID:'+followID);
   return new Promise((resolve,reject)=>{
     axios({
       method: 'PATCH',
-      url: 'user/'+userID+'/follow/'+followID,
-      withCredentials: false,
+      url: 'user/'+userID+'/follow/'+followID
     })
     .then ( res =>{
       console.log('sucess');
       console.log(res);
-      return resolve(res)
+      return resolve(res.data)
     })
     .catch(err => {
         console.log(err.message);
@@ -54,13 +48,12 @@ const post_create = (authorID,targetFilter,edit_data) =>{
             data:{
                 targetFilter: targetFilter,
                 data:edit_data
-            },
-            withCredentials: false,
+            }
         })
         .then ( res =>{
             console.log('sucess');
             console.log(res);
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
@@ -73,22 +66,15 @@ const post_create = (authorID,targetFilter,edit_data) =>{
 
 //DELETE user/post/:postID
 const post_delete = (postID) =>{
-    console.log('create');
-    //alert('creating');
-    //fil=JSON.parse(fil);
-    //fil={"entityID": "jon-1428"};
-   //fil={};
-
     return new Promise((resolve,reject)=>{
         axios({
             method: 'DELETE',
-            url: 'user/post/'+postID,
-            withCredentials: false,
+            url: 'user/post/'+postID
         })
         .then ( res =>{
             console.log('sucess');
             console.log(res);
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
@@ -109,12 +95,11 @@ const post_edit = (filter,edit_data) =>{
             data:{
                 filter: filter,
                 data:edit_data
-            },
-            withCredentials: false,
+            }
         })
         .then ( res =>{
             console.log('sucess');
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
@@ -126,8 +111,8 @@ const post_edit = (filter,edit_data) =>{
 
 //PATCH user/:entityID/post/:postID/like
 const post_like = (addFlag,authorFilter,postFilter) =>{
-    var entityID="entityID"
-    var postID= "postID"
+    var entityID='??'
+    var postID ='??'
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PATCH',
@@ -136,12 +121,11 @@ const post_like = (addFlag,authorFilter,postFilter) =>{
                 addFlag : addFlag,
                 authorFilter : authorFilter,
                 postFilter : postFilter
-            },
-            withCredentials: false,
+            }
         })
         .then ( res =>{
             console.log('sucess');
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
@@ -159,13 +143,12 @@ const comment_create = (entityID,postID,add_data) =>{
             url: 'user/'+entityID+'/post/'+postID+'/comment/new',
             data:{
                 data	: add_data
-            },
-            withCredentials: false,
+            }
         })
         .then ( res =>{
             console.log('sucess');
             console.log(res);
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
@@ -182,13 +165,12 @@ const comment_delete = (entityID, postID, commentID) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'DELETE',
-            url: 'user/'+entityID+'/post/'+postID+'/comment/'+commentID,
-            withCredentials: false,
+            url: 'user/'+entityID+'/post/'+postID+'/comment/'+commentID
         })
         .then (res =>{
             console.log('sucess');
             console.log(res);
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
@@ -201,8 +183,7 @@ const comment_delete = (entityID, postID, commentID) =>{
 
 //PUT user/:entityID/post/:postID/comment/:commentID
 const comment_edit = (entityID, postID, filter,edit_data) =>{
-    var commentID="pls_enter"
-    var postID= "pls_enter"
+    var commentID ='??'
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PUT',
@@ -210,12 +191,11 @@ const comment_edit = (entityID, postID, filter,edit_data) =>{
             data:{
                 filter: filter,
                 data:edit_data
-            },
-            withCredentials: false,
+            }
         })
         .then ( res =>{
             console.log('sucess');
-            return resolve(res)
+            return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);

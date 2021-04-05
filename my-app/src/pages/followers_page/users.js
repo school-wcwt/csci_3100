@@ -20,7 +20,7 @@ const Users= ()=>{
             <h1>Follow entity</h1>
             <button onClick= {()=>{change_post()}}>post_entity
             </button>
-            <p>count ={entity4!= null ? entity4.data.entityID : ''}</p>
+            <p>count ={entity4!= null ? entity4.entityID : ''}</p>
         </div>
         )
     }
