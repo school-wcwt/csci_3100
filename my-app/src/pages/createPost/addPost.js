@@ -1,15 +1,22 @@
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import {app} from '../../base';
 
 //data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
 
 
 export default function AddPost() {
   const { register, handleSubmit} = useForm();
-  const onSubmit  = data => console.log(data);
-  const onErrors = errors => console.error(errors);
-
+  const onSubmit  = (data) => {
+    console.log(data);
+    for (let i = 0; i < data.photo.length; i++) {
+      const storageRef = app.storage().ref();
+      const fileRef = storageRef.child(data.photo[i].name);
+      fileRef.put(data.photo[i]).then(()=>{
+        console.log("Photo",i+1," Uploaded");
+      })
+    }
+  }
 
   return (
     <Container className="mt-5 pb-5 col-lg-6 bg-light rounded">
@@ -45,7 +52,7 @@ export default function AddPost() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Upload Pictures</Form.Label>
-            <Form.File id="Upload1" ref={register} type="file" name="photo" multiple/>
+            <Form.File type="file" name="photo" ref={register} multiple/>
           </Form.Group>
           <Button variant="dark" type="submit" className="float-right">
             Add Post
