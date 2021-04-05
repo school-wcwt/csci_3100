@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from '../../axiosConfig';
 import Navbar from "../main/component/nav";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InformCard from './component/cardMedia';
@@ -58,20 +58,66 @@ const useStyles = makeStyles((theme) => ({
 // google drive: https://drive.google.com/drive/folders/1HDCkRRA1zYwjAEwEMjK1xJTmOrcN59oh?usp=sharing
 // BigImagePath: "/img/user_image/handsome1.jpg" // !
 
+/*
+            mydataset = {
+                UserID: EntitiesID,
+                UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
+                Email: "1155109240@gmail.com", // !
+                Favourite_Rest: 5, // !
+                Followers: 1000, // !
+                PostNumber: 10, // !
+                lastestLoginTime: "24 April 2021", // !
+                BigImagePath: "/img/user_image/handsome1.jpg" // !
+            }
+*/
 function load_my_data(EntitiesID){
-    //["Followed Resturant","Likes","Post Number","Follower"];
-    mydataset = {
+    return mydataset = {
         UserID: EntitiesID,
-        UserName: "Tom Wong", // !
+        UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
         Email: "1155109240@gmail.com", // !
         Favourite_Rest: 5, // !
         Followers: 1000, // !
         PostNumber: 10, // !
         lastestLoginTime: "24 April 2021", // !
         BigImagePath: "/img/user_image/handsome1.jpg" // !
-    };
-    return mydataset;
+    }
 }
+
+function load_my_data_new(EntitiesID){
+    new Promise((resolve,reject)=>{
+        axios({
+            method: 'GET',
+            url: `/entity/${EntitiesID}`,
+        })
+        .then (res=>{
+            mydataset = {
+                UserID: EntitiesID,
+                UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
+                Email: "1155109240@gmail.com", // !
+                Favourite_Rest: 5, // !
+                Followers: 1000, // !
+                PostNumber: 10, // !
+                lastestLoginTime: "24 April 2021", // !
+                BigImagePath: "/img/user_image/handsome1.jpg" // !
+            }
+            return resolve(mydataset)
+        })
+        .catch(err => {
+            mydataset = {
+                UserID: EntitiesID,
+                UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
+                Email: "1155109240@gmail.com", // !
+                Favourite_Rest: 5, // !
+                Followers: 1000, // !
+                PostNumber: 10, // !
+                lastestLoginTime: "24 April 2021", // !
+                BigImagePath: "/img/user_image/handsome1.jpg" // !
+            }
+            return reject(mydataset)
+        })
+    })
+}
+    
 /*
         <Paper elevation={3} style = {{backgroundColor: color}}>
         <Nav className = {classes.Heading_title}>{title}</Nav>
@@ -146,7 +192,7 @@ const PostArea =()=> {
 const UserProfilePage = () =>{
     Auth();
     const pageID  = useParams();
-    load_my_data(pageID.EntitiesID);
+    mydataset = load_my_data(pageID.EntitiesID);
     return(
     <div className="pt-5" >
         <Navbar/>

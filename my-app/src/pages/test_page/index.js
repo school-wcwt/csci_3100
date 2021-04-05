@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../axiosConfig';
+import {getEntity} from '../../component/load_backend/entityFunction';
 import {makeStyles,Grid,Paper} from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
 }));
@@ -29,8 +30,18 @@ body {
     }
 }
 */
+const GetData = (EntitiesID) =>{
+  return JSON.stringify(getEntity(EntitiesID));
+}
+const Testpage = () =>{
+  return (
+    <div>
+      <h1>{GetData("Tom_Wong-0506")}</h1>
+    </div> 
+  )
+}
 
-const Testpage = () => {
+const Testpage2 = () => {
 
   function handleRefresh(e) {
     e.preventDefault();
