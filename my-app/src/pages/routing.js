@@ -6,7 +6,7 @@ import Reservation from './reservation/';
 import ErrorPage from './errorPage/';
 import TestPage from './test_page/';
 import RestRegister from './restRegister/';
-import Followers from './followers_page/';
+import Entity from './followers_page/entity.js';
 import Users from './followers_page/users.js'
 import Search from './followers_page/search.js'
 import DiscoverPage from './discover_page/';
@@ -35,7 +35,7 @@ class Routing extends Component {
                 <Route path='/test_page' component={TestPage}/>
                 <Route path='/createPost' component={CreatePost}/>
                 <Route path='/restRegister' component={RestRegister}/>
-                <Route path='/followers' component={Followers}/>
+                <Route path='/entity' component={Entity}/>
                 <Route path='/users' component={Users}/>
                 <Route path='/search' component={Search}/>
                 <Route path='/discover' component={DiscoverPage}/>

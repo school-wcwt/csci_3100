@@ -40,7 +40,7 @@ const entityFn = require("../../component/load_backend/entityFunction");
     const [input, set_input] = useState('');
     const [entity, set_entity]= useState(null);
     useEffect(()=>{
-      change_post({}) // api.data.count from api after update store
+      change_post({})
     },[])
     return(
       <div>
@@ -50,13 +50,13 @@ const entityFn = require("../../component/load_backend/entityFunction");
         <Form className="justify-content-center">
           <Form.Group controlId="Name">
             <Form.Label>Entity Name</Form.Label>
-            <Form.Control id= "my_id" type="text" placeholder="Name" onChange={(event)=>{handleNameChange(event)}} />
+            <Form.Control controlId=" myID" type="text" placeholder="Name" onChange={(event)=>{handleNameChange(event)}} />
           </Form.Group>
           <Button variant="dark" type="submit" className="float-right" onClick ={(event)=>{handleClick(event)}}>
             Add Post
          </Button>
         </Form>
-        <div>{entity!=null ? entity.data.map(sinEnt=>{return (
+        <div>{entity!=null ? entity.map(sinEnt=>{return (
         
         <div>
           <p>username:{sinEnt.username}</p>
