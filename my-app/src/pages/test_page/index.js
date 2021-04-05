@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {makeStyles,Grid,Paper} from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
 }));
@@ -30,8 +31,49 @@ body {
 */
 
 const Testpage = () => {
+
+  function handleRefresh(e) {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3104/refresh',
+      withCredentials: true,
+      //data: {filter: {entityID: 'jon-9073'}}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
+  function handleLogout(e) {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3104/logout',
+      withCredentials: true,
+      data: {filter: {entityID: 'jon-9073'}}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3104/login',
+      withCredentials: true,
+      data: {filter: {entityID: 'jon-9073'}, password: 'jonlam'}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
   return (
-    <h1>4545</h1>
+    <>
+    <button onClick={handleLogin}>Login</button>
+    <button onClick={handleRefresh}>Refresh</button>
+    <button onClick={handleLogout}>Logout</button>
+    </>
   )
 }
 export default Testpage;

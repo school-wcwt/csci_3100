@@ -73,7 +73,7 @@ const Login_DataBase = (data)=>{
         }
     })
     .then(res => {
-        document.cookie = "state=" + res.data.token;
+        document.cookie = "state=" + res.data.access_token;
         alert("Login sucess");
         history.push('/main');
     })
