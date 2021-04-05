@@ -45,9 +45,7 @@ export default function AddPost() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Upload Pictures</Form.Label>
-            <Form.File id="Upload1" ref={register} type="file" name="photo[0]"/>
-            <Form.File id="Upload2" ref={register} type="file" name="photo[1]"/>
-            <Form.File id="Upload3" ref={register} type="file" name="photo[2]"/>
+            <Form.File id="Upload1" ref={register} type="file" name="photo" multiple/>
           </Form.Group>
           <Button variant="dark" type="submit" className="float-right">
             Add Post
