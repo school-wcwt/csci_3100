@@ -152,3 +152,11 @@ const RestRegister = ()=>{
 
 
 export default RestRegister;
+
+
+/*
+Input item
+data {
+    type
+}
+*/

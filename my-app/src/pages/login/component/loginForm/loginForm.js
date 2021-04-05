@@ -7,13 +7,6 @@ import {send_validation_email} from '../../../../component/email/email';
 import {Nav} from 'react-bootstrap';
 import history from "../../../history";
 
-const parseJwt = (token) => {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-      return "Error here";
-    }
-  };
 const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
@@ -156,7 +149,7 @@ const RegisterForm = (props) => {
             {method: 'POST',
             url: '/register',
             data: {
-                type: 0,
+                type: "User",
                 username: data.UserName,
                 email: data.Email,
                 password: data.Password
