@@ -1,10 +1,10 @@
 import {Navbar,Form,Button,FormControl,Nav} from 'react-bootstrap';
 import logo from '../../../image/icon2.PNG';
 import {Link} from 'react-router-dom';
-import {GetUserObj} from '../../services/authService';
+import {GetMyEntities} from '../../services/authService';
 
 function NAVbar(){
-    const entitiesID = GetUserObj().entityID;
+    const entitiesID = GetMyEntities();
     return(
 <>
   <Navbar collapseOnSelect expand="lg" bg="dark" fixed="top" variant="dark">

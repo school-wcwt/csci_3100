@@ -12,7 +12,7 @@ import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import {Post} from '../../component/feed/feed';
-import {GetUserObj} from '../services/authService';
+import {GetMyEntities} from '../services/authService';
 import {Auth} from '../services/authService';
 
 
@@ -60,9 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 function load_my_data(EntitiesID){
     //["Followed Resturant","Likes","Post Number","Follower"];
-    const user_obj = GetUserObj();
     mydataset = {
-        UserID: user_obj.EntitiesID,
+        UserID: EntitiesID,
         UserName: "Tom Wong", // !
         Email: "1155109240@gmail.com", // !
         Favourite_Rest: 5, // !
