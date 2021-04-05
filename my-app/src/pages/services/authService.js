@@ -12,13 +12,13 @@ const GetToken = () =>{
 
 const GetUserObj = () =>{
     const token = GetToken();
-    if (token == "") return "";
+    if (token == "" || token == "empty") return "";
     return jwt_decode(token);
 }
 
 const Auth = () =>{
     if (GetToken() == "" || GetToken() == "empty" )
-        history.push('./login');
+        history.push('/login');
 }
 
 const PrintUserObj = () =>{

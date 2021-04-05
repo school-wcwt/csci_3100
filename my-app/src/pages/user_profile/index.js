@@ -13,6 +13,7 @@ import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import {Post} from '../../component/feed/feed';
 import {GetUserObj} from '../services/authService';
+import {Auth} from '../services/authService';
 
 
 
@@ -144,6 +145,7 @@ const PostArea =()=> {
     )
 }
 const UserProfilePage = () =>{
+    Auth();
     const pageID  = useParams();
     load_my_data(pageID.EntitiesID);
     return(

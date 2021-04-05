@@ -66,7 +66,7 @@ const Login_DataBase = (data)=>{
     axios(
         {
         method: 'POST',
-        url: 'auth/login',
+        url: '/login',
         data: {
             filter: {email: data.Email},
             password: data.Password 
@@ -113,7 +113,7 @@ const LoginForm = (props) => {
 
     const onSubmit = data => {
         setLoading(true);
-        Login_DataBase(data);
+        if (Login_DataBase(data)==false)    setLoading(false);;
     };
 
     return (
@@ -154,7 +154,7 @@ const RegisterForm = (props) => {
         };
         axios(
             {method: 'POST',
-            url: 'new',
+            url: '/register',
             data: {
                 type: 0,
                 username: data.UserName,

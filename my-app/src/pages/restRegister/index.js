@@ -5,23 +5,9 @@ import bg_img from './img/8.jpg';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import axios from '../../axiosConfig';
-/*
-import Autocomplete from '@material-ui/lab/Autocomplete';
-const top100Films = [
-    { title: 'The Shawshank Redemption', year: 1994 },
-    { title: 'The Godfather', year: 1972 },]
-function ComboBox() {
-    return (
-      <Autocomplete
-        id="combo-box-demo"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        style={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-      />
-    );
-  }
-*/
+import history from '../history';
+import {Auth} from '../services/authService';
+
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
         //backgroundImage: `linear-gradient(rgba(0, 0, 0,0.7),rgba(0, 0, 0,0.7)),url(${piazzaImg})`,
@@ -102,24 +88,9 @@ const TextBox = ({label,dataName,type,register}) => {
 const RestForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
-    const currencies = [
-        {
-          value: 'USD',
-          label: '$',
-        },
-        {
-          value: 'EUR',
-          label: '€',
-        },
-        {
-          value: 'BTC',
-          label: '฿',
-        },
-        {
-          value: 'JPY',
-          label: '¥',
-        },
-      ];
+    const CancelOnCick = () =>{
+        history.push('/');
+    };
 
     const onSubmit = data => {
         axios(
@@ -156,7 +127,7 @@ const RestForm = (props) => {
             </Button>
         </label>   
         <label for = "go_register">
-            <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
+            <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {CancelOnCick} component="span">
                 Cancel
             </Button>
         </label>
@@ -166,7 +137,7 @@ const RestForm = (props) => {
 }
 const RestRegister = ()=>{
     const classes = useStyles();
-    
+    Auth();
     return (        
         <div className = {classes.bgImg}>
             <div className = {classes.paper_div}>
