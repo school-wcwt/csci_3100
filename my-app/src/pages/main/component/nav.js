@@ -16,6 +16,7 @@ function NAVbar(){
     <Nav.Link as={Link} to="/discover" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Discover</Nav.Link>
     <Nav.Link as={Link} to="/createPost" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Create Post</Nav.Link>
     <Nav.Link as={Link} to="/restregister" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Create Restaurant</Nav.Link>
+    <Nav.Link as={Link} to="/search" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Search</Nav.Link>
     <Nav.Link as={Link} to={`/userprofile/${entitiesID}`} className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>My Account</Nav.Link>
     </Nav>
     <Form inline>
