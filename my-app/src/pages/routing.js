@@ -8,6 +8,7 @@ import TestPage from './test_page/';
 import RestRegister from './restRegister/';
 import Followers from './followers_page/';
 import Users from './followers_page/users.js'
+import Search from './followers_page/search.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
 import CreatePost from './createPost';
@@ -36,6 +37,7 @@ class Routing extends Component {
                 <Route path='/restRegister' component={RestRegister}/>
                 <Route path='/followers' component={Followers}/>
                 <Route path='/users' component={Users}/>
+                <Route path='/search' component={Search}/>
                 <Route path='/discover' component={DiscoverPage}/>
                 <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
                 <Route component={ErrorPage} />
