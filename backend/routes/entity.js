@@ -26,7 +26,9 @@ router.post('/', (req, res) => {
 // Authorized Queries
 
 router.post('/new', (req, res) => {
-    res.redirect('/register');
+    entityFunc.createEntity({...req.body, type: 'Rest'})
+    .then(createdEntity => res.status(201).json(createdEntity))
+    .catch(err => res.status(500).json(err.message));
 })
 
 router.put('/', (req, res) => {

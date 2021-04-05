@@ -1,6 +1,7 @@
 const Entity = require('../models/Entity');
-const User = require('../models/User')
+const User = require('../models/User');
 const Rest = require('../models/Rest');
+const Auth = require('../models/Auth');
 const bcrypt = require('bcrypt');
 
 var tagGen = (username) => { 
@@ -19,7 +20,7 @@ var findEntity = (filter, opt = null) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
             var option = {
-                select:   {password: 0},
+                select:   {},
                 populate: {path: 'groupList', select: 'name content'},
                 ...opt, 
             }
@@ -36,7 +37,7 @@ var findEntities = (filter, opt = null) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
             var option = {
-                select:   {password: 0},
+                select:   {},
                 populate: {path: 'groupList', select: 'name content'},
                 ...opt, 
             }
@@ -63,8 +64,8 @@ var createEntity = (data) => {
             }
             newEntity.tag = await tagGen(data.username);
             newEntity.entityID = `${data.username}-${newEntity.tag}`;
-            console.log(newEntity)
             var addedEntity = await Entity.create(newEntity);
+            if (data.type == 'User') await Auth.create({...newEntity, entity: addedEntity._id});
             var savedEntity = await findEntity({_id: addedEntity._id})
             return resolve(savedEntity);
         } catch(err) { return reject(err) }})();
@@ -87,6 +88,7 @@ var updateEntity = (filter, data) => {
             }
             var updatedEntity = await Entity.findOneAndUpdate(filter, newEntity).exec();
             if (updatedEntity == null) throw new Error('Entity not found.');
+            if (updatedEntity.type == 'User') await Auth.findOneAndUpdate(filter, newEntity).exec();
             var savedEntity = await findEntity({_id: updatedEntity._id});
             return resolve(savedEntity);
         } catch (err) { return reject(err) }})();

@@ -2,7 +2,10 @@ var express = require('express');
 var app = express();
 
 var cors = require('cors');
-app.use(cors());
+app.use(cors({origin: /http:\/\/localhost:30[0-9]{2}$/, credentials: true}));
+
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
 
 require('dotenv').config();
 
@@ -20,13 +23,13 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 // http://localhost:3100/entity
 
-const checkAuth = require('./middleware/checkAuth');
+const verifyAuth = require('./middleware/verifyAuth');
 
-app.use('/',                     require('./routes/auth'));
-app.use('/entity',    checkAuth, require('./routes/entity'));
-app.use('/grouplist', checkAuth, require('./routes/groupList'));
-app.use('/post',      checkAuth, require('./routes/post'));
-app.use('/comment',   checkAuth, require('./routes/comment'));
+app.use('/',                             require('./routes/auth'));
+app.use('/entity',    verifyAuth.access, require('./routes/entity'));
+app.use('/grouplist', verifyAuth.access, require('./routes/groupList'));
+app.use('/post',      verifyAuth.access, require('./routes/post'));
+app.use('/comment',   verifyAuth.access, require('./routes/comment'));
 
 
 const PORT = require('./config').backendPort
