@@ -42,9 +42,13 @@ router.post('/refresh', verifyAuth.refresh, (req, res) => {
             maxAge: 14 * 60 * 60 * 1000,
             httpOnly: true,
         })
+        res.cookie('access_token', access_token, {
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true,
+        })
         res.status(200).json({
-            access_token: access_token,
-            refresh_token: refresh_token,
+            //access_token: access_token,
+            //refresh_token: refresh_token,
             message: user
         })
     } catch (err) { res.status(500).json(err.message) }
@@ -76,12 +80,16 @@ router.post('/login', (req, res) => {
             refresh_token, config.accessSecret);
         await Auth.updateOne({entity: entity.user._id}, {accessToken: access_token}).exec();
         res.cookie('refresh_token', refresh_token, {
-            maxAge: 14 * 60 * 60 * 1000,
+            maxAge: 14 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        })
+        res.cookie('access_token', access_token, {
+            maxAge: 60 * 60 * 1000,
             httpOnly: true,
         })
         res.status(200).json({
-            access_token: access_token,
-            refresh_token: refresh_token,
+            //access_token: access_token,
+            //refresh_token: refresh_token,
             message: entity.user
         })
     } catch (err) {
