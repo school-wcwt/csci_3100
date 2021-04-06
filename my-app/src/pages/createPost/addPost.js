@@ -1,38 +1,61 @@
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
-import {app} from '../../base';
+import { app } from '../../base';
+//import {GetMyEntities} from '../services/authService';
+var postFn = require("../../component/load_backend/postFunction.js");
+
 
 //data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
 
 
 export default function AddPost() {
-  const { register, handleSubmit} = useForm();
-  const onSubmit  = (data) => {
+  //const entitiesID = GetMyEntities();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
     const downloadURL = [];
-    console.log(data);
+    //console.log(data);
     for (let i = 0; i < data.photo.length; i++) {
       const storageRef = app.storage().ref();
       const newfile = data.photo[i];
       newfile["id"] = Math.random();
-      const fileRef = storageRef.child(newfile.id+"/"+newfile.name);
-      fileRef.put(data.photo[i]).then(()=>{
+      const fileRef = storageRef.child(newfile.id + "/" + newfile.id + newfile.name);
+      fileRef.put(data.photo[i]).then(() => {
         console.log("Photo",i+1," Uploaded");
-        fileRef.getDownloadURL().then((url) => {
+       fileRef.getDownloadURL().then((url) => {
           downloadURL[i] = url;
           console.log(downloadURL[i]);
         })
       })
-      var edit_data={
-        "content":      data.content,
-        "photo":        downloadURL,
-        "hashtag":      data.hashtag_list,
-    };
-      console.log(edit_data);
+    }
+
+    function wait(ms) {
+      return new Promise(r => setTimeout(r, ms));
     }
     
-   //post_create(authorID,targetFilter,edit_data);
-  }
+    try {
+      await wait(500);
+      var targetFilter = {"entityID": "rrr-1296"}
+      console.log('create');
+      var edit_data = {
+        "type":  0,
+        "username": data.RestaurantName,
+        "content": data.content,
+        "photo": downloadURL,
+        "hashtag": data.hashtag_list
+      };
+      console.log(edit_data);
+      console.log(data.RestaurantName);
+      console.log(edit_data.content);
+      console.log(edit_data.photo);
+      console.log(edit_data.hashtag);
 
+      await postFn.post_create(targetFilter,edit_data);
+    }
+    catch(err){
+      console.log(err)
+      console.log('ERROR!!!!!!!!!')
+  }
+  }
   return (
     <Container className="mt-5 pb-5 col-lg-6 bg-light rounded">
       <div className="py-3">
@@ -67,7 +90,7 @@ export default function AddPost() {
           </Form.Group>
           <Form.Group>
             <Form.Label>Upload Pictures</Form.Label>
-            <Form.File type="file" name="photo" ref={register} multiple/>
+            <Form.File type="file" name="photo" ref={register} multiple />
           </Form.Group>
           <Button variant="dark" type="submit" className="float-right">
             Add Post

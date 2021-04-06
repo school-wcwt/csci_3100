@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import axios from '../../axiosConfig';
-import {getEntity} from '../../component/load_backend/entityFunction';
+//import {getEntity} from '../../component/load_backend/entityFunction';
 import {makeStyles,Grid,Paper} from '@material-ui/core';
+const entityFn = require("../../component/load_backend/entityFunction");
 const useStyles = makeStyles((theme) => ({
 }));
 
