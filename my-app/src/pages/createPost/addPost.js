@@ -2,7 +2,7 @@ import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bo
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
 import {GetMyEntities} from '../services/authService';
-var userFn = require("../../component/load_backend/userFunction.js");
+var postFn = require("../../component/load_backend/postFunction.js");
 
 
 //data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
@@ -37,7 +37,7 @@ export default function AddPost() {
       console.log(edit_data.content);
       console.log(edit_data.photo);
       console.log(edit_data.hashtag);
-      userFn.post_create(`/userprofile/${entitiesID}`,"Gbond",edit_data);
+      postFn.post_create(`/userprofile/${entitiesID}`,"Gbond",edit_data);
     }
     catch(err){
       console.log(err)

@@ -41,7 +41,7 @@ router.delete('/:postID', (req, res) => {
     //var filter = req.body.filter == null ? {postID: req.params.postID} : req.body.filter;
     console.log(res.locals)
     var filter = {
-        author: res.locals.user.entityID,     
+        author: res.locals.user.entity_id,     
         postID: req.params.postID, 
     }
     userFunc.deletePost(filter)
