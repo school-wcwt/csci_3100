@@ -22,7 +22,7 @@ export default function AddPost() {
       })
     }
     
-   // post_create(authorID,targetFilter,data);
+  // post_create(authorID,targetFilter,data);
   }
 
   return (
