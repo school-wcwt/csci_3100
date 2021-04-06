@@ -77,7 +77,7 @@ const comment_delete = (commentID) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'DELETE',
-            url: 'comment/${commentID}'
+            url: `comment/${commentID}`
         })
         .then (res =>{
             console.log('sucess');
@@ -98,7 +98,7 @@ const comment_edit = (commentID,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PUT',
-            url: 'comment/${commentID}',
+            url: `comment/${commentID}`,
             data:{
                 data:edit_data
             }
