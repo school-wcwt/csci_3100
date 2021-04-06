@@ -17,12 +17,20 @@ export default function AddPost() {
       const fileRef = storageRef.child(newfile.id+"/"+newfile.name);
       fileRef.put(data.photo[i]).then(()=>{
         console.log("Photo",i+1," Uploaded");
-        downloadURL[i] = fileRef.getDownloadURL();
-        console.log(downloadURL[i]);
+        fileRef.getDownloadURL().then((url) => {
+          downloadURL[i] = url;
+          console.log(downloadURL[i]);
+        })
       })
+      var edit_data={
+        "content":      data.content,
+        "photo":        downloadURL,
+        "hashtag":      data.hashtag_list,
+    };
+      console.log(edit_data);
     }
     
-  // post_create(authorID,targetFilter,data);
+   //post_create(authorID,targetFilter,edit_data);
   }
 
   return (
