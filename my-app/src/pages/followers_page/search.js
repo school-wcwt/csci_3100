@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import {LoadBackend}  from "../../component/load_backend/load_backend.js";
 import { Navbar, Form, Button, FormControl, Nav, Container, Col, Modal } from 'react-bootstrap';
 
 const entityFn = require("../../component/load_backend/entityFunction");

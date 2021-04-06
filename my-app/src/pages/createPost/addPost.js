@@ -1,8 +1,13 @@
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
+<<<<<<< HEAD
 //import {GetMyEntities} from '../services/authService';
 var userFn = require("../../component/load_backend/userFunction.js");
+=======
+import {GetMyEntities} from '../services/authService';
+var postFn = require("../../component/load_backend/postFunction.js");
+>>>>>>> 11a269ba5a374a07ff6de7731fa7ecfcf04a24f9
 
 
 //data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
@@ -42,8 +47,12 @@ export default function AddPost() {
       console.log(edit_data.content);
       console.log(edit_data.photo);
       console.log(edit_data.hashtag);
+<<<<<<< HEAD
 
       userFn.post_create(targetFilter,edit_data);
+=======
+      postFn.post_create(`/userprofile/${entitiesID}`,"Gbond",edit_data);
+>>>>>>> 11a269ba5a374a07ff6de7731fa7ecfcf04a24f9
     }
     catch(err){
       console.log(err)
