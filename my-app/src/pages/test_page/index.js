@@ -30,7 +30,7 @@ body {
     }
 }
 */
-const GetData = (EntitiesID) =>{
+/*const GetData = (EntitiesID) =>{
   return JSON.stringify(getEntity(EntitiesID));
 }
 const Testpage = () =>{
@@ -39,9 +39,9 @@ const Testpage = () =>{
       <h1>{GetData("Tom_Wong-0506")}</h1>
     </div> 
   )
-}
+}*/
 
-const Testpage2 = () => {
+const Testpage = () => {
 
   function handleRefresh(e) {
     e.preventDefault();
