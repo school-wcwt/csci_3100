@@ -40,7 +40,7 @@ var deletePost = (filter) => {
             if (deletedPost.type == 1)
                 await entityFunc.updateEntity(
                     {_id: deletedPost.target},
-                    { $inc:  {rating: -data.rating},
+                    { $inc:  {rating: deletedPost.rating},
                       $pull: {post: deletedPost._id} })
             return resolve(deletedPost);
         } catch(err) { return reject(err) } })();
