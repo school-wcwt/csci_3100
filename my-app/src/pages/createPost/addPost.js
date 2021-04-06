@@ -11,7 +11,7 @@ var postFn = require("../../component/load_backend/postFunction.js");
 export default function AddPost() {
   //const entitiesID = GetMyEntities();
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const downloadURL = [];
     //console.log(data);
     for (let i = 0; i < data.photo.length; i++) {
@@ -27,7 +27,13 @@ export default function AddPost() {
         })
       })
     }
+
+    function wait(ms) {
+      return new Promise(r => setTimeout(r, ms));
+    }
+    
     try {
+      await wait(500);
       var targetFilter = {"entityID": "rrr-1296"}
       console.log('create');
       var edit_data = {
@@ -43,7 +49,7 @@ export default function AddPost() {
       console.log(edit_data.photo);
       console.log(edit_data.hashtag);
 
-      postFn.post_create(targetFilter,edit_data);
+      await postFn.post_create(targetFilter,edit_data);
     }
     catch(err){
       console.log(err)
