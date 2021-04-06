@@ -15,6 +15,7 @@ router.get('/:entityID', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+    console.log('gmgjgjgj');
     entityFunc.findEntities(req.body.filter)
     .then(entities => {
         if (entities == null) res.status(204).json(null);

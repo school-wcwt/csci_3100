@@ -66,7 +66,7 @@ const Login_DataBase = (data)=>{
         }
     })
     .then(res => {
-        document.cookie = "state=" + res.data.message.entityID;
+        document.cookie = "state=" + res.data.entityID;
         console.log("my token in login is " + document.cookie);
         alert("Login sucess");
         history.push('/main');

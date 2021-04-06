@@ -1,90 +1,7 @@
 import React, { useState, useEffect } from "react";
-//import {LoadBackend}  from "../../component/load_backend/load_backend.js";
-
 const entityFn = require("../../component/load_backend/entityFunction");
 
-/*
- class Entity1 extends LoadBackend{
-    constructor(props) {
-        super(props);
-        this.state = {
-          value: '{"entityID": "jon-rest-3413"}',
-          entity: '',
-          userID:'hihi',
-          followID:'byebye',
-          input_data:'{"username": "here"}',
-      };
-    }
-    render() {
-      let textInput = React.createRef();
-      var a= new LoadBackend;
-     // a.createPost();
-     //Comp1.shout(1);
-     console.log();
-
-        return (
-
-        <div>
-          <h1>a Fetch all entities</h1>
-          <button type="button" onClick={() => this.handleSubmit('{}')}> Submit </button>
-
-          <h1>Create Post</h1>
-          <button type="button" onClick={() => a.createPost()}> Submit </button>
-
-
-          <h1>Follow entity</h1>
-            <label> 
-              UserID:
-              <input id="userID" type="text" value={this.state.userID} onChange={(event)=>this.handleChange2(event)} />
-            </label>
-
-            <label> 
-              FollowID:
-              <input id="followID" type="text" value={this.state.followID} onChange={(event)=>this.handleChange2(event)} />
-            </label>
-            <button type="button" onClick={()=>this.follow(this.state.userID, this.state.followID)}> Submit </button>
-
-
-
-            <h1>Change entity</h1>
-            <label> 
-              entityID:
-              <input id="userID" type="text" value={this.state.userID} onChange={(event)=>this.handleChange2(event)} />
-            </label>
-
-            <label> 
-              data to change(~JSON format):
-              <input id="input_data" type="text" value={this.state.input_data} onChange={(event)=>this.handleChange2(event)} />
-            </label>
-            <button type="button" onClick={()=>this.edit_entity(this.state.userID, this.state.input_data)}> Submit </button>
-
-
-
-          <h1> Input query filter</h1>
-            <label> 
-              Query (~Json format):
-              <input ref={textInput} type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            <button type="button" onClick={()=>this.handleSubmit(this.state.value)}> Submit </button>
-            <h1>Clear</h1>
-            <button type="button" onClick={()=>this.setState({entity:''})}> Clear </button>
-          <div>{this.printAll(this.state.entity)}</div>
-
-
-          </div>
-        );
-      }
-    }
-
-*/
-
-
-
-
 const Entity= ()=>{
-  console.log();
-
-
   const Get_entity =()=>{
       const [entity1, setEntity1] = useState(null);
       const change_get= async ()=>{
@@ -100,7 +17,6 @@ const Entity= ()=>{
       const remove_get= ()=>{
         setEntity1(null)
       }
-
     return(
       <div>
         <h1>Get entity</h1>
@@ -127,24 +43,6 @@ const Entity= ()=>{
         console.log('---------------')
       }
     }
-/*
-    var a=[]
-    
-    if (entity2!=null){
-      entity2.data.map((single)=>{
-    a.push(single.entityID)
-      }
-    )}
-    console.log(a)
-    
-    console.log(a)
-    
-
-    var a=[1,2,3]
-    var a=["username1-8759", "user2-4935", "jon-rest-1296"];
-    */
-
-
     return (
       <div>
         <h1>Post All entity</h1>
@@ -176,7 +74,6 @@ const Entity= ()=>{
       </div>
     )
   }
-
 
 
   const Delete_entity =()=>{
@@ -222,8 +119,6 @@ const Entity= ()=>{
   }
 
 
-
-//condition ? true : false
   return (
 <div>
   <Get_entity></Get_entity>
@@ -235,14 +130,3 @@ const Entity= ()=>{
       )
 }
  export default Entity;
- //  <button type="button" onClick={this.handleSubmit}> Submit </button>
-
- /*
-     render(){
-        return(
-        <div> 
-            <NameForm />    
-        </div>);
-    }
- }
- */

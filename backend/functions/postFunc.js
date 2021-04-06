@@ -84,7 +84,7 @@ var createPost = (props, authorEntityID, data) => {
             await newPost.save();
             const savedPost = findPost({_id: newPost._id});
             return resolve(savedPost);
-        } catch (err) { return reject(err) }})()
+        } catch (err) { console.log(err.message);return reject(err) }})()
     })
 }
 
@@ -94,16 +94,21 @@ var createPost = (props, authorEntityID, data) => {
  * @returns {Promise<Object>} A promise with a deleted Post.
  */
  var deletePost = (filter) => {
+     console.log('---f')
+     console.log(filter)
     return new Promise((resolve, reject) => {
         (async () => { try { 
             const deletedPost = await Post.findOneAndDelete(filter).exec();
+            console.log('------------')
+            console.log(filter)
+            console.log(deletedPost)
             if (deletedPost == null) throw new Error('Post not found.');
             await Promise.all([
                 deleteComments({post: deletedPost._id}),
                 useTags({ target: deletedPost.target }, deletedPost.hashtag, [])
             ])
             return resolve(deletedPost);
-        } catch(err) { return reject(err) }})(); 
+        } catch(err) {console.log('sff');console.log(err.message);return reject(err) }})(); 
     })
 }
 

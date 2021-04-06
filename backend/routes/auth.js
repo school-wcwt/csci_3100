@@ -22,7 +22,10 @@ var extendToken = (payload, durationInDays, parentRT) => {
     maxExp = payload.iat + (MaxRefreshDays * 24 * 3600);
     payload.exp = newExp <= maxExp ? newExp : maxExp;
     payload.parentRT = parentRT;
-    return jwt.sign(payload, config.refreshSecret);
+    return {
+        token: jwt.sign(payload, config.refreshSecret), 
+        label: `RT-${payload.iat}-${payload.exp}`
+    };
 }
 
 // ----- Routes -----
@@ -31,11 +34,14 @@ router.post('/refresh', verifyAuth.refresh, (req, res) => {
     (async () => { try {
         let entityID = res.locals.user.entityID;
         let entity_id = res.locals.user.entity_id;
-        let refresh_token = extendToken(
-            res.locals.user, 14, res.locals.token);
+        let decoded = res.locals.user;
+        let refresh_token_raw = extendToken(
+            res.locals.user, 14, 
+            `RT-${decoded.iat}-${decoded.exp}`);
+        let refresh_token = refresh_token_raw.token;
         let access_token = createToken(
             entityID, entity_id, '1h',
-            refresh_token, config.accessSecret);
+            refresh_token_raw.label, config.accessSecret);
         await Auth.updateOne({entity: entity_id}, {accessToken: access_token}).exec();
         let user = await entityFunc.findEntity({_id: entity_id});
         res.cookie('refresh_token', refresh_token, {
@@ -46,11 +52,7 @@ router.post('/refresh', verifyAuth.refresh, (req, res) => {
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
         })
-        res.status(200).json({
-            //access_token: access_token,
-            //refresh_token: refresh_token,
-            message: user
-        })
+        res.status(200).json(user)
     } catch (err) { res.status(500).json(err.message) }
     })()
 })
@@ -75,9 +77,10 @@ router.post('/login', (req, res) => {
         let refresh_token = createToken(
             entity.user.entityID, entity.user._id, '14d',
             entity.auth.refreshToken, config.refreshSecret);
+        let decoded = await jwt.verify(refresh_token, config.refreshSecret)
         let access_token = createToken(
             entity.user.entityID, entity.user._id, '1h',
-            refresh_token, config.accessSecret);
+            `RT-${decoded.iat}-${decoded.exp}`, config.accessSecret);
         await Auth.updateOne({entity: entity.user._id}, {accessToken: access_token}).exec();
         res.cookie('refresh_token', refresh_token, {
             maxAge: 14 * 24 * 60 * 60 * 1000,
@@ -87,11 +90,7 @@ router.post('/login', (req, res) => {
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
         })
-        res.status(200).json({
-            //access_token: access_token,
-            //refresh_token: refresh_token,
-            message: entity.user
-        })
+        res.status(200).json(entity.user)
     } catch (err) {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
         else if (err.message == 'Incorrect password.') res.status(403).json(err.message)
@@ -113,6 +112,7 @@ router.post('/logout', (req, res) => {
     Auth.updateOne(req.body.filter, {accessToken: '', refreshToken: ''}).exec()
     .then(resp => {
         res.clearCookie('refresh_token');
+        res.clearCookie('access_token');
         res.status(200).json('OK')
     })
     .catch(err => res.status(500).json(err.message));

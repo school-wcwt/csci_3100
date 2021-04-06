@@ -31,6 +31,7 @@ body {
     }
 }
 */
+<<<<<<< HEAD
 const GetData =(entitieID)=>{
   const [entity1, setEntity1] = useState(null);
   const change_get= async ()=>{
@@ -47,6 +48,10 @@ const GetData =(entitieID)=>{
   const remove_get= ()=>{
     setEntity1(null)
   }
+=======
+/*const GetData = (EntitiesID) =>{
+  return JSON.stringify(getEntity(EntitiesID));
+>>>>>>> 11a269ba5a374a07ff6de7731fa7ecfcf04a24f9
 }
 const Testpage = () =>{
   return (
@@ -54,9 +59,9 @@ const Testpage = () =>{
       <h1>{GetData("Tom_Wong-0506")}</h1>
     </div> 
   )
-}
+}*/
 
-const Testpage2 = () => {
+const Testpage = () => {
 
   function handleRefresh(e) {
     e.preventDefault();
