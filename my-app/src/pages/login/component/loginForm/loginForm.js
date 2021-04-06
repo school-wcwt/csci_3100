@@ -177,11 +177,9 @@ const RegisterForm = (props) => {
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Email" label = "Email" name = "Email" type="email" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Password" label = "Password" name = "Password" type="password" />
             <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />        
-                <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} 
-                component="span" >Join Us Now</Button>
-                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-                <Button variant="contained" size="large" color="secondary" className={classes.buttom_style}
-                component="span" onClick = {props.setPanel} >Cancel</Button>
+            <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Join Us Now</Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {props.setPanel} >Cancel</Button>
         </div>
         </form>
         </>
