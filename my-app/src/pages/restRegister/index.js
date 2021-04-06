@@ -102,7 +102,6 @@ const Register_DataBase = (data)=>{
         openingHr: [data.starttime,data.endtime],
     };
     console.log(JSON.stringify(mydata))
-    return 0;
     axios(
         {
         method: 'POST',
@@ -112,7 +111,7 @@ const Register_DataBase = (data)=>{
             username: data.RestName,
             address: data.Address,
             name: data.nickName?data.nickName:data.RestName,
-            phone: data.phone?data.phone:0,
+            phone: data.phone?data.phone.trim():0,
             profPhoto: data.profPhoto,
             status: data.status?data.status:"Aviliable",
             openingHr: [data.starttime,data.endtime],
