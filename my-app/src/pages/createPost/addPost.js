@@ -8,14 +8,21 @@ import {app} from '../../base';
 export default function AddPost() {
   const { register, handleSubmit} = useForm();
   const onSubmit  = (data) => {
+    const downloadURL = [];
     console.log(data);
     for (let i = 0; i < data.photo.length; i++) {
       const storageRef = app.storage().ref();
-      const fileRef = storageRef.child(data.photo[i].name);
+      const newfile = data.photo[i];
+      newfile["id"] = Math.random();
+      const fileRef = storageRef.child(newfile.id+"/"+newfile.name);
       fileRef.put(data.photo[i]).then(()=>{
         console.log("Photo",i+1," Uploaded");
+        downloadURL[i] = fileRef.getDownloadURL();
+        console.log(downloadURL[i]);
       })
     }
+    
+   // post_create(authorID,targetFilter,data);
   }
 
   return (
