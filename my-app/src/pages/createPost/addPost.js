@@ -1,12 +1,15 @@
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
-const userFn = require("../../component/load_backend/userFunction.js");
+import {GetMyEntities} from '../services/authService';
+var userFn = require("../../component/load_backend/userFunction.js");
+
 
 //data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
 
 
 export default function AddPost() {
+  const entitiesID = GetMyEntities();
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     const downloadURL = [data.photo.length];
@@ -34,7 +37,7 @@ export default function AddPost() {
       console.log(edit_data.content);
       console.log(edit_data.photo);
       console.log(edit_data.hashtag);
-      //userFn.post_create("Gbond-2575","Gbond",edit_data);
+      userFn.post_create(`/userprofile/${entitiesID}`,"Gbond",edit_data);
     }
     catch(err){
       console.log(err)
