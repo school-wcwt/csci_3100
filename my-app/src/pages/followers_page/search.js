@@ -38,26 +38,26 @@ const Search = () => {
   const [input, set_input] = useState('');
   const [entity, set_entity] = useState(null);
 
-  useEffect(() => {change_post({})}, [])
+  useEffect(() => {change_post()},[])
 
   return (
     <div>
       <Form inline>
         <div className="mx-auto row">
-          <FormControl type="text" placeholder="Search" className="col-8" onChange={(event) => { handleNameChange(event) }} />
+          <FormControl type="text" placeholder="Search" className="col-8" onChange={(event) => { handleNameChange(event)}} />
           <Button variant="outline-secondary"><i className="fa fa-search" onClick={handleShow}></i></Button>
         </div>
       </Form>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Search Result</Modal.Title>
+        <Modal.Header closeButton className="bg-dark">
+          <Modal.Title style={{color: "LightCoral", fontWeight:800}}>Search Result</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="bg-light">
           <div>
             {entity != null ? entity.map(sinEnt => {
               return (
-                <div className="border p-2">
+                <div className="border-bottom">
                   <p>username: {sinEnt.username}</p>
                   <p>entityID: {sinEnt.entityID}</p>
                 </div>
