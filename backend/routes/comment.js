@@ -27,20 +27,23 @@ router.post('/', (req, res) => {
 // Authorized Queries
 
 router.post('/new', (req, res) => {
-    var authorFilter = {entityID: res.locals.entityID};
+    console.log('ffff')
+    var authorFilter = {entityID: res.locals.user.entityID};
+    console.log(authorFilter)
+
     userFunc.createComment(req.body.postFilter, authorFilter, req.body.data)
     .then(updatedPost => res.status(201).json(updatedPost))
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Entity not found.') 
             res.status(404).json(err.message)
-        else res.status(500).json(err.message)
+        else {console.log(err.message);res.status(500).json(err.message)}
     })
 })
 
 router.delete('/:commentID', (req, res) => {
     var filter = {
         commentID: req.params.commentID,
-        author: res.locals.entity_id
+        author: res.locals.user.entity_id
     };
     userFunc.deleteComment(filter)
     .then(updatedPost => res.status(200).json(updatedPost))
@@ -54,7 +57,7 @@ router.delete('/:commentID', (req, res) => {
 router.put('/:commentID', (req, res) => {
     var filter = {
         commentID: req.params.commentID,
-        author: res.locals.entity_id
+        author: res.locals.user.entity_id
     };
     userFunc.updateComment(filter, req.body.data)
     .then(updatedComment => res.status(200).json(updatedComment))

@@ -2,15 +2,34 @@ import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
 
+//GET comment/:commentID
+const comment_get = (commentID) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method: 'GET',
+            url: `comment/${commentID}`,
+        })
+        .then ( res =>{
+            console.log('sucess');
+            console.log(res);
+            return resolve(res.data)
+        })
+        .catch(err => {
+            console.log(err.message);
+            console.log('error');
+            return reject(err)
+        })
+    })
+}
 
-//POST user/:entityID/post/:postID/comment/new
-const comment_create = (entityID,postID,add_data) =>{
+//POST comment/
+const comment_post = (fil) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'POST',
-            url: 'user/'+entityID+'/post/'+postID+'/comment/new',
+            url: 'comment/',
             data:{
-                data	: add_data
+                filter	: fil
             }
         })
         .then ( res =>{
@@ -27,13 +46,38 @@ const comment_create = (entityID,postID,add_data) =>{
 }
 
 
-//DELETE user/:entityID/post/:postID/comment/:commentID
-const comment_delete = (entityID, postID, commentID) =>{
-    console.log('create');
+
+//POST comment/new
+const comment_create = (fil,add_data) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method: 'POST',
+            url: 'comment/new',
+            data:{
+                postFilter	: fil,
+                data    :   add_data
+            }
+        })
+        .then ( res =>{
+            console.log('sucess');
+            console.log(res);
+            return resolve(res.data)
+        })
+        .catch(err => {
+            console.log(err.message);
+            console.log('error');
+            return reject(err)
+        })
+    })
+}
+
+
+//DELETE comment/:commentID
+const comment_delete = (commentID) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'DELETE',
-            url: 'user/'+entityID+'/post/'+postID+'/comment/'+commentID
+            url: 'comment/${commentID}'
         })
         .then (res =>{
             console.log('sucess');
@@ -50,14 +94,12 @@ const comment_delete = (entityID, postID, commentID) =>{
 
 
 //PUT user/:entityID/post/:postID/comment/:commentID
-const comment_edit = (entityID, postID, filter,edit_data) =>{
-    var commentID ='??'
+const comment_edit = (commentID,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PUT',
-            url: 'user/'+entityID+'/post/'+postID+'/comment/'+commentID,
+            url: 'comment/${commentID}',
             data:{
-                filter: filter,
                 data:edit_data
             }
         })
@@ -76,6 +118,8 @@ const comment_edit = (entityID, postID, filter,edit_data) =>{
 
 
 export {
+    comment_get,
+    comment_post,
     comment_create,
     comment_delete,
     comment_edit

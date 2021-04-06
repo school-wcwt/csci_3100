@@ -34,12 +34,14 @@ var createComment = (props, authorEntityID, content) => {
             var newComment = await new Comment({
                 commentID: `${authorEntityID}-${Date.now()}`,
                 ...props,
-                content: content,
+                content: content.content,
                 time:    Date.now(),
             }).save()
+            console.log('---------------sss')
+            console.log(newComment)
             var savedComment = await findComment({_id: newComment._id})
             return resolve(savedComment);
-        } catch (err) { return reject(err) }})()
+        } catch (err) {return reject(err) }})()
     })
 }
 
