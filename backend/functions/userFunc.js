@@ -2,6 +2,7 @@ const entityFunc = require('./entityFunc');
 const postFunc = require('./postFunc');
 const commentFunc = require('./commentFunc');
 const groupListFunc = require('./groupListFunc');
+const hashtagFunc = require('./hashtagFunc');
 
 // ------ User Post Function ------
 
@@ -115,6 +116,30 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) =
     })
 }
 
+// ------ User Hashtag Functions ------
+
+var findTag = (restFilter, name) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var rest = await entityFunc.findEntity(restFilter);
+            if (rest == null) throw new Error('Entity not found.');
+            var tag = await hashtagFunc.findTag({entity: rest._id, name: name})
+            return resolve(tag);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+var findTags = (restFilter, name) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var rest = await entityFunc.findEntity(restFilter);
+            if (rest == null) throw new Error('Entity not found.');
+            var tags = await hashtagFunc.findTags({entity: rest._id, name: name})
+            return resolve(tags);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
 // ------ Inter-user interactions ------
 
 var likePost = (postFilter, authorFilter, addFlag = true) => {
@@ -194,18 +219,27 @@ var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
     })
 }
 
+// --
+
 module.exports = {
     //auth,
     createPost,
     deletePost,
     updatePost,
+
     createList,
     deleteList,
     updateList,
     updateListContent,
+
+    findTag,
+    findTags,
+
     likePost,
     createComment,
     deleteComment,
     updateComment,
     updateFollow,
+
+
 }

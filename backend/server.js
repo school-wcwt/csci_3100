@@ -30,7 +30,7 @@ app.use('/entity',    verifyAuth.access, require('./routes/entity'));
 app.use('/grouplist', verifyAuth.access, require('./routes/groupList'));
 app.use('/post',      verifyAuth.access, require('./routes/post'));
 app.use('/comment',   verifyAuth.access, require('./routes/comment'));
-
+app.use('/hashtag',   verifyAuth.access, require('./routes/hashtag'));
 
 const PORT = require('./config').backendPort
 console.log(`----------Port: ${PORT}-----------`);

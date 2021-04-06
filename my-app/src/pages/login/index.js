@@ -8,6 +8,8 @@ import LogoImg from './image/logo.png';
 import {Auth} from '../services/authService';
 import {Redirect} from 'react-router-dom';
 
+
+
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
         //backgroundImage: `linear-gradient(rgba(0, 0, 0,0.7),rgba(0, 0, 0,0.7)),url(${piazzaImg})`,
@@ -58,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = ()=>{
     var [panel, setPanel] = React.useState(0);
     const classes = useStyles();
-    return (     
+    return (
         <div className = {classes.bgImg}>
             <img src = {imacImg} className = {classes.imac_style}/>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
@@ -67,7 +69,6 @@ const Login = ()=>{
                 {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
             </Paper>
         </div>
-
     )
 }
 

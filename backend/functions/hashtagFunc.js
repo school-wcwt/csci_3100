@@ -81,6 +81,7 @@ var useTags = (props, oldTagsID = [], newTagsName = []) => {
 }
 
 module.exports = {
+    findTag,
     findTags,
     useTags,
 }
