@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Paper,makeStyles,TextField } from "@material-ui/core";
+import { Paper,makeStyles,TextField,CircularProgress } from "@material-ui/core";
 import bg_img from './img/8.jpg';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
@@ -28,19 +28,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor : "rgb(255, 255, 255,0.85)",
         },
 
-    paper_div:{
-        opacity: "1",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        width: "100%",
-        height: "100vh", 
-    },
-
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: "95%",
+        width: "96%",
+    },
+    textField_small: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: "47%",
     },
     main_buttom_style: {
         margin: theme.spacing(1),
@@ -77,60 +73,98 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TextBox = ({label,dataName,type,register}) => {
-    if (!type)  type = "text";
     const classes = useStyles();
+    if (!type)  type = "text";
     return (
         <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
         id={dataName} label = {label} name = {dataName} type={type} />
     );
 }
+const TextBoxSmall = ({label,dataName,type,defaultValue,register}) => {
+    const classes = useStyles();
+    if (!type)  type = "text";
+    return (
+        <TextField className={classes.textField_small} margin="normal" variant="outlined" inputRef={register}
+        id={dataName} label = {label} name = {dataName} type={type} defaultValue={defaultValue}/>
+    );
+}
+
+const Register_DataBase = (data)=>{
+    console.log("Process on Create Rest");
+    const mydata = {
+        type: "Rest",
+        username: data.RestName,
+        address: data.Address,
+        name: data.nickName?data.nickName:data.RestName,
+        phone: data.phone?data.phone:0,
+        profPhoto: data.profPhoto,
+        status: data.status?data.status:"Aviliable",
+        openingHr: [data.starttime,data.endtime],
+    };
+    console.log(JSON.stringify(mydata))
+    return 0;
+    axios(
+        {
+        method: 'POST',
+        url: '/register',
+        data: {
+            type: "Rest",
+            username: data.RestName,
+            address: data.Address,
+            name: data.nickName?data.nickName:data.RestName,
+            phone: data.phone?data.phone:0,
+            profPhoto: data.profPhoto,
+            status: data.status?data.status:"Aviliable",
+            openingHr: [data.starttime,data.endtime],
+        }}
+    )
+    .then(res => {
+        alert("Register sucess");
+
+    })
+    .catch(err => {
+        console.log(err.message);
+    })
+    
+};
 
 const RestForm = (props) => {
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
+    const [loading, setLoading] = React.useState(false);
+    const timer = React.useRef();
+    React.useEffect(() => {
+        return () => {
+          clearTimeout(timer.current);
+        };
+      }, []);
     const CancelOnCick = () =>{
         history.push('/');
     };
 
     const onSubmit = data => {
-        axios(
-            {
-            // not correct here
-            method: 'POST',
-            url: '/user/auth',
-            data: {
-                filter: {email: data.Email},
-                password: data.Password 
-            }
-        })
-        .then(res => {
-            alert("Rest register sucess");
-        })
-        .catch(err => {
-            console.log(err);
-            console.log("Rest register sucess");
-        })
+        setLoading(true);
+        if (Register_DataBase(data)==false)    setLoading(false);;
     };
-    console.log("Cookies in rest register is  " + document.cookie);
+
+   const RestStatusLabel = ["Aviliable","Closed Already"];
+   const [RestStatus, setRestStatus] = React.useState("Aviliable");
+   const handleChange = (event) => {
+    setRestStatus(event.target.value);
+  };
+  //defaultValue
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
         <Nav className={classes.welcome_message} >Welcome to Create a new Restaurant. Please Fill in the Following Information</Nav>
-        <TextBox label = "Restaurant Name" dataName ="restName" register = {register}/>
-        <TextBox label = "Contact Number" dataName ="phone" register = {register}/>
-        <TextBox label = "Region" dataName ="address_region" register = {register}/>
-        <TextBox label = "Location" dataName ="address_Location" register = {register}/>
-        <TextBox label = "Your First Rating for this Restaurant (0 To 5)" dataName ="likes" type = "number" register = {register}/>
-        <input id="go_login" type="submit" style = {{display:"none"}}/>
-        <label for="go_login">
-            <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} component="span">
-                Recommand This 
-            </Button>
-        </label>   
-        <label for = "go_register">
-            <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {CancelOnCick} component="span">
-                Cancel
-            </Button>
-        </label>
+        <TextBox label = "Restaurant Name" dataName ="RestName" register = {register}/>
+        <TextBox label = "Address" dataName ="Address" register = {register}/>
+        <TextBox label = "Any Nick name or Chinese Name" dataName ="nickName" register = {register}/>
+        <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
+        <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
+        <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
+        <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Create Restaurant Now</Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >Cancel</Button>
     </form>
     )
 
@@ -140,11 +174,9 @@ const RestRegister = ()=>{
     Auth();
     return (        
         <div className = {classes.bgImg}>
-            <div className = {classes.paper_div}>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
             <RestForm/>
             </Paper>
-            </div>
         </div>
 
     )

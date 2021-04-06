@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import axios from '../../axiosConfig';
-import {getEntity} from '../../component/load_backend/entityFunction';
+//import {getEntity} from '../../component/load_backend/entityFunction';
 import {makeStyles,Grid,Paper} from '@material-ui/core';
+const entityFn = require("../../component/load_backend/entityFunction");
 const useStyles = makeStyles((theme) => ({
 }));
 
@@ -30,8 +31,22 @@ body {
     }
 }
 */
-const GetData = (EntitiesID) =>{
-  return JSON.stringify(getEntity(EntitiesID));
+const GetData =(entitieID)=>{
+  const [entity1, setEntity1] = useState(null);
+  const change_get= async ()=>{
+    try{
+      var entity1= await entityFn.getEntity(entitieID);
+      setEntity1(entity1);
+      return JSON.stringify(entity1);
+    }
+    catch(err){
+      console.log(err)
+      console.log('---------------')
+    }
+}
+  const remove_get= ()=>{
+    setEntity1(null)
+  }
 }
 const Testpage = () =>{
   return (

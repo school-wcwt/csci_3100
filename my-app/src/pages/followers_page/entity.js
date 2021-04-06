@@ -89,7 +89,7 @@ const Entity= ()=>{
       const [entity1, setEntity1] = useState(null);
       const change_get= async ()=>{
         try{
-          var entity1= await entityFn.getEntity("here");
+          var entity1= await entityFn.getEntity("Tom_Wong-0506");
           setEntity1(entity1);
         }
         catch(err){
