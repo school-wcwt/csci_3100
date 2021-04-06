@@ -1,7 +1,7 @@
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
-import {GetMyEntities} from '../services/authService';
+//import {GetMyEntities} from '../services/authService';
 var userFn = require("../../component/load_backend/userFunction.js");
 
 
@@ -9,10 +9,10 @@ var userFn = require("../../component/load_backend/userFunction.js");
 
 
 export default function AddPost() {
-  const entitiesID = GetMyEntities();
+  //const entitiesID = GetMyEntities();
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    const downloadURL = [data.photo.length];
+    const downloadURL = [];
     //console.log(data);
     for (let i = 0; i < data.photo.length; i++) {
       const storageRef = app.storage().ref();
@@ -21,27 +21,33 @@ export default function AddPost() {
       const fileRef = storageRef.child(newfile.id + "/" + newfile.id + newfile.name);
       fileRef.put(data.photo[i]).then(() => {
         console.log("Photo",i+1," Uploaded");
-        fileRef.getDownloadURL().then((url) => {
+       fileRef.getDownloadURL().then((url) => {
           downloadURL[i] = url;
           console.log(downloadURL[i]);
         })
       })
     }
     try {
+      var targetFilter = {"entityID": "rrr-1296"}
+      console.log('create');
       var edit_data = {
+        "type":  0,
+        "username": data.RestaurantName,
         "content": data.content,
         "photo": downloadURL,
         "hashtag": data.hashtag_list
       };
       console.log(edit_data);
+      console.log(data.RestaurantName);
       console.log(edit_data.content);
       console.log(edit_data.photo);
       console.log(edit_data.hashtag);
-      userFn.post_create(`/userprofile/${entitiesID}`,"Gbond",edit_data);
+
+      userFn.post_create(targetFilter,edit_data);
     }
     catch(err){
       console.log(err)
-      console.log('---------------')
+      console.log('ERROR!!!!!!!!!')
   }
   }
   return (
