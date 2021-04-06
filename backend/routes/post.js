@@ -5,7 +5,6 @@ const userFunc = require('../functions/userFunc');
 const postFunc = require('../functions/postFunc');
 
 // Unauthorized Queries
-
 router.get('/:postID', (req, res) => {
     postFunc.findPost({postID: req.params.postID})
     .then(post => {
@@ -28,21 +27,23 @@ router.post('/', (req, res) => {
 
 router.post('/new', (req, res) => {
     //var authorFilter = req.body.authorFilter == null ? {entityID: req.params.userID} : req.body.authorFilter;
-    var authorFilter = {entityID: res.locals.entityID};
+    var authorFilter = {entityID: res.locals.user.entityID};
+    console.log(res.locals.user.entityID)
     userFunc.createPost(authorFilter, req.body.targetFilter, req.body.data)
     .then(newPost => res.status(201).json(newPost))
     .catch(err => {
-        if (err.message == 'Entity not found.') res.status(404).json(err.message)
+        if (err.message == 'Entity not found.') {console.log(err.message); res.status(404).json(err.message)}
         else res.status(500).json(err.message)
     })
 })
 
 router.delete('/:postID', (req, res) => {
     //var filter = req.body.filter == null ? {postID: req.params.postID} : req.body.filter;
+    console.log(res.locals)
     var filter = {
-        author: res.locals.entity_id,
+        author: res.locals.user.entityID,     
         postID: req.params.postID, 
-    } 
+    }
     userFunc.deletePost(filter)
     .then(deletedPost => res.status(200).json(deletedPost))
     .catch(err => {
@@ -55,7 +56,7 @@ router.delete('/:postID', (req, res) => {
 router.put('/:postID', (req, res) => {
     //var filter = req.body.filter == null ? {postID: req.params.postID} : req.body.filter;
     var filter = {
-        author: res.locals.entity_id,
+        author: res.locals.user.entity_id,
         postID: req.params.postID, 
     }
     userFunc.updatePost(filter, req.body.data)
@@ -68,7 +69,7 @@ router.put('/:postID', (req, res) => {
 
 router.patch('/like/:postID', (req, res) => {
     //var authorFilter = req.body.authorFilter == null ? {entityID: req.params.userID} : req.body.authorFilter;
-    var authorFilter = {entityID: res.locals.entityID};
+    var authorFilter = {entityID: res.locals.user.entityID};
     var postFilter = {postID: req.params.postID};
     userFunc.likePost(postFilter, authorFilter, req.body.addFlag)
     .then(updatedPost => res.status(200).json(updatedPost))

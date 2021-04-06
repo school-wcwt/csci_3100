@@ -40,11 +40,35 @@ const follow = (userID, followID)=>{
 *                           *
 */
 //POST user/:entityID/post/new
-const post_create = (authorID,targetFilter,edit_data) =>{
+const post_post = (fil) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'POST',
-            url: '/user/'+authorID+'/post/new',
+            url: '/post/',
+            data:{
+                filter: fil
+            }
+        })
+        .then ( res =>{
+            console.log('sucess');
+            console.log(res);
+            return resolve(res.data)
+        })
+        .catch(err => {
+            console.log(err.message);
+            console.log('error');
+            return reject(err)
+        })
+    })
+}
+
+
+
+const post_create = (targetFilter,edit_data) =>{
+    return new Promise((resolve,reject)=>{
+        axios({
+            method: 'POST',
+            url: '/post/new',
             data:{
                 targetFilter: targetFilter,
                 data:edit_data
@@ -69,7 +93,7 @@ const post_delete = (postID) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'DELETE',
-            url: 'user/post/'+postID
+            url: '/post/'+postID
         })
         .then ( res =>{
             console.log('sucess');
@@ -91,7 +115,7 @@ const post_edit = (filter,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PUT',
-            url: 'user/post/'+postID,
+            url: '/post/'+postID,
             data:{
                 filter: filter,
                 data:edit_data
@@ -116,7 +140,7 @@ const post_like = (addFlag,authorFilter,postFilter) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PATCH',
-            url: "user/"+entityID+"/post/"+postID+"/like",
+            url: "/post/like/"+postID,
             data:{
                 addFlag : addFlag,
                 authorFilter : authorFilter,
@@ -209,6 +233,7 @@ const comment_edit = (entityID, postID, filter,edit_data) =>{
 
 export {
     follow,
+    post_post,
     post_create,
     post_delete,
     post_edit,

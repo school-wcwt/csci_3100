@@ -25,11 +25,36 @@ const Users= ()=>{
         )
     }
 
+    const PostPost =()=>{
+        const [entity4, setEntity4] = useState(null);
+        const change_post= async ()=>{
+        try{
+            var targetFilter = {}
+            var entity4 = await userFn.post_post(targetFilter);
+            setEntity4(entity4)
+        }
+        catch(err){
+            console.log(err)
+            console.log('---------------')
+        }
+        }
+        return (
+        <div>
+            <h1>post_post</h1>
+            <button onClick= {()=>{change_post()}}>post_entity
+            </button>
+            <p>count ={entity4!=null ? entity4.map(sinEnt=>{return (<p>{sinEnt.postID}</p>)}) : ''}</p>
+        </div>
+        )
+    }
+
+
+
     const PostCreate =()=>{
         const [entity4, setEntity4] = useState(null);
         const change_post= async ()=>{
         try{
-            var authorID='user2-4935';
+            var authorID='usern-1424';
             var targetFilter = {"entityID": "jon-rest-1296"}
             console.log('create');
 
@@ -45,7 +70,7 @@ const Users= ()=>{
                 "rating":       1
             };
 
-            var entity4 = await userFn.post_create(authorID,targetFilter,edit_data);
+            var entity4 = await userFn.post_create(targetFilter,edit_data);
             setEntity4(entity4)
         }
         catch(err){
@@ -66,8 +91,8 @@ const Users= ()=>{
         const [entity4, setEntity4] = useState(null);
         const change_post= async ()=>{
         try{
-            var postID= "user2-4935-1617031465312"
-            var entity4 = await userFn.post_delete("??");
+            var postID= "user2-4935-1617032582492"
+            var entity4 = await userFn.post_delete(postID)
             setEntity4(entity4)
         }
         catch(err){
@@ -226,6 +251,7 @@ const Users= ()=>{
 //condition ? true : false
   return (
 <div>
+    <PostPost></PostPost>
   <Follow_entity></Follow_entity>
   <PostCreate></PostCreate>
   <PostDelete></PostDelete>
