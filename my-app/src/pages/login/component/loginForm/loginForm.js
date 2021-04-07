@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { makeStyles, TextField,CircularProgress  } from "@material-ui/core";
+import { makeStyles, TextField,CircularProgress, Box, Paper  } from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import axios from '../../../../axiosConfig';
 import {send_validation_email} from '../../../../component/email/email';
@@ -8,49 +8,41 @@ import {Nav} from 'react-bootstrap';
 import history from "../../../history";
 
 const useStyles = makeStyles((theme) => ({
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: "95%",
-    },
-    main_buttom_style: {
-        margin: theme.spacing(1),
-        height: "8vh",
-        width: theme.spacing(55),
-        [theme.breakpoints.up("xl")]: {
-            width: theme.spacing(68),
-        },
-    },
-    buttom_style: {
-        margin: theme.spacing(1),
-        width: theme.spacing(55),
-        [theme.breakpoints.up("xl")]: {
-            width: theme.spacing(68),
-        }
-        
-    },
 
-    extendedIcon: {
-        marginRight: theme.spacing(1),
-        color: "rgb(47, 79, 79)",
-
+    flexContainer:{
+        width: '20rem',
+        margin: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        padding: theme.spacing(2),
     },
-    welcome_message:{
-        color: "LightCoral", 
-        fontWeight:800,
-        margin: "0 auto",
-        padding: "2%",
-        paddingLeft:"5%",
-
+    primaryButton: {
+        margin: `1rem auto`,
+        background: theme.palette.primary.main,
+        fontFamily: 'Poppins',
+        fontSize: '1rem',
+        letterSpacing: '2px',
+        color: theme.palette.grey[200],
     },
-    buttonProgress:  {
-        margin: theme.spacing(1),
-        position: "relative",
-        width: theme.spacing(1),
-        [theme.breakpoints.up("lg")]: {
-            width: theme.spacing(1),
-        }
+    secondaryButton: {
+        background: theme.palette.grey[400],
+        fontFamily: 'Poppins',
+        fontSize: '1rem',
+        letterSpacing: '2px',
+        color: theme.palette.grey[200],
     },
+    buttonProgress: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        margin: '-12px'
+    },
+    buttonWrapper: {
+        width: '100%',
+        position: 'relative',
+    }
     
 }));
 
@@ -111,22 +103,19 @@ const LoginForm = (props) => {
     };
 
     return (
-        <div  style = {{textAlign: "center"}}>
-        <Nav className={classes.welcome_message} >Welcome Back to mATE! We Hope All of You Can Enjoy the Food</Nav>
-        <form onSubmit={handleSubmit(onSubmit)}>    
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-                id="Email" label = "Email" name = "Email" type="email" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
-                id="Password" label = "Password" name = "Password" type="password" />
-            <Button variant="contained" size="large" color="secondary" className={classes.main_buttom_style} type="submit" >
-                Login
-            </Button>            
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.flexContainer}>
+            <TextField fullWidth margin='dense' inputRef={register}
+                required id="Email" label = "Email" name = "Email" type="email" />
+            <TextField fullWidth margin='dense' inputRef={register}
+                required id="Password" label = "Password" name = "Password" type="password" />
+            <div className={classes.buttonWrapper}>
+                <Button fullWidth variant="contained" className={classes.primaryButton} disabled={loading} type="submit" >Login</Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
+            <Button fullWidth variant="contained" className={classes.secondaryButton} onClick={props.setPanel}>
+                Register
+            </Button>
         </form>
-        {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-        <Button variant="contained" size="large" color="primary" className={classes.buttom_style} onClick = {props.setPanel} component="span">
-            Register
-        </Button>
-        </div> 
     );
 };
 
@@ -170,19 +159,17 @@ const RegisterForm = (props) => {
     };
     // data return name of [UserName,Email,Password,PasswordCheck]
     return (
-        <>
-        <form onSubmit={handleSubmit(onSubmit)}>
-        <div  style = {{textAlign: "center"}}>
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="UserName" label = "UserName" name = "UserName" type="username" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Email" label = "Email" name = "Email" type="email" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="Password" label = "Password" name = "Password" type="password" />
-            <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register} required = "true" id="PasswordCheck" label = "Please Comfirm Your Password Again" name = "PasswordCheck" type="password" />        
-            <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Join Us Now</Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {props.setPanel} >Cancel</Button>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.flexContainer}>
+            <TextField fullWidth margin='dense' inputRef={register} required id="UserName" label = "User name" name = "UserName" type="username" />
+            <TextField fullWidth margin='dense' inputRef={register} required id="Email" label = "Email" name = "Email" type="email" />
+            <TextField fullWidth margin='dense' inputRef={register} required id="Password" label = "Password" name = "Password" type="password" />
+            <TextField fullWidth margin='dense' inputRef={register} required id="PasswordCheck" label = "Confirm password" name = "PasswordCheck" type="password" /> 
+            <div className={classes.buttonWrapper}>
+                <Button fullWidth variant="contained" className={classes.primaryButton} type="submit" onClick={handleSubmit(onSubmit)}>Let me in!</Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
+            <Button fullWidth variant="contained" className={classes.secondaryButton} onClick={props.setPanel}>Cancel</Button>
         </form>
-        </>
     );
 };
 

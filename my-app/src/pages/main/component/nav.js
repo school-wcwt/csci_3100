@@ -1,5 +1,5 @@
 import {Navbar,Form,Button,FormControl,Nav} from 'react-bootstrap';
-import logo from '../../../image/icon2.PNG';
+import logo from '../../../image/logo-word.PNG';
 import {Link} from 'react-router-dom';
 import {GetMyEntities} from '../../services/authService';
 import Search from '../../followers_page/search';
