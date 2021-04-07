@@ -8,7 +8,7 @@ const DataLoader = (postid) =>{
         PostOwner: "User Post Owner",
         UserIcon: "/img/feed_all/user.png",
         PostDate: "16/3/2021",
-        RestaurantName: "Restaurant",
+        RestaurantName: "Rest",
         PostHeader: "I am Gbond_A. This restaurant is good.",
         hashtag_list: [{ "name": '#Yummy', "frequency": 11 }, { "name": '#Juicy', "frequency": 22 }],
         image_set: ["/img/feed_all/1.jpg", "/img/feed_all/2.jpg", "/img/feed_all/3.jpg"],
@@ -23,7 +23,6 @@ const DataLoader = (postid) =>{
 
 const Post = (postid) => {
     const data = DataLoader(postid);
-
     return (
         
         <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral" ,fontSize: "1.3vw"}}>
