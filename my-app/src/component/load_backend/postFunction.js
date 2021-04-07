@@ -22,7 +22,7 @@ const post_post = (fil) =>{
         })
         .then ( res =>{
             console.log('sucess');
-            console.log(res);
+            console.log(res.data);
             return resolve(res.data)
         })
         .catch(err => {

@@ -135,11 +135,11 @@ var updatePost = (filter, props = null, data = null) => {
             if (props != null && props.like != null) 
                 props.addFlag 
                     ? updateQuery.$push.like = {$each: [props.like], $position: 0}
-                    : updateQuery.$pull.like = props.like;
+                    : updateQuery.$pull = {like: props.like};
             if (props != null && props.comment != null)
                 props.addFlag 
                     ? updateQuery.$push.comment = {$each: [props.comment], $position: 0}
-                    : updateQuery.$pull.comment = props.comment;
+                    : updateQuery.$pull = {comment: props.comment};
             console.log(updateQuery);
             // Update post
             await Post.updateOne(filter, updateQuery).exec();
