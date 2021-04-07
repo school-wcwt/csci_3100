@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
+
+//Last update 7/4/2021
+
 //GET entity/:entityID
-const getEntity= (entityID)=>{
+const entity_get= (entityID)=>{
+  console.log(entityID)
   return new Promise((resolve,reject)=>{
     axios({
       method: 'GET',
@@ -10,6 +14,7 @@ const getEntity= (entityID)=>{
     })
     .then ( res =>{
         console.log('sucess');
+        console.log(res.data)
         return resolve(res.data)
     })
     .catch(err => {
@@ -20,8 +25,7 @@ const getEntity= (entityID)=>{
 }
 
 //POST entity/
-const post_entity = (fil)=>{
- // fil=JSON.parse(fil);
+const entity_post = (fil)=>{
   return new Promise((resolve,reject)=>{
     axios({
       method: 'POST',
@@ -43,13 +47,12 @@ const post_entity = (fil)=>{
   })
 }
 
-
-//PUT entity/:entityID
-const edit_entity = (entityID,edit_data)=>{
+//PUT entity/
+const entity_edit = (edit_data)=>{
   return new Promise((resolve,reject)=>{
     axios({
       method: 'PUT',
-      url: '/entity/'+entityID,
+      url: '/entity/',
       data:{
         data:edit_data
       }
@@ -65,12 +68,12 @@ const edit_entity = (entityID,edit_data)=>{
   })
 }
 
-
-const delete_entity= (entityID)=>{
+//DELETE entity/
+const entity_delete= ()=>{
   return new Promise((resolve,reject)=>{
     axios({
       method: 'DELETE',
-      url: '/entity/'+entityID,
+      url: '/entity/',
     })
     .then ( res =>{
         console.log('sucess');
@@ -83,12 +86,31 @@ const delete_entity= (entityID)=>{
   })
 }
 
-
+//PATCH user/follow/:entityID
+const entity_follow = (followID)=>{
+  return new Promise((resolve,reject)=>{
+    axios({
+      method: 'PATCH',
+      url: 'user/follow/'+followID
+    })
+    .then ( res =>{
+      console.log('sucess');
+      console.log(res);
+      return resolve(res.data)
+    })
+    .catch(err => {
+        console.log(err.message);
+        console.log('error');
+        return reject(err)
+    })
+  })
+}
 
 
 export {
-  getEntity,
-  post_entity,
-  edit_entity,
-  delete_entity,
+  entity_get,
+  entity_post,
+  entity_edit,
+  entity_delete,
+  entity_follow
 }
