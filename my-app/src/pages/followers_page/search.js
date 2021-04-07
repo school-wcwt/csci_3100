@@ -26,7 +26,7 @@ const Search = () => {
 
   const change_post = async (filter) => {
     try {
-      var entity2 = await entityFn.post_entity(filter);
+      var entity2 = await entityFn.entity_post(filter);
       set_entity(entity2)
     }
     catch (err) {
