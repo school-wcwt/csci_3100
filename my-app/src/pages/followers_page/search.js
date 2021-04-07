@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Navbar, Form, Button, FormControl, Nav, Container, Col, Modal } from 'react-bootstrap';
+import React, { useState, useEffect,Link } from "react";
+import { Navbar, Form, Button, FormControl, Nav, Container, Col, Modal,Row } from 'react-bootstrap';
 
 const entityFn = require("../../component/load_backend/entityFunction");
 const Search = () => {
@@ -57,9 +57,13 @@ const Search = () => {
           <div>
             {entity != null ? entity.map(sinEnt => {
               return (
-                <div className="border-bottom">
-                  <p>username: {sinEnt.username}</p>
-                  <p>entityID: {sinEnt.entityID}</p>
+                
+                <div className="border-bottom py-2 mx-0">                
+                  <Row>
+                    <Col>Username: {sinEnt.username}</Col> 
+
+                    <Col className="text-center"> <a href={`/userprofile/${sinEnt.entityID}`}>Profile</a></Col>
+                  </Row>
                 </div>
               )
             }) : ''}
