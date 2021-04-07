@@ -11,6 +11,8 @@ import styled from 'styled-components';
 import MUItheme from './component/MUITheme/theme'
 import { ThemeProvider } from '@material-ui/core/styles';
 
+require('dotenv').config()
+
 ReactDOM.render(
   <ThemeProvider theme={MUItheme}>
     <BrowserRouter>
