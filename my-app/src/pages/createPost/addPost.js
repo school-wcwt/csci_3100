@@ -14,7 +14,7 @@ export default function AddPost() {
     
     try {
       const downloadURL = Upload_Photo(data.photo);
-      while (downloadURL=='' && data.photo.length != 0){
+      while (data.photo.length != 0 && downloadURL[data.photo.length-1]==undefined ){
         await wait(500);
       }
         
