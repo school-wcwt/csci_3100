@@ -123,13 +123,14 @@ const Register_DataBase = async (data)=>{
     await axios(
         {
         method: 'POST',
-        url: '/register',
+        url: '/entity/new',
         data: mydata
     }
     )
     .then(res => {
-        alert("Register sucess");
         console.log(res);
+        alert("Register sucess");
+        history.push(`/restprofile/${res.data.entityID}`);
 
     })
     .catch(err => {
