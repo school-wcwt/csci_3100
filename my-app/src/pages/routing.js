@@ -9,6 +9,7 @@ import RestRegister from './restRegister/';
 import Entity from './followers_page/entity.js';
 import Post from './followers_page/post.js'
 import Comment from './followers_page/comment.js'
+import Sock from './followers_page/socket-test.js'
 import Search from './followers_page/search.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
@@ -40,6 +41,7 @@ class Routing extends Component {
                 <Route path='/entity' component={Entity}/>
                 <Route path='/post' component={Post}/>
                 <Route path='/comment' component={Comment}/>
+                <Route path='/sock' component={Sock}/>
                 <Route path='/search' component={Search}/>
                 <Route path='/discover' component={DiscoverPage}/>
                 <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
