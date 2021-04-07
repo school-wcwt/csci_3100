@@ -80,13 +80,47 @@ const Testpage = () => {
     .catch(err => console.log(err))
   }
 
-  function callTest(e) {
+  function callTest1(e) {
     e.preventDefault();
     axios({
-      method: 'GET',
-      url: 'http://localhost:3104/entity/jon-9073',
+      method: 'POST',
+      url: 'http://localhost:3104/post/new',
       withCredentials: true,
-      //data: {filter: {entityID: 'jon-9073'}, password: 'jonlam'}
+      data: {targetFilter: {entityID: 'jon-rest-1296'}, data:{type: 1, content: 'Test', rating: 5}}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
+  function callTest2(e) {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3104/comment/new',
+      withCredentials: true,
+      data: {postFilter: {postID: 'jon-9073-1617789946417'}, data: {content: 'Test comment.'}}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
+  function callTest3(e) {
+    e.preventDefault();
+    axios({
+      method: 'DELETE',
+      url: 'http://localhost:3104/comment/jon-9073-1617790377779',
+      withCredentials: true,
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
+  function callTest4(e) {
+    e.preventDefault();
+    axios({
+      method: 'DELETE',
+      url: 'http://localhost:3104/post/jon-9073-1617789946417',
+      withCredentials: true,
     })
     .then(res => console.log(res))
     .catch(err => console.log(err))
@@ -97,7 +131,10 @@ const Testpage = () => {
     <button onClick={handleLogin}>Login</button>
     <button onClick={handleRefresh}>Refresh</button>
     <button onClick={handleLogout}>Logout</button>
-    <button onClick={callTest}>Test</button>
+    <button onClick={callTest1}>Add Post</button>
+    <button onClick={callTest2}>Add Comment</button>
+    <button onClick={callTest3}>Del Comment</button>
+    <button onClick={callTest4}>Del Post</button>
     </>
   )
 }
