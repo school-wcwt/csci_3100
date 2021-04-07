@@ -68,7 +68,7 @@ const Comment= ()=>{
         const change_post= async ()=>{
         try{
             var fil={
-                "postID": "user2-4935-1617032582492"
+                "postID": "usern-1424-1617788867042"
             };
             var add_data = {"content" : "some text"};
             var entity4 = await commentFn.comment_create(fil,add_data);
@@ -94,7 +94,7 @@ const Comment= ()=>{
         const change_post= async ()=>{
             alert(' triggered')
             try{
-                var commentID = "usern-1424-1617727925676"
+                var commentID = "usern-1424-1617788913646"
 
 
 
@@ -122,9 +122,9 @@ const Comment= ()=>{
             alert(' triggered')
             try{
                 //? need to chnage
-                var commentID = "usern-1424-1617729456595"
+                var commentID = "usern-1424-1617788913763"
                 var edit_data={
-                    "content":      "edit-comment",
+                    "content":      "editffff-comment",
                 };
                 var entity4 = await commentFn.comment_edit(commentID,edit_data);
                 setEntity4(entity4)
