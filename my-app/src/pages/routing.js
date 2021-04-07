@@ -12,6 +12,7 @@ import Comment from './followers_page/comment.js'
 import Search from './followers_page/search.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
+import RestProfilePage from './rest_profile';
 import CreatePost from './createPost';
 import '../component/css/background.css';
 // it is backend path for template I found
@@ -22,7 +23,7 @@ import '../component/css/background.css';
 // {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
 
 import history from "./history";
-
+//RestProfilePage
 class Routing extends Component { 
     render() {
       return (
@@ -42,6 +43,7 @@ class Routing extends Component {
                 <Route path='/search' component={Search}/>
                 <Route path='/discover' component={DiscoverPage}/>
                 <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
+                <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
                 <Route component={ErrorPage} />
             </Switch>
           </div>
