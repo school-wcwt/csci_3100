@@ -77,11 +77,10 @@ const RegisterForm = (props) => {
             <div className={styles.buttonWrapper}>
                 <Button fullWidth variant="contained" disabled={loading || success} type="submit" 
                     className={success ? styles.successButton : styles.primaryButton}>
-                    {success ? <CheckIcon className={styles.checkIcon}/>: 'Let me in!'}
+                    {success ? 'Check your email!' : 'Let me in!'}
                 </Button>
                 {loading && <CircularProgress size={24} className={styles.buttonProgress} />}
             </div>
-            {success ? <Button fullWidth variant="contained" disabled className={styles.successButton}>Check your email!</Button> : null}
             <Button fullWidth variant="outlined" className={styles.secondaryButton} onClick={props.setPanel}>
                 {success ? 'Back to Login' : 'Cancel'}
             </Button>
