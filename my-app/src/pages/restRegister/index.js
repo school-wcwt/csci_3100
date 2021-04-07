@@ -129,6 +129,7 @@ const Register_DataBase = (data)=>{
 };
 
 const RestForm = (props) => {
+    var nummberOfFile = 0;
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const [loading, setLoading] = React.useState(false);
@@ -144,7 +145,7 @@ const RestForm = (props) => {
 
     const onSubmit = data => {
         setLoading(true);
-        if (Register_DataBase(data)==false)    setLoading(false);;
+        if (Register_DataBase(data)==false)    setLoading(false);
     };
 
    const RestStatusLabel = ["Aviliable","Closed Already"];
@@ -162,7 +163,10 @@ const RestForm = (props) => {
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
         <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
         <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
-        <Button variant="contained" style={{backgroundColor: "#6495ED",color:"white"}} className={classes.textField_small} startIcon={<CloudUploadIcon />}> Upload Image</Button>
+        <input accept="image/*" id="contained-RestFile" multiple style={{display:"none"}} type="file"/>
+        <label htmlFor="contained-RestFile" className={classes.textField_small}>
+            <Button variant="contained" style={{backgroundColor: "#6495ED",color:"white"}} className={classes.textField_small} startIcon={<CloudUploadIcon/>} component="span" > Upload Image</Button>
+        </label>
         <br/>
         <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Create Restaurant Now</Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
