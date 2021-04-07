@@ -8,11 +8,15 @@ import Routing from './pages/routing.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components';
 
+import MUItheme from './component/MUITheme/theme'
+import { ThemeProvider } from '@material-ui/core/styles';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routing />
-  </BrowserRouter>,
+  <ThemeProvider theme={MUItheme}>
+    <BrowserRouter>
+      <Routing />
+    </BrowserRouter>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 reportWebVitals();
