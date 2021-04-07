@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import axios from '../../axiosConfig';
 import history from '../history';
 import {Auth} from '../services/authService';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
@@ -41,17 +42,17 @@ const useStyles = makeStyles((theme) => ({
     main_buttom_style: {
         margin: theme.spacing(1),
         height: "8vh",
-        width: "95%",
+        width: "55%",
         [theme.breakpoints.up("lg")]: {
-            width: theme.spacing(68),
+            width: "55%",
         }
     },
     buttom_style: {
         margin: theme.spacing(1),
         height: "8vh",
-        width: theme.spacing(20),
+        width: "40%",
         [theme.breakpoints.up("lg")]: {
-            width: theme.spacing(30),
+            width: "40%",
         }
     },
     welcome_message:{
@@ -161,9 +162,11 @@ const RestForm = (props) => {
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
         <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
         <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
+        <Button variant="contained" style={{backgroundColor: "#6495ED",color:"white"}} className={classes.textField_small} startIcon={<CloudUploadIcon />}> Upload Image</Button>
+        <br/>
         <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Create Restaurant Now</Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >Cancel</Button>
+        <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >Cancel</Button>
     </form>
     )
 
