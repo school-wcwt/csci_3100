@@ -1,23 +1,43 @@
 //https://www.valentinog.com/blog/socket-react/
 import React, { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4001";
+import { socket, trigChange, detectChange } from "../../component/socket-client/socket-client.js"
+import { GetMyEntities } from '../services/authService';
+var entitiesID = GetMyEntities();
 
-function App() {
-  const [response, setResponse] = useState("");
+
+const App = () => {
+  const [response, setResponse] = useState('');
+
+
+  function toDO() {
+    console.log('-')
+    console.log('up')
+    setResponse(Date())
+  }
+
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
-      setResponse(data);
-    });
+    detectChange(toDO);
   }, []);
 
   return (
-    <p>
-      It's <time dateTime={response}>{response}</time>
-    </p>
+    <div>
+      <button onClick={event => { trigChange(event) }}>CLick me</button>
+      <p>My ID is: {entitiesID}
+        {response}
+      </p>
+    </div>
   );
 }
 
 export default App;
+
+
+// useEffect(() => {
+//   socket.on("FromAPI", data => {
+//     setResponse(data);
+//   });
+//   // CLEAN UP THE EFFECT
+//   // return () => socket.disconnect();
+//   //
+// }, []);
