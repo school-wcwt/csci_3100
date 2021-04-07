@@ -8,6 +8,8 @@ import axios from '../../axiosConfig';
 import history from '../history';
 import {Auth} from '../services/authService';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import {Upload_Photo} from '../../component/Upload/upload';
+import {Form} from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
@@ -90,42 +92,54 @@ const TextBoxSmall = ({label,dataName,type,defaultValue,register}) => {
     );
 }
 
-const Register_DataBase = (data)=>{
+const Register_DataBase = async (data)=>{
+
+
+    function wait(ms) {
+        return new Promise(r => setTimeout(r, ms));
+      }
+      
+      try {
+        const downloadURL = Upload_Photo(data.photo);
+
+        console.log(downloadURL);
+        while (data.photo.length != 0 && downloadURL[data.photo.length-1]==undefined){
+          await wait(500);
+        }
+
+
     console.log("Process on Create Rest");
     const mydata = {
         type: "Rest",
         username: data.RestName,
         address: data.Address,
         name: data.nickName?data.nickName:data.RestName,
-        phone: data.phone?data.phone:0,
-        profPhoto: data.profPhoto,
+        phone: data.phone?data.phone.trim():0,
+        profPhoto: downloadURL,
         status: data.status?data.status:"Aviliable",
         openingHr: [data.starttime,data.endtime],
     };
     console.log(JSON.stringify(mydata))
-    axios(
+    await axios(
         {
         method: 'POST',
-        url: '/register',
-        data: {
-            type: "Rest",
-            username: data.RestName,
-            address: data.Address,
-            name: data.nickName?data.nickName:data.RestName,
-            phone: data.phone?data.phone.trim():0,
-            profPhoto: data.profPhoto,
-            status: data.status?data.status:"Aviliable",
-            openingHr: [data.starttime,data.endtime],
-        }}
+        url: '/entity/new',
+        data: mydata
+    }
     )
     .then(res => {
+        console.log(res);
         alert("Register sucess");
+        history.push(`/restprofile/${res.data.entityID}`);
 
     })
     .catch(err => {
         console.log(err.message);
     })
-    
+}catch(err){
+    console.log(err)
+    console.log('ERROR!!!!!!!!!')
+}
 };
 
 const RestForm = (props) => {
@@ -163,10 +177,7 @@ const RestForm = (props) => {
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
         <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
         <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
-        <input accept="image/*" id="contained-RestFile" multiple style={{display:"none"}} type="file"/>
-        <label htmlFor="contained-RestFile" className={classes.textField_small}>
-            <Button variant="contained" style={{backgroundColor: "#6495ED",color:"white"}} className={classes.textField_small} startIcon={<CloudUploadIcon/>} component="span" > Upload Image</Button>
-        </label>
+        <Form.File type="file" name="photo" ref={register} multiple/>
         <br/>
         <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Create Restaurant Now</Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 

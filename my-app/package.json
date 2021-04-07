@@ -27,6 +27,7 @@
     "react-material-ui-carousel": "^2.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
+    "socket.io-client": "^4.0.1",
     "styled-components": "^5.2.1",
     "swap": "^0.0.3",
     "swup": "^2.0.14",

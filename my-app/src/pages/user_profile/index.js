@@ -64,7 +64,8 @@ function load_my_data(EntitiesID){
         Followers: 1000, // !
         PostNumber: 10, // !
         lastestLoginTime: "24 April 2021", // !
-        BigImagePath: "/img/user_image/handsome1.jpg" // !
+        BigImagePath: "/img/user_image/handsome1.jpg", // !,
+        PostID: ["asd","asdas","asdasd"],
     }
 }
 
@@ -123,7 +124,13 @@ const PostArea =()=> {
             <Grid item xs={4}></Grid>
             <Grid item xs={6}>
             <Paper elevation={3} >
-                <Post/>
+                {mydataset.PostID.map( (postid,idx) => 
+                {   {console.log("post id is " + postid)}
+                    <Post postid={postid}/>
+                }
+                
+                )
+                }
             </Paper>
                
             </Grid>
