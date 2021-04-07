@@ -3,7 +3,8 @@ import { Typography, Box, CssBaseline } from '@material-ui/core';
 
 import logo from '../../image/logo.png'
 import useStyles from './styles/indexStyle'
-import { LoginForm, RegisterForm } from './component/loginForm.js';
+import LoginForm from './component/loginForm'
+import RegisterForm from './component/registerForm'
 
 const Login = () => {
     var [panel, setPanel] = React.useState(0);

@@ -11,7 +11,7 @@ const style = makeStyles((theme) => ({
         padding: theme.spacing(2),
     },
     primaryButton: {
-        margin: `1rem auto`,
+        margin: `0.5rem auto`,
         background: theme.palette.primary.main,
         fontFamily: 'Poppins',
         fontWeight: '700',
@@ -23,12 +23,26 @@ const style = makeStyles((theme) => ({
         }
     },
     secondaryButton: {
-        background: theme.palette.grey[400],
+        margin: `0.5rem auto`,
         fontFamily: 'Poppins',
         fontWeight: '700',
         fontSize: '1rem',
         letterSpacing: '2px',
         color: theme.palette.grey[700],
+    },
+    successButton: {
+        margin: `0.5rem auto`,
+        '&:disabled': {
+            background: theme.palette.success.main,
+            color: theme.palette.grey[200],
+        },
+        fontFamily: 'Poppins',
+        fontWeight: '700',
+        fontSize: '1rem',
+        letterSpacing: '2px',
+    },
+    checkIcon: {
+        fontSize: '1.75rem'
     },
     buttonProgress: {
         position: 'absolute',
