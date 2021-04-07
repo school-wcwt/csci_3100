@@ -7,11 +7,32 @@ var postFn = require("../../component/load_backend/postFunction.js");
 
 //data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
 
+const Upload_Photo = (photoFileArray)=>{
+  const downloadURL = [];
+  console.log("photo inside function: " + photoFileArray);
+  downloadURL.length = photoFileArray.length;
+  Array.from(photoFileArray).map((photo,i)=>{
+    const storageRef = app.storage().ref();  
+    const newfile = photo;
+    newfile["id"] = Math.random();
+    const fileRef = storageRef.child(newfile.id + "/" + newfile.id + newfile.name);
+    fileRef.put(photo).then(() => {
+      console.log("Photo",i+1," Uploaded");
+     fileRef.getDownloadURL().then((url) => {
+        downloadURL[i] = url;
+        console.log(downloadURL[i]);
+      })
+    })
+
+  })
+  return downloadURL;
+}
 
 export default function AddPost() {
   //const entitiesID = GetMyEntities();
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
+    /*
     const downloadURL = [];
     //console.log(data);
     for (let i = 0; i < data.photo.length; i++) {
@@ -27,13 +48,17 @@ export default function AddPost() {
         })
       })
     }
-
+    */
+    console.log(data.photo);
+    console.log(data.photo.length);
+    //return 0;
+    const downloadURL =  Upload_Photo(data.photo);
     function wait(ms) {
       return new Promise(r => setTimeout(r, ms));
     }
     
     try {
-      await wait(500);
+      await wait(2000);
       var targetFilter = {"entityID": "rrr-1296"}
       console.log('create');
       var edit_data = {
