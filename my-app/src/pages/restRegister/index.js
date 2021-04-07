@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import axios from '../../axiosConfig';
 import history from '../history';
 import {Auth} from '../services/authService';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
@@ -41,17 +42,17 @@ const useStyles = makeStyles((theme) => ({
     main_buttom_style: {
         margin: theme.spacing(1),
         height: "8vh",
-        width: "95%",
+        width: "55%",
         [theme.breakpoints.up("lg")]: {
-            width: theme.spacing(68),
+            width: "55%",
         }
     },
     buttom_style: {
         margin: theme.spacing(1),
         height: "8vh",
-        width: theme.spacing(20),
+        width: "40%",
         [theme.breakpoints.up("lg")]: {
-            width: theme.spacing(30),
+            width: "40%",
         }
     },
     welcome_message:{
@@ -128,6 +129,7 @@ const Register_DataBase = (data)=>{
 };
 
 const RestForm = (props) => {
+    var nummberOfFile = 0;
     const { register, handleSubmit } = useForm();
     const classes = useStyles();
     const [loading, setLoading] = React.useState(false);
@@ -143,7 +145,7 @@ const RestForm = (props) => {
 
     const onSubmit = data => {
         setLoading(true);
-        if (Register_DataBase(data)==false)    setLoading(false);;
+        if (Register_DataBase(data)==false)    setLoading(false);
     };
 
    const RestStatusLabel = ["Aviliable","Closed Already"];
@@ -161,9 +163,14 @@ const RestForm = (props) => {
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
         <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
         <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
+        <input accept="image/*" id="contained-RestFile" multiple style={{display:"none"}} type="file"/>
+        <label htmlFor="contained-RestFile" className={classes.textField_small}>
+            <Button variant="contained" style={{backgroundColor: "#6495ED",color:"white"}} className={classes.textField_small} startIcon={<CloudUploadIcon/>} component="span" > Upload Image</Button>
+        </label>
+        <br/>
         <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Create Restaurant Now</Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-            <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >Cancel</Button>
+        <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >Cancel</Button>
     </form>
     )
 

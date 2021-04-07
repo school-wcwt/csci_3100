@@ -1,39 +1,24 @@
+import {useState} from 'react';
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
-//import {GetMyEntities} from '../services/authService';
+import {Upload_Photo} from '../../component/Upload/upload';
 var postFn = require("../../component/load_backend/postFunction.js");
 
-
-//data: {name:"",Content:"",picture:"",hastag:["Hashtag1","Hashtag2","Hashtag3","Hashtag4","Hashtag5"]}
-
-
 export default function AddPost() {
-  //const entitiesID = GetMyEntities();
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    const downloadURL = [];
-    //console.log(data);
-    for (let i = 0; i < data.photo.length; i++) {
-      const storageRef = app.storage().ref();
-      const newfile = data.photo[i];
-      newfile["id"] = Math.random();
-      const fileRef = storageRef.child(newfile.id + "/" + newfile.id + newfile.name);
-      fileRef.put(data.photo[i]).then(() => {
-        console.log("Photo",i+1," Uploaded");
-       fileRef.getDownloadURL().then((url) => {
-          downloadURL[i] = url;
-          console.log(downloadURL[i]);
-        })
-      })
-    }
-
     function wait(ms) {
       return new Promise(r => setTimeout(r, ms));
     }
     
     try {
-      await wait(500);
+      const downloadURL = Upload_Photo(data.photo);
+      while (downloadURL=='' && data.photo.length != 0){
+        await wait(500);
+      }
+        
+      console.log("download url are : " + downloadURL.length);
       var targetFilter = {"entityID": "rrr-1296"}
       console.log('create');
       var edit_data = {
