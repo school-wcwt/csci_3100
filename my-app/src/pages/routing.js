@@ -14,7 +14,7 @@ import Search from './followers_page/search.js'
 import PanelBar from './followers_page/panel.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
-import RestProfilePage from './rest_profile';
+import RestProfilePage from './rest_profile/';
 import CreatePost from './createPost';
 import '../component/css/background.css';
 // it is backend path for template I found
@@ -46,8 +46,8 @@ class Routing extends Component {
                 <Route path='/search' component={Search}/>
                 <Route path='/panel' component={PanelBar}/>
                 <Route path='/discover' component={DiscoverPage}/>
-
                 <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
+                <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
                 <Route component={ErrorPage} />
             </Switch>
           </div>
