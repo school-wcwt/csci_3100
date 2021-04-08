@@ -5,14 +5,15 @@ const ENDPOINT = "http://127.0.0.1:4001";
 const socket = socketIOClient(ENDPOINT);
 
 const trigChange = () => {
-    var a = Date();
-    socket.emit("FromClient", a);
+  var a = Date();
+  socket.emit("FromClient", a);
 }
 
 function detectChange(callback){
-    socket.on("FromAPI", data => {
-      callback();
-    })
+  socket.on("FromAPI", data => {
+    callback();
+  })
 }
+
 
 export {socket, trigChange, detectChange};

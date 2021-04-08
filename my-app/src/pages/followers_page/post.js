@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { trigChange } from "../../component/socket-client/socket-client.js";
 const postFn = require("../../component/load_backend/postFunction.js");
 
 const Post = () => {
@@ -57,6 +58,8 @@ const Post = () => {
 
                         <div>
                             <p>{sinEnt.postID}</p>
+                            {/* <p>{JSON.stringify(sinEnt.comment)}</p> */}
+                            {sinEnt.comment.commentID}
                             {/* {JSON.stringify(sinEnt)} */}
                         </div>
                     )
@@ -66,13 +69,10 @@ const Post = () => {
     }
 
     const PostCreate = () => {
-
-
         return (
             <div>
                 <h1>post_create</h1>
-                <button onClick={() => {post_create() }}>post_entity
-            </button>
+                <button onClick={event => { trigChange(event) }}>CLick me</button>
             </div>
         )
     }

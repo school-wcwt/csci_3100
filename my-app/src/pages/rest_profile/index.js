@@ -11,7 +11,7 @@ import ForumIcon from '@material-ui/icons/Forum';
 import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
-import {Post} from '../../component/feed/feed';
+import {Post} from '../../component/post/post.js';
 import {GetMyEntities} from '../services/authService';
 import {Auth} from '../services/authService';
 

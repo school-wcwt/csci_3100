@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     detectChange(toDO);
-  }, []);
+  }, [response]);
 
   return (
     <div>

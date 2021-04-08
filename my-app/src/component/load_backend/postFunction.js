@@ -12,6 +12,7 @@ import axios from '../../axiosConfig';
 */
 //POST user/:entityID/post/new
 const post_post = (fil) =>{
+    console.log(fil)
     return new Promise((resolve,reject)=>{
         axios({
             method: 'POST',
@@ -21,7 +22,7 @@ const post_post = (fil) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess');
+            console.log('sucess!!!!!!');
             console.log(res.data);
             return resolve(res.data)
         })

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { socket, trigChange, detectChange } from "../../component/socket-client/socket-client.js"
+
 const commentFn = require("../../component/load_backend/commentFunction.js");
 
 const Comment= ()=>{
@@ -68,11 +70,12 @@ const Comment= ()=>{
         const change_post= async ()=>{
         try{
             var fil={
-                "postID": "usern-1424-1617788867042"
+                "postID": "usern-1424-1617813203859"
             };
             var add_data = {"content" : "some text"};
             var entity4 = await commentFn.comment_create(fil,add_data);
             setEntity4(entity4)
+            trigChange()
         }
         catch(err){
             console.log(err)
