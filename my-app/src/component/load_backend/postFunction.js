@@ -79,15 +79,13 @@ const post_delete = (postID) =>{
 }
 
 
-//PUT user/post/:postID
-const post_edit = (filter,edit_data) =>{
-    var postID= "pls_enter"
+//PUT post/:postID
+const post_edit = (postID,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PUT',
             url: '/post/'+postID,
             data:{
-                filter: filter,
                 data:edit_data
             }
         })
@@ -103,22 +101,19 @@ const post_edit = (filter,edit_data) =>{
     })
 }
 
-//PATCH user/:entityID/post/:postID/like
-const post_like = (addFlag,authorFilter,postFilter) =>{
-    var entityID='??'
-    var postID ='??'
+//PATCH post/like/:postID
+const post_like = (postID, addFlag) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PATCH',
             url: "/post/like/"+postID,
             data:{
                 addFlag : addFlag,
-                authorFilter : authorFilter,
-                postFilter : postFilter
             }
         })
         .then ( res =>{
             console.log('sucess');
+            console.log(res.data)
             return resolve(res.data)
         })
         .catch(err => {

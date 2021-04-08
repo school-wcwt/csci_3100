@@ -9,8 +9,7 @@ const trigChange = () => {
   socket.emit("FromClient", a);
 }
 
-function detectChange(callback){
-  var a=1;
+const detectChange= (callback) =>{
   socket.on("FromAPI", data => {
     callback();
   })

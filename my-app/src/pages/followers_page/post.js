@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { trigChange } from "../../component/socket-client/socket-client.js";
+import { socket, detectChange, trigChange } from "../../component/socket-client/socket-client.js";
 const postFn = require("../../component/load_backend/postFunction.js");
 
 const Post = () => {
     const [entity4, setEntity4] = useState(null);
-    const [state, set_state] = useState(0)
-    const change_post = async () => {
+    useEffect(() => {
+        detectChange(change_post)
+    }, [])
 
+
+    const change_post = async () => {
         try {
             var targetFilter = {}
             var entity4 = await postFn.post_post(targetFilter);
@@ -18,19 +21,20 @@ const Post = () => {
         }
     }
 
+
     const post_create = async () => {
         try {
             var authorID = 'usern-1424';
             var targetFilter = { "entityID": "jon-rest-1296" }
             var edit_data = {
                 "type": 1,
-                "content": "c2",
+                "content": "new_content",
                 "photo": "pic",
                 "hashtag": ["h1213ash1", "ha12311sh2", "ha23123sh3"],
                 "rating": 9
             };
             await postFn.post_create(targetFilter, edit_data);
-            set_state(Date())
+            trigChange()
         }
         catch (err) {
             console.log(err)
@@ -38,16 +42,7 @@ const Post = () => {
         }
     }
 
-
-    useEffect(() => {
-        change_post()
-        console.log('run!!')
-    },[state])
-
-
-
     const PostPost = () => {
-
         return (
             <div>
                 <h1>post_post</h1>
@@ -55,7 +50,6 @@ const Post = () => {
             </button>
                 <p>count ={entity4 != null ? entity4.map(sinEnt => {
                     return (
-
                         <div>
                             <p>{sinEnt.postID}</p>
                             {/* <p>{JSON.stringify(sinEnt.comment)}</p> */}
@@ -80,8 +74,9 @@ const Post = () => {
     const PostDelete = () => {
         const change_post = async () => {
             try {
-                var postID = "user2-4935-1617032582492"
+                var postID = "usern-1424-1617874563729"
                 await postFn.post_delete(postID)
+                trigChange()
             }
             catch (err) {
                 console.log(err)
@@ -97,15 +92,43 @@ const Post = () => {
         )
     }
 
+
+
+
+    const PostDeleteAll = () => {
+        const delete_all_post = async () => {
+            try {
+                var posts = await postFn.post_post({})
+                posts.map(async (post,idx)=>{
+                    console.log(post.postID)
+                    await postFn.post_delete(post.postID)
+                    trigChange()
+                })
+            }
+            catch (err) {
+                console.log(err)
+                console.log('---------------')
+            }
+        }
+        return (
+            <div>
+                <h1>post_delete ALL</h1>
+                <button onClick={() => { delete_all_post() }}>post_entity
+            </button>
+            </div>
+        )
+    }
+
     const PostEdit = () => {
         const change_post = async () => {
             try {
-                var filter = { "postID": "user2-4935-1617031432521" }
+                var postID = "usern-1424-1617874401609"
                 var edit_data = {
                     "content": "final_edit",
                     "rating": 1
                 };
-                await postFn.post_edit(filter, edit_data);
+                await postFn.post_edit(postID, edit_data);
+                trigChange()
             }
             catch (err) {
                 console.log(err)
@@ -125,13 +148,9 @@ const Post = () => {
         const change_post = async () => {
             try {
                 var addFlag = 1 //1 if like, 0 if pull like
-                var authorFilter = {
-                    "entityID": "user2-4935"
-                };
-                var postFilter = {
-                    "postID": "user2-4935-1617031432521"
-                }
-                await postFn.post_like(addFlag, authorFilter, postFilter);
+                var postID = "usern-1424-1617874401609"
+                await postFn.post_like(postID, addFlag);
+                trigChange()
             }
             catch (err) {
                 console.log(err)
@@ -152,6 +171,7 @@ const Post = () => {
             <PostPost></PostPost>
             <PostCreate></PostCreate>
             <PostDelete></PostDelete>
+            <PostDeleteAll></PostDeleteAll>
             <PostEdit></PostEdit>
             <PostLike></PostLike>
         </div>
