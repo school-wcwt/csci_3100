@@ -3,100 +3,102 @@ import { socket, trigChange, detectChange } from "../../component/socket-client/
 
 const commentFn = require("../../component/load_backend/commentFunction.js");
 
-const Comment= ()=>{
-    const CommentGet =()=>{
+const Comment = () => {
+    const CommentGet = () => {
         const [entity, setEntity] = useState(null);
-        const change_get= async ()=>{
-          try{
-            var entity= await commentFn.comment_get("usern-1424-1617727654805");
-            setEntity(entity);
-          }
-          catch(err){
-            console.log(err)
-            console.log('---------------')
-          }
-      }
-        const remove_get= ()=>{
-          setEntity(null)
+        const change_get = async () => {
+            try {
+                var entity = await commentFn.comment_get("usern-1424-1617727654805");
+                setEntity(entity);
+            }
+            catch (err) {
+                console.log(err)
+                console.log('---------------')
+            }
         }
-      return(
-        <div>
-          <h1>comment_get</h1>
-        <button onClick= {()=>{change_get()}}>get_entity
-        </button>
-        <p>count ={entity!= null ? entity.commentID : ''}</p>
-  
-        <button onClick= {()=>{remove_get()}}>remove_get
-        </button>
-        <p>count ={entity!= null ? entity.commentID : ''}</p>
-    </div>
-      )
-    }
-
-    const CommentPost =()=>{
-        const [entity4, setEntity4] = useState(null);
-        const change_post= async ()=>{
-        try{
-            var fil={};
-            var entity4 = await commentFn.comment_post(fil);
-            setEntity4(entity4)
+        const remove_get = () => {
+            setEntity(null)
         }
-        catch(err){
-            console.log(err)
-            console.log('---------------')
-        }
-        }
-
         return (
-         <div>
-            <h1>comment_post</h1>
-            <button onClick= {()=>{change_post()}}>post_entity
-            </button>
-            <p>count ={entity4!=null ? entity4.map(sinEnt=>{return (
-            <div>            
-                <h5>{sinEnt.commentID}</h5>
-                <p>{sinEnt.content}</p>
+            <div>
+                <h1>comment_get</h1>
+                <button onClick={() => { change_get() }}>get_entity
+        </button>
+                <p>count ={entity != null ? entity.commentID : ''}</p>
+
+                <button onClick={() => { remove_get() }}>remove_get
+        </button>
+                <p>count ={entity != null ? entity.commentID : ''}</p>
             </div>
-
-            )}) 
-            
-            : ''}</p>
-        </div>
         )
     }
 
-    const CommentCreate =()=>{
+    const CommentPost = () => {
         const [entity4, setEntity4] = useState(null);
-        const change_post= async ()=>{
-        try{
-            var fil={
-                "postID": "usern-1424-1617813203859"
-            };
-            var add_data = {"content" : "some text"};
-            var entity4 = await commentFn.comment_create(fil,add_data);
-            setEntity4(entity4)
-            trigChange()
-        }
-        catch(err){
-            console.log(err)
-            console.log('---------------')
-        }
+        const change_post = async () => {
+            try {
+                var fil = {};
+                var entity4 = await commentFn.comment_post(fil);
+                setEntity4(entity4)
+            }
+            catch (err) {
+                console.log(err)
+                console.log('---------------')
+            }
         }
 
         return (
-        <div>
-            <h1>comment_create</h1>
-            <button onClick= {()=>{change_post()}}>post_entity
+            <div>
+                <h1>comment_post</h1>
+                <button onClick={() => { change_post() }}>post_entity
             </button>
-        </div>
+                <p>count ={entity4 != null ? entity4.map(sinEnt => {
+                    return (
+                        <div>
+                            <h5>{sinEnt.commentID}</h5>
+                            <p>{sinEnt.content}</p>
+                        </div>
+
+                    )
+                })
+
+                    : ''}</p>
+            </div>
         )
     }
 
-    const CommentDelete =()=>{
+    const CommentCreate = () => {
         const [entity4, setEntity4] = useState(null);
-        const change_post= async ()=>{
+        const change_post = async () => {
+            try {
+                var fil = {
+                    "postID": "usern-1424-1617815158871"
+                };
+                var add_data = { "content": "some text2" };
+                var entity4 = await commentFn.comment_create(fil, add_data);
+                setEntity4(entity4)
+                trigChange()
+            }
+            catch (err) {
+                console.log(err)
+                console.log('---------------')
+            }
+        }
+
+        return (
+            <div>
+                <h1>comment_create</h1>
+                <button onClick={() => { change_post() }}>post_entity
+            </button>
+            </div>
+        )
+    }
+
+    const CommentDelete = () => {
+        const [entity4, setEntity4] = useState(null);
+        const change_post = async () => {
             alert(' triggered')
-            try{
+            try {
                 var commentID = "usern-1424-1617788913646"
 
 
@@ -104,57 +106,57 @@ const Comment= ()=>{
                 var entity4 = await commentFn.comment_delete(commentID);
                 setEntity4(entity4)
             }
-            catch(err){
+            catch (err) {
                 console.log(err)
                 console.log('---------------')
             }
         }
 
         return (
-        <div>
-            <h1>comment_delete</h1>
-            <button onClick= {()=>{change_post()}}>post_entity
+            <div>
+                <h1>comment_delete</h1>
+                <button onClick={() => { change_post() }}>post_entity
             </button>
-        </div>
+            </div>
         )
     }
 
-    const CommentEdit =()=>{
+    const CommentEdit = () => {
         const [entity4, setEntity4] = useState(null);
-        const change_post= async ()=>{
+        const change_post = async () => {
             alert(' triggered')
-            try{
+            try {
                 //? need to chnage
                 var commentID = "usern-1424-1617788913763"
-                var edit_data={
-                    "content":      "editffff-comment",
+                var edit_data = {
+                    "content": "editffff-comment",
                 };
-                var entity4 = await commentFn.comment_edit(commentID,edit_data);
+                var entity4 = await commentFn.comment_edit(commentID, edit_data);
                 setEntity4(entity4)
             }
-            catch(err){
+            catch (err) {
                 console.log(err)
                 console.log('---------------')
             }
         }
 
         return (
-        <div>
-            <h1>comment_edit</h1>
-            <button onClick= {()=>{change_post()}}>post_entity
+            <div>
+                <h1>comment_edit</h1>
+                <button onClick={() => { change_post() }}>post_entity
             </button>
-        </div>
+            </div>
         )
     }
 
-  return (
-<div>
-    <CommentGet></CommentGet>
-    <CommentPost></CommentPost>
-    <CommentCreate></CommentCreate>
-    <CommentDelete></CommentDelete>
-    <CommentEdit></CommentEdit>
-</div>
-      )
+    return (
+        <div>
+            <CommentGet></CommentGet>
+            <CommentPost></CommentPost>
+            <CommentCreate></CommentCreate>
+            <CommentDelete></CommentDelete>
+            <CommentEdit></CommentEdit>
+        </div>
+    )
 }
- export default Comment;
+export default Comment;

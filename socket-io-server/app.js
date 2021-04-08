@@ -20,8 +20,8 @@ const io = require('socket.io')(server, {
 io.on("connection", (socket) => {
   console.log('New Connection')
   socket.on("FromClient", data => {
-    console.log('émit!')
-    socket.emit("FromAPI", Date())
+    console.log('hey')
+    io.emit("FromAPI", Date())
   })
 
   socket.on("disconnect", () => {

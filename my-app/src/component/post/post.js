@@ -11,19 +11,22 @@ const postFn = require("../load_backend/postFunction.js");
 const Post = (props) => {
     const [posts, setPosts] = useState(null)
     const get_function = async (targetFilter) => {
+        console.log('get_function called')
         try {
             var posts1 = await postFn.post_post(targetFilter);
             setPosts(posts1)
+            console.log('get_function called success')
         }
         catch (err) {
             console.log(err)
         }
     }
+
+
+
     useEffect(() => {
-        detectChange(get_function(props.filter))
-        socket.on("FromAPI", data => {
-            alert('fuck')
-          })
+        get_function()
+        detectChange(get_function)
     }, [])
 
 

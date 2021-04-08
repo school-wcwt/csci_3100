@@ -7,8 +7,6 @@ var entitiesID = GetMyEntities();
 
 const App = () => {
   const [response, setResponse] = useState('');
-
-
   function toDO() {
     console.log('-')
     console.log('up')
@@ -16,13 +14,13 @@ const App = () => {
   }
 
 
-  useEffect(() => {
+  // useEffect(() => {
     detectChange(toDO);
-  }, [response]);
+  // }, []);
 
   return (
     <div>
-      <button onClick={event => { trigChange(event) }}>CLick me</button>
+      <button onClick={event => { trigChange(event) }}>CLick me to trigChange</button>
       <p>My ID is: {entitiesID}
         {response}
       </p>

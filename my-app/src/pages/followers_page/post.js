@@ -72,7 +72,7 @@ const Post = () => {
         return (
             <div>
                 <h1>post_create</h1>
-                <button onClick={event => { trigChange(event) }}>CLick me</button>
+                <button onClick={event => { post_create(event) }}>CLick me</button>
             </div>
         )
     }
