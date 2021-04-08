@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { socket, detectChange, trigChange } from "../../component/socket-client/socket-client.js";
+import PanelBar from "./panel.js"
+
 const postFn = require("../../component/load_backend/postFunction.js");
 
 const Post = () => {
@@ -168,6 +170,7 @@ const Post = () => {
     }
     return (
         <div>
+            <PanelBar></PanelBar>
             <PostPost></PostPost>
             <PostCreate></PostCreate>
             <PostDelete></PostDelete>

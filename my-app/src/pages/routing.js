@@ -11,6 +11,7 @@ import Post from './followers_page/post.js'
 import Comment from './followers_page/comment.js'
 import Sock from './followers_page/socket-test.js'
 import Search from './followers_page/search.js'
+import PanelBar from './followers_page/panel.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
 import RestProfilePage from './rest_profile';
@@ -43,9 +44,10 @@ class Routing extends Component {
                 <Route path='/comment' component={Comment}/>
                 <Route path='/sock' component={Sock}/>
                 <Route path='/search' component={Search}/>
+                <Route path='/panel' component={PanelBar}/>
                 <Route path='/discover' component={DiscoverPage}/>
+
                 <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
-                <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
                 <Route component={ErrorPage} />
             </Switch>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
+import PanelBar from "./panel.js"
 
 import { GetMyEntities } from '../services/authService';
 
@@ -145,6 +146,7 @@ const Entity = () => {
 
   return (
     <div>
+      <PanelBar></PanelBar>
       <Get_entity></Get_entity>
       <Post_entity></Post_entity>
       <Edit_entity></Edit_entity>

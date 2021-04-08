@@ -19,6 +19,7 @@ function NAVbar(){
     <Nav.Link as={Link} to="/restregister" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Create Restaurant</Nav.Link>
     <Nav.Link as={Link} to="/restprofile/random" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Match A Restaurant</Nav.Link>
     <Nav.Link as={Link} to={`/userprofile/${entitiesID}`} className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>My Account</Nav.Link>
+    <Nav.Link as={Link} to={`/panel`} className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Panel</Nav.Link>
     </Nav>
     <Search/>
     </Navbar.Collapse>

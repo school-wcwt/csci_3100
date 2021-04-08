@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { socket, trigChange, detectChange } from "../../component/socket-client/socket-client.js"
-
+import PanelBar from "./panel.js"
 const commentFn = require("../../component/load_backend/commentFunction.js");
 
 const Comment = () => {
@@ -151,6 +151,7 @@ const Comment = () => {
 
     return (
         <div>
+            <PanelBar></PanelBar>
             <CommentGet></CommentGet>
             <CommentPost></CommentPost>
             <CommentCreate></CommentCreate>
