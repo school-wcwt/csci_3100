@@ -36,22 +36,28 @@ const post_post = (fil) =>{
 
 const post_create = (targetFilter,edit_data) =>{
     return new Promise((resolve,reject)=>{
+        console.log('first time --------------------')
+        console.log(edit_data)
         axios({
             method: 'POST',
             url: '/post/new',
             data:{
                 targetFilter: targetFilter,
-                data:edit_data
+                data: edit_data
             }
         })
         .then ( res =>{
+            console.log('second time --------------------')
             console.log('sucess');
-            console.log(res);
+            console.log(edit_data)
+            console.log(res.data)
+            console.log('finish--------------------')
+
             return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
-            console.log('error');
+            console.log('error!!!!!!!!!!!!');
             return reject(err)
         })
     })

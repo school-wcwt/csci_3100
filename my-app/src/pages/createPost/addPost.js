@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
-import {Upload_Photo} from '../../component/Upload/upload';
+import { Upload_Photo } from '../../component/Upload/upload';
 var postFn = require("../../component/load_backend/postFunction.js");
 
 export default function AddPost() {
@@ -10,38 +10,52 @@ export default function AddPost() {
   const onSubmit = async (data) => {
     function download_URL() {
       const downloadURL = Upload_Photo(data.photo);
-      return new Promise((resolve,reject)=>{
+      return new Promise((resolve, reject) => {
 
         //const downloadURL = Upload_Photo(data.photo);
         console.log("download url are : " + downloadURL.length);
-        
+
         console.log('create');
         var edit_data = {
-          "type":  0,
+          "type": 0,
           "username": data.RestaurantName,
           "content": data.content,
           "photo": downloadURL,
           "hashtag": data.hashtag_list
         };
+      
         console.log(edit_data);
         console.log(data.RestaurantName);
         console.log(edit_data.content);
         console.log(edit_data.photo);
         console.log(edit_data.hashtag);
-
+        return resolve(edit_data)
       })
-  
+
     }
-    
+
     try {
-      var targetFilter = {"entityID": "rrr-1296"};
-      var edit_data = await download_URL();
-      await postFn.post_create(targetFilter,edit_data);
+      var targetFilter = { "entityID": "rrr-1296" };
+      alert('gg')
+      // var edit_data = await download_URL();
+      console.log(download_URL())
+      download_URL().then(edit_data => {
+        alert('ok!')
+        console.log("**********")
+        console.log(edit_data.photo)
+        console.log("**********")
+        postFn.post_create(targetFilter, edit_data);
+        alert('created!')
+
+      }
+      )
+
+
     }
-    catch(err){
+    catch (err) {
       console.log(err)
       console.log('ERROR!!!!!!!!!')
-  }
+    }
   }
   return (
     <Container className="mt-5 pb-5 col-lg-6 bg-light rounded">
