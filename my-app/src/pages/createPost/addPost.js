@@ -8,32 +8,34 @@ var postFn = require("../../component/load_backend/postFunction.js");
 export default function AddPost() {
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    function wait(ms) {
-      return new Promise(r => setTimeout(r, ms));
+    function download_URL() {
+      const downloadURL = Upload_Photo(data.photo);
+      return new Promise((resolve,reject)=>{
+
+        //const downloadURL = Upload_Photo(data.photo);
+        console.log("download url are : " + downloadURL.length);
+        
+        console.log('create');
+        var edit_data = {
+          "type":  0,
+          "username": data.RestaurantName,
+          "content": data.content,
+          "photo": downloadURL,
+          "hashtag": data.hashtag_list
+        };
+        console.log(edit_data);
+        console.log(data.RestaurantName);
+        console.log(edit_data.content);
+        console.log(edit_data.photo);
+        console.log(edit_data.hashtag);
+
+      })
+  
     }
     
     try {
-      const downloadURL = Upload_Photo(data.photo);
-      while (data.photo.length != 0 && downloadURL[data.photo.length-1]==undefined ){
-        await wait(500);
-      }
-        
-      console.log("download url are : " + downloadURL.length);
-      var targetFilter = {"entityID": "rrr-1296"}
-      console.log('create');
-      var edit_data = {
-        "type":  0,
-        "username": data.RestaurantName,
-        "content": data.content,
-        "photo": downloadURL,
-        "hashtag": data.hashtag_list
-      };
-      console.log(edit_data);
-      console.log(data.RestaurantName);
-      console.log(edit_data.content);
-      console.log(edit_data.photo);
-      console.log(edit_data.hashtag);
-
+      var targetFilter = {"entityID": "rrr-1296"};
+      var edit_data = await download_URL();
       await postFn.post_create(targetFilter,edit_data);
     }
     catch(err){
