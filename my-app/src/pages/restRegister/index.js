@@ -179,9 +179,13 @@ const RestForm = (props) => {
         <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
         <Form.File type="file" name="photo" ref={register} multiple/>
         <br/>
-        <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >Create Restaurant Now</Button>
+        <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >
+        <Nav className={classes.welcome_message} style={{color:"#FFF8DC"}}>Create Restaurant Now</Nav>
+        </Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-        <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >Cancel</Button>
+        <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >
+        <Nav className={classes.welcome_message} style={{color:"#FFF8DC"}}>Cancel</Nav>
+        </Button>
     </form>
     )
 
