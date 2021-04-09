@@ -28,15 +28,17 @@ export default function AddPost() {
         console.log(edit_data.content);
         console.log(edit_data.photo);
         console.log(edit_data.hashtag);
-
-      })
+        return resolve(edit_data)
+      }) 
+      
   
     }
     
     try {
       var targetFilter = {"entityID": "rrr-1296"};
-      var edit_data = await download_URL();
-      await postFn.post_create(targetFilter,edit_data);
+      const data = await download_URL();
+      console.log(data);
+      await postFn.post_create(targetFilter,data);
     }
     catch(err){
       console.log(err)
