@@ -1,76 +1,108 @@
-import React, { useState, useEffect,Link } from "react";
-import { Navbar, Form, Button, FormControl, Nav, Container, Col, Modal,Row } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { darken, makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import history from '../history'
+
 
 const entityFn = require("../../component/load_backend/entityFunction");
-const Search = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  const handleNameChange = (event) => {
-    console.log('hihi')
-    console.log(event.target.value);
-    console.log(event.target.id)
-    var new_value = event.target.value;
-    set_input(new_value);
+const useStyles = makeStyles((theme) => ({
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.primary.light,
+    '&:hover': {
+      backgroundColor: darken(theme.palette.background.default, 0.05),
+    },
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      margin: 'auto',
+      width: '40%',
+    },
+  },
+  searchIcon: {
+    color: theme.palette.primary.main,
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+const SearchBar = (props) => {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => { if (!open) setOptions([]) }, [open]);
+
+  const chooseEntity = (e, chosen) => {
+    setTimeout(() => {history.push(`/userprofile/${chosen}`)}, 500)
+  }
+
+  const fetchDatabase = (e, input) => {
+    setLoading(true);
     var filter = {
       $or: [
-        { "entityID": { $regex: '^' + new_value } },
-        { "username": { $regex: '^' + new_value } }
+        { "entityID": { $regex: '^' + input } },
+        { "username": { $regex: '^' + input } }
       ]
     };
-    console.log('filter:')
-    console.log(filter)
-    change_post(filter)
+    entityFn.entity_post(filter)
+    .then(entities => {
+      setOptions(entities.map(entity => entity.entityID));
+      setLoading(false);
+    })
+    .catch(err => console.log(err))
+    
   }
-
-  const change_post = async (filter) => {
-    try {
-      var entity2 = await entityFn.entity_post(filter);
-      set_entity(entity2)
-    }
-    catch (err) {
-      console.log(err)
-      console.log('---------------')
-    }
-  }
-
-  const [input, set_input] = useState('');
-  const [entity, set_entity] = useState(null);
-
-  useEffect(() => {change_post()},[])
 
   return (
-    <div>
-      <Form inline>
-        <div className="mx-auto row">
-          <FormControl type="text" placeholder="Search" className="col-8" onChange={(event) => { handleNameChange(event)}} />
-          <Button variant="outline-secondary"><i className="fa fa-search" onClick={handleShow}></i></Button>
-        </div>
-      </Form>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton className="bg-dark">
-          <Modal.Title style={{color: "LightCoral", fontWeight:800}}>Search Result</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="bg-light">
-          <div>
-            {entity != null ? entity.map(sinEnt => {
-              return (
-                
-                <div className="border-bottom py-2 mx-0">                
-                  <Row>
-                    <Col>Username: {sinEnt.username}</Col> 
-
-                    <Col className="text-center"> <a href={`/userprofile/${sinEnt.entityID}`}>Profile</a></Col>
-                  </Row>
-                </div>
-              )
-            }) : ''}
-          </div></Modal.Body>
-      </Modal>
-
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <SearchIcon />
+      </div>
+      <Autocomplete
+        id="custom-input-demo"
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        onChange={chooseEntity}
+        onInputChange={fetchDatabase}
+        options={options}
+        loading={loading}
+        classes={{paper: classes.paper}}
+        renderInput={(params) => (
+          <InputBase
+            ref={params.InputProps.ref}
+            placeholder="Search…"
+            fullWidth
+            classes={{ root: classes.inputRoot, input: classes.inputInput, }}
+            inputProps={params.inputProps}
+          />
+        )}
+      />
     </div>
   )
-} ;
-export default Search;
+} 
+
+export default SearchBar;

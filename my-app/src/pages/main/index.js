@@ -1,9 +1,8 @@
 import React from 'react';
-import {Post} from "../../component/post/post.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NAVbar from "./component/nav.js";
-import state from "../userState";
-import  {Auth} from '../services/authService';
+import NavBar from "./component/nav";
+import { Post } from "../../component/post/post.js";
+import { Auth } from '../services/authService';
 import { CssBaseline } from '@material-ui/core';
 
 const Main = () => {
@@ -11,7 +10,8 @@ const Main = () => {
     var fil= {}
     return (
         <>
-            <NAVbar />
+            <CssBaseline />
+            <NavBar />
             <Post filter={fil}/>
         </>
     )
