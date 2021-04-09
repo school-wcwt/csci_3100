@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { TextField, CircularProgress, Button } from "@material-ui/core";
 import CheckIcon from '@material-ui/icons/Check';
-
 import axios from '../../../axiosConfig';
 import {send_validation_email} from '../../../component/email/email';
 import useStyles from '../styles/formStyle'
@@ -49,7 +48,7 @@ const RegisterForm = (props) => {
         const emaildata = {
             to_name: data.username,
             user_email: data.email,
-            message: "Still in Testing"
+            message: "/ I am messgae"
         };
         axios.post('/register', body)
         .then(res => {
