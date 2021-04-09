@@ -8,12 +8,16 @@ import { CssBaseline } from '@material-ui/core';
 
 const Main = () => {
     Auth();
-    var fil= {}
+    var fil= {} 
     return (
+        // Please don't delete <div/> before replacing the <Navbar/>
         <>
+        <div className="pt-5">
             <NAVbar />
             <Post filter={fil}/>
+        </div>
         </>
+        
     )
 }
 export default Main;
