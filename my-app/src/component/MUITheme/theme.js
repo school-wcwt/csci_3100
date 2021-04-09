@@ -19,7 +19,18 @@ var theme = createMuiTheme({
             fontFamily: 'Poppins',
             fontWeight: 700, 
         },
-        h4: { fontFamily: 'Poppins' },
+        h4: { 
+            fontFamily: 'Poppins',
+            fontWeight: 700, 
+        },
+        h5: { 
+            fontFamily: 'Poppins',
+            fontWeight: 700, 
+        },
+        h6: { 
+            fontFamily: 'Poppins',
+            fontWeight: 700, 
+        },
     },
     palette: {
         primary: {
