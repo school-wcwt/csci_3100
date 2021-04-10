@@ -36,8 +36,6 @@ const post_post = (fil) =>{
 
 const post_create = (targetFilter,edit_data) =>{
     return new Promise((resolve,reject)=>{
-        console.log('first time --------------------')
-        console.log(edit_data)
         axios({
             method: 'POST',
             url: '/post/new',
@@ -47,12 +45,8 @@ const post_create = (targetFilter,edit_data) =>{
             }
         })
         .then ( res =>{
-            console.log('second time --------------------')
-            console.log('sucess');
-            console.log(edit_data)
             console.log(res.data)
-            console.log('finish--------------------')
-
+            alert("Successful");
             return resolve(res.data)
         })
         .catch(err => {

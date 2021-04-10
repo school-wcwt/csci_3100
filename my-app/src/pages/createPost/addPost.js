@@ -6,86 +6,44 @@ import { Upload_Photo } from '../../component/Upload/upload';
 var postFn = require("../../component/load_backend/postFunction.js");
 
 
-
-
-
-
-function download_URL(data) {
-  return new Promise((resolve, reject) => {
-    // console.log('*********')
-
-    Upload_Photo(data.photo).then(downloadURL => {
-      //const downloadURL = Upload_Photo(data.photo);
-      console.log("download url are : " + downloadURL.length);
-      console.log(downloadURL)
-      console.log('create');
-      var edit_data = {
-        "type": 0,
-        "content": 'content',
-        "photo": downloadURL,
-        "hashtag": ['hash1']
-      };
-
-      console.log(edit_data);
-      // console.log(data.RestaurantName);
-      // console.log(edit_data.content);
-      // console.log(edit_data.photo);
-      // console.log(edit_data.hashtag);
-      return resolve(edit_data)
-    })
-
-  })
-}
-
-
 export default function AddPost() {
   const { register, handleSubmit } = useForm();
-  const onSubmit = async (data) => {
-    try {
-      var targetFilter = { "entityID": "rrr-1296" };
-      // var edit_data = await download_URL();
-      download_URL(data).then(edit_data => {
-        // console.log("**********")
-        // console.log(edit_data.photo)
-        // console.log("**********")
-        postFn.post_create(targetFilter, edit_data);
-        console.log('here!')
-      })
-    }
-    catch (err) {
-      console.log(err)
-      console.log('ERROR!!!!!!!!!')
-    }
+  const onSubmit = data => {
+    var targetFilter = { "entityID": "rrr-1296" };
+    Upload_Photo(data.photo).then(downloadURL => {
+      var edit_data = {
+        "type": 0,
+        "rating": data.rating,
+        "content": data.content,
+        "photo": downloadURL,
+        "hashtag": data.hashtag_list
+      };
+      postFn.post_create(targetFilter, edit_data);
+    })
   }
   return (
     <Container className="mt-5 pb-5 col-lg-6 bg-light rounded">
       <div className="py-3">
         <Form className="justify-content-center" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="RestaurantName">
-            <Form.Label>Restaurant Name</Form.Label>
-            <Form.Control type="text" placeholder="Name" name="RestaurantName" ref={register} />
+            <Form.Label>Rating</Form.Label>
+            <Form.Control type="text" pattern="[0-9]" placeholder="0 ~ 9" required name="rating" ref={register} />
           </Form.Group>
           <Form.Group controlId="content">
             <Form.Label>Content</Form.Label>
-            <Form.Control as="textarea" rows={3} name="content" placeholder="Please Type here..." ref={register} />
+            <Form.Control as="textarea" rows={3} required name="content" placeholder="Please Type here..." ref={register} />
           </Form.Group>
           <Form.Group controlId="hashtag_list">
             <Form.Label>Hashtag</Form.Label>
             <Form.Row>
               <Col>
-                <Form.Control placeholder="#1" type="text" name="hashtag_list[0]" ref={register} />
+                <Form.Control placeholder="#1" type="text" required name="hashtag_list[0]" ref={register} />
               </Col>
               <Col>
-                <Form.Control placeholder="#2" type="text" name="hashtag_list[1]" ref={register} />
+                <Form.Control placeholder="#2" type="text" required name="hashtag_list[1]" ref={register} />
               </Col>
               <Col>
-                <Form.Control placeholder="#3" type="text" name="hashtag_list[2]" ref={register} />
-              </Col>
-              <Col>
-                <Form.Control placeholder="#4" type="text" name="hashtag_list[3]" ref={register} />
-              </Col>
-              <Col>
-                <Form.Control placeholder="#5" type="text" name="hashtag_list[4]" ref={register} />
+                <Form.Control placeholder="#3" type="text" required name="hashtag_list[2]" ref={register} />
               </Col>
             </Form.Row>
           </Form.Group>
@@ -101,17 +59,3 @@ export default function AddPost() {
     </Container>
   )
 }
-
-/*addPost(){
-        axios.post('/addPost', {
-          title: this.state.title,
-          subject: this.state.subject
-        })
-          .then(function (response) {
-            console.log('response from add post is ', response);
-            hashHistory.push('/')
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-}*/
