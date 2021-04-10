@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { darken, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
+import { InputBase } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import history from '../history'
 
@@ -45,6 +45,20 @@ const useStyles = makeStyles((theme) => ({
       width: '20ch',
     },
   },
+  optionList: {
+    display: 'flex',
+    width: '100%'
+  },
+  optionName: {
+    color: theme.palette.primary.main,
+    fontWeight: '700',
+    flex: 4
+  },
+  optionTag: {
+    color: theme.palette.grey[400],
+    flex: 1,
+    textAlign: 'right',
+  }
 }));
 
 const SearchBar = (props) => {
@@ -56,7 +70,7 @@ const SearchBar = (props) => {
   useEffect(() => { if (!open) setOptions([]) }, [open]);
 
   const chooseEntity = (e, chosen) => {
-    setTimeout(() => {history.push(`/userprofile/${chosen}`)}, 500)
+    setTimeout(() => {history.push(`/userprofile/${chosen.entityID}`)}, 500)
   }
 
   const fetchDatabase = (e, input) => {
@@ -69,12 +83,28 @@ const SearchBar = (props) => {
     };
     entityFn.entity_post(filter)
     .then(entities => {
-      setOptions(entities.map(entity => entity.entityID));
+      setOptions(entities);
       setLoading(false);
     })
     .catch(err => console.log(err))
-    
   }
+
+  const renderList = (option) => {
+    return (
+      <>
+        <div className={classes.optionName}>{option.username}</div>
+        <div className={classes.optionTag}>{`#${option.tag}`}</div> 
+      </>
+    )
+  }
+
+  const renderInputBox = (params) => (
+    <InputBase 
+      fullWidth placeholder="Search…"
+      ref={params.InputProps.ref} inputProps={params.inputProps}
+      classes={{ root: classes.inputRoot, input: classes.inputInput, }}
+    />
+  )
 
   return (
     <div className={classes.search}>
@@ -83,23 +113,13 @@ const SearchBar = (props) => {
       </div>
       <Autocomplete
         id="custom-input-demo"
-        open={open}
-        onOpen={() => setOpen(true)}
-        onClose={() => setOpen(false)}
+        classes={{paper: classes.paper}}
+        options={options} loading={loading}
+        open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}
         onChange={chooseEntity}
         onInputChange={fetchDatabase}
-        options={options}
-        loading={loading}
-        classes={{paper: classes.paper}}
-        renderInput={(params) => (
-          <InputBase
-            ref={params.InputProps.ref}
-            placeholder="Search…"
-            fullWidth
-            classes={{ root: classes.inputRoot, input: classes.inputInput, }}
-            inputProps={params.inputProps}
-          />
-        )}
+        getOptionLabel={(x)=>x.entityID} renderOption={renderList}
+        renderInput={renderInputBox}
       />
     </div>
   )
