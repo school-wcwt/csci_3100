@@ -11,27 +11,29 @@ var postFn = require("../../component/load_backend/postFunction.js");
 
 
 function download_URL(data) {
-  const downloadURL = Upload_Photo(data.photo);
   return new Promise((resolve, reject) => {
+    // console.log('*********')
 
-    //const downloadURL = Upload_Photo(data.photo);
-    console.log("download url are : " + downloadURL.length);
-    console.log(downloadURL)
-    console.log('create');
-    var edit_data = {
-      "type": 0,
-      "username": data.RestaurantName,
-      "content": data.content,
-      "photo": downloadURL,
-      "hashtag": data.hashtag_list
-    };
+    Upload_Photo(data.photo).then(downloadURL => {
+      //const downloadURL = Upload_Photo(data.photo);
+      console.log("download url are : " + downloadURL.length);
+      console.log(downloadURL)
+      console.log('create');
+      var edit_data = {
+        "type": 0,
+        "content": 'content',
+        "photo": downloadURL,
+        "hashtag": ['hash1']
+      };
 
-    console.log(edit_data);
-    console.log(data.RestaurantName);
-    console.log(edit_data.content);
-    console.log(edit_data.photo);
-    console.log(edit_data.hashtag);
-    return resolve(edit_data)
+      console.log(edit_data);
+      // console.log(data.RestaurantName);
+      // console.log(edit_data.content);
+      // console.log(edit_data.photo);
+      // console.log(edit_data.hashtag);
+      return resolve(edit_data)
+    })
+
   })
 }
 
@@ -39,19 +41,16 @@ function download_URL(data) {
 export default function AddPost() {
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-
     try {
       var targetFilter = { "entityID": "rrr-1296" };
       // var edit_data = await download_URL();
       download_URL(data).then(edit_data => {
-        console.log("**********")
-        console.log(edit_data.photo)
-        console.log("**********")
+        // console.log("**********")
+        // console.log(edit_data.photo)
+        // console.log("**********")
         postFn.post_create(targetFilter, edit_data);
-      }
-      )
-
-
+        console.log('here!')
+      })
     }
     catch (err) {
       console.log(err)
