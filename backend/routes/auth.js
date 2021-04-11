@@ -9,7 +9,7 @@ const entityFunc = require('../functions/entityFunc');
 const config = require('../config');
 const verifyAuth = require('../middleware/verifyAuth');
 const Auth = require('../models/Auth');
-
+const emailFnc = require('../middleware/email');
 const MaxRefreshDays = 60;
 
 var createToken = (entityID, entity_id, duration, parentRT, secret) => {
@@ -100,12 +100,17 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
+    emailFnc.send_validation_email( {to_name: req.body.username ,user_email:req.body.email, message:`I am Backend from ${135}`} );
+    /*
     entityFunc.createEntity({...req.body, type: 'User'})
-    .then(createdEntity => res.status(201).json(createdEntity))
+    .then(createdEntity => {
+        res.status(201).json(createdEntity);})
     .catch(err => {
         if (err.message == 'Email exists.') res.status(409).json(err.message);
         else res.status(500).json(err.message);
     })
+    */
+    
 })
 
 router.post('/logout', (req, res) => {

@@ -103,6 +103,7 @@ const Register_DataBase = data =>{
         type: "Rest",
         username: data.RestName,
         address: data.Address,
+        email :data.email,
         name: data.nickName?data.nickName:data.RestName,
         phone: data.phone?data.phone.trim():0,
         profPhoto: downloadURL,
@@ -160,6 +161,7 @@ const RestForm = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
         <Nav className={classes.welcome_message} >Welcome to Create a new Restaurant. Please Fill in the Following Information</Nav>
         <TextBox label = "Restaurant Name" dataName ="RestName" register = {register}/>
+        <TextBox label = "Email (For reservation )" dataName ="email" type = "email" register = {register}/>
         <TextBox label = "Address" dataName ="Address" register = {register}/>
         <TextBox label = "Any Nick name or Chinese Name" dataName ="nickName" register = {register}/>
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
