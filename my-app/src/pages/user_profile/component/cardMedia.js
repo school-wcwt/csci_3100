@@ -23,6 +23,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import history from '../../history';
+import axios from '../../../axiosConfig'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -113,6 +114,9 @@ export default function RecipeReviewCard({datainput}) {
   };
   const handleLikeMe = () =>{
     setliked(!liked);
+    console.log(`Clicked liked to ${datainput.entitiesID}`);
+    axios.patch(`entity/follow/${datainput.entitiesID}`,{addFlag:liked}).then(res=>console.log("Liked")).catch(err=>console.log("Can not like"))
+
 
   };
   const handleLogOut = () =>{
