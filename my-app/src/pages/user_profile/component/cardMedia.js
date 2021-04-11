@@ -105,7 +105,7 @@ export default function RecipeReviewCard({datainput}) {
   const [expanded, setExpanded] = React.useState(false);
   const [seeting_expanded, setseeting_expanded] = React.useState(false);
   const [liked,setliked] = React.useState(false);
-  const handleExpandClick = () => {
+  const handleEditProfile = () => {
     setExpanded(!expanded);
   };
   const handleSeeting = () => {
@@ -137,8 +137,8 @@ export default function RecipeReviewCard({datainput}) {
       />
       <Collapse in={seeting_expanded} timeout="auto" unmountOnExit>
         <div style = {{float: "right"}}>
-        <Button onClick = {handleExpandClick}>View More</Button>
-        <Button color="secondary"onClick = {handleLogOut}>Log Out</Button>
+        <Button color = "secondary" onClick = {handleEditProfile}>Edit Profile</Button>
+        <Button color= "secondary" onClick = {handleLogOut}>Log Out</Button>
         </div>
       </Collapse>
       <CardMedia
