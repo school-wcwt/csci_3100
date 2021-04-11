@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 function load_my_data(EntitiesID){
     return mydataset = {
         UserID: EntitiesID,
-        UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
+        UserName: EntitiesID, // !
         Email: "1155109240@gmail.com", // !
         Favourite_Rest: 5, // !
         Followers: 1000, // !

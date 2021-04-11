@@ -104,11 +104,16 @@ export default function RecipeReviewCard({datainput}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [seeting_expanded, setseeting_expanded] = React.useState(false);
+  const [liked,setliked] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   const handleSeeting = () => {
     setseeting_expanded(!seeting_expanded);
+  };
+  const handleLikeMe = () =>{
+    setliked(!liked);
+
   };
   const handleLogOut = () =>{
     history.push('/login');
@@ -147,28 +152,13 @@ export default function RecipeReviewCard({datainput}) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" onClick = {handleLikeMe}>
+          <FavoriteIcon style = {{color: liked?"red":"grey"}}/>
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }
