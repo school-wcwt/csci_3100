@@ -68,12 +68,12 @@ const UserProfilePage = () =>{
             UserName: data_backend.username, // !
             Email: data_backend.email, // !
             Favourite_Rest: data_backend.followingRest.length, // !
-            Followers: data_backend.followed.length, // !
+            likes: data_backend.followed.length, // !
+            Followers: data_backend.followingUser.length,
             PostNumber: data_backend.post.length, // !
             JoinTime: new Date(data_backend.joinTime).toDateString(), // !
             BigImagePath: "/img/user_image/handsome1.jpg", // !,
             PostID: data_backend.post,
-            likes: data_backend.followingUser.length,
             complete: data_backend.entityID?true:false,
         };
     };

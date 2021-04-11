@@ -115,9 +115,7 @@ export default function RecipeReviewCard({datainput}) {
   const handleLikeMe = () =>{
     setliked(!liked);
     console.log(`Clicked liked to ${datainput.entitiesID}`);
-    axios.patch(`entity/follow/${datainput.entitiesID}`,{addFlag:liked}).then(res=>console.log("Liked")).catch(err=>console.log("Can not like"))
-
-
+    axios.patch(`entity/follow/${datainput.entitiesID}`,{"addFlag":liked}).then(res=>console.log("Liked")).catch(err=>console.log("Can not like"));
   };
   const handleLogOut = () =>{
     history.push('/login');
