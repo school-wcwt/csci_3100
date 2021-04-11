@@ -28,13 +28,23 @@ const Post = () => {
         try {
             var authorID = 'usern-1424';
             var targetFilter = { "entityID": "jon-rest-1296" }
-            var edit_data = {
-                "type": 1,
-                "content": "new_content",
-                "photo": "pic",
-                "hashtag": ["h1213ash1", "ha12311sh2", "ha23123sh3"],
-                "rating": 9
-            };
+            var edit_data ={
+                "type": 0,
+                "username": "",
+                "content": "zdc",
+                "photo": [
+                    "https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.744031560873416%2F0.7440315608734161.jpg?alt=media&token=a37486e7-f786-46f6-a70d-defe82fe6506",
+                    "https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.20557764609980622%2F0.205577646099806222.jpg?alt=media&token=24ff4f43-31cc-48d7-8d46-e9f91611373e",
+                    "https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.5778665660021995%2F0.57786656600219953.jpg?alt=media&token=99547f5a-9995-4266-874a-65eab9a3e0cd"
+                ],
+                "hashtag": [
+                    "szdc",
+                    "zsdc",
+                    "zsd",
+                    "asd",
+                    "qwe"
+                ]
+            }
             await postFn.post_create(targetFilter, edit_data);
             trigChange()
         }

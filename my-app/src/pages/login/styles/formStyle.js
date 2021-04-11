@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, fade } from "@material-ui/core/styles";
 
 const style = makeStyles((theme) => ({ 
     flexContainer:{
@@ -19,7 +19,7 @@ const style = makeStyles((theme) => ({
         letterSpacing: '2px',
         color: theme.palette.grey[200],
         '&:hover': {
-            background: theme.palette.primary.dark,
+            background: fade(theme.palette.common.white, 0.25),
         }
     },
     secondaryButton: {

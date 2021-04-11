@@ -92,20 +92,10 @@ const TextBoxSmall = ({label,dataName,type,defaultValue,register}) => {
     );
 }
 
-const Register_DataBase = async (data)=>{
+const Register_DataBase = data =>{
 
 
-    function wait(ms) {
-        return new Promise(r => setTimeout(r, ms));
-      }
-      
-      try {
-        const downloadURL = Upload_Photo(data.photo);
-
-        console.log(downloadURL);
-        while (data.photo.length != 0 && downloadURL[data.photo.length-1]==undefined){
-          await wait(500);
-        }
+    Upload_Photo(data.photo).then(downloadURL => {
 
 
     console.log("Process on Create Rest");
@@ -120,7 +110,7 @@ const Register_DataBase = async (data)=>{
         openingHr: [data.starttime,data.endtime],
     };
     console.log(JSON.stringify(mydata))
-    await axios(
+    axios(
         {
         method: 'POST',
         url: '/entity/new',
@@ -136,10 +126,8 @@ const Register_DataBase = async (data)=>{
     .catch(err => {
         console.log(err.message);
     })
-}catch(err){
-    console.log(err)
-    console.log('ERROR!!!!!!!!!')
-}
+
+})
 };
 
 const RestForm = (props) => {
@@ -177,7 +165,7 @@ const RestForm = (props) => {
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
         <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
         <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
-        <Form.File type="file" name="photo" ref={register} multiple/>
+        <Form.File type="file" name="photo" ref={register}/>
         <br/>
         <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >
         <Nav className={classes.welcome_message} style={{color:"#FFF8DC"}}>Create Restaurant Now</Nav>

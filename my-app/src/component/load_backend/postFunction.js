@@ -41,17 +41,17 @@ const post_create = (targetFilter,edit_data) =>{
             url: '/post/new',
             data:{
                 targetFilter: targetFilter,
-                data:edit_data
+                data: edit_data
             }
         })
         .then ( res =>{
-            console.log('sucess');
-            console.log(res);
+            console.log(res.data)
+            alert("Successful");
             return resolve(res.data)
         })
         .catch(err => {
             console.log(err.message);
-            console.log('error');
+            console.log('error!!!!!!!!!!!!');
             return reject(err)
         })
     })
