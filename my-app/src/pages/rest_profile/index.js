@@ -54,40 +54,20 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 }));
-
-// google drive: https://drive.google.com/drive/folders/1HDCkRRA1zYwjAEwEMjK1xJTmOrcN59oh?usp=sharing
-// BigImagePath: "/img/user_image/handsome1.jpg" // !
-
-/*
-            mydataset = {
-                UserID: EntitiesID,
-                UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
-                Email: "1155109240@gmail.com", // !
-                Favourite_Rest: 5, // !
-                Followers: 1000, // !
-                PostNumber: 10, // !
-                lastestLoginTime: "24 April 2021", // !
-                BigImagePath: "/img/user_image/handsome1.jpg" // !
-            }
-*/
 function load_my_data(EntitiesID){
     return mydataset = {
         UserID: EntitiesID,
         UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
-        Email: "1155109240@gmail.com", // !
+        nickName: 'NickName',
+        address: "I am address",
+        phoneNumber: "12345678", // !
         Favourite_Rest: 5, // !
         Followers: 1000, // !
         PostNumber: 10, // !
-        lastestLoginTime: "24 April 2021", // !
         BigImagePath: "/img/user_image/handsome1.jpg" // !
     }
 }
-    
-/*
-        <Paper elevation={3} style = {{backgroundColor: color}}>
-        <Nav className = {classes.Heading_title}>{title}</Nav>
-        </Paper>
-*/
+
 
 const HeaderPaper = ({title,number,color,icon}) =>{
     const classes = useStyles();
@@ -104,8 +84,6 @@ const HeaderPaper = ({title,number,color,icon}) =>{
             </div>
             </Paper>
         </Button>
-
-
     )
 }
 
@@ -150,7 +128,6 @@ const PostArea =()=> {
                 </Paper>
                 </Grid>
             </Grid>
-            
         </div>
     )
 }

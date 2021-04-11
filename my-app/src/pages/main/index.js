@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NAVbar from "./component/nav.js";
 import state from "../userState";
 import  {Auth} from '../services/authService';
+import { Typography, Box, CssBaseline } from '@material-ui/core';
+
 
 const Main = () => {
     Auth();

@@ -4,7 +4,8 @@ import { TextField, CircularProgress, Button } from "@material-ui/core";
 import CheckIcon from '@material-ui/icons/Check';
 import axios from '../../../axiosConfig';
 import {send_validation_email} from '../../../component/email/email';
-import useStyles from '../styles/formStyle'
+import useStyles from '../styles/formStyle';
+//const {send_validation_email} = require();
 
 const RegisterForm = (props) => {
     const { register, handleSubmit } = useForm();
@@ -54,7 +55,7 @@ const RegisterForm = (props) => {
         .then(res => {
             setLoading(false);
             setSuccess(true);
-            send_validation_email(emaildata);
+            //send_validation_email(emaildata);
         })
         .catch(err => console.log(err.message));
     };

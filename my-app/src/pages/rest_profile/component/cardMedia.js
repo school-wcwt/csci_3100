@@ -122,20 +122,9 @@ export default function RecipeReviewCard({datainput}) {
             {datainput.UserName[0]}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings" onClick = {handleSeeting}>
-            <MoreVertIcon />
-          </IconButton>
-        }
         title= {datainput.UserName}
-        subheader={`Last Online: ${datainput.lastestLoginTime}`}
+        subheader={`Nick Name: ${datainput.nickName}`}
       />
-      <Collapse in={seeting_expanded} timeout="auto" unmountOnExit>
-        <div style = {{float: "right"}}>
-        <Button onClick = {handleExpandClick}>View More</Button>
-        <Button color="secondary"onClick = {handleLogOut}>Log Out</Button>
-        </div>
-      </Collapse>
       <CardMedia
         className={classes.media}
         image={datainput.BigImagePath}
@@ -143,7 +132,7 @@ export default function RecipeReviewCard({datainput}) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {!datainput.introduction||datainput.introduction=="" ? "Welcome to my profile. I am new joiner from mATE": datainput.introduction}
+          Address: {datainput.address}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
