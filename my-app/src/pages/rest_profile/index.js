@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from '../../axiosConfig';
 import Navbar from "../main/component/nav";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,12 +12,10 @@ import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
 import {Post} from '../../component/post/post.js';
-import {GetMyEntities} from '../services/authService';
+import { CssBaseline } from '@material-ui/core';
 import {Auth} from '../services/authService';
+import {UserHeading,PostArea} from './component/profile';
 
-
-
-var mydataset;
 
 // ! means not null when get data
 const useStyles = makeStyles((theme) => ({
@@ -54,94 +52,54 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
     },
 }));
-function load_my_data(EntitiesID){
-    return mydataset = {
-        UserID: EntitiesID,
-        UserName: EntitiesID.substr(0,EntitiesID.length-5), // !
-        nickName: 'NickName',
-        address: "I am address",
-        phoneNumber: "12345678", // !
-        Favourite_Rest: 5, // !
-        Followers: 1000, // !
-        PostNumber: 10, // !
-        BigImagePath: "/img/user_image/handsome1.jpg" // !
-    }
-}
 
 
-const HeaderPaper = ({title,number,color,icon}) =>{
-    const classes = useStyles();
-    number = number?number:"Only Follower Can view This Data";
-    return (
-        <Button variant="contained" size="large" style ={{backgroundColor: color,}}>
-            <Paper elevation={0}  style = {{backgroundColor: color}}>
-            <Nav className = {classes.Heading_title}>{title}</Nav>
-            <br/>
-            {icon}
-            <br/>
-            <div className = {classes.Number_title}>
-                <Nav >{number}</Nav>
-            </div>
-            </Paper>
-        </Button>
-    )
-}
 
-const UserHeading  = () => {
-    const classes = useStyles();
-    const title_box = ["Followed Resturant","Likes","Post Number","Follower"];
-    const color_box = ["#5F9EA0","#DC143C","#9370DB","#FFA500"];
-    return (
-        <div className="pt-5" >
-        <Grid container spacing={1}>
-            <Grid item xs={4}>
-                <InformCard datainput = {mydataset} />
-            </Grid>
-            <Grid item xs={3} className = {classes.Heading_Box_style}>
-                <div className = {classes.paper_style}>
-                <HeaderPaper color = {color_box[0]} title = {title_box[0]} number = {32} icon = {<FreeBreakfastIcon className = {classes.icon_style}/>}/>
-                <HeaderPaper color = {color_box[1]} title = {title_box[1]} number = {5052} icon = {<FavoriteIcon className = {classes.icon_style}/>}/>
-                </div>
-            </Grid>
-            <Grid item xs={3} className = {classes.Heading_Box_style}>
-                <div className = {classes.paper_style}>
-                <HeaderPaper color = {color_box[2]} title = {title_box[2]} number = {3} icon = {<ForumIcon className = {classes.icon_style}/>}/>
-                <HeaderPaper color = {color_box[3]} title = {title_box[3]} number = {3105} icon = {<PeopleIcon className = {classes.icon_style}/>}/>
-                </div>
-            </Grid>
-        </Grid>
-        </div>
-        
-    );
-};
-
-const PostArea =()=> {
-    return (
-        <div className="pt-5">
-            <Grid container spacing={1}>
-                <Grid item xs={4}>
-                    
-                </Grid>
-                <Grid item xs={6}>
-                <Paper elevation={3} >
-                    <Post/>
-                </Paper>
-                </Grid>
-            </Grid>
-        </div>
-    )
-}
 const RestProfilePage = () =>{
     Auth();
     const pageID  = useParams();
-    mydataset = load_my_data(pageID.EntitiesID);
+    const entitiesID = pageID.EntitiesID;
+
+    const [myData, setUser] = useState(null);
+    const [MyPage, setPage] = useState();
+    const Fit_my_data = (data_backend)=>{
+        return {
+            entitiesID: data_backend.entityID,
+            UserName: data_backend.username,
+            Email: data_backend.email, 
+            Favourite_Rest: data_backend.followingRest?data_backend.followingRest.length:0, 
+            likes: data_backend.followed?data_backend.followed.length:0, 
+            Followers: data_backend.followingUser?data_backend.followingUser.length:0,
+            PostNumber: data_backend.post?data_backend.post.length:0,
+            JoinTime: new Date(data_backend.joinTime).toDateString(),
+            BigImagePath: data_backend.profPhoto,//"/img/user_image/handsome1.jpg",
+            PostID: data_backend.post,
+            complete: data_backend.entityID?true:false,
+        };
+    };
+    useEffect(() => {
+      axios.get(`entity/${entitiesID}`)
+      .then(entity => {
+        setUser(entity.data);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },[])
+    if (myData==null){ return ( <p>'Loading'</p>) }
+    var mydataset = Fit_my_data(myData)
+    if (!mydataset.complete){ return ( <p>'Loading'</p>) }
+    console.log("data is " + JSON.stringify(myData));
     return(
-    <div className="pt-5" >
+        <>
+        <CssBaseline />
         <Navbar/>
-        <UserHeading/>
-        <PostArea/>
-    </div>
-    )
+        <UserHeading mydataset = {mydataset}/>
+        <PostArea mydataset = {mydataset}/>
+        
+        </>
+        )
+    
 }
 
 export default RestProfilePage;

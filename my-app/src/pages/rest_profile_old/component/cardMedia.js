@@ -23,7 +23,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import history from '../../history';
-import axios from '../../../axiosConfig'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -105,17 +104,11 @@ export default function RecipeReviewCard({datainput}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [seeting_expanded, setseeting_expanded] = React.useState(false);
-  const [liked,setliked] = React.useState(false);
-  const handleEditProfile = () => {
+  const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   const handleSeeting = () => {
     setseeting_expanded(!seeting_expanded);
-  };
-  const handleLikeMe = () =>{
-    setliked(!liked);
-    console.log(`Clicked liked to ${datainput.entitiesID}`);
-    axios.patch(`entity/follow/${datainput.entitiesID}`,{"addFlag":liked}).then(res=>console.log("Liked")).catch(err=>console.log("Can not like"));
   };
   const handleLogOut = () =>{
     history.push('/login');
@@ -129,20 +122,9 @@ export default function RecipeReviewCard({datainput}) {
             {datainput.UserName[0]}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings" onClick = {handleSeeting}>
-            <MoreVertIcon />
-          </IconButton>
-        }
         title= {datainput.UserName}
-        subheader={`Join Time: ${datainput.JoinTime}`}
+        subheader={`Nick Name: ${datainput.nickName}`}
       />
-      <Collapse in={seeting_expanded} timeout="auto" unmountOnExit>
-        <div style = {{float: "right"}}>
-        <Button color = "secondary" onClick = {handleEditProfile}>Edit Profile</Button>
-        <Button color= "secondary" onClick = {handleLogOut}>Log Out</Button>
-        </div>
-      </Collapse>
       <CardMedia
         className={classes.media}
         image={datainput.BigImagePath}
@@ -150,17 +132,32 @@ export default function RecipeReviewCard({datainput}) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {!datainput.introduction||datainput.introduction=="" ? "Welcome to my profile. I am new joiner from mATE": datainput.introduction}
+          Address: {datainput.address}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick = {handleLikeMe}>
-          <FavoriteIcon style = {{color: liked?"red":"grey"}}/>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
       </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>Method:</Typography>
+        </CardContent>
+      </Collapse>
     </Card>
   );
 }
