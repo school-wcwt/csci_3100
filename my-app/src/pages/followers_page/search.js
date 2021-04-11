@@ -11,6 +11,7 @@ const entityFn = require("../../component/load_backend/entityFunction");
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
+    flexGrow: 3,
     borderRadius: theme.shape.borderRadius,
     backgroundColor: theme.palette.primary.light,
     '&:hover': {

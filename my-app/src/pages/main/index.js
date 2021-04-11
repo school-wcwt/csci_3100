@@ -1,11 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./component/nav";
-import { Post } from "../../component/post/post.js";
+import { Posts } from "../../component/post/posts.js";
 import { Auth } from '../services/authService';
 import { CssBaseline } from '@material-ui/core';
 
-const Main = () => {
+const Main = (props) => {
     Auth();
     var fil= {} 
     return (
@@ -13,7 +13,7 @@ const Main = () => {
         <>
             <CssBaseline />
             <NavBar />
-            <Post filter={fil}/>
+            <Posts {...props} filter={fil}/>
         </>
         
     )

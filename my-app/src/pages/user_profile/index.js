@@ -11,7 +11,7 @@ import ForumIcon from '@material-ui/icons/Forum';
 import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
-import {Post} from '../../component/post/post.js';
+import {Posts} from '../../component/post/posts.js';
 import {GetMyEntities} from '../services/authService';
 import {Auth} from '../services/authService';
 
@@ -127,7 +127,7 @@ const PostArea =()=> {
             <Paper elevation={3} >
                 {mydataset.PostID.map( (postid,idx) => 
                 {   {console.log("post id is " + postid)}
-                    <Post filter={fil}/>
+                    <Posts filter={fil}/>
                 }
                 
                 )

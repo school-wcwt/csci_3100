@@ -26,34 +26,38 @@ import '../component/css/background.css';
 
 import history from "./history";
 //RestProfilePage
-class Routing extends Component { 
-    render() {
-      return (
-      <Router history={history}>
-          <div>
-            <Switch>
-                <Route exact path='/' component={Main} />
-                <Route exact path='/main' component={Main} />
-                <Route path='/login' component={Login} />
-                <Route path='/reservation' component={Reservation}/>
-                <Route path='/test_page' component={TestPage}/>
-                <Route path='/createPost' component={CreatePost}/>
-                <Route path='/restRegister' component={RestRegister}/>
-                <Route path='/entity' component={Entity}/>
-                <Route path='/post' component={Post}/>
-                <Route path='/comment' component={Comment}/>
-                <Route path='/sock' component={Sock}/>
-                <Route path='/search' component={Search}/>
-                <Route path='/panel' component={PanelBar}/>
-                <Route path='/discover' component={DiscoverPage}/>
-                <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
-                <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
-                <Route component={ErrorPage} />
-            </Switch>
-          </div>
-        </Router>
-      );
-    }
+const Routing = (props) => {
+  const [user, setUser] = useState({});
+
+  const handleLogin = (loggedInUser) => {
+    setUser(loggedInUser);
   }
+
+  return (
+    <Router history={history}>
+      <div>
+        <Switch>
+            <Route exact path='/' component={Main} />
+            <Route exact path='/main' render={(props) => <Main user={user}/>} />
+            <Route path='/login' render={(props) => <Login handleLogin={handleLogin}/>} />
+            <Route path='/reservation' component={Reservation}/>
+            <Route path='/test_page' component={TestPage}/>
+            <Route path='/createPost' component={CreatePost}/>
+            <Route path='/restRegister' component={RestRegister}/>
+            <Route path='/entity' component={Entity}/>
+            <Route path='/post' render={(props) => <Post user={user}/>} />
+            <Route path='/comment' component={Comment}/>
+            <Route path='/sock' component={Sock}/>
+            <Route path='/search' component={Search}/>
+            <Route path='/panel' component={PanelBar}/>
+            <Route path='/discover' component={DiscoverPage}/>
+            <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
+            <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
+            <Route component={ErrorPage} />
+        </Switch>
+      </div>
+    </Router>
+  );
+}
   
   export default Routing;

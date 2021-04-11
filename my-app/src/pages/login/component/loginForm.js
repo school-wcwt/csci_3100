@@ -25,6 +25,7 @@ const LoginForm = (props) => {
             setSuccess(true);
             document.cookie = "state=" + res.data.entityID;
             console.log(`Logged in as ${res.data.entityID}`)
+            props.handleLogin(res.data);
             setTimeout(() => {
                 history.push('/main');
             }, 1500)
