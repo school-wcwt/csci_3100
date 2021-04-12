@@ -19,7 +19,8 @@ const style = makeStyles((theme) => ({
         letterSpacing: '2px',
         color: theme.palette.grey[200],
         '&:hover': {
-            background: fade(theme.palette.common.white, 0.25),
+            background: theme.palette.primary.light,
+            color: theme.palette.grey[700]
         }
     },
     secondaryButton: {

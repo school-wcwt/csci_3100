@@ -71,7 +71,9 @@ const SearchBar = (props) => {
   useEffect(() => { if (!open) setOptions([]) }, [open]);
 
   const chooseEntity = (e, chosen) => {
-    setTimeout(() => {history.push(`/userprofile/${chosen.entityID}`)}, 500)
+    if (chosen !== null) {
+      setTimeout(() => {history.push(`/userprofile/${chosen.entityID}`)}, 500)
+    }
   }
 
   const fetchDatabase = (e, input) => {
@@ -119,7 +121,10 @@ const SearchBar = (props) => {
         open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}
         onChange={chooseEntity}
         onInputChange={fetchDatabase}
-        getOptionLabel={(x)=>x.entityID} renderOption={renderList}
+        getOptionSelected={(opt, val) => {
+          return opt.entityID == val.entityID
+        }}
+        getOptionLabel={x => x.entityID} renderOption={renderList}
         renderInput={renderInputBox}
       />
     </div>

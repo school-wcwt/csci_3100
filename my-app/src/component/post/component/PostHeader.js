@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, ButtonBase, CardHeader } from '@material-ui/core';
-import { StarBorderRounded, StarRounded, StarHalfRounded } from '@material-ui/icons'
+import Rating from '../../Rating'
 
 const useStyles = makeStyles((theme) => ({
   // Card
@@ -49,24 +49,10 @@ const useStyles = makeStyles((theme) => ({
 export default function PostHeader(props) {
   const classes = useStyles();
 
-  const renderRating = (() => {
-    const rating = props.post.rating !== undefined ? props.post.rating : 0;
-    const fullStars = ~~(rating/2);
-    const halfStars = rating % 2;
-    const emptyStars = 5 - fullStars - halfStars;
-    return (
-      <div>
-        {[...Array(fullStars)].map((x, i)  => <StarRounded key={`star-${i}`}/>)}
-        {halfStars ? <StarHalfRounded key={`star-${fullStars}`}/> : null}
-        {[...Array(emptyStars)].map((x, i) => <StarBorderRounded key={`star-${i-emptyStars+5}`}/>)}
-      </div>
-    ) 
-  })()
-
-  const renderDate = (() => {
-    const date = new Date(props.post.createdTime);
+  const renderDate = (time) => {
+    const date = new Date(time);
     return <span className={classes.time}>{`${date.toLocaleDateString('en-GB')} ${date.toLocaleTimeString('it-IT')}`}</span>
-  })()
+  }
 
   return (
     <CardHeader className={classes.header}
@@ -88,8 +74,8 @@ export default function PostHeader(props) {
         </ButtonBase>}
       action={
         <div className={classes.infoDetail}>
-          {renderRating}
-          {renderDate}
+          {props.post.rating !== undefined ? <Rating rating={props.post.rating}/> : <Rating rating={0}/>}
+          {renderDate(props.post.createdTime)}
         </div>}
     />
   )

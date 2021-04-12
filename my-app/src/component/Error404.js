@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Loading = (props) => {
+const Error404 = (props) => {
     const styles = useStyles(); 
 
     return (
@@ -40,7 +40,10 @@ const Loading = (props) => {
             <Box m={4} pt={4}/>
             <img src={logo} className = {styles.logo}/>
             <Typography className={styles.header}> 
-                Making popsicles... ❄️ 
+                Can't find your flavour. 🍧
+            </Typography>
+            <Typography variant='h5'>
+                - Error 404 -
             </Typography>
             <Box m={4} pt={4}/>
         </div>
@@ -48,4 +51,4 @@ const Loading = (props) => {
     )
 }
 
-export default Loading;
+export default Error404;

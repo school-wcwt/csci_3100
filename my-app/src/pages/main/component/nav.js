@@ -8,7 +8,7 @@ import AddLocationIcon from '@material-ui/icons/AddLocationOutlined'
 import PostAddIcon from '@material-ui/icons/PostAddRounded'
 import AccountCircle from '@material-ui/icons/AccountCircleRounded'
 
-import { GetMyEntities } from '../../services/authService';
+import global from '../../../component/global'
 import SearchBar from '../../followers_page/search'
 import history from '../../history'
 
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const entityID = GetMyEntities();
+  const entityID = global.loginedUser.user.entityID;
   const classes = useStyles();
   
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);

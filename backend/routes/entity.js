@@ -9,7 +9,7 @@ router.get('/:entityID', (req, res) => {
     entityFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
         if (entity == null) res.status(204).json(null);
-        res.status(200).json(entity)
+        return res.status(200).json(entity)
     })
     .catch(err => res.status(500).json(err))
 })

@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 const UserProfilePage = () =>{
     Auth();
     const pageID  = useParams();
-    const entitiesID = pageID.EntitiesID;
+    const entitiesID = pageID.EntityID;
 
     const [myData, setUser] = useState(null);
     const [MyPage, setPage] = useState();

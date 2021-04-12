@@ -6,36 +6,28 @@ import { useState, useEffect, useCallback } from "react";
 import { socket, trigChange, detectChange } from "../socket-client/socket-client.js"
 import Post from "./post"
 import Loading from '../loading.js';
-
+import Error404 from '../Error404.js';
 
 const postFn = require("../load_backend/postFunction.js");
 
-const Posts = (props) => {
-    const [posts, setPosts] = useState(null)
-    const get_function = async (targetFilter) => {
-        console.log('get_function called')
-        try {
-            var posts1 = await postFn.post_post(targetFilter);
-            setPosts(posts1)
-            console.log('get_function called success')
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
+export default function Posts(props) {
+  const [fetched, setFetched] = useState(false)
+  const [posts, setPosts] = useState(null)
 
-    useEffect(() => {
-        get_function(props.filter)
-        detectChange(get_function)
-    }, [])
+  useEffect(() => {
+    postFn.post_post(props.filter)
+    .then(posts => {
+      setPosts(posts)
+      setFetched(true)
+    })
+    .catch(err => console.log(err))
+  }, [])
 
-
-    if (posts == null) return <Loading/>
-    else return (                                        
-        posts.map(data2 => {
-            return <Post post={data2} {...props} key={data2.postID}/>
-        })
-    )
+  if (!fetched) return <Loading/>
+  else if (fetched && posts == null) return <Error404/>
+  else return (
+    posts.map(data2 => {
+      return <Post post={data2} {...props} key={data2.postID}/>
+    })
+  )
 }
-
-export { Posts } ;
