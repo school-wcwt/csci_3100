@@ -30,12 +30,28 @@ const Posts = (props) => {
     }, [])
 
 
+<<<<<<< HEAD
     if (posts == null) return <Loading/>
     else return (                                        
         posts.map(data2 => {
             return <Post post={data2} {...props} key={data2.postID}/>
         })
     )
+=======
+    if (posts == null)
+        return (<div>
+            <p>'Loading'</p>
+            <button onClick={event =>{get_function(props.filter)}}>Click me!</button>
+        </div>)
+    else {
+        return (                                        
+            posts.map(data2 => {
+                
+                return <Post post={data2} {...props} key={data2.postID}/>
+            })
+        )
+    }
+>>>>>>> f63a7b2138bcd8ea52755a23244281fa4cbc3b1e
 }
 
 export { Posts } ;
