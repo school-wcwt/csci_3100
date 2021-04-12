@@ -23,7 +23,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import history from '../../history';
-import axios from '../../../axiosConfig'
+import axios from '../../../axiosConfig';
+import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -120,7 +121,9 @@ export default function RecipeReviewCard({datainput}) {
   const handleLogOut = () =>{
     history.push('/login');
   }
-  
+  const handleAddComment = () =>{
+    history.push(`/createpost/${datainput.entitiesID}`);
+  }
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -157,8 +160,8 @@ export default function RecipeReviewCard({datainput}) {
         <IconButton aria-label="add to favorites" onClick = {handleLikeMe}>
           <FavoriteIcon style = {{color: liked?"red":"grey"}}/>
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        <IconButton aria-label="add comment" onClick= {handleAddComment}>
+          <AddCommentOutlinedIcon />
         </IconButton>
       </CardActions>
     </Card>

@@ -3,7 +3,9 @@ import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bo
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
 import { Upload_Photo } from '../../component/Upload/upload';
+import history from '../history';
 var postFn = require("../../component/load_backend/postFunction.js");
+
 
 
 export default function AddPost(props) {
@@ -19,7 +21,8 @@ export default function AddPost(props) {
         "photo": downloadURL,
         "hashtag": data.hashtag_list
       };
-      postFn.post_create(targetFilter, edit_data);
+      postFn.post_create(targetFilter, edit_data).then(res=>history.push('/main'));
+      
     })
   }
   return (
