@@ -9,6 +9,7 @@ import Error404 from "../../component/Error404";
 import Loading from "../../component/loading";
 import axios from '../../axiosConfig'
 import NavBar from '../main/component/nav'
+import history from '../history'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -147,6 +148,9 @@ const UserActions = (props) => {
 const RestActions = (props) => {
   const classes = useStyles()
   const followed = global.loginedUser.user.followingRest.includes(props.rest._id);
+  const handleAddPost = () =>{
+    history.push(`/createPost/${props.rest.entityID}`)
+}
   return (
     <>
     <div className={classes.actionRoot}>
@@ -155,8 +159,8 @@ const RestActions = (props) => {
       </Button>
     </div>
     <div className={classes.actionRoot}>
-      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
-        Review
+      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick = {handleAddPost} >
+        Add Post
       </Button>
       <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
         Check-in
