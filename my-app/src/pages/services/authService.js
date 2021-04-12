@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import history from '../history';
-import axios from '../../axiosConfig'
+import axios from '../../axiosConfig';
+const entityFn = require("../../component/load_backend/entityFunction");
 
 /*
     var tmp = document.cookie.split('; ');
@@ -27,11 +28,15 @@ const GetMyEntities = () =>{
 }
 
 const GetMyUser = () =>{
-    const itemkey = "myuser=";
-    const idx = document.cookie.search(itemkey);
-    if (idx==-1)   return "empty"
-    return JSON.parse(document.cookie.substr(idx+itemkey.length,document.cookie.length).split('; ')[0]);
-
+    return new Promise((resolve,reject)=>{
+        entityFn.entity_get(GetMyEntities())
+        .then(res=> {
+            return resolve(res);
+        })
+        .catch(err =>{
+            return reject(err);
+        });
+    })
 }
 
 const Auth = () =>{
