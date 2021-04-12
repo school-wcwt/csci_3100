@@ -52,7 +52,8 @@ var theme = createMuiTheme({
             contrastText: '#1e1e1e',
         },
         background: {
-            default: '#fffdf5'
+            default: '#fffdf5',
+            paper: '#faf7ed',
         }
     },
 

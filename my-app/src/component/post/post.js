@@ -1,104 +1,266 @@
 //next: use filter
-import React from 'react';
-import { Carousel, Container, Row, Col } from 'react-bootstrap';
-import Paper from '@material-ui/core/Paper';
-import { useState, useEffect, useCallback } from "react";
-import { socket, trigChange, detectChange } from "../socket-client/socket-client.js"
+import { darken, makeStyles } from '@material-ui/core/styles';
+import { useState } from "react";
+import { Avatar, IconButton, Button, ButtonBase, MobileStepper, 
+         Card, CardHeader, CardMedia, CardContent, CardActions, 
+         Collapse, InputBase, Divider } from '@material-ui/core';
+import { FavoriteRounded, FavoriteBorderRounded, 
+         AddCommentOutlined, AddCommentRounded,
+         BookmarkBorderRounded, BookmarkRounded,
+         StarBorderRounded, StarRounded, StarHalfRounded,
+         KeyboardArrowRightRounded, KeyboardArrowLeftRounded
+       } from '@material-ui/icons'
+
+const useStyles = makeStyles((theme) => ({
+  // Card
+  wrapper: {
+    display: 'flex',
+    maxWidth: 600,
+    margin: `2rem auto`,
+    flexDirection: 'column',
+    '& .MuiCard-root': {
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+  header: {
+    '& .MuiCardHeader-action':{
+      alignSelf: 'center',
+      margin: '0px'
+    },
+    '& .MuiCardHeader-avatar':{
+      marginRight: theme.spacing(1),
+    }
+  },
+  footer: {
+    justifyContent: 'space-between'
+  },
+
+  // Photo
+  photoImg: {
+    aspectRatio: 1,
+    overflow: 'hidden',
+    display: 'block',
+    width: '100%',
+    objectFit: 'contain',
+    backgroundColor: darken(theme.palette.background.default, 0.05)
+  },
+  stepper: {
+    backgroundColor: theme.palette.background.paper
+  },
+
+  // Tags
+  tags : {
+    display: 'inline-flex',
+    gap: theme.spacing(1),
+  },
+  tagButton: {
+    borderRadius: 30,
+    fontSize: '0.8rem',
+  },
+
+  // Header
+  infoAuthor: {
+    display: 'flex',
+  },
+  infoDetail : {
+    fontFamily: 'Poppins',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: '0px'
+  },
+  infoEntityID: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    color: theme.palette.primary.main,
+    justifyContent: 'flex-start',
+    padding: theme.spacing(0, 1)
+  },
+  infoTag: {
+    fontFamily: 'Poppins',
+    color: theme.palette.grey[400],
+  },
+  infoPostType: {
+    fontFamily: 'Poppins',
+    color: theme.palette.grey[700],
+  },
+  time: {
+    fontSize: '0.7rem',
+    color: theme.palette.grey[400],
+  },
+
+  // Comment
+  commentHeader: {
+    paddingBottom: theme.spacing(1),
+    '& .MuiCardHeader-avatar':{
+      marginRight: theme.spacing(1),
+    }
+  },
+  commentAvatar:{
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
+  commentContent: {
+    paddingTop: theme.spacing(1)
+  },
+
+  // Footer
+  footerLike:{
+    marginLeft: theme.spacing(1),
+    fontWeight: '700',
+  }
 
 
-const postFn = require("../load_backend/postFunction.js");
+}))
 
 const Post = (props) => {
-    const [posts, setPosts] = useState(null)
-    const get_function = async (targetFilter) => {
-        console.log('get_function called')
-        try {
-            var posts1 = await postFn.post_post(targetFilter);
-            setPosts(posts1)
-            console.log('get_function called success')
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
+  const [activeStep, setActiveStep] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const classes = useStyles();
+  
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
 
 
-    useEffect(() => {
-        get_function()
-        detectChange(get_function)
-    }, [])
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
+  const maxSteps = props.post.photo.length || 0;
 
-    if (posts == null)
-        return (<div>
-            <p>'Loading'</p>
-            <button onClick={event =>{get_function(props.filter)}}>Click me!</button>
-        </div>)
-    else {
-        return (                                        
-            posts.map(data2 => {
-                return (
-                    <Container className="pb-5 mt-5" style={{ borderBottomStyle: "solid", borderColor: "LightCoral", fontSize: "1.3vw" }}>
-                        <Row>
-                            <Col xs="1">
-                                <Row><img src={data2.author.profPhoto} alt="Author photo." className="mx-auto my-2 img-fluid"></img></Row>
-                                <Row><i className="fa fa-ellipsis-h mx-auto my-2" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
-                                <Row><i className="fa fa-heart-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
-                                <Row><i className="fa fa-comment-o mx-auto my-2" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
-                                <Row><i className="fa fa-bell-o mx-auto my-3" style={{ color: "LightCoral", fontSize: "2em" }}></i></Row>
-                            </Col>
+  const renderRating = (() => {
+    const rating = props.post.rating !== undefined ? props.post.rating : 0;
+    const fullStars = ~~(rating/2);
+    const halfStars = rating % 2;
+    const emptyStars = 5 - fullStars - halfStars;
+    return (
+      <div>
+        {[...Array(fullStars)].map((x, i)  => <StarRounded key={`star-${i}`}/>)}
+        {halfStars ? <StarHalfRounded key={`star-${fullStars}`}/> : null}
+        {[...Array(emptyStars)].map((x, i) => <StarBorderRounded key={`star-${i-emptyStars+5}`}/>)}
+      </div>
+    ) 
+  })()
 
-                            <Col xs="10" className="pl-5">
-                                <Row className="mt-4">
-                                    <div><span style={{ color: "LightCoral", fontWeight: "800" }}>{data2.author.username}</span> posted on {data2.createdTime} at <span style={{ color: "LightCoral", fontWeight: "800" }}>{data2.target.username}</span>
-                                    </div>
-                                </Row>
+  const renderDate = (() => {
+    const date = new Date(props.post.createdTime);
+    return <span className={classes.time}>{`${date.toLocaleDateString('en-GB')} ${date.toLocaleTimeString('it-IT')}`}</span>
+  })()
 
-                                <Row className="my-3 ml-4">{data2.content}</Row>
+  const renderComments = (
+    <>
+    {props.post.comment.map((comment) => 
+      <div key={comment.commentID}>
+        <Divider/>
+        <CardHeader className={classes.commentHeader}
+          avatar={
+            <Avatar variant='rounded' className={classes.commentAvatar}
+              alt={comment.author.entityID} src={comment.author.profPhoto[0]}/>}
+          title={
+            <ButtonBase className={classes.infoEntityID}>
+                <span>{comment.author.username}</span>
+                <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
+            </ButtonBase>}/>
+        <CardContent className={classes.commentContent}>{comment.content}</CardContent>
+      </div>
+    )}
+    </>
+  )
 
-                                <Row className="mb-4">
-                                    <Carousel fade className="w-100">
-                                        {
-                                            data2.photo.map(
-                                                (image, idx) =>
-                                                    <Carousel.Item style={{ height: "auto" }}>
-                                                        <img className="d-block w-100" src={image} alt={image + idx} />
-                                                    </Carousel.Item>
-                                            )
-                                        }
-                                    </Carousel>
-                                </Row>
+  return (                    
+    <Card className={classes.wrapper} elevation={0}>
 
-                                <Row className="mb-4" >
-                                    {
-                                        data2.hashtag.map(
-                                            (hashtag, idx) =>
-                                                <a href={"#" + idx} className="badge mr-2 text-light" style={{ backgroundColor: "LightCoral" }}>
-                                                    <Col> {hashtag.name}</Col>
-                                                </a>
-                                        )
-                                    }
-                                </Row>
-                                {
-                                    data2.comment.map((comment_item) =>
-                                        <Row>
-                                            <Col xs="1" className="my-auto">
-                                                <img src={comment_item.author.profPhoto} height="30" width="30" alt="comment author photo." className="mx-auto my-2"></img>
-                                            </Col>
-                                            <Col xs="2" className="my-auto"><span style={{ color: "LightCoral", fontWeight: "800" }}>{comment_item.author.username}</span></Col>
-                                            <Col xs="8" className="my-auto"><p style={{ overflowWrap: "break-word", margin: "3%" }}>{comment_item.content}</p></Col>
-                                        </Row>
-                                    )
-                                }
-                            </Col>
+      <CardHeader className={classes.header}
+        avatar={
+          <Avatar variant='rounded' className={classes.avatar}
+            alt={props.post.author.entityID} src={props.post.author.profPhoto[0]}/>}
+        title={
+          <div className={classes.infoAuthor}>
+            <ButtonBase className={classes.infoEntityID}>
+              <span>{props.post.author.username}</span>
+              <span className={classes.infoTag}>{`#${props.post.author.tag}`}</span>
+            </ButtonBase>
+            <span className={classes.infoPostType}>{props.post.type ? 'checked-in at' : 'reviewed'}</span>
+          </div>}
+        subheader={
+          <ButtonBase className={classes.infoEntityID}>
+            <span>{props.post.target.username}</span>
+            <span className={classes.infoTag}>{`#${props.post.author.tag}`}</span>
+          </ButtonBase>}
+        action={
+          <div className={classes.infoDetail}>
+            {renderRating}
+            {renderDate}
+          </div>}/>
+      
+      <CardMedia>
+        <img className={classes.photoImg} src={props.post.photo[activeStep]}/>
+        <MobileStepper
+          steps={maxSteps}
+          position="static"
+          variant="dots"
+          activeStep={activeStep}
+          className={classes.stepper}
+          nextButton={
+            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+              <KeyboardArrowRightRounded />
+            </Button>
+          }
+          backButton={
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              <KeyboardArrowLeftRounded />
+            </Button>
+          }
+        />
+      </CardMedia>
 
-                        </Row>
-                    </Container>
-                )
-            })
-        )
-    }
+      <CardContent className={classes.tags}>
+        {props.post.hashtag.map((tag, i) => (
+          <Button variant='outlined' className={classes.tagButton} key={`tag-${i}`}>
+            {`# ${tag.name}`}
+          </Button>
+        ))}
+      </CardContent>
+
+      <Divider/>
+
+      <CardContent>
+        {props.post.content}
+      </CardContent>
+
+      {renderComments}
+
+      <Divider/>
+      
+      <CardActions className={classes.footer}>
+        <span className={classes.footerLike}>{`${props.post.like.length} likes`}</span>
+        <div>
+          <IconButton>
+            {props.post.like.includes(props.user._id) ? <FavoriteRounded/> : <FavoriteBorderRounded/>}
+          </IconButton>
+          <IconButton>
+            {props.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
+          </IconButton>
+          <IconButton onClick={handleExpandClick}>
+            {expanded ? <AddCommentRounded/> : <AddCommentOutlined/>}
+          </IconButton>
+        </div>
+      </CardActions>
+
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Divider/>
+        <CardContent>
+          <InputBase variant='filled' fullWidth multiline placeholder={`${props.user.username}'s comment`}></InputBase>
+        </CardContent>
+      </Collapse>
+    </Card>
+  )
 }
 
-export { Post };
+export default Post;

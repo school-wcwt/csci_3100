@@ -15,10 +15,18 @@ const GetMyEntities = () =>{
     return document.cookie.substr(idx+itemkey.length,document.cookie.length).split('; ')[0];
 }
 
+const GetMyUser = () =>{
+    const itemkey = "myuser=";
+    const idx = document.cookie.search(itemkey);
+    if (idx==-1)   return "empty"
+    return JSON.parse(document.cookie.substr(idx+itemkey.length,document.cookie.length).split('; ')[0]);
+
+}
+
 const Auth = () =>{
     if (GetMyEntities() == "" || GetMyEntities() == "empty" )
         history.push('/login');
 }
 
 
-export {Auth,GetMyEntities}
+export {Auth,GetMyEntities,GetMyUser}

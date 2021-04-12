@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const entityFunc = require('../functions/entityFunc');
-
+const userFunc = require('../functions/userFunc');
 // Unauthorized Queries
 
 router.get('/:entityID', (req, res) => { 
@@ -32,7 +32,7 @@ router.post('/new', (req, res) => {
 })
 
 router.put('/', (req, res) => {
-    var filter = {entityID: req.locals.entityID};
+    var filter = {entityID: res.locals.user.entityID};
     entityFunc.updateEntity(filter, req.body.data)
     .then(updatedEntity => res.status(200).json(updatedEntity))
     .catch(err => {
@@ -43,7 +43,7 @@ router.put('/', (req, res) => {
 })
 
 router.delete('/', (req, res) => {
-    var filter = {entityID: req.locals.entityID};
+    var filter = {entityID: res.locals.user.entityID};
     entityFunc.deleteEntity(filter)
     .then(deletedEntity => res.status(200).json(deletedEntity))
     .catch(err => {
@@ -53,7 +53,7 @@ router.delete('/', (req, res) => {
 })
 
 router.patch('/follow/:entityID', (req, res) => {
-    var authorFilter = {entityID: res.locals.entityID};
+    var authorFilter = {entityID: res.locals.user.entityID};
     var targetFilter = {entityID: req.params.entityID};
     userFunc.updateFollow(authorFilter, targetFilter, req.body.addFlag)
     .then(updatedEntity => res.status(200).json(updatedEntity))

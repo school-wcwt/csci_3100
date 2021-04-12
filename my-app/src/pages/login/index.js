@@ -6,7 +6,7 @@ import useStyles from './styles/indexStyle'
 import LoginForm from './component/loginForm'
 import RegisterForm from './component/registerForm'
 
-const Login = () => {
+const Login = (props) => {
     var [panel, setPanel] = React.useState(0);
     const styles = useStyles(); 
 
@@ -19,7 +19,7 @@ const Login = () => {
             <Typography className={styles.header}> 
                 Spilling tea with friends has never been easier. 🍵
             </Typography>
-            {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} /> : null }
+            {panel == 0 ? <LoginForm setPanel={() => {setPanel(!panel)}} handleLogin={props.handleLogin} /> : null }
             {panel == 1 ? <RegisterForm setPanel={() => {setPanel(!panel)}} /> : null}
             <Box m={4} pt={4}/>
         </div>
