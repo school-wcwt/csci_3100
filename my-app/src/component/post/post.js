@@ -10,6 +10,9 @@ import { FavoriteRounded, FavoriteBorderRounded,
          StarBorderRounded, StarRounded, StarHalfRounded,
          KeyboardArrowRightRounded, KeyboardArrowLeftRounded
        } from '@material-ui/icons'
+import Loading from '../loading'
+import global from '../global'
+import ImageDisplay from './component/ImageDisplay' 
 
 const useStyles = makeStyles((theme) => ({
   // Card
@@ -114,25 +117,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Post = (props) => {
-  const [activeStep, setActiveStep] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
-  
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
 
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  const maxSteps = props.post.photo.length || 0;
 
   const renderRating = (() => {
     const rating = props.post.rating !== undefined ? props.post.rating : 0;
@@ -173,7 +165,8 @@ const Post = (props) => {
     </>
   )
 
-  return (                    
+  if (global.loginedUser.user == null) return <Loading/>
+  else return (                    
     <Card className={classes.wrapper} elevation={0}>
 
       <CardHeader className={classes.header}
@@ -199,26 +192,9 @@ const Post = (props) => {
             {renderDate}
           </div>}/>
       
-      <CardMedia>
-        <img className={classes.photoImg} src={props.post.photo[activeStep]}/>
-        <MobileStepper
-          steps={maxSteps}
-          position="static"
-          variant="dots"
-          activeStep={activeStep}
-          className={classes.stepper}
-          nextButton={
-            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-              <KeyboardArrowRightRounded />
-            </Button>
-          }
-          backButton={
-            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-              <KeyboardArrowLeftRounded />
-            </Button>
-          }
-        />
-      </CardMedia>
+      {props.post.photo.length !== 0 
+      ? <CardMedia><ImageDisplay {...props}/></CardMedia>
+      : null}
 
       <CardContent className={classes.tags}>
         {props.post.hashtag.map((tag, i) => (
@@ -242,10 +218,10 @@ const Post = (props) => {
         <span className={classes.footerLike}>{`${props.post.like.length} likes`}</span>
         <div>
           <IconButton>
-            {props.post.like.includes(props.user._id) ? <FavoriteRounded/> : <FavoriteBorderRounded/>}
+            {props.post.like.includes(global.loginedUser.user._id) ? <FavoriteRounded/> : <FavoriteBorderRounded/>}
           </IconButton>
           <IconButton>
-            {props.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
+            {global.loginedUser.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
           </IconButton>
           <IconButton onClick={handleExpandClick}>
             {expanded ? <AddCommentRounded/> : <AddCommentOutlined/>}
@@ -256,7 +232,7 @@ const Post = (props) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Divider/>
         <CardContent>
-          <InputBase variant='filled' fullWidth multiline placeholder={`${props.user.username}'s comment`}></InputBase>
+          <InputBase variant='filled' fullWidth multiline placeholder={`${global.loginedUser.user.username}'s comment`}></InputBase>
         </CardContent>
       </Collapse>
     </Card>

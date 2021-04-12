@@ -140,7 +140,6 @@ var updatePost = (filter, props = null, data = null) => {
                 props.addFlag 
                     ? updateQuery.$push.comment = {$each: [props.comment], $position: 0}
                     : updateQuery.$pull = {comment: props.comment};
-            console.log(updateQuery);
             // Update post
             await Post.updateOne(filter, updateQuery).exec();
             const updatedPost = await findPost({_id: post._id});

@@ -27,10 +27,12 @@ var refresh = (req, res, next) => {
         if (!token) return res.status(403).json('Refresh token not supplied.')
         let decoded = await jwt.verify(token, config.refreshSecret);
         let entity = await Auth.findOne({entity: decoded.entity_id}).exec();
-        if (entity.refreshToken != decoded.parentRT) {
+        if (entity.refreshToken != `RT-${decoded.iat}-${decoded.exp}`) {
             await Auth.updateOne(
                 {entity: decoded.entity_id}, 
                 {accessToken: '', refreshToken: ''})
+            res.cookie('refresh_token', '', {maxAge: 0})
+            res.cookie('access_token',  '', {maxAge: 0})
             return res.status(401).json('Token compromised. Revoked.')
         } 
         // Invalidate old token (in DB) and replace as recieved token

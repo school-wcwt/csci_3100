@@ -7,6 +7,8 @@ import axios from '../../../axiosConfig';
 import history from "../../history";
 import useStyles from '../styles/formStyle'
 
+import global from '../../../component/global'
+
 const LoginForm = (props) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -27,6 +29,7 @@ const LoginForm = (props) => {
             document.cookie = "myuser=" + JSON.stringify(res.data);
             console.log(`Logged in as ${res.data.entityID}`)
             props.handleLogin(res.data);
+            global.loginedUser.setUser(res.data);
             setTimeout(() => {
                 history.push('/main');
             }, 1500)

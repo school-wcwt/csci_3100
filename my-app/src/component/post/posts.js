@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import { useState, useEffect, useCallback } from "react";
 import { socket, trigChange, detectChange } from "../socket-client/socket-client.js"
 import Post from "./post"
+import Loading from '../loading.js';
 
 
 const postFn = require("../load_backend/postFunction.js");
@@ -24,23 +25,17 @@ const Posts = (props) => {
     }
 
     useEffect(() => {
-        get_function()
+        get_function(props.filter)
         detectChange(get_function)
     }, [])
 
 
-    if (posts == null)
-        return (<div>
-            <p>'Loading'</p>
-            <button onClick={event =>{get_function(props.filter)}}>Click me!</button>
-        </div>)
-    else {
-        return (                                        
-            posts.map(data2 => {
-                return <Post post={data2} {...props} key={data2.postID}/>
-            })
-        )
-    }
+    if (posts == null) return <Loading/>
+    else return (                                        
+        posts.map(data2 => {
+            return <Post post={data2} {...props} key={data2.postID}/>
+        })
+    )
 }
 
 export { Posts } ;
