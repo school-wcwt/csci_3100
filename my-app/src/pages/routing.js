@@ -53,6 +53,7 @@ const Routing = (props) => {
             <Route path='/entity' component={Entity}/>
             <Route path='/post' render={(props) => <Post user={user}/>} />
             <Route path='/comment' component={Comment}/>
+            <Route path='/hashtag' component={Hashtag}/>
             <Route path='/sock' component={Sock}/>
             <Route path='/search' component={Search}/>
             <Route path='/panel' component={PanelBar}/>

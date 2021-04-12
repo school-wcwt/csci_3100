@@ -12,6 +12,8 @@ function PanelBar(){
     <Nav.Link as={Link} to="/entity" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Entity Panel</Nav.Link>
     <Nav.Link as={Link} to="/post" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Post Panel</Nav.Link>
     <Nav.Link as={Link} to="/comment" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Comment Panel</Nav.Link>
+    <Nav.Link as={Link} to="/hashtag" className="mr-xl-5 mr-md-4 my-auto" style={{color: "LightCoral", fontWeight:800}}>Hashtag Panel</Nav.Link>
+
     </Nav>
     </Navbar.Collapse>
   </Navbar>
