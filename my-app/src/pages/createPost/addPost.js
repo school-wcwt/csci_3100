@@ -6,10 +6,11 @@ import { Upload_Photo } from '../../component/Upload/upload';
 var postFn = require("../../component/load_backend/postFunction.js");
 
 
-export default function AddPost() {
+export default function AddPost(props) {
+  console.log("Inside function Add post func for " +props.entityID);
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
-    var targetFilter = { "entityID": "rrr-1296" };
+    var targetFilter = { "entityID": props.entityID||"rrr-1296" };
     Upload_Photo(data.photo).then(downloadURL => {
       var edit_data = {
         "type": 0,

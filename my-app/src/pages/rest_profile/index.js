@@ -93,6 +93,7 @@ const RestProfilePage = () =>{
     },[])
     if (myData==null){ return ( <p>'Loading'</p>) }
     var mydataset = Fit_my_data(myData)
+    if (myData.type=="User"){history.push(`/userprofile/${myData.entityID}`)}
     if (!mydataset.complete){ return ( <p>'Loading'</p>) }
     return(
         <>

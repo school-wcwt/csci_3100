@@ -15,7 +15,7 @@ import PanelBar from './followers_page/panel.js'
 import DiscoverPage from './discover_page/';
 import UserProfilePage from './user_profile/';
 import RestProfilePage from './rest_profile/';
-import CreatePost from './createPost';
+import CreatePost from './createPost/';
 import '../component/css/background.css';
 import {GetMyUser} from './services/authService';
 // it is backend path for template I found
@@ -43,7 +43,6 @@ const Routing = (props) => {
             <Route path='/login' render={(props) => <Login handleLogin={handleLogin}/>} />
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
-            <Route path='/createPost' component={CreatePost}/>
             <Route path='/restRegister' component={RestRegister}/>
             <Route path='/entity' component={Entity}/>
             <Route path='/post' render={(props) => <Post user={user}/>} />
@@ -54,6 +53,7 @@ const Routing = (props) => {
             <Route path='/discover' component={DiscoverPage}/>
             <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
             <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
+            <Route path='/createPost/:EntitiesID' > <CreatePost/> </Route>
             <Route component={ErrorPage} />
         </Switch>
       </div>

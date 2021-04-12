@@ -122,7 +122,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem className={classes.menuItem} onClick={() => handleHistory('/createPost')}>
+      <MenuItem className={classes.menuItem} onClick={() => handleHistory('/createPost/rrr-1296')}>
         <IconButton className={classes.menuButton} >
           <PostAddIcon />
         </IconButton>
@@ -150,7 +150,7 @@ export default function PrimarySearchAppBar() {
           </IconButton>*/}
           <>
           <div className={classes.sectionDesktop}>
-            <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/createPost')}>
+            <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/createPost/rrr-1296')}>
               <PostAddIcon />
             </IconButton>
             <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/restregister')}>

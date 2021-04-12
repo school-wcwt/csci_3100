@@ -97,12 +97,14 @@ const PostArea =(mydataset)=> {
     return (
         <div className="pt-5">
             <Grid container spacing={1}>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={6}>
-            <Paper elevation={3} >
-            </Paper>
-               
-            </Grid>
+                <Grid item xs={4}>{/*Empty now*/}</Grid>
+                
+                <Grid item xs={6}>
+                    
+                    {/* All post here*/}
+
+                </Grid>
+
             </Grid>
             
         </div>

@@ -102,7 +102,7 @@ const UserProfilePage = () =>{
         <Navbar/>
         <UserHeading mydataset = {mydataset}/>
         <PostArea mydataset = {mydataset}/>
-        
+        <p>{mydataset.PostID[0]}</p>
         </>
         )
     
