@@ -37,7 +37,7 @@ const Posts = (props) => {
     else {
         return (                                        
             posts.map(data2 => {
-                return <Post post={data2} {...props}/>
+                return <Post post={data2} {...props} key={data2.postID}/>
             })
         )
     }

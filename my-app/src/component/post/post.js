@@ -114,7 +114,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Post = (props) => {
-  const [post, setPost] = useState(props.post)
   const [activeStep, setActiveStep] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
@@ -157,19 +156,19 @@ const Post = (props) => {
   const renderComments = (
     <>
     {props.post.comment.map((comment) => 
-      <>
-      <Divider/>
-      <CardHeader className={classes.commentHeader}
-        avatar={
-          <Avatar variant='rounded' className={classes.commentAvatar}
-            alt={comment.author.entityID} src={comment.author.profPhoto}/>}
-        title={
-          <ButtonBase className={classes.infoEntityID}>
-              <span>{comment.author.username}</span>
-              <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
-          </ButtonBase>}/>
-      <CardContent className={classes.commentContent}>{comment.content}</CardContent>
-      </>
+      <div key={comment.commentID}>
+        <Divider/>
+        <CardHeader className={classes.commentHeader}
+          avatar={
+            <Avatar variant='rounded' className={classes.commentAvatar}
+              alt={comment.author.entityID} src={comment.author.profPhoto[0]}/>}
+          title={
+            <ButtonBase className={classes.infoEntityID}>
+                <span>{comment.author.username}</span>
+                <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
+            </ButtonBase>}/>
+        <CardContent className={classes.commentContent}>{comment.content}</CardContent>
+      </div>
     )}
     </>
   )
@@ -180,7 +179,7 @@ const Post = (props) => {
       <CardHeader className={classes.header}
         avatar={
           <Avatar variant='rounded' className={classes.avatar}
-            alt={props.post.author.entityID} src={props.post.author.profPhoto}/>}
+            alt={props.post.author.entityID} src={props.post.author.profPhoto[0]}/>}
         title={
           <div className={classes.infoAuthor}>
             <ButtonBase className={classes.infoEntityID}>
@@ -253,8 +252,6 @@ const Post = (props) => {
           </IconButton>
         </div>
       </CardActions>
-
-      
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Divider/>

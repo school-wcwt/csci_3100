@@ -122,13 +122,13 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem className={classes.menuItem} onClick={() => handleHistory('/createPost/rrr-1296')}>
+      <MenuItem className={classes.menuItem} onClick={() => handleHistory('/createPost/rrr-1296')} key='AddPost'>
         <IconButton className={classes.menuButton} >
           <PostAddIcon />
         </IconButton>
         <span>Add Post</span>
       </MenuItem>
-      <MenuItem className={classes.menuItem} onClick={() => handleHistory('/restregister')}>
+      <MenuItem className={classes.menuItem} onClick={() => handleHistory('/restregister')} key='AddLocation'>
         <IconButton className={classes.menuButton}>
           <AddLocationIcon />
         </IconButton>
