@@ -49,13 +49,12 @@ const RegisterForm = (props) => {
         const emaildata = {
             to_name: data.username,
             user_email: data.email,
-            message: "/ I am messgae"
         };
         axios.post('/register', body)
         .then(res => {
             setLoading(false);
             setSuccess(true);
-            //send_validation_email(emaildata);
+            send_validation_email(emaildata);
         })
         .catch(err => console.log(err.message));
     };

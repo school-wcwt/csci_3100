@@ -1,23 +1,34 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
 
-//const YOUR_SERVICE_ID = "service_kigbdr9";
-//const YOUR_TEMPLATE_ID = "template_c4tbz8f";
-//const YOUR_USER_ID = "user_kwKrThl3IGwRCEZNIF8Zc";
+const YOUR_SERVICE_ID = "service_kzjnr6k";
+const YOUR_USER_ID = "user_ZppA6fucpK6lErmR2miFi";
 // https://dashboard.emailjs.com/admin
 // ac: mateiwelcome@gmail.com
 // pw: csci3100
 
 function send_validation_email(data) {
-console.log(data);
-emailjs.send("service_kzjnr6k", "template_gkwgm05", data, "user_ZppA6fucpK6lErmR2miFi")
+    /*--data required--
+    user_email,to_name
+    */
+emailjs.send(YOUR_SERVICE_ID, "template_gkwgm05", data, YOUR_USER_ID)
     .then((result) => {
         console.log(result.text);
     }, (error) => {
         console.log(error.text);
     });
 }
+function send_reservation_email_user(data){
+    /* --data required--
+    user_email,rest_email,to_name,RestaurantName,Time,Remarks
+    */
+    emailjs.send(YOUR_SERVICE_ID, "template_bi4dcyr", data, YOUR_USER_ID)
+    .then((result) => {
+        console.log(result.text);
+    }, (error) => {
+        console.log(error.text);
+    });
+} 
 
 
-
-export {send_validation_email};
+export {send_validation_email,send_reservation_email_user};

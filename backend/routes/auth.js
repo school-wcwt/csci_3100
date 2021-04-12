@@ -100,8 +100,7 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    emailFnc.send_validation_email( {to_name: req.body.username ,user_email:req.body.email, message:`I am Backend from ${135}`} );
-    /*
+    //emailFnc.send_validation_email( {to_name: req.body.username ,user_email:req.body.email, message:`I am Backend from ${135}`} );
     entityFunc.createEntity({...req.body, type: 'User'})
     .then(createdEntity => {
         res.status(201).json(createdEntity);})
@@ -109,7 +108,7 @@ router.post('/register', (req, res) => {
         if (err.message == 'Email exists.') res.status(409).json(err.message);
         else res.status(500).json(err.message);
     })
-    */
+    
     
 })
 

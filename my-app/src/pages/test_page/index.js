@@ -2,7 +2,12 @@ import React,{ useState, useEffect } from 'react';
 import axios from '../../axiosConfig';
 //import {getEntity} from '../../component/load_backend/entityFunction';
 import {makeStyles,Grid,Paper} from '@material-ui/core';
+import {GetMyUser} from '../services/authService';
+import {entity_edit} from '../../component/load_backend/entityFunction';
+import {send_reservation_email_user} from '../../component/email/email';
 const entityFn = require("../../component/load_backend/entityFunction");
+
+
 const useStyles = makeStyles((theme) => ({
 }));
 
@@ -125,16 +130,39 @@ const Testpage = () => {
     .then(res => console.log(res))
     .catch(err => console.log(err))
   }
+  function handleViewData(e){
+    GetMyUser().then(res =>console.log("My data is " + JSON.stringify(res)))
+  }
 
+  function handleAddPhoto(e){
+    const edit_data = {profPhoto :["https://www.pandasecurity.com/en/mediacenter/src/uploads/2013/11/pandasecurity-facebook-photo-privacy.jpg"]}
+    entity_edit(edit_data).then(res=>console.log("Success! in update profile")).catch(err=>console.log("Error in edit profile"))
+
+  }
+  const handleEmailRes = (e) =>{
+    const email_data = {
+      user_email:"a1336867016@gmail.com",
+      rest_email:"1155109240@link.cuhk.edu.hk",
+      to_name:"Tom Wong",
+      RestaurantName:"YOLO CAFE",
+      Time:"12-4-2020 (21:00)",
+      Remarks:undefined||"N/A"
+    }
+    send_reservation_email_user(email_data);
+  }
   return (
     <>
     <button onClick={handleLogin}>Login</button>
+    <button onClick={handleViewData}>View Data</button>
     <button onClick={handleRefresh}>Refresh</button>
     <button onClick={handleLogout}>Logout</button>
     <button onClick={callTest1}>Add Post</button>
     <button onClick={callTest2}>Add Comment</button>
     <button onClick={callTest3}>Del Comment</button>
     <button onClick={callTest4}>Del Post</button>
+    <button onClick={handleAddPhoto}>Add Photo</button>
+    <button onClick={handleEmailRes}>Send Email Res</button>
+    
     </>
   )
 }
