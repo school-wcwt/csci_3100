@@ -9,6 +9,7 @@ import PostAddIcon from '@material-ui/icons/PostAddRounded'
 import AccountCircle from '@material-ui/icons/AccountCircleRounded'
 
 import global from '../../../component/global'
+import Loading from '../../../component/loading'
 import SearchBar from '../../followers_page/search'
 import history from '../../history'
 
@@ -137,7 +138,8 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  return (
+  if (global.loginedUser.user == null) return <Loading />
+  else return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant='dense' className={classes.toolBar}>

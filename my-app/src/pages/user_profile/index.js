@@ -148,11 +148,21 @@ const RestActions = (props) => {
   const classes = useStyles()
   const followed = global.loginedUser.user.followingRest.includes(props.rest._id);
   return (
+    <>
     <div className={classes.actionRoot}>
       <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
         {followed ? 'Following' : 'Follow'}
       </Button>
     </div>
+    <div className={classes.actionRoot}>
+      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
+        Review
+      </Button>
+      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
+        Check-in
+      </Button>
+    </div>
+    </>
   )
 }
 
