@@ -46,7 +46,7 @@ router.post('/refresh', verifyAuth.refresh, (req, res) => {
         let user = await entityFunc.findEntity({_id: entity_id});
         res.cookie('refresh_token', refresh_token, {
             maxAge: 14 * 60 * 60 * 1000,
-            httpOnly: true,
+            httpOnly: false,
         })
         res.cookie('access_token', access_token, {
             maxAge: 60 * 60 * 1000,
@@ -84,7 +84,7 @@ router.post('/login', (req, res) => {
         await Auth.updateOne({entity: entity.user._id}, {accessToken: access_token}).exec();
         res.cookie('refresh_token', refresh_token, {
             maxAge: 14 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
+            httpOnly: false,
         })
         res.cookie('access_token', access_token, {
             maxAge: 60 * 60 * 1000,

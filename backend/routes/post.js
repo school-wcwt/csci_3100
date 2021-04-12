@@ -46,7 +46,6 @@ router.delete('/:postID', (req, res) => {
     userFunc.deletePost(filter)
     .then(deletedPost => res.status(200).json(deletedPost))
     .catch(err => {
-        console.log(err);
         if (err.message == 'Post not found.' || err.message == 'Comment not found.' || err.message == 'Tag not found.') 
             res.status(404).json(err.message)
         else res.status(500).json(err.message)

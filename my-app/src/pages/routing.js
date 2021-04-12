@@ -1,4 +1,4 @@
-import {React, Component,useState } from 'react';
+import {React, Component,useState, useEffect } from 'react';
 import {  Router, Switch, Redirect,Route, Link } from 'react-router-dom';
 import Main from './main/';
 import Login from './login/';
@@ -9,6 +9,7 @@ import RestRegister from './restRegister/';
 import Entity from './followers_page/entity.js';
 import Post from './followers_page/post.js'
 import Comment from './followers_page/comment.js'
+import Hashtag from './followers_page/hashtag.js'
 import Sock from './followers_page/socket-test.js'
 import Search from './followers_page/search.js'
 import PanelBar from './followers_page/panel.js'
@@ -17,7 +18,8 @@ import UserProfilePage from './user_profile/';
 import RestProfilePage from './rest_profile/';
 import CreatePost from './createPost/';
 import '../component/css/background.css';
-import {GetMyUser} from './services/authService';
+import {GetMyUser, useLoginUser} from './services/authService';
+import axios from '../axiosConfig'
 // it is backend path for template I found
 // input box : https://v3.material-ui.com/demos/text-fields/
 
@@ -26,20 +28,24 @@ import {GetMyUser} from './services/authService';
 // {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
 
 import history from "./history";
+import global from '../component/global';
+import { Typography } from '@material-ui/core';
 //RestProfilePage
 const Routing = (props) => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({})
 
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
   }
 
+  global.loginedUser = useLoginUser();
+
   return (
     <Router history={history}>
       <div>
         <Switch>
-            <Route exact path='/' render={(props) => <Main user={GetMyUser()}/>} />
-            <Route exact path='/main' render={(props) => <Main user={GetMyUser()}/>} />
+            <Route exact path='/' component={Main} />
+            <Route exact path='/main' render={(props) => <Main/>} />
             <Route path='/login' render={(props) => <Login handleLogin={handleLogin}/>} />
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
@@ -47,6 +53,7 @@ const Routing = (props) => {
             <Route path='/entity' component={Entity}/>
             <Route path='/post' render={(props) => <Post user={GetMyUser()}/>} />
             <Route path='/comment' component={Comment}/>
+            <Route path='/hashtag' component={Hashtag}/>
             <Route path='/sock' component={Sock}/>
             <Route path='/search' component={Search}/>
             <Route path='/panel' component={PanelBar}/>
