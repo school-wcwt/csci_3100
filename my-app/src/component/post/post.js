@@ -1,17 +1,15 @@
 //next: use filter
-import { darken, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
-import { Avatar, IconButton, Button, ButtonBase, MobileStepper, 
-         Card, CardHeader, CardMedia, CardContent, CardActions, 
+import { IconButton, Card, CardMedia, CardContent, CardActions, 
          Collapse, InputBase, Divider } from '@material-ui/core';
 import { FavoriteRounded, FavoriteBorderRounded, 
          AddCommentOutlined, AddCommentRounded,
-         BookmarkBorderRounded, BookmarkRounded,
-         StarBorderRounded, StarRounded, StarHalfRounded,
-         KeyboardArrowRightRounded, KeyboardArrowLeftRounded
-       } from '@material-ui/icons'
+         BookmarkBorderRounded, BookmarkRounded, } from '@material-ui/icons'
+         
 import Loading from '../loading'
 import global from '../global'
+
 import PostHeader from './component/PostHeader' 
 import ImageDisplay from './component/ImageDisplay' 
 import Hashtags from './component/Hashtags' 
