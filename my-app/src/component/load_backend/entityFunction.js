@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
+import { trigChange } from "../socket-client/socket-client";
 
 //Last update 7/4/2021
 
@@ -14,7 +15,6 @@ const entity_get= (entityID)=>{
     })
     .then ( res =>{
         console.log('sucess');
-        console.log(res.data)
         return resolve(res.data)
     })
     .catch(err => {
@@ -36,7 +36,6 @@ const entity_post = (fil)=>{
     })
    .then ( res =>{
       console.log('sucess');
-      console.log(res);
       return resolve(res.data)
     })
    .catch(err => {
@@ -59,6 +58,7 @@ const entity_edit = (edit_data)=>{
     })
     .then ( res =>{
       console.log('sucess');
+      trigChange();
         console.log(res);
     })
     .catch(err => {
@@ -77,6 +77,7 @@ const entity_delete= ()=>{
     })
     .then ( res =>{
         console.log('sucess');
+        trigChange();
         return resolve(res.data)
     })
     .catch(err => {
@@ -96,6 +97,7 @@ const entity_follow = (followID)=>{
     .then ( res =>{
       console.log('sucess');
       console.log(res);
+      trigChange();
       return resolve(res.data)
     })
     .catch(err => {

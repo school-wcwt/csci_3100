@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
+import { trigChange } from "../socket-client/socket-client";
+
 /*
 *                           *
 *                           *
@@ -46,6 +48,7 @@ const post_create = (targetFilter,edit_data) =>{
         .then ( res =>{
             console.log(res.data)
             alert("Successful");
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {
@@ -67,6 +70,7 @@ const post_delete = (postID) =>{
         .then ( res =>{
             console.log('sucess');
             console.log(res);
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {
@@ -90,6 +94,7 @@ const post_edit = (postID,edit_data) =>{
         })
         .then ( res =>{
             console.log('sucess');
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {
@@ -113,6 +118,7 @@ const post_like = (postID, addFlag) =>{
         .then ( res =>{
             console.log('sucess');
             console.log(res.data)
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {

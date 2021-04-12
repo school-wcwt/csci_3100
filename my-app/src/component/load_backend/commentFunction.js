@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
+import { trigChange } from "../socket-client/socket-client";
 
 //GET comment/:commentID
 const comment_get = (commentID) =>{
@@ -61,6 +62,7 @@ const comment_create = (fil,add_data) =>{
         .then ( res =>{
             console.log('sucess');
             console.log(res);
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {
@@ -82,6 +84,7 @@ const comment_delete = (commentID) =>{
         .then (res =>{
             console.log('sucess');
             console.log(res);
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {
@@ -105,6 +108,7 @@ const comment_edit = (commentID,edit_data) =>{
         })
         .then ( res =>{
             console.log('sucess');
+            trigChange();
             return resolve(res.data)
         })
         .catch(err => {
