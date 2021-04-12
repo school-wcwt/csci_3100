@@ -24,6 +24,7 @@ const LoginForm = (props) => {
             setLoading(false);
             setSuccess(true);
             document.cookie = "state=" + res.data.entityID;
+            document.cookie = "myuser=" + JSON.stringify(res.data);
             console.log(`Logged in as ${res.data.entityID}`)
             props.handleLogin(res.data);
             setTimeout(() => {

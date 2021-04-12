@@ -17,6 +17,7 @@ import UserProfilePage from './user_profile/';
 import RestProfilePage from './rest_profile/';
 import CreatePost from './createPost';
 import '../component/css/background.css';
+import {GetMyUser} from './services/authService';
 // it is backend path for template I found
 // input box : https://v3.material-ui.com/demos/text-fields/
 
@@ -38,7 +39,7 @@ const Routing = (props) => {
       <div>
         <Switch>
             <Route exact path='/' component={Main} />
-            <Route exact path='/main' render={(props) => <Main user={user}/>} />
+            <Route exact path='/main' render={(props) => <Main user={GetMyUser()}/>} />
             <Route path='/login' render={(props) => <Login handleLogin={handleLogin}/>} />
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
