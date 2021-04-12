@@ -32,12 +32,6 @@ import global from '../component/global';
 import { Typography } from '@material-ui/core';
 //RestProfilePage
 const Routing = (props) => {
-  const [user, setUser] = useState({})
-
-  const handleLogin = (loggedInUser) => {
-    setUser(loggedInUser);
-  }
-
   global.loginedUser = useLoginUser();
 
   return (
@@ -45,8 +39,8 @@ const Routing = (props) => {
       <div>
         <Switch>
             <Route exact path='/' component={Main} />
-            <Route exact path='/main' render={(props) => <Main/>} />
-            <Route path='/login' render={(props) => <Login handleLogin={handleLogin}/>} />
+            <Route exact path='/main' component={Main} />
+            <Route path='/login' component={Login} />
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
             <Route path='/restRegister' component={RestRegister}/>
