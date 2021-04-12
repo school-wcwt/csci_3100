@@ -6,11 +6,38 @@ import { trigChange } from "../socket-client/socket-client";
 /*
 *                           *
 *                           *
-*   Posts / Comment / Like  *
+*   Posts 
 *                           *
 *                           *
 *                           *
 */
+
+//GET entity/:entityID
+const post_get= (postID)=>{
+    console.log(postID)
+    return new Promise((resolve,reject)=>{
+      axios({
+        method: 'GET',
+        url: '/post/'+postID,
+      })
+      .then ( res =>{
+          console.log('sucess');
+          console.log(res.data)
+          return resolve(res.data)
+      })
+      .catch(err => {
+          console.log('error');
+          return reject(err)
+      })
+    })
+  }
+  
+
+
+
+
+
+
 //POST user/:entityID/post/new
 const post_post = (fil) =>{
     console.log(fil)
@@ -131,6 +158,7 @@ const post_like = (postID, addFlag) =>{
 
 
 export {
+    post_get,
     post_post,
     post_create,
     post_delete,

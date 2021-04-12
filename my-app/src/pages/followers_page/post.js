@@ -23,12 +23,48 @@ const Post = () => {
         }
     }
 
+    const Post_get = () => {
+        const [post_get, set_post_get] = useState(null);
+        const postID = "usern-7164-1618224928582"
+        console.log('---')
+        console.log(postID)
+        console.log('---')
+        const change_get = async () => {
+            try {
+                var post_get = await postFn.post_get(postID);
+                set_post_get(post_get);
+            }
+            catch (err) {
+                console.log(err)
+                console.log('---------------')
+            }
+        }
+        const remove_get = () => {
+            set_post_get(null)
+        }
+        return (
+            <div>
+                <h1>Get post</h1>
+                <button onClick={() => { change_get() }}>post_get
+          </button>
+                <p>searching postID: {postID}</p>
+                <p>post ={post_get != null ? post_get.postID : ''}</p>
+
+                <button onClick={() => { remove_get() }}>remove_get
+          </button>
+                <p>count ={post_get != null ? post_get.postID : ''}</p>
+            </div>
+        )
+    }
+
+
+
 
     const post_create = async () => {
         try {
             var authorID = 'usern-1424';
             var targetFilter = { "entityID": "jon-rest-1296" }
-            var edit_data ={
+            var edit_data = {
                 "type": 0,
                 "username": "",
                 "content": "zdc",
@@ -116,7 +152,7 @@ const Post = () => {
         const delete_all_post = async () => {
             try {
                 var posts = await postFn.post_post({})
-                posts.map(async (post,idx)=>{
+                posts.map(async (post, idx) => {
                     console.log(post.postID)
                     await postFn.post_delete(post.postID)
                     trigChange()
@@ -186,6 +222,7 @@ const Post = () => {
     return (
         <div>
             <PanelBar></PanelBar>
+            <Post_get></Post_get>
             <PostPost></PostPost>
             <PostCreate></PostCreate>
             <PostDelete></PostDelete>
