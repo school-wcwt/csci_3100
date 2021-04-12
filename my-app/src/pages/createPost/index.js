@@ -4,6 +4,8 @@ import NAVbar from "../main/component/nav.js";
 import AddPost from "./addPost.js";
 import {Auth} from '../services/authService';
 import { useParams } from 'react-router';
+import { CssBaseline } from '@material-ui/core';
+
 const CreatePost = () => {
     Auth();
     const pageID  = useParams();
@@ -11,10 +13,11 @@ const CreatePost = () => {
     console.log("Create post in "+ entitiesID);
     return (
 
-            <div className="pt-5">
+            <>
+                <CssBaseline />
                 <NAVbar />
                 <AddPost entityID = {entitiesID}/>
-            </div>
+            </>
 
     )
 }

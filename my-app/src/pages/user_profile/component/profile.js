@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import {Post} from '../../../component/post/post.js';
 import { CssBaseline } from '@material-ui/core';
 import {Auth} from '../../services/authService';
+import {Posts} from '../../../component/post/posts';
 const useStyles = makeStyles((theme) => ({
     paper_style:{
         display: 'flex',
@@ -92,7 +93,8 @@ const UserHeading  = ({mydataset}) => {
         
     );
 };
-const PostArea =(mydataset)=> {
+//<Posts props = {{filter: mydataset.postID}}/>
+const PostArea =({mydataset})=> {
     var fil = {}
     return (
         <div className="pt-5">
@@ -100,8 +102,9 @@ const PostArea =(mydataset)=> {
             <Grid item xs={4}></Grid>
             <Grid item xs={6}>
             <Paper elevation={3} >
+                
             </Paper>
-               
+                
             </Grid>
             </Grid>
             
