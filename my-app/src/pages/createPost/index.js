@@ -9,7 +9,7 @@ import { CssBaseline } from '@material-ui/core';
 const CreatePost = () => {
     Auth();
     const pageID  = useParams();
-    const entitiesID = pageID.EntitiesID;
+    const entitiesID = pageID.EntityID;
     console.log("Create post in "+ entitiesID);
     return (
 
