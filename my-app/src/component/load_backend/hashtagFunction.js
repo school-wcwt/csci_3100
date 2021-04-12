@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
+import { trigChange } from "../socket-client/socket-client";
 
 //Last update 7/4/2021
 
