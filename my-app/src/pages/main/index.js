@@ -8,14 +8,13 @@ import global from '../../component/global'
 
 const Main = (props) => {
     var postFilter= {}
-    return (
-        // Please don't delete <div/> before replacing the <Navbar/>. HONG 09Apr23:12 - Duly noted.
+    if (global.loginedUser.user == null) return <Loading />
+    else return (
         <>
             <CssBaseline />
             <NavBar />
             <Posts filter={postFilter}/> 
         </>
-        
     )
 }
 export default Main;

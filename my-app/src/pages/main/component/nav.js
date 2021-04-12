@@ -138,8 +138,7 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  if (global.loginedUser.user == null) return <Loading />
-  else return (
+  return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant='dense' className={classes.toolBar}>
