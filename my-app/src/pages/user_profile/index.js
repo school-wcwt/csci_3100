@@ -15,6 +15,7 @@ import {Posts} from '../../component/post/post.js';
 import { CssBaseline } from '@material-ui/core';
 import {Auth} from '../services/authService';
 import {UserHeading,PostArea} from './component/profile';
+import history from '../history';
 
 
 // ! means not null when get data
@@ -63,19 +64,23 @@ const UserProfilePage = () =>{
     const [myData, setUser] = useState(null);
     const [MyPage, setPage] = useState();
     const Fit_my_data = (data_backend)=>{
-        return {
-            entitiesID: data_backend.entityID,
-            UserName: data_backend.username, // !
-            Email: data_backend.email, // !
-            Favourite_Rest: data_backend.followingRest.length, // !
-            likes: data_backend.followed.length, // !
-            Followers: data_backend.followingUser.length,
-            PostNumber: data_backend.post.length, // !
-            JoinTime: new Date(data_backend.joinTime).toDateString(), // !
-            BigImagePath: "/img/user_image/handsome1.jpg", // !,
-            PostID: data_backend.post,
+        try{
+            return{   
             complete: data_backend.entityID?true:false,
-        };
+            entitiesID: data_backend.entityID,
+            UserName: data_backend.username,
+            Email: data_backend.email, 
+            Favourite_Rest: data_backend.followingRest?data_backend.followingRest.length:0, 
+            likes: data_backend.followed?data_backend.followed.length:0, 
+            Followers: data_backend.followingUser?data_backend.followingUser.length:0,
+            PostNumber: data_backend.post?data_backend.post.length:0,
+            JoinTime: new Date(data_backend.joinTime).toDateString(),
+            BigImagePath: data_backend.profPhoto[0]||"/img/user_image/handsome1.jpg",
+            PostID: data_backend.post,
+            };
+        }
+        catch(err){console.log("Error in rest profile page"); history.push('/ErrorPage'); return {complete:false};}
+         
     };
     useEffect(() => {
       axios.get(`entity/${entitiesID}`)
@@ -88,8 +93,9 @@ const UserProfilePage = () =>{
     },[])
     if (myData==null){ return ( <p>'Loading'</p>) }
     var mydataset = Fit_my_data(myData)
+    if (myData.type=="Rest"){history.push(`/restprofile/${myData.entityID}`)}
     if (!mydataset.complete){ return ( <p>'Loading'</p>) }
-    console.log("data is " + mydataset.Followers);
+    console.log("data is " + JSON.stringify(myData));
     return(
         <>
         <CssBaseline />
