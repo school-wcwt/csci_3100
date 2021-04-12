@@ -14,8 +14,7 @@ import Sock from './followers_page/socket-test.js'
 import Search from './followers_page/search.js'
 import PanelBar from './followers_page/panel.js'
 import DiscoverPage from './discover_page/';
-import UserProfilePage from './user_profile/';
-import RestProfilePage from './rest_profile/';
+import ProfilePage from './user_profile/index';
 import CreatePost from './createPost/';
 import '../component/css/background.css';
 import {GetMyUser, useLoginUser} from './services/authService';
@@ -52,9 +51,8 @@ const Routing = (props) => {
             <Route path='/search' component={Search}/>
             <Route path='/panel' component={PanelBar}/>
             <Route path='/discover' component={DiscoverPage}/>
-            <Route path='/userprofile/:EntitiesID' > <UserProfilePage/> </Route>
-            <Route path='/restprofile/:EntitiesID' > <RestProfilePage/> </Route>
-            <Route path='/createPost/:EntitiesID' > <CreatePost/> </Route>
+            <Route path='/createPost/:EntityID' > <CreatePost/> </Route>
+            <Route path='/profile/:EntityID' component={ProfilePage}/>
             <Route component={ErrorPage} />
         </Switch>
       </div>

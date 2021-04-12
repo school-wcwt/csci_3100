@@ -165,7 +165,7 @@ export default function PrimarySearchAppBar() {
           <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/Discover')}>
             <ExploreIcon />
           </IconButton>
-          <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory(`/userprofile/${entityID}`)}>
+          <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory(`/profile/${entityID}`)}>
             <AccountCircle />
           </IconButton>
           </>

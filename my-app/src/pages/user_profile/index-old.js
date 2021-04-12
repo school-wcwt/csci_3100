@@ -11,7 +11,7 @@ import ForumIcon from '@material-ui/icons/Forum';
 import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import {Nav} from 'react-bootstrap';
 import Button from '@material-ui/core/Button';
-import {Post} from '../../component/post/post.js';
+import {Posts} from '../../component/post/post.js';
 import { CssBaseline } from '@material-ui/core';
 import {Auth} from '../services/authService';
 import {UserHeading,PostArea} from './component/profile';
@@ -56,16 +56,16 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const RestProfilePage = () =>{
+const UserProfilePage = () =>{
     Auth();
     const pageID  = useParams();
-    const entitiesID = pageID.EntitiesID;
+    const entitiesID = pageID.EntityID;
 
     const [myData, setUser] = useState(null);
     const [MyPage, setPage] = useState();
     const Fit_my_data = (data_backend)=>{
         try{
-            return{
+            return{   
             complete: data_backend.entityID?true:false,
             entitiesID: data_backend.entityID,
             UserName: data_backend.username,
@@ -93,18 +93,19 @@ const RestProfilePage = () =>{
     },[])
     if (myData==null){ return ( <p>'Loading'</p>) }
     var mydataset = Fit_my_data(myData)
-    if (myData.type=="User"){history.push(`/profile/${myData.entityID}`)}
+    if (myData.type=="Rest"){history.push(`/profile/${myData.entityID}`)}
     if (!mydataset.complete){ return ( <p>'Loading'</p>) }
+    console.log("data is " + JSON.stringify(myData));
     return(
         <>
         <CssBaseline />
         <Navbar/>
         <UserHeading mydataset = {mydataset}/>
         <PostArea mydataset = {mydataset}/>
-        
+        <p>{mydataset.PostID[0]}</p>
         </>
         )
     
 }
 
-export default RestProfilePage;
+export default UserProfilePage;

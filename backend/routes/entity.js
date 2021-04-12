@@ -8,8 +8,8 @@ const userFunc = require('../functions/userFunc');
 router.get('/:entityID', (req, res) => { 
     entityFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
-        if (entity == null) res.status(204).json(null);
-        return res.status(200).json(entity)
+        if (entity == null) return res.status(204).json(null);
+        return res.status(200).json(entity);
     })
     .catch(err => res.status(500).json(err))
 })
@@ -17,8 +17,8 @@ router.get('/:entityID', (req, res) => {
 router.post('/', (req, res) => {
     entityFunc.findEntities(req.body.filter)
     .then(entities => {
-        if (entities == null) res.status(204).json(null);
-        res.status(200).json(entities)        
+        if (entities == null) return res.status(204).json(null);
+        return res.status(200).json(entities);     
     })
     .catch(err => res.status(500).json(err))
 })

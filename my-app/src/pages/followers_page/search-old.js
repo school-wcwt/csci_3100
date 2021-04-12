@@ -62,7 +62,7 @@ const Search = () => {
                   <Row>
                     <Col>Username: {sinEnt.username}</Col> 
 
-                    <Col className="text-center"> <a href={`/userprofile/${sinEnt.entityID}`}>Profile</a></Col>
+                    <Col className="text-center"> <a href={`/profile/${sinEnt.entityID}`}>Profile</a></Col>
                   </Row>
                 </div>
               )

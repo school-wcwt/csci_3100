@@ -10,7 +10,7 @@ const { deleteComments } = require('./commentFunc');
 var findPost = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            const post = await Post.findOne(filter)
+            const post = await Post.findOne(filter).sort({createdTime: -1})
             .populate('author', 'entityID username tag name profPhoto')
             .populate('target', 'entityID username tag name profPhoto')
             .populate('hashtag', 'name')
@@ -36,7 +36,7 @@ var findPost = (filter) => {
  var findPosts = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            const post = await Post.find(filter)
+            const post = await Post.find(filter).sort({createdTime: -1})
             .populate('author', 'entityID username tag name profPhoto')
             .populate('target', 'entityID username tag name profPhoto')
             .populate('hashtag', 'name')

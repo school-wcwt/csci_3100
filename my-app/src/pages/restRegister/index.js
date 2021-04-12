@@ -121,7 +121,7 @@ const Register_DataBase = data =>{
     .then(res => {
         console.log(res);
         alert("Register sucess");
-        history.push(`/restprofile/${res.data.entityID}`);
+        history.push(`/profile/${res.data.entityID}`);
 
     })
     .catch(err => {

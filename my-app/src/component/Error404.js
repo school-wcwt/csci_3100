@@ -42,7 +42,7 @@ const Error404 = (props) => {
             <Typography className={styles.header}> 
                 Can't find your flavour. 🍧
             </Typography>
-            <Typography variant='h5'>
+            <Typography className={styles.subHeader}>
                 - Error 404 -
             </Typography>
             <Box m={4} pt={4}/>
