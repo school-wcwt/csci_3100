@@ -38,14 +38,14 @@ const Routing = (props) => {
     <Router history={history}>
       <div>
         <Switch>
-            <Route exact path='/' component={Main} />
+            <Route exact path='/' render={(props) => <Main user={GetMyUser()}/>} />
             <Route exact path='/main' render={(props) => <Main user={GetMyUser()}/>} />
             <Route path='/login' render={(props) => <Login handleLogin={handleLogin}/>} />
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
             <Route path='/restRegister' component={RestRegister}/>
             <Route path='/entity' component={Entity}/>
-            <Route path='/post' render={(props) => <Post user={user}/>} />
+            <Route path='/post' render={(props) => <Post user={GetMyUser()}/>} />
             <Route path='/comment' component={Comment}/>
             <Route path='/sock' component={Sock}/>
             <Route path='/search' component={Search}/>
