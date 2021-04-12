@@ -5,6 +5,7 @@ import Posts from "../../component/post/posts.js";
 import { Auth } from '../services/authService';
 import { CssBaseline, Typography } from '@material-ui/core';
 import global from '../../component/global'
+import Loading from '../../component/loading'
 
 const Main = (props) => {
     var postFilter= {}

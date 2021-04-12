@@ -21,7 +21,7 @@ function ErrorPage({message}) {
       <TitleBar/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Customers! Code 404 </p>
+        <p>Hello Customers! </p>
         <p>We want to tell that</p>
         <Link_Word message = {message} link = {'/'}/>
       </header>

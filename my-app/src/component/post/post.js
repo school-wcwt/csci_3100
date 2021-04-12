@@ -15,6 +15,8 @@ import ImageDisplay from './component/ImageDisplay'
 import Hashtags from './component/Hashtags' 
 import Comments from './component/Comments' 
 
+const PostFunc = require('../load_backend/postFunction');
+
 const useStyles = makeStyles((theme) => ({
   // Card
   wrapper: {
@@ -38,11 +40,18 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
-
+  const [favourite,setFavourite] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  const handleLike = () =>{
+    //console.log(JSON.stringify(props.post.postID));
+    setFavourite(!props.post.like.includes(global.loginedUser.user._id))
+    PostFunc.post_like(props.post.postID,favourite) 
+    .then(res=>{
+      console.log("changed state in post ID "+ props.post.postID);
+    })
+  }
   if (global.loginedUser.user == null) return <Loading/>
   else return (                    
     <Card className={classes.wrapper} elevation={0}>
@@ -64,8 +73,8 @@ const Post = (props) => {
       <CardActions className={classes.footer}>
         <span className={classes.footerLike}>{`${props.post.like.length} likes`}</span>
         <div>
-          <IconButton>
-            {props.post.like.includes(global.loginedUser.user._id) ? <FavoriteRounded/> : <FavoriteBorderRounded/>}
+          <IconButton onClick={handleLike}>
+            {props.post.like.includes(global.loginedUser.user._id)||favourite ? <FavoriteRounded/> : <FavoriteBorderRounded/>}
           </IconButton>
           <IconButton>
             {global.loginedUser.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
