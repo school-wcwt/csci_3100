@@ -1,4 +1,5 @@
-import { Avatar, Button, Divider, makeStyles, Typography, IconButton, Popover, CssBaseline } from "@material-ui/core";
+import { Avatar, Button, Divider, makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress     } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded } from '@material-ui/icons'
 import Rating from '../../component/Rating'
 import global from '../../component/global'
@@ -10,6 +11,9 @@ import Loading from "../../component/loading";
 import axios from '../../axiosConfig'
 import NavBar from '../main/component/nav'
 import history from '../history'
+import {Form} from 'react-bootstrap';
+import {Upload_Photo} from '../../component/Upload/upload';
+const entityFn = require('../../component/load_backend/entityFunction');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,17 +126,118 @@ const RestInfo = (props) => {
   )
 }
 
+const SettingDialog = (props) =>{
+  const { register, handleSubmit } = useForm();
+  const [laoding,setLoading] = useState(false);
+  const [error, setError] = useState({
+    username: false,
+    password: false,
+    confirmpw: false,
+});
+const invalidData = data => {
+  var validName = /^[0-9a-zA-Z_-]+$/;
+  var flag = false;
+  var err = error;
+  if (!validName.test(data.username)) {
+      err.username = true; flag = true;
+  } else err.username = false;
+  setError(err);
+  if (flag) return true 
+  else return false;
+}
+  const classes = useStyles()
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const onSubmit = data => {
+    setLoading(true);
+    if (data.username=='' && data.photo.length==0){
+      setLoading(false);
+      handleClose();
+      return true;
+    }
+    // statr update below
+    let new_data = {}
+    const update_entities = () => {
+      entityFn.entity_edit(new_data)
+      .then(res=>{
+        console.log("Update sucess!");
+        global.loginedUser.setUser(res.data);
+        setLoading(false);
+        handleClose();
+        return true;
+      })
+    }
+
+    if (data.username!=''){
+      if (invalidData(data)) return;
+      new_data.username = data.username; 
+    }
+    if (data.photo.length!=0){
+      Upload_Photo(data.photo).then(downloadURL=>{
+        new_data.profPhoto = downloadURL
+        update_entities();
+      })
+    }
+    else {
+      update_entities();
+    }
+  };
+  return (
+    <div>
+      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick = {handleClickOpen}>
+            Setting
+      </Button> 
+      <Dialog open={open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Change My data</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Only Fill in the Field You want to change. mATE 1.0 Support Change Icon feature ^_^!
+          </DialogContentText>
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField fullWidth margin='dense' inputRef={register} 
+                id="username" label="Username" name="username" type="username"
+                error={error.username} helperText={error.username ? 'Incorrect format. Letters, numbers, -, and _ only.' : "Letters, numbers, -, and _ only."} />
+          
+          <Form.File type="file" name="photo" ref={register}/>
+          </form>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          {laoding?
+          <Button color="primary">
+             <CircularProgress size={24} />
+          </Button>:
+          <Button onClick={handleSubmit(onSubmit)} color="primary">
+            Apply Changes
+          </Button>}
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
 const UserActions = (props) => {
   const classes = useStyles()
   const followed = global.loginedUser.user.followingUser.includes(props.user._id);
   const isSelf = global.loginedUser.user.entityID == props.user.entityID;
   const hasGroupList = props.user.groupList.length !== 0
+  const handleSeeting = () =>{
+    console.log("Seeting");
+  };
+  
   return (
     <div className={classes.actionRoot}>
       {isSelf
-        ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
-            Setting
-          </Button>    
+        ? 
+           <SettingDialog />
         : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}> 
             {followed ? 'Following' : 'Follow'}
           </Button>}
