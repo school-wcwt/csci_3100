@@ -5,13 +5,19 @@ const entityFunc = require('../functions/entityFunc');
 const userFunc = require('../functions/userFunc');
 // Unauthorized Queries
 
+router.post('/random', (req, res) => {
+    entityFunc.randomRests(req.body.filter, req.body.size)
+    .then(rests => res.status(200).json(rests))
+    .catch(err => res.status(500).json(err.message))
+})
+
 router.get('/:entityID', (req, res) => { 
     entityFunc.findEntity({entityID: req.params.entityID})
     .then(entity => {
         if (entity == null) return res.status(204).json(null);
         return res.status(200).json(entity);
     })
-    .catch(err => res.status(500).json(err))
+    .catch(err => res.status(500).json(err.message))
 })
 
 router.post('/', (req, res) => {
@@ -20,7 +26,7 @@ router.post('/', (req, res) => {
         if (entities == null) return res.status(204).json(null);
         return res.status(200).json(entities);     
     })
-    .catch(err => res.status(500).json(err))
+    .catch(err => res.status(500).json(err.message))
 })
 
 // Authorized Queries
@@ -36,9 +42,9 @@ router.put('/', (req, res) => {
     entityFunc.updateEntity(filter, req.body.data)
     .then(updatedEntity => res.status(200).json(updatedEntity))
     .catch(err => {
-        if (err.message == 'Email exists.') res.status(409).json(err);
-        else if (err.message == 'Entity not found.') res.status(404).json(err);
-        else res.status(500).json(err);
+        if (err.message == 'Email exists.') res.status(409).json(err.message);
+        else if (err.message == 'Entity not found.') res.status(404).json(err.message);
+        else res.status(500).json(err.message);
     })
 })
 
@@ -47,8 +53,8 @@ router.delete('/', (req, res) => {
     entityFunc.deleteEntity(filter)
     .then(deletedEntity => res.status(200).json(deletedEntity))
     .catch(err => {
-        if (err.message == 'Entity not found.') res.status(404).json(err);
-        else res.status(500).json(err);
+        if (err.message == 'Entity not found.') res.status(404).json(err.message);
+        else res.status(500).json(err.message);
     })
 })
 
@@ -62,5 +68,7 @@ router.patch('/follow/:entityID', (req, res) => {
         else res.status(500).json(err.message)
     })
 })
+
+
 
 module.exports = router;

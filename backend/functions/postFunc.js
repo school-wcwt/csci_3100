@@ -16,7 +16,7 @@ var findPost = (filter) => {
             .populate('hashtag', 'name')
             .populate({
                 path:'comment',
-                perDocumentLimit: 3,
+                perDocumentLimit: 10,
                 populate: {
                     path: 'author',
                     select: 'entityID username tag name profPhoto'
@@ -148,6 +148,87 @@ var updatePost = (filter, props = null, data = null) => {
     })
 }
 
+var randomPosts = (filter = {_id: {$exists: true}}, size = 1) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try {
+            var posts = await Post.aggregate([
+                {$match: filter},
+                {$sample: {size: size}},
+                {$lookup: {
+                    from: 'entities',
+                    localField: 'author',
+                    foreignField: '_id',
+                    as: 'author',
+                }},
+                {$unwind: '$author'},
+                {$lookup: {
+                    from: 'entities',
+                    localField: 'target',
+                    foreignField: '_id',
+                    as: 'target',
+                }},
+                {$unwind: '$target'},
+                {$lookup: {
+                    from: 'hashtags',
+                    localField: 'hashtag',
+                    foreignField: '_id',
+                    as: 'hashtags'
+                }},
+                {$lookup: {
+                    from: 'comments',
+                    let: { 'comment': "$comment" },
+                    pipeline: [
+                        {$match: {$expr: {$in: ['$_id', '$$comment']}}},
+                        {$lookup: {
+                            from: 'entities',
+                            localField: 'author',
+                            foreignField: '_id',
+                            as: 'author'
+                        }},
+                        {$unwind: '$author'}
+                    ],
+                    as: 'comment',
+                }},
+                {$project: {
+                    _id: 1,
+                    postID: 1,
+                    type: 1,
+                    'author._id': 1,
+                    'author.entityID': 1,
+                    'author.username': 1,
+                    'author.tag': 1,
+                    'author.name': 1,
+                    'author.profPhoto': 1,
+                    'target._id': 1,
+                    'target.entityID': 1,
+                    'target.username': 1,
+                    'target.tag': 1,
+                    'target.name': 1,
+                    'target.profPhoto': 1,
+                    content: 1,
+                    photo: 1,
+                    createdTime: 1,
+                    modifiedTime: 1,
+                    rating: 1,
+                    'hashtag._id': 1,
+                    'hashtag.name': 1,
+                    like: 1,
+                    'comment._id': 1,
+                    'comment.commentID': 1,
+                    'comment.content' : 1,
+                    'comment.post': 1,
+                    'comment.time': 1,
+                    'comment.author.entityID': 1,
+                    'comment.author.username': 1,
+                    'comment.author.tag': 1,
+                    'comment.author.name': 1,
+                    'comment.author.profPhoto': 1,
+                }},
+            ]).exec()
+            return resolve(posts);
+        } catch(err) { return reject(err) }})(); 
+    })
+}
 
 
 module.exports = {
@@ -156,4 +237,5 @@ module.exports = {
     createPost,
     updatePost,
     deletePost,
+    randomPosts,
 }

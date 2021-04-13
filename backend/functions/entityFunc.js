@@ -105,6 +105,18 @@ var deleteEntity = (filter) => {
     })
 }
 
+var randomRests = (filter = {type: 'Rest'}, size = 1) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try {
+            var rests = await Entity.aggregate([
+                {$match: filter},
+                {$sample: {size: size}},
+            ]).exec()
+            return resolve(rests);
+        } catch(err) { return reject(err) }})(); 
+    })
+}
+
 // ---------- Functional -----------
 
 
@@ -114,5 +126,6 @@ module.exports = {
     findEntities,
     createEntity,
     updateEntity,
-    deleteEntity
+    deleteEntity,
+    randomRests,
 }

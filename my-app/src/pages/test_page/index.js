@@ -150,6 +150,19 @@ const Testpage = () => {
     }
     send_reservation_email_user(email_data);
   }
+
+  const getRandomRest = (e) => {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3104/post/random',
+      withCredentials: true,
+      data: { size: 1}
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
   return (
     <>
     <button onClick={handleLogin}>Login</button>
@@ -162,6 +175,7 @@ const Testpage = () => {
     <button onClick={callTest4}>Del Post</button>
     <button onClick={handleAddPhoto}>Add Photo</button>
     <button onClick={handleEmailRes}>Send Email Res</button>
+    <button onClick={getRandomRest}>Random Rest</button>
     
     </>
   )

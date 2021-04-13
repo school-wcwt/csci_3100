@@ -6,11 +6,17 @@ const postFunc = require('../functions/postFunc');
 
 // Unauthorized Queries
 
+router.post('/random', (req, res) => {
+    postFunc.randomPosts(req.body.filter, req.body.size)
+    .then(posts => res.status(200).json(posts))
+    .catch(err => res.status(500).json(err.message))
+})
+
 router.get('/:postID', (req, res) => {
     postFunc.findPost({postID: req.params.postID})
     .then(post => {
         if (post == null) res.status(204).json(post)
-        res.status(200).json(post)
+        else res.status(200).json(post)
     })
     .catch(err => res.status(500).json(err.message))
 })
@@ -19,7 +25,7 @@ router.post('/', (req, res) => {
     postFunc.findPosts(req.body.filter)
     .then(posts => {
         if (posts == null) res.status(204).json(posts)
-        res.status(200).json(posts)
+        else res.status(200).json(posts)
     })
     .catch(err => res.status(500).json(err.message))    
 })
