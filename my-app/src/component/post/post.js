@@ -60,8 +60,8 @@ const Post = (props) => {
       {props.post.photo.length !== 0
         ? <CardMedia><ImageDisplay {...props}/></CardMedia> : null}
 
-      {props.post.tags   
-        ? <Hashtags/> : null }
+      {props.post.hashtag && props.post.hashtag.length !== 0
+        ? <Hashtags {...props} /> : null }
 
       <Divider/>
       <CardContent>{props.post.content}</CardContent>

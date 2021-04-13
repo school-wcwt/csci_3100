@@ -14,13 +14,19 @@ export default function Posts(props) {
   const [fetched, setFetched] = useState(false)
   const [posts, setPosts] = useState(null)
 
-  useEffect(() => {
-    postFn.post_post(props.filter)
+  const fetchPosts = (filter) => {
+    postFn.post_post(filter)
     .then(posts => {
       setPosts(posts)
       setFetched(true)
     })
     .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    fetchPosts(props.filter)
+    detectChange(fetchPosts, props.filter)
+    //return () => socket.disconnect();
   }, [])
 
   if (!fetched) return <Loading/>
