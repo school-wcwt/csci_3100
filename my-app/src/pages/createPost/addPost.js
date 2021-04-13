@@ -12,8 +12,8 @@ export default function AddPost(props) {
   console.log("Inside function Add post func for " +props.entityID);
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
-    data.rating > 10 ? data.rating = 10 : data.rating;
-    data.rating < 0 ? data.rating = 0 : data.rating;
+    data.rating = data.rating > 10 ? 10 : data.rating;
+    data.rating = data.rating < 0 ? 0 : data.rating;
     var targetFilter = { "entityID": props.entityID||"rrr-1296" };
     Upload_Photo(data.photo).then(downloadURL => {
       var edit_data = {
