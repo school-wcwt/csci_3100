@@ -1,5 +1,5 @@
-import { Avatar, Button, Divider, makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress     } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+import { Avatar, Button, Divider, makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress, FormControl, Select, MenuItem, InputLabel     } from "@material-ui/core";
+import { useForm, Controller } from "react-hook-form";
 import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded } from '@material-ui/icons'
 import Rating from '../../component/Rating'
 import global from '../../component/global'
@@ -75,7 +75,48 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
     letterSpacing: '2px',
     alignSelf: 'center',
-  }
+  },
+  dialogButton: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+  },
+  dialogApply: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+  },
+  dialogApply: {
+    width: '100%',
+    position: 'relative',
+    padding: theme.spacing(0, 3)
+  },
+  dialogItem: {
+    padding: theme.spacing(0, 3, 2)
+  },
+  formShared: {
+    display: 'flex'
+  },
+  formName: {
+    flex: 3
+  },
+  formGender:{
+    width: '7rem',
+    margin: theme.spacing(1, 0, 0.5, 2),
+    '& .MuiSelect-select': {
+      paddingTop: '3px'
+    }
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    margin: '-12px'
+  },
 }))
 
 const UserInfo = (props) => {
@@ -126,38 +167,33 @@ const RestInfo = (props) => {
   )
 }
 
-const SettingDialog = (props) =>{
-  const { register, handleSubmit } = useForm();
-  const [laoding,setLoading] = useState(false);
-  const [error, setError] = useState({
+const SettingDialog = (props) => {
+  const classes = useStyles()
+  const { register, handleSubmit, control } = useForm();
+  const [ gender, setGender ] = useState('');
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState({
     username: false,
     password: false,
     confirmpw: false,
-});
-const invalidData = data => {
-  var validName = /^[0-9a-zA-Z_-]+$/;
-  var flag = false;
-  var err = error;
-  if (!validName.test(data.username)) {
-      err.username = true; flag = true;
-  } else err.username = false;
-  setError(err);
-  if (flag) return true 
-  else return false;
-}
-  const classes = useStyles()
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  });
+  const invalidData = data => {
+    var validName = /^[0-9a-zA-Z_-]+$/;
+    var flag = false;
+    var err = error;
+    if (!validName.test(data.username)) {
+        err.username = true; flag = true;
+    } else err.username = false;
+    setError(err);
+    if (flag) return true 
+    else return false;
+  }
+
   const onSubmit = data => {
     setLoading(true);
     if (data.username=='' && data.photo.length==0){
       setLoading(false);
-      handleClose();
+      props.handleClose();
       return true;
     }
     // statr update below
@@ -168,7 +204,7 @@ const invalidData = data => {
         console.log("Update sucess!");
         global.loginedUser.setUser(res.data);
         setLoading(false);
-        handleClose();
+        props.handleClose();
         return true;
       })
     }
@@ -189,36 +225,54 @@ const invalidData = data => {
   };
   return (
     <div>
-      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick = {handleClickOpen}>
-            Setting
-      </Button> 
-      <Dialog open={open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Change My data</DialogTitle>
+ 
+      <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle>Change My Info</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Only Fill in the Field You want to change. mATE 1.0 Support Change Icon feature ^_^!
-          </DialogContentText>
+          <DialogContentText> So, who do you want to be? 🥸 </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField fullWidth margin='dense' inputRef={register} 
-                id="username" label="Username" name="username" type="username"
-                error={error.username} helperText={error.username ? 'Incorrect format. Letters, numbers, -, and _ only.' : "Letters, numbers, -, and _ only."} />
-          
-          <Form.File type="file" name="photo" ref={register}/>
+            <div className={classes.formShared}>
+            <TextField margin='dense' inputRef={register} className={classes.formName}
+              id="name" label="Name" name="name" type="name"/>
+            <FormControl className={classes.formGender} >
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Controller as={
+                <Select labelId="gender-label">
+                  <MenuItem value=''>-</MenuItem>
+                  <MenuItem value='Female'>Female</MenuItem>
+                  <MenuItem value='Male'>Male</MenuItem>
+                  <MenuItem value='Non-Binary'>Non-Binary</MenuItem>
+                </Select>
+              } control={control} name='gender' defaultValue=''/>
+            </FormControl>
+            </div>
+            <TextField fullWidth margin='dense' inputRef={register} 
+              id="email" label="Email" name="email" type="email"/>
+            <TextField fullWidth margin='dense' inputRef={register} 
+              id="phone" label="Phone" name="phone" />
+            <Form.File type="file" name="photo" ref={register}/>
           </form>
-          
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <div className={classes.dialogApply}>
+          <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
+            onClick={handleSubmit(onSubmit)} >
+            Apply Changes
+          </Button>
+          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        </div>
+        <div className={classes.dialogItem}>
+          <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
             Cancel
           </Button>
-          {laoding?
-          <Button color="primary">
-             <CircularProgress size={24} />
-          </Button>:
-          <Button onClick={handleSubmit(onSubmit)} color="primary">
-            Apply Changes
-          </Button>}
-        </DialogActions>
+        </div>
+        <DialogTitle>I can't eat anymore...</DialogTitle>
+        <div className={classes.dialogItem}>
+          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton}>Log out</Button>
+        </div>
+        <DialogTitle>Just let me go.</DialogTitle>
+        <div className={classes.dialogItem}>
+          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton}>Delete Account</Button>
+        </div>
       </Dialog>
     </div>
   );
@@ -226,18 +280,20 @@ const invalidData = data => {
 
 const UserActions = (props) => {
   const classes = useStyles()
+  const [open, setOpen] = useState(false);
   const followed = global.loginedUser.user.followingUser.includes(props.user._id);
   const isSelf = global.loginedUser.user.entityID == props.user.entityID;
   const hasGroupList = props.user.groupList.length !== 0
-  const handleSeeting = () =>{
-    console.log("Seeting");
-  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   
   return (
     <div className={classes.actionRoot}>
       {isSelf
-        ? 
-           <SettingDialog />
+        ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
+            Setting
+          </Button>
         : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}> 
             {followed ? 'Following' : 'Follow'}
           </Button>}
@@ -246,6 +302,7 @@ const UserActions = (props) => {
             Saved Lists
           </Button>
         : null}
+      <SettingDialog open={open} handleOpen={handleOpen} handleClose={handleClose}/>
     </div>
   )
 }

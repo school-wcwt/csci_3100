@@ -37,7 +37,7 @@ var theme = createMuiTheme({
             light: '#faf1f0',
             main: '#ee6a67',
             dark: '#b7393c',
-            contrastText: '#404040',
+            contrastText: '#eeeeee',
         },
         /*secondary: {
             light: '#b4b4b4',
