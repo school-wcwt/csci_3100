@@ -10,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircleRounded'
 
 import global from '../../../component/global'
 import Loading from '../../../component/loading'
-import SearchBar from '../../followers_page/search'
+import SearchBar from './search'
 import history from '../../history'
 
 
@@ -19,12 +19,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   toolBar: {
-    justifyContent: 'space-between',
     flexGrow: 1,
-  },
-  rightButton: {
-    color: theme.palette.primary.main,
-    marginLeft:  theme.spacing(1),
+    justifyContent: 'space-between',
   },
   header: {
     ...theme.typography.h6,
@@ -32,6 +28,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     marginRight: theme.spacing(2),
   },
+  rightButton: {
+    color: theme.palette.primary.main,
+    marginLeft:  theme.spacing(1),
+  },
+
+
   menuItem: {
     color: theme.palette.primary.main,
     '&:hover': {
@@ -47,29 +49,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.primary.light,
-    '&:hover': {
-      backgroundColor: darken(theme.palette.background.default, 0.05),
-    },
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      margin: 'auto',
-      width: '40%',
-    },
-  },
-  searchIcon: {
-    color: theme.palette.primary.main,
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   inputRoot: {
     color: 'inherit',
@@ -90,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+
 }));
 
 export default function PrimarySearchAppBar() {
@@ -150,25 +130,25 @@ export default function PrimarySearchAppBar() {
             <NotificationsIcon />
           </IconButton>*/}
           <>
-          <div className={classes.sectionDesktop}>
-            <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/createPost/rrr-1296')}>
-              <PostAddIcon />
+            <div className={classes.sectionDesktop}>
+              <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/createPost/rrr-1296')}>
+                <PostAddIcon />
+              </IconButton>
+              <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/restregister')}>
+                <AddLocationIcon />
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton edge='end' className={classes.rightButton} onClick={handleMobileMenuOpen}>
+                <AddIcon />
+              </IconButton>
+            </div>
+            <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/Discover')}>
+              <ExploreIcon />
             </IconButton>
-            <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/restregister')}>
-              <AddLocationIcon />
+            <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory(`/profile/${entityID}`)}>
+              <AccountCircle />
             </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton edge='end' className={classes.rightButton} onClick={handleMobileMenuOpen}>
-              <AddIcon />
-            </IconButton>
-          </div>
-          <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory('/Discover')}>
-            <ExploreIcon />
-          </IconButton>
-          <IconButton edge="end" className={classes.rightButton} onClick={() => handleHistory(`/profile/${entityID}`)}>
-            <AccountCircle />
-          </IconButton>
           </>
         </Toolbar>
       </AppBar>

@@ -1,4 +1,5 @@
-import { Avatar, Button, Divider, makeStyles, Typography, IconButton, Popover, CssBaseline } from "@material-ui/core";
+import { Tooltip ,Avatar, Button, Divider,withStyles,makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress, FormControl, Select, MenuItem, InputLabel     } from "@material-ui/core";
+import { useForm, Controller } from "react-hook-form";
 import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded } from '@material-ui/icons'
 import Rating from '../../component/Rating'
 import global from '../../component/global'
@@ -10,6 +11,10 @@ import Loading from "../../component/loading";
 import axios from '../../axiosConfig'
 import NavBar from '../main/component/nav'
 import history from '../history'
+import {Form} from 'react-bootstrap';
+import {Upload_Photo} from '../../component/Upload/upload';
+
+const entityFn = require('../../component/load_backend/entityFunction');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,8 +76,58 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
     letterSpacing: '2px',
     alignSelf: 'center',
-  }
+  },
+  dialogButton: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+  },
+  dialogApply: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+  },
+  dialogApply: {
+    width: '100%',
+    position: 'relative',
+    padding: theme.spacing(0, 3)
+  },
+  dialogItem: {
+    padding: theme.spacing(0, 3, 2)
+  },
+  formShared: {
+    display: 'flex'
+  },
+  formName: {
+    flex: 3
+  },
+  formGender:{
+    width: '7rem',
+    margin: theme.spacing(1, 0, 0.5, 2),
+    '& .MuiSelect-select': {
+      paddingTop: '3px'
+    }
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    margin: '-12px'
+  },
 }))
+
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[1],
+    color: 'black',
+    fontSize: 11,
+  },
+}))(Tooltip);
 
 const UserInfo = (props) => {
   const classes = useStyles()
@@ -97,23 +152,43 @@ const UserInfo = (props) => {
   )
 }
 const RestInfo = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const handleCopyAddress  = () =>{
+    navigator.clipboard.writeText(props.rest.address);
+    alert("Location Copied");
+  }
+  const handleCopyPhone  = () =>{
+    navigator.clipboard.writeText(props.rest.phone);
+    alert("Phone Copied");
+  }
+  const handleCopyHr  = () =>{
+    navigator.clipboard.writeText(`From ${String(props.rest.openingHr).split(",")[0]} To ${String(props.rest.openingHr).split(",")[1]}`);
+    alert("OpeningHour Copied");
+  }
   return (
     <div className={classes.infoRoot}>
-      <IconButton>
-        <LocationOnRounded />
+      <Tooltip title={<Typography>{`Location: ${props.rest.address}`}</Typography>}>
+      <IconButton onClick = {handleCopyAddress}>
+        <LocationOnRounded/>
       </IconButton>
-      {props.rest.phone
-        ? <IconButton>
-          <PhoneRounded />
-        </IconButton>
+      </Tooltip>
+      {props.rest.phone&&props.rest.phone!=0
+        ?
+        <Tooltip title={<Typography>{`Phone: ${props.rest.phone}`}</Typography>}>
+          <IconButton onClick = {handleCopyPhone}>
+            <PhoneRounded/>
+          </IconButton>
+        </Tooltip> 
         : <IconButton disabled>
           <PhoneDisabledRounded />
         </IconButton>}
       {props.rest.openingHr && props.rest.openingHr.length !== 0
-        ? <IconButton>
-          <AlarmRounded />
-        </IconButton>
+        ?
+        <Tooltip title={<Typography>{`Opening Hour: From ${String(props.rest.openingHr).split(",")[0]} To ${String(props.rest.openingHr).split(",")[1]}`}</Typography>}>
+          <IconButton onClick = {handleCopyHr}>
+            <AlarmRounded/>
+          </IconButton>
+          </Tooltip>
         : <IconButton disabled>
           <AlarmOffRounded />
         </IconButton>}
@@ -121,25 +196,152 @@ const RestInfo = (props) => {
   )
 }
 
+const SettingDialog = (props) => {
+  const classes = useStyles()
+  const { register, handleSubmit, control } = useForm();
+  const [ gender, setGender ] = useState('');
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState({
+    username: false,
+    password: false,
+    confirmpw: false,
+});
+  const invalidData = data => {
+    var validName = /^[0-9a-zA-Z_-]+$/;
+    var flag = false;
+    var err = error;
+    if (!validName.test(data.username)) {
+        err.username = true; flag = true;
+    } else err.username = false;
+    setError(err);
+    if (flag) return true 
+    else return false;
+  }
+  
+  const handleLogout = () =>{
+    axios.post('/logout')
+    .then(history.push('/login'));
+  }
+
+  const onSubmit = data => {
+    setLoading(true);
+    if (data.name=='' && data.gender == '' && data.email == '' && data.phone == '' && data.photo.length==0){
+      setLoading(false);
+      props.handleClose();
+      return true;
+    }
+
+    // statr update below
+    let new_data = {}
+    const update_entities = () => {
+      entityFn.entity_edit(new_data)
+      .then(res=>{
+        console.log("Update sucess!");
+        
+        global.loginedUser.setUser(res.data);
+        setLoading(false);
+        props.handleClose();
+        return true;
+      })
+    };
+
+    if (data.name!=''){
+      //if (invalidData(data)) return;
+      new_data.name = data.name; 
+    }
+    if (data.gender != '')  new_data.gender = data.gender
+    if (data.email  !='') new_data.email = data.email
+    if (data.phone  !='') new_data.phone = data.phone
+    if (data.photo.length!=0){
+      Upload_Photo(data.photo).then(downloadURL=>{
+        new_data.profPhoto = downloadURL
+        update_entities();
+      })
+    }
+    else {
+      update_entities();
+    }
+  };
+  return (
+    <div>
+      <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle>Change My Info</DialogTitle>
+        <DialogContent>
+          <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={classes.formShared}>
+            <TextField margin='dense' inputRef={register} className={classes.formName}
+              id="name" label="Name" name="name" type="name"/>
+            <FormControl className={classes.formGender} >
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Controller as={
+                <Select labelId="gender-label">
+                  <MenuItem value=''>-</MenuItem>
+                  <MenuItem value='Female'>Female</MenuItem>
+                  <MenuItem value='Male'>Male</MenuItem>
+                  <MenuItem value='Non-Binary'>Non-Binary</MenuItem>
+                </Select>
+              } control={control} name='gender' defaultValue=''/>
+            </FormControl>
+            </div>
+            <TextField fullWidth margin='dense' inputRef={register} 
+              id="email" label="Email" name="email" type="email"/>
+            <TextField fullWidth margin='dense' inputRef={register} 
+              id="phone" label="Phone" name="phone" />
+              <DialogContentText>Upload Icon Image</DialogContentText>
+            <Form.File type="file" name="photo" ref={register}/>
+          </form>
+        </DialogContent>
+        <div className={classes.dialogApply}>
+          <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
+            onClick={handleSubmit(onSubmit)} >
+            Apply Changes
+          </Button>
+          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        </div>
+        <div className={classes.dialogItem}>
+          <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
+            Cancel
+          </Button>
+        </div>
+        <DialogTitle>I can't eat anymore...</DialogTitle>
+        <div className={classes.dialogItem}>
+          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={handleLogout}>Log out</Button>
+        </div>
+        <DialogTitle>Just let me go.</DialogTitle>
+        <div className={classes.dialogItem}>
+          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton}>Delete Account</Button>
+        </div>
+      </Dialog>
+    </div>
+  );
+}
+
 const UserActions = (props) => {
   const classes = useStyles()
+  const [open, setOpen] = useState(false);
   const followed = global.loginedUser.user.followingUser.includes(props.user._id);
   const isSelf = global.loginedUser.user.entityID == props.user.entityID;
   const hasGroupList = props.user.groupList.length !== 0
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
   return (
     <div className={classes.actionRoot}>
       {isSelf
-        ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
-          Setting
+        ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
+            Setting
           </Button>
-        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
-          {followed ? 'Following' : 'Follow'}
-        </Button>}
+        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}> 
+            {followed ? 'Following' : 'Follow'}
+          </Button>}
       {isSelf
         ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton}>
           Saved Lists
           </Button>
         : null}
+      <SettingDialog open={open} handleOpen={handleOpen} handleClose={handleClose}/>
     </div>
   )
 }

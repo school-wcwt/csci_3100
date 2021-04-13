@@ -12,6 +12,7 @@ const Auth = require('../models/Auth');
 const emailFnc = require('../middleware/email');
 const MaxRefreshDays = 60;
 
+
 var createToken = (entityID, entity_id, duration, parentRT, secret) => {
     var payload = { entityID, entity_id, duration, parentRT };
     return jwt.sign(payload, secret, { expiresIn: duration });
@@ -112,8 +113,9 @@ router.post('/register', (req, res) => {
     
 })
 
-router.post('/logout', (req, res) => {
-    Auth.updateOne(req.body.filter, {accessToken: '', refreshToken: ''}).exec()
+router.post('/logout', verifyAuth.access, (req, res) => {
+    const filter = {entityID: res.locals.user.entityID};
+    Auth.updateOne(filter, {accessToken: '', refreshToken: ''}).exec()
     .then(resp => {
         res.clearCookie('refresh_token');
         res.clearCookie('access_token');

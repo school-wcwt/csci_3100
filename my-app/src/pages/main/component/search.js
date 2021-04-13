@@ -3,10 +3,10 @@ import { darken, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import history from '../history'
+import history from '../../history'
 
 
-const entityFn = require("../../component/load_backend/entityFunction");
+const entityFn = require("../../../component/load_backend/entityFunction");
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -116,6 +116,7 @@ const SearchBar = (props) => {
       </div>
       <Autocomplete
         id="custom-input-demo"
+        style = {{color:"black"}}
         classes={{paper: classes.paper}}
         options={options} loading={loading}
         open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}
