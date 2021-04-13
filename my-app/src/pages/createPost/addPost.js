@@ -13,10 +13,13 @@ export default function AddPost(props) {
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
     var targetFilter = { "entityID": props.entityID||"rrr-1296" };
+    var rating = parseInt(data.rating);
+    rating = rating < 0  ? 0  : rating;
+    rating = rating > 10 ? 10 : rating;
     Upload_Photo(data.photo).then(downloadURL => {
       var edit_data = {
         "type": 1,
-        "rating": data.rating,
+        "rating": rating,
         "content": data.content,
         "photo": downloadURL,
         "hashtag": data.hashtag_list

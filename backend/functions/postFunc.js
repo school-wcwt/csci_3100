@@ -42,7 +42,7 @@ var findPost = (filter) => {
             .populate('hashtag', 'name')
             .populate({
                 path:'comment',
-                perDocumentLimit: 3,
+                perDocumentLimit: 10,
                 populate: {
                     path: 'author',
                     select: 'entityID username tag name profPhoto'

@@ -65,12 +65,12 @@ export default function PostHeader(props) {
             <span>{props.post.author.username}</span>
             <span className={classes.infoTag}>{`#${props.post.author.tag}`}</span>
           </ButtonBase>
-          <span className={classes.infoPostType}>{props.post.type ? 'checked-in at' : 'reviewed'}</span>
+          <span className={classes.infoPostType}>{props.post.type ? 'reviewed': 'checked-in at' }</span>
         </div>}
       subheader={
         <ButtonBase className={classes.infoEntityID}>
           <span>{props.post.target.username}</span>
-          <span className={classes.infoTag}>{`#${props.post.author.tag}`}</span>
+          <span className={classes.infoTag}>{`#${props.post.target.tag}`}</span>
         </ButtonBase>}
       action={
         <div className={classes.infoDetail}>
