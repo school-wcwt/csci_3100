@@ -1,21 +1,120 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import PanelBar from "./panel.js"
+import global from '../../component/global'
 
 import { GetMyEntities } from '../services/authService';
 
 const entityFn = require("../../component/load_backend/entityFunction");
 
+
+
+
+
+
+
+
 const Entity = () => {
   var entitiesID = GetMyEntities();
 
+
+  const Filter_testing = () => {
+    const [entity2, setEntity2] = useState(null);
+    const grab_followers = () => {
+
+      entityFn.entity_get(global.loginedUser.user.entityID).then(data => {
+        console.log('------------===')
+        console.log(data)
+        //===========User type=============
+        //fil for ALL users
+        var fil = {
+          'type': 'User'
+        }
+
+        //fil for following, User
+        var fil = {
+          '_id': { $in: data.followingUser },
+          'type': 'User'
+        }
+
+
+        //fil for followed, by User
+        var fil = {
+          '_id': { $in: data.followed },
+          'type': 'User'
+        }
+
+
+        //fil for not followed, exclude myself, by user
+        var fil1 = {
+          '_id': {
+            $nin:
+              data.followed.concat(global.loginedUser.user._id)
+          },
+          'type': 'User'
+        }
+
+        //fil for non-following, exclude myself, User
+        var fil = {
+          '_id': {
+            $nin:
+              data.followingUser.concat(global.loginedUser.user._id)
+          },
+          'type': 'User'
+        }
+
+        //===========Rest type=============
+        //fil for ALL Rest
+        var fil = {
+          'type': 'Rest'
+        }
+
+
+        //fil for following rest
+        var fil = {
+          '_id': { $in: data.followingRest },
+          'type': 'Rest'
+        }
+
+        //fil for non-following rest
+        var fil = {
+          '_id': { $nin: data.followingRest },
+          'type': 'Rest'
+        }
+
+
+        //then will return the json array
+        entityFn.entity_post(fil1).then(data => {
+          console.log(data)
+          console.log('hihi')
+          setEntity2(data)
+        })
+      })
+    }
+    return (
+      <div>
+        <h1>Filter testing</h1>
+        <button onClick={() => { grab_followers() }}>get_entity
+      </button>
+
+        {entity2 == null ? '' :
+          entity2.map(singEntity => {
+            return (
+              <>
+                <h1>entityID ={singEntity != null ? singEntity.entityID : ''}</h1>
+                <p>username ={singEntity != null ? singEntity.username : ''}</p>
+                <p>profPhoto ={singEntity != null ? singEntity.profPhoto : ''}</p>
+              </>
+            )
+          })
+        }
+      </div>
+    )
+  }
   const Get_entity = () => {
     const [entity1, setEntity1] = useState(null);
 
 
-    console.log('---')
-    console.log(entitiesID)
-    console.log('---')
     const change_get = async () => {
       try {
         var entity1 = await entityFn.entity_get(entitiesID);
@@ -45,9 +144,9 @@ const Entity = () => {
 
   const Post_entity = () => {
     const [entity2, setEntity2] = useState(null);
-    const [field, set_field] = useState(JSON.stringify({"entityID":entitiesID}));
+    const [field, set_field] = useState(JSON.stringify({ "entityID": entitiesID }));
 
-    const handleChange = (event)=>{
+    const handleChange = (event) => {
       set_field(event.target.value)
       change_post()
     }
@@ -67,7 +166,7 @@ const Entity = () => {
         <form>
           <label>
             Name:
-            <input type="text" name="name" value={field} onChange={(event)=>{handleChange(event)}}/>
+            <input type="text" name="name" value={field} onChange={(event) => { handleChange(event) }} />
           </label>
         </form>
         <button onClick={() => { change_post() }}>entity_post
@@ -125,7 +224,8 @@ const Entity = () => {
     const [entity4, setEntity4] = useState(null);
     const change_post = async () => {
       try {
-        var followerID = 'user2-4935';
+        var followerID = 'username3-8409'
+
         var entity4 = await entityFn.entity_follow(followerID);
       }
       catch (err) {
@@ -147,6 +247,7 @@ const Entity = () => {
   return (
     <div>
       <PanelBar></PanelBar>
+      <Filter_testing></Filter_testing>
       <Get_entity></Get_entity>
       <Post_entity></Post_entity>
       <Edit_entity></Edit_entity>
@@ -155,4 +256,4 @@ const Entity = () => {
     </div>
   )
 }
-export default Entity;
+export default (Entity)
