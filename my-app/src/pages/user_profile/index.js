@@ -15,6 +15,7 @@ import history from '../history'
 import { Form } from 'react-bootstrap';
 import { Upload_Photo } from '../../component/Upload/upload';
 import DateTimePicker from 'react-datetime-picker';
+import {send_reservation_email_user} from '../../component/email/email';
 const entityFn = require('../../component/load_backend/entityFunction');
 
 const useStyles = makeStyles((theme) => ({
@@ -338,11 +339,34 @@ const ResversionDialog = (props) => {
   const classes = useStyles()
   const { register, handleSubmit, control } = useForm();
   const [loading, setLoading] = useState(false);
-  const [value, onChange] = useState(new Date());
+  const [ResDate, setResDate] = useState(new Date());
+  const [error,setError] = useState({Name:false,Phone:false,});
   const onSubmit = data => {
-    /* Time , Remarks*/
-    console.log("data in resversion: " + JSON.stringify(data))
-
+    setLoading(true);
+    if (data.Name == ''){error.Name = true; setError(error); return true}
+    if (data.Phone == ''){error.Phone = true; setError(error); return true}
+    const passdata = {
+      user_email:global.loginedUser.user.email,
+      rest_email:"mate@gmail.com",
+      to_name:data.Name,
+      RestaurantName:props.rest.username,
+      Time:`${ResDate.toDateString()} ${ResDate.toLocaleTimeString()}`,
+      Remarks: `User Phone Number: ${data.Phone} ${data.Remarks||''}` 
+    }
+    send_reservation_email_user(passdata)
+    .then(res=>{
+      alert("Please Check Your Email !")
+      setLoading(false);
+      setError({Name:false,Phone:false,})
+      props.handleClose();
+      
+    })
+    .catch(err=>{
+      alert("Fail to send email !")
+      setLoading(false);
+      setError({Name:false,Phone:false,})
+      props.handleClose();
+    })
   };
 
   return (
@@ -352,29 +376,13 @@ const ResversionDialog = (props) => {
         <DialogContent>
           <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
-
-            <div>
-              <DateTimePicker
-                onChange={onChange}
-                value={value}
-                disableClock={true}
-              />
-            </div>
-
+            <DateTimePicker onChange={setResDate} value={ResDate} disableClock={true}/>
             <TextField inputRef={register} className={classes.formName}
-              id="Time" label="Time" name="Time" type="Time" />
-          </form>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField inputRef={register} className={classes.formName}
+              id="Name" fullWidth label="Name" name="Name" type="Name" error={error.Name} helperText = {error.Name?"Please Enter Your Name":null} />
+            <TextField fullWidth inputRef={register} className={classes.formName}
               id="Remarks" label="Remarks" name="Remarks" type="Remarks" />
-          </form>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField inputRef={register} className={classes.formName}
-              id="Name" label="Name" name="Name" type="Name" />
-          </form>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField inputRef={register} className={classes.formName}
-              id="Phone" label="Phone" name="Phone" type="Phone" />
+            <TextField inputRef={register} className={classes.formName} error={error.Phone} helperText = {error.Phone?"Please Enter Your Phone Number":null}
+              id="Phone" label="Phone Number" name="Phone" type="Phone" />
           </form>
         </DialogContent>
         <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
@@ -414,7 +422,7 @@ const RestActions = (props) => {
         <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Book Me!
       </Button>
-        <ResversionDialog open={open} handleOpen={handleOpen} handleClose={handleClose} />
+        <ResversionDialog {...props} open={open} handleOpen={handleOpen} handleClose={handleClose} />
       </div>
     </>
   )

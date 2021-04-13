@@ -22,12 +22,15 @@ function send_reservation_email_user(data){
     /* --data required--
     user_email,rest_email,to_name,RestaurantName,Time,Remarks
     */
-    emailjs.send(YOUR_SERVICE_ID, "template_bi4dcyr", data, YOUR_USER_ID)
-    .then((result) => {
-        console.log(result.text);
-    }, (error) => {
-        console.log(error.text);
-    });
+    return new Promise((resolve,reject)=>{
+        emailjs.send(YOUR_SERVICE_ID, "template_bi4dcyr", data, YOUR_USER_ID)
+        .then ( res =>{
+            return resolve(res);
+        })
+        .catch(err => {
+            return reject(err)
+        })
+    })
 } 
 
 
