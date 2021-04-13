@@ -43,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
   popover: {
     pointerEvents: 'none',
   },
-  popoverPaper:{
+  popoverPaper: {
     padding: theme.spacing(1)
   },
-  actionRoot:{
+  actionRoot: {
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
@@ -60,8 +60,8 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '2px',
     color: theme.palette.grey[200],
     '&:hover': {
-        background: theme.palette.primary.light,
-        color: theme.palette.grey[700]
+      background: theme.palette.primary.light,
+      color: theme.palette.grey[700]
     },
   },
   actionSecondaryButton: {
@@ -87,37 +87,36 @@ const UserInfo = (props) => {
   return (
     <div className={classes.infoRoot}>
       {renderItem('Posts', props.user.post.length)}
-      <Divider orientation='vertical' variant='middle' flexItem/>
+      <Divider orientation='vertical' variant='middle' flexItem />
       {renderItem('Followed', props.user.followed.length)}
-      <Divider orientation='vertical' variant='middle' flexItem/>
+      <Divider orientation='vertical' variant='middle' flexItem />
       {renderItem('Following User', props.user.followingUser.length)}
-      <Divider orientation='vertical' variant='middle' flexItem/>
+      <Divider orientation='vertical' variant='middle' flexItem />
       {renderItem('Following Restaurants', props.user.followingRest.length)}
     </div>
   )
 }
-
 const RestInfo = (props) => {
   const classes = useStyles()
   return (
     <div className={classes.infoRoot}>
       <IconButton>
-        <LocationOnRounded/>
+        <LocationOnRounded />
       </IconButton>
-      {props.rest.phone 
+      {props.rest.phone
         ? <IconButton>
-            <PhoneRounded/>
-          </IconButton>
+          <PhoneRounded />
+        </IconButton>
         : <IconButton disabled>
-            <PhoneDisabledRounded/>
-          </IconButton>}
+          <PhoneDisabledRounded />
+        </IconButton>}
       {props.rest.openingHr && props.rest.openingHr.length !== 0
         ? <IconButton>
-            <AlarmRounded/>
-          </IconButton>
+          <AlarmRounded />
+        </IconButton>
         : <IconButton disabled>
-            <AlarmOffRounded/>
-          </IconButton>}
+          <AlarmOffRounded />
+        </IconButton>}
     </div>
   )
 }
@@ -131,14 +130,14 @@ const UserActions = (props) => {
     <div className={classes.actionRoot}>
       {isSelf
         ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
-            Setting
-          </Button>    
-        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}> 
-            {followed ? 'Following' : 'Follow'}
-          </Button>}
+          Setting
+          </Button>
+        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
+          {followed ? 'Following' : 'Follow'}
+        </Button>}
       {isSelf
         ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton}>
-            Saved Lists
+          Saved Lists
           </Button>
         : null}
     </div>
@@ -148,24 +147,24 @@ const UserActions = (props) => {
 const RestActions = (props) => {
   const classes = useStyles()
   const followed = global.loginedUser.user.followingRest.includes(props.rest._id);
-  const handleAddPost = () =>{
+  const handleAddPost = () => {
     history.push(`/createPost/${props.rest.entityID}`)
-}
+  }
   return (
     <>
-    <div className={classes.actionRoot}>
-      <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
-        {followed ? 'Following' : 'Follow'}
+      <div className={classes.actionRoot}>
+        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
+          {followed ? 'Following' : 'Follow'}
+        </Button>
+      </div>
+      <div className={classes.actionRoot}>
+        <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleAddPost} >
+          Add Post
       </Button>
-    </div>
-    <div className={classes.actionRoot}>
-      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick = {handleAddPost} >
-        Add Post
+        <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
+          Check-in
       </Button>
-      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
-        Check-in
-      </Button>
-    </div>
+      </div>
     </>
   )
 }
@@ -177,7 +176,7 @@ export default function UserProfile(props) {
   const classes = useStyles()
   const urlParams = useParams();
   const entityID = urlParams.EntityID;
-  
+
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -190,49 +189,49 @@ export default function UserProfile(props) {
 
   useEffect(() => {
     axios.get(`entity/${entityID}`)
-    .then(res => {
-      if (res.data) setEntity(res.data)
-      setFetched(true)
-    })
-    .catch(err => console.log(err))
+      .then(res => {
+        if (res.data) setEntity(res.data)
+        setFetched(true)
+      })
+      .catch(err => console.log(err))
   }, [urlParams])
 
-  if (!fetched || global.loginedUser.user == null) return <Loading/>
-  else if (fetched && entity == null) return <Error404/>
+  if (!fetched || global.loginedUser.user == null) return <Loading />
+  else if (fetched && entity == null) return <Error404 />
   else return (
     <>
-    <CssBaseline/>
-    <NavBar/>
-    <div className={classes.root}>
-      <Avatar variant={entity.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar}
-      alt={entity.entityID} src={entity.profPhoto[0]}/>
-      <Typography variant='h4'
-        onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
-        {entity.username}
-      </Typography>
-      <Popover
-        id="mouse-over-popover"
-        className={classes.popover}
-        classes={{ paper: classes.popoverPaper, }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'center', horizontal: 'right'}}
-        transformOrigin={{ vertical: 'center', horizontal: 'left'}}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-      >
-        <Typography>{`#${entity.tag}`}</Typography>
-      </Popover>
-      {entity.name
-        ? <Typography variant='h6'>{entity.name}</Typography> : null}
-      {entity.type == 'Rest' && entity.post.length !== 0
-        ? <Rating rating={entity.rating/entity.post.length}/> : null}
-      {entity.type == 'User'
-        ? <UserInfo {...props} user={entity}/> : <RestInfo {...props} rest={entity}/>}
-      {entity.type == 'User'
-        ? <UserActions {...props} user={entity}/> : <RestActions {...props} rest={entity}/>}
-    </div>
-    <Posts filter={{_id: {$in: entity.post}}}/>
+      <CssBaseline />
+      <NavBar />
+      <div className={classes.root}>
+        <Avatar variant={entity.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar}
+          alt={entity.entityID} src={entity.profPhoto[0]} />
+        <Typography variant='h4'
+          onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
+          {entity.username}
+        </Typography>
+        <Popover
+          id="mouse-over-popover"
+          className={classes.popover}
+          classes={{ paper: classes.popoverPaper, }}
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'center', horizontal: 'left' }}
+          onClose={handlePopoverClose}
+          disableRestoreFocus
+        >
+          <Typography>{`#${entity.tag}`}</Typography>
+        </Popover>
+        {entity.name
+          ? <Typography variant='h6'>{entity.name}</Typography> : null}
+        {entity.type == 'Rest' && entity.post.length !== 0
+          ? <Rating rating={entity.rating / entity.post.length} /> : null}
+        {entity.type == 'User'
+          ? <UserInfo {...props} user={entity} /> : <RestInfo {...props} rest={entity} />}
+        {entity.type == 'User'
+          ? <UserActions {...props} user={entity} /> : <RestActions {...props} rest={entity} />}
+      </div>
+      <Posts filter={{ _id: { $in: entity.post } }} />
     </>
   )
 }
