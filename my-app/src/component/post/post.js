@@ -58,7 +58,12 @@ const Post = (props) => {
     })
   }
   const onSubmit = data => {
-    setLoadingComment(true)
+    setLoadingComment(true);
+    if (data.newComment==''){
+      setLoadingComment(false);
+      setExpanded(false);
+      return true;
+    }
     CommentFunc.comment_create({postID:props.post.postID},data.newComment)
     .then(res=>{setLoadingComment(false);setExpanded(false)})
     .catch(err=>console.log("Error"))
