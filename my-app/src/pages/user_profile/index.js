@@ -1,5 +1,5 @@
 
-import { Tooltip ,Avatar, Button, Divider,withStyles,makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress, FormControl, Select, MenuItem, InputLabel     } from "@material-ui/core";
+import { Tooltip, Avatar, Button, Divider, withStyles, makeStyles, Typography, IconButton, Popover, CssBaseline, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, FormControl, Select, MenuItem, InputLabel } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded } from '@material-ui/icons'
 import Rating from '../../component/Rating'
@@ -12,9 +12,9 @@ import Loading from "../../component/loading";
 import axios from '../../axiosConfig'
 import NavBar from '../main/component/nav'
 import history from '../history'
-import {Form} from 'react-bootstrap';
-import {Upload_Photo} from '../../component/Upload/upload';
-
+import { Form } from 'react-bootstrap';
+import { Upload_Photo } from '../../component/Upload/upload';
+import DateTimePicker from 'react-datetime-picker';
 const entityFn = require('../../component/load_backend/entityFunction');
 
 const useStyles = makeStyles((theme) => ({
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
   formName: {
     flex: 3
   },
-  formGender:{
+  formGender: {
     width: '7rem',
     margin: theme.spacing(1, 0, 0.5, 2),
     '& .MuiSelect-select': {
@@ -154,42 +154,42 @@ const UserInfo = (props) => {
 }
 const RestInfo = (props) => {
   const classes = useStyles();
-  const handleCopyAddress  = () =>{
+  const handleCopyAddress = () => {
     navigator.clipboard.writeText(props.rest.address);
     alert("Location Copied");
   }
-  const handleCopyPhone  = () =>{
+  const handleCopyPhone = () => {
     navigator.clipboard.writeText(props.rest.phone);
     alert("Phone Copied");
   }
-  const handleCopyHr  = () =>{
+  const handleCopyHr = () => {
     navigator.clipboard.writeText(`From ${String(props.rest.openingHr).split(",")[0]} To ${String(props.rest.openingHr).split(",")[1]}`);
     alert("OpeningHour Copied");
   }
   return (
     <div className={classes.infoRoot}>
       <Tooltip title={<Typography>{`Location: ${props.rest.address}`}</Typography>}>
-      <IconButton onClick = {handleCopyAddress}>
-        <LocationOnRounded/>
-      </IconButton>
+        <IconButton onClick={handleCopyAddress}>
+          <LocationOnRounded />
+        </IconButton>
       </Tooltip>
-      {props.rest.phone&&props.rest.phone!=0
+      {props.rest.phone && props.rest.phone != 0
         ?
         <Tooltip title={<Typography>{`Phone: ${props.rest.phone}`}</Typography>}>
-          <IconButton onClick = {handleCopyPhone}>
-            <PhoneRounded/>
+          <IconButton onClick={handleCopyPhone}>
+            <PhoneRounded />
           </IconButton>
-        </Tooltip> 
+        </Tooltip>
         : <IconButton disabled>
           <PhoneDisabledRounded />
         </IconButton>}
       {props.rest.openingHr && props.rest.openingHr.length !== 0
         ?
         <Tooltip title={<Typography>{`Opening Hour: From ${String(props.rest.openingHr).split(",")[0]} To ${String(props.rest.openingHr).split(",")[1]}`}</Typography>}>
-          <IconButton onClick = {handleCopyHr}>
-            <AlarmRounded/>
+          <IconButton onClick={handleCopyHr}>
+            <AlarmRounded />
           </IconButton>
-          </Tooltip>
+        </Tooltip>
         : <IconButton disabled>
           <AlarmOffRounded />
         </IconButton>}
@@ -200,22 +200,22 @@ const RestInfo = (props) => {
 const SettingDialog = (props) => {
   const classes = useStyles()
   const { register, handleSubmit, control } = useForm();
-  const [ gender, setGender ] = useState('');
-  const [ loading, setLoading ] = useState(false);
-  const [ error, setError ] = useState({
+  const [gender, setGender] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({
     username: false,
     password: false,
     confirmpw: false,
-});
-  
-  const handleLogout = () =>{
+  });
+
+  const handleLogout = () => {
     axios.post('/logout')
-    .then(history.push('/login'));
+      .then(history.push('/login'));
   }
 
   const onSubmit = data => {
     setLoading(true);
-    if (data.name=='' && data.gender == '' && data.email == '' && data.phone == '' && data.photo.length==0){
+    if (data.name == '' && data.gender == '' && data.email == '' && data.phone == '' && data.photo.length == 0) {
       setLoading(false);
       props.handleClose();
       return true;
@@ -225,22 +225,22 @@ const SettingDialog = (props) => {
     let new_data = {}
     const update_entities = () => {
       entityFn.entity_edit(new_data)
-      .then(res=>{
-        console.log("Update sucess!");
-        
-        global.loginedUser.setUser(res.data);
-        setLoading(false);
-        props.handleClose();
-        return true;
-      })
+        .then(res => {
+          console.log("Update sucess!");
+
+          global.loginedUser.setUser(res.data);
+          setLoading(false);
+          props.handleClose();
+          return true;
+        })
     };
 
-    if (data.name   !='')  new_data.name = data.name; 
-    if (data.gender != '')  new_data.gender = data.gender
-    if (data.email  !='') new_data.email = data.email
-    if (data.phone  !='') new_data.phone = data.phone
-    if (data.photo.length!=0){
-      Upload_Photo(data.photo).then(downloadURL=>{
+    if (data.name != '') new_data.name = data.name;
+    if (data.gender != '') new_data.gender = data.gender
+    if (data.email != '') new_data.email = data.email
+    if (data.phone != '') new_data.phone = data.phone
+    if (data.photo.length != 0) {
+      Upload_Photo(data.photo).then(downloadURL => {
         new_data.profPhoto = downloadURL
         update_entities();
       })
@@ -257,26 +257,26 @@ const SettingDialog = (props) => {
           <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={classes.formShared}>
-            <TextField margin='dense' inputRef={register} className={classes.formName}
-              id="name" label="Name" name="name" type="name"/>
-            <FormControl className={classes.formGender} >
-              <InputLabel id="gender-label">Gender</InputLabel>
-              <Controller as={
-                <Select labelId="gender-label">
-                  <MenuItem value=''>-</MenuItem>
-                  <MenuItem value='Female'>Female</MenuItem>
-                  <MenuItem value='Male'>Male</MenuItem>
-                  <MenuItem value='Non-Binary'>Non-Binary</MenuItem>
-                </Select>
-              } control={control} name='gender' defaultValue=''/>
-            </FormControl>
+              <TextField margin='dense' inputRef={register} className={classes.formName}
+                id="name" label="Name" name="name" type="name" />
+              <FormControl className={classes.formGender} >
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Controller as={
+                  <Select labelId="gender-label">
+                    <MenuItem value=''>-</MenuItem>
+                    <MenuItem value='Female'>Female</MenuItem>
+                    <MenuItem value='Male'>Male</MenuItem>
+                    <MenuItem value='Non-Binary'>Non-Binary</MenuItem>
+                  </Select>
+                } control={control} name='gender' defaultValue='' />
+              </FormControl>
             </div>
-            <TextField fullWidth margin='dense' inputRef={register} 
-              id="email" label="Email" name="email" type="email"/>
-            <TextField fullWidth margin='dense' inputRef={register} 
+            <TextField fullWidth margin='dense' inputRef={register}
+              id="email" label="Email" name="email" type="email" />
+            <TextField fullWidth margin='dense' inputRef={register}
               id="phone" label="Phone" name="phone" />
-              <DialogContentText>Upload Icon Image</DialogContentText>
-            <Form.File type="file" name="photo" ref={register}/>
+            <DialogContentText>Upload Icon Image</DialogContentText>
+            <Form.File type="file" name="photo" ref={register} />
           </form>
         </DialogContent>
         <div className={classes.dialogApply}>
@@ -313,22 +313,22 @@ const UserActions = (props) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   return (
     <div className={classes.actionRoot}>
       {isSelf
         ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
-            Setting
+          Setting
           </Button>
-        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}> 
-            {followed ? 'Following' : 'Follow'}
-          </Button>}
+        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
+          {followed ? 'Following' : 'Follow'}
+        </Button>}
       {isSelf
         ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton}>
           Saved Lists
           </Button>
         : null}
-      <SettingDialog open={open} handleOpen={handleOpen} handleClose={handleClose}/>
+      <SettingDialog open={open} handleOpen={handleOpen} handleClose={handleClose} />
     </div>
   )
 }
@@ -337,10 +337,12 @@ const UserActions = (props) => {
 const ResversionDialog = (props) => {
   const classes = useStyles()
   const { register, handleSubmit, control } = useForm();
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [value, onChange] = useState(new Date());
   const onSubmit = data => {
     /* Time , Remarks*/
     console.log("data in resversion: " + JSON.stringify(data))
+
   };
 
   return (
@@ -350,19 +352,36 @@ const ResversionDialog = (props) => {
         <DialogContent>
           <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField  inputRef={register} className={classes.formName}
-              id="Time" label="Time" name="Time" type="Time"/>
+
+            <div>
+              <DateTimePicker
+                onChange={onChange}
+                value={value}
+                disableClock={true}
+              />
+            </div>
+
+            <TextField inputRef={register} className={classes.formName}
+              id="Time" label="Time" name="Time" type="Time" />
           </form>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField  inputRef={register} className={classes.formName}
-              id="Remarks" label="Remarks" name="Remarks" type="Remarks"/>
+            <TextField inputRef={register} className={classes.formName}
+              id="Remarks" label="Remarks" name="Remarks" type="Remarks" />
+          </form>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField inputRef={register} className={classes.formName}
+              id="Name" label="Name" name="Name" type="Name" />
+          </form>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField inputRef={register} className={classes.formName}
+              id="Phone" label="Phone" name="Phone" type="Phone" />
           </form>
         </DialogContent>
-          <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
-            onClick={handleSubmit(onSubmit)} >
-            Confirm
+        <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
+          onClick={handleSubmit(onSubmit)} >
+          Confirm
           </Button>
-          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
         <div className={classes.dialogItem}>
           <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
             Cancel
@@ -392,11 +411,11 @@ const RestActions = (props) => {
         <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleAddPost} >
           Add Post
       </Button>
-      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
-        Book Me!
+        <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
+          Book Me!
       </Button>
-      <ResversionDialog open={open} handleOpen={handleOpen} handleClose={handleClose}/>
-    </div>
+        <ResversionDialog open={open} handleOpen={handleOpen} handleClose={handleClose} />
+      </div>
     </>
   )
 }
