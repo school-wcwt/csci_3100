@@ -13,6 +13,7 @@ import NavBar from '../main/component/nav'
 import history from '../history'
 import {Form} from 'react-bootstrap';
 import {Upload_Photo} from '../../component/Upload/upload';
+
 const entityFn = require('../../component/load_backend/entityFunction');
 
 const useStyles = makeStyles((theme) => ({
@@ -176,7 +177,7 @@ const SettingDialog = (props) => {
     username: false,
     password: false,
     confirmpw: false,
-  });
+});
   const invalidData = data => {
     var validName = /^[0-9a-zA-Z_-]+$/;
     var flag = false;
@@ -188,10 +189,15 @@ const SettingDialog = (props) => {
     if (flag) return true 
     else return false;
   }
+  
+  const handleLogout = () =>{
+    axios.post('/logout')
+    .then(history.push('/login'));
+  }
 
   const onSubmit = data => {
     setLoading(true);
-    if (data.username=='' && data.photo.length==0){
+    if (data.username=='' && data.photo.length==0 && data.email == ''){
       setLoading(false);
       props.handleClose();
       return true;
@@ -208,7 +214,9 @@ const SettingDialog = (props) => {
         return true;
       })
     }
-
+    if (data.email!=''){
+      new_data.email = data.email;
+    }
     if (data.username!=''){
       if (invalidData(data)) return;
       new_data.username = data.username; 
@@ -225,7 +233,6 @@ const SettingDialog = (props) => {
   };
   return (
     <div>
- 
       <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle>Change My Info</DialogTitle>
         <DialogContent>
@@ -267,7 +274,7 @@ const SettingDialog = (props) => {
         </div>
         <DialogTitle>I can't eat anymore...</DialogTitle>
         <div className={classes.dialogItem}>
-          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton}>Log out</Button>
+          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={handleLogout}>Log out</Button>
         </div>
         <DialogTitle>Just let me go.</DialogTitle>
         <div className={classes.dialogItem}>
