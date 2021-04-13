@@ -311,7 +311,11 @@ const UserActions = (props) => {
   const followed = global.loginedUser.user.followingUser.includes(props.user._id);
   const isSelf = global.loginedUser.user.entityID == props.user.entityID;
   const hasGroupList = props.user.groupList.length !== 0
-
+  const HandleFollow = () =>{
+    entityFn.entity_follow(props.user.entityID)
+    .then(res=>global.loginedUser.setUser(res))
+    .catch(res=>console.log("Can not follow "+ props.user.entityID))
+  }
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -321,7 +325,7 @@ const UserActions = (props) => {
         ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Setting
           </Button>
-        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick={()=>{entityFn.entity_follow(props.user.entityID)}}>
+        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick={HandleFollow}>
           {followed ? 'Following' : 'Follow'}
         </Button>}
       {isSelf
@@ -411,7 +415,9 @@ const RestActions = (props) => {
     history.push(`/createPost/${props.rest.entityID}`)
   }
   const HandleFollow = () =>{
-    console.log("Handle follow");
+    entityFn.entity_follow(props.rest.entityID)
+    .then(res=>global.loginedUser.setUser(res))
+    .catch(res=>console.log("Can not follow "+ props.rest.entityID))
   }
   return (
     <>

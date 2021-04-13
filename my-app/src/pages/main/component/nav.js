@@ -91,6 +91,7 @@ export default function PrimarySearchAppBar() {
   const handleHistory = (page) => {
     setTimeout(() => {
       history.push(page);
+      history.go();
     }, 500)
   }
 
