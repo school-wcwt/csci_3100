@@ -349,8 +349,6 @@ const ReservationDialog = (props) => {
     setLoading(true);
     if (data.Name == ''){error.Name = true; setError(error); return true}
     if (data.Phone == ''){error.Phone = true; setError(error); return true}
-    console.log("My res data"+ JSON.stringify(props.rest));
-    return true
     const passdata = {
       user_email:global.loginedUser.user.email,
       rest_email:"mate@gmail.com",

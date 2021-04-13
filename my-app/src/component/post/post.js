@@ -2,7 +2,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
 import { IconButton, Card, CardMedia, CardContent, CardActions, 
-         Collapse, InputBase, Divider } from '@material-ui/core';
+         Collapse, InputBase, Divider, CircularProgress } from '@material-ui/core';
 import { FavoriteRounded, FavoriteBorderRounded, 
          AddCommentOutlined, AddCommentRounded,
          BookmarkBorderRounded, BookmarkRounded, } from '@material-ui/icons'
@@ -13,8 +13,7 @@ import global from '../global'
 import PostHeader from './component/PostHeader' 
 import ImageDisplay from './component/ImageDisplay' 
 import Hashtags from './component/Hashtags' 
-import Comments from './component/Comments' 
-
+import Comments from './component/Comments'  
 const PostFunc = require('../load_backend/postFunction');
 
 const useStyles = makeStyles((theme) => ({
@@ -40,16 +39,18 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
-  const [favourite,setFavourite] = useState(false);
+  const [loadingLike,setLoadingLike] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   const handleLike = () =>{
-    //console.log(JSON.stringify(props.post.postID));
-    setFavourite(!props.post.like.includes(global.loginedUser.user._id))
-    PostFunc.post_like(props.post.postID,favourite) 
+    setLoadingLike(true);
+    const state = !props.post.like.includes(global.loginedUser.user._id)
+    PostFunc.post_like(props.post.postID,state) 
     .then(res=>{
-      console.log("changed state in post ID "+ props.post.postID);
+      setTimeout(() => {
+        setLoadingLike(false)
+      }, 2000)
     })
   }
   if (global.loginedUser.user == null) return <Loading/>
@@ -74,7 +75,9 @@ const Post = (props) => {
         <span className={classes.footerLike}>{`${props.post.like.length} likes`}</span>
         <div>
           <IconButton onClick={handleLike}>
-            {props.post.like.includes(global.loginedUser.user._id)||favourite ? <FavoriteRounded/> : <FavoriteBorderRounded/>}
+            {loadingLike ? <CircularProgress size={24} className={classes.buttonProgress} />:
+              props.post.like.includes(global.loginedUser.user._id) ? <FavoriteRounded/> : <FavoriteBorderRounded/>
+            }
           </IconButton>
           <IconButton>
             {global.loginedUser.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
