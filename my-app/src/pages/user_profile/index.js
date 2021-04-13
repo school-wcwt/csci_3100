@@ -321,7 +321,7 @@ const UserActions = (props) => {
         ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Setting
           </Button>
-        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
+        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick={()=>{entityFn.entity_follow(props.user.entityID)}}>
           {followed ? 'Following' : 'Follow'}
         </Button>}
       {isSelf
@@ -411,8 +411,8 @@ const RestActions = (props) => {
   return (
     <>
       <div className={classes.actionRoot}>
-        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton}>
-          {followed ? 'Following' : 'Follow'}
+        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick={()=>{alert('gi!')}}>
+          {followed ? 'Following' : 'Follo6w'}
         </Button>
       </div>
       <div className={classes.actionRoot}>

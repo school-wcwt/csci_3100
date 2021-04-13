@@ -92,10 +92,10 @@ const entity_follow = (followID)=>{
   return new Promise((resolve,reject)=>{
     axios({
       method: 'PATCH',
-      url: 'user/follow/'+followID
+      url: 'entity/follow/'+followID
     })
     .then ( res =>{
-      console.log('sucess');
+      console.log('sucessfff');
       console.log(res);
       trigChange();
       return resolve(res.data)
