@@ -335,7 +335,7 @@ const UserActions = (props) => {
 }
 
 
-const ResversionDialog = (props) => {
+const ReservationDialog = (props) => {
   const classes = useStyles()
   const { register, handleSubmit, control } = useForm();
   const [loading, setLoading] = useState(false);
@@ -345,6 +345,8 @@ const ResversionDialog = (props) => {
     setLoading(true);
     if (data.Name == ''){error.Name = true; setError(error); return true}
     if (data.Phone == ''){error.Phone = true; setError(error); return true}
+    console.log("My res data"+ JSON.stringify(props.rest));
+    return true
     const passdata = {
       user_email:global.loginedUser.user.email,
       rest_email:"mate@gmail.com",
@@ -372,7 +374,7 @@ const ResversionDialog = (props) => {
   return (
     <div>
       <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle>Make Resversion</DialogTitle>
+        <DialogTitle>Make Reservation</DialogTitle>
         <DialogContent>
           <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -408,11 +410,14 @@ const RestActions = (props) => {
   const handleAddPost = () => {
     history.push(`/createPost/${props.rest.entityID}`)
   }
+  const HandleFollow = () =>{
+    console.log("Handle follow");
+  }
   return (
     <>
       <div className={classes.actionRoot}>
-        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick={()=>{alert('gi!')}}>
-          {followed ? 'Following' : 'Follo6w'}
+        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick = {HandleFollow}>
+          {followed ? 'Following' : 'Follow'}
         </Button>
       </div>
       <div className={classes.actionRoot}>
@@ -422,7 +427,7 @@ const RestActions = (props) => {
         <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Book Me!
       </Button>
-        <ResversionDialog {...props} open={open} handleOpen={handleOpen} handleClose={handleClose} />
+        <ReservationDialog {...props} open={open} handleOpen={handleOpen} handleClose={handleClose} />
       </div>
     </>
   )
