@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
 router.post('/new', (req, res) => {
     var authorFilter = {entityID: res.locals.user.entityID};
-    userFunc.createComment(req.body.postFilter, authorFilter, req.body.data.content)
+    userFunc.createComment(req.body.postFilter, authorFilter, req.body.content)
     .then(updatedPost => res.status(201).json(updatedPost))
     .catch(err => {
         if (err.message == 'Post not found.' || err.message == 'Entity not found.') 

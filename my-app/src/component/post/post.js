@@ -1,12 +1,13 @@
 //next: use filter
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { IconButton, Card, CardMedia, CardContent, CardActions, 
-         Collapse, InputBase, Divider, CircularProgress } from '@material-ui/core';
+         Collapse, InputBase, Divider, CircularProgress  } from '@material-ui/core';
 import { FavoriteRounded, FavoriteBorderRounded, 
          AddCommentOutlined, AddCommentRounded,
          BookmarkBorderRounded, BookmarkRounded, } from '@material-ui/icons'
-         
+import SendIcon from '@material-ui/icons/Send';
 import Loading from '../loading'
 import global from '../global'
 
@@ -15,6 +16,7 @@ import ImageDisplay from './component/ImageDisplay'
 import Hashtags from './component/Hashtags' 
 import Comments from './component/Comments'  
 const PostFunc = require('../load_backend/postFunction');
+const CommentFunc = require('../load_backend/commentFunction');
 
 const useStyles = makeStyles((theme) => ({
   // Card
@@ -39,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
+  const { register, handleSubmit } = useForm();
   const [loadingLike,setLoadingLike] = useState(false);
+  const [loadingComment,setLoadingComment] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -52,6 +56,13 @@ const Post = (props) => {
         setLoadingLike(false)
       }, 2000)
     })
+  }
+  const onSubmit = data => {
+    setLoadingComment(true)
+    CommentFunc.comment_create({postID:props.post.postID},data.newComment)
+    .then(res=>{setLoadingComment(false);setExpanded(false)})
+    .catch(err=>console.log("Error"))
+    
   }
   if (global.loginedUser.user == null) return <Loading/>
   else return (                    
@@ -91,7 +102,12 @@ const Post = (props) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Divider/>
         <CardContent>
-          <InputBase variant='filled' fullWidth multiline placeholder={`${global.loginedUser.user.username}'s comment`}></InputBase>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InputBase inputRef={register} name = "newComment" variant='filled' fullWidth multiline placeholder={`${global.loginedUser.user.username}'s comment`}/>
+          <IconButton style={{float: "right"}} onClick = {handleSubmit(onSubmit)}>
+          {loadingComment ? <CircularProgress size={24} className={classes.buttonProgress} />:<SendIcon />}
+          </IconButton>
+        </form>
         </CardContent>
       </Collapse>
     </Card>

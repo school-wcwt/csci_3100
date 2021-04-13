@@ -56,7 +56,7 @@ const comment_create = (fil,add_data) =>{
             url: 'comment/new',
             data:{
                 postFilter	: fil,
-                data    :   add_data
+                content    :   add_data
             }
         })
         .then ( res =>{
