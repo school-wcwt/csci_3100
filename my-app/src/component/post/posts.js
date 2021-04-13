@@ -27,7 +27,7 @@ export default function Posts(props) {
     fetchPosts(props.filter)
     detectChange(fetchPosts, props.filter)
     //return () => socket.disconnect();
-  }, [])
+  }, [props.filter])
 
   if (!fetched) return <Loading/>
   else if (fetched && posts == null) return <Error404/>
