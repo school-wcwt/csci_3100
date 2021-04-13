@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress, FormControl, Select, MenuItem, InputLabel     } from "@material-ui/core";
+import { Tooltip ,Avatar, Button, Divider,withStyles,makeStyles, Typography, IconButton, Popover, CssBaseline,TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,CircularProgress, FormControl, Select, MenuItem, InputLabel     } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded } from '@material-ui/icons'
 import Rating from '../../component/Rating'
@@ -120,6 +120,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[1],
+    color: 'black',
+    fontSize: 11,
+  },
+}))(Tooltip);
+
 const UserInfo = (props) => {
   const classes = useStyles()
   const renderItem = (name, count) => {
@@ -144,23 +153,43 @@ const UserInfo = (props) => {
 }
 
 const RestInfo = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const handleCopyAddress  = () =>{
+    navigator.clipboard.writeText(props.rest.address);
+    alert("Location Copied");
+  }
+  const handleCopyPhone  = () =>{
+    navigator.clipboard.writeText(props.rest.phone);
+    alert("Phone Copied");
+  }
+  const handleCopyHr  = () =>{
+    navigator.clipboard.writeText(`From ${String(props.rest.openingHr).split(",")[0]} To ${String(props.rest.openingHr).split(",")[1]}`);
+    alert("OpeningHour Copied");
+  }
   return (
     <div className={classes.infoRoot}>
-      <IconButton>
+      <Tooltip title={<Typography>{`Location: ${props.rest.address}`}</Typography>}>
+      <IconButton onClick = {handleCopyAddress}>
         <LocationOnRounded/>
       </IconButton>
-      {props.rest.phone 
-        ? <IconButton>
+      </Tooltip>
+      {props.rest.phone&&props.rest.phone!=0
+        ?
+        <Tooltip title={<Typography>{`Phone: ${props.rest.phone}`}</Typography>}>
+          <IconButton onClick = {handleCopyPhone}>
             <PhoneRounded/>
           </IconButton>
+        </Tooltip> 
         : <IconButton disabled>
             <PhoneDisabledRounded/>
           </IconButton>}
       {props.rest.openingHr && props.rest.openingHr.length !== 0
-        ? <IconButton>
+        ?
+        <Tooltip title={<Typography>{`Opening Hour: From ${String(props.rest.openingHr).split(",")[0]} To ${String(props.rest.openingHr).split(",")[1]}`}</Typography>}>
+          <IconButton onClick = {handleCopyHr}>
             <AlarmRounded/>
           </IconButton>
+          </Tooltip>
         : <IconButton disabled>
             <AlarmOffRounded/>
           </IconButton>}
@@ -197,30 +226,33 @@ const SettingDialog = (props) => {
 
   const onSubmit = data => {
     setLoading(true);
-    if (data.username=='' && data.photo.length==0 && data.email == ''){
+    if (data.name=='' && data.gender == '' && data.email == '' && data.phone == '' && data.photo.length==0){
       setLoading(false);
       props.handleClose();
       return true;
     }
+
     // statr update below
     let new_data = {}
     const update_entities = () => {
       entityFn.entity_edit(new_data)
       .then(res=>{
         console.log("Update sucess!");
+        
         global.loginedUser.setUser(res.data);
         setLoading(false);
         props.handleClose();
         return true;
       })
+    };
+
+    if (data.name!=''){
+      //if (invalidData(data)) return;
+      new_data.name = data.name; 
     }
-    if (data.email!=''){
-      new_data.email = data.email;
-    }
-    if (data.username!=''){
-      if (invalidData(data)) return;
-      new_data.username = data.username; 
-    }
+    if (data.gender != '')  new_data.gender = data.gender
+    if (data.email  !='') new_data.email = data.email
+    if (data.phone  !='') new_data.phone = data.phone
     if (data.photo.length!=0){
       Upload_Photo(data.photo).then(downloadURL=>{
         new_data.profPhoto = downloadURL
@@ -236,7 +268,7 @@ const SettingDialog = (props) => {
       <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle>Change My Info</DialogTitle>
         <DialogContent>
-          <DialogContentText> So, who do you want to be? 🥸 </DialogContentText>
+          <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={classes.formShared}>
             <TextField margin='dense' inputRef={register} className={classes.formName}
@@ -257,6 +289,7 @@ const SettingDialog = (props) => {
               id="email" label="Email" name="email" type="email"/>
             <TextField fullWidth margin='dense' inputRef={register} 
               id="phone" label="Phone" name="phone" />
+              <DialogContentText>Upload Icon Image</DialogContentText>
             <Form.File type="file" name="photo" ref={register}/>
           </form>
         </DialogContent>
