@@ -9,7 +9,6 @@ import RegisterForm from './component/registerForm'
 const Login = (props) => {
     var [panel, setPanel] = React.useState(0);
     const styles = useStyles(); 
-
     return (
         <div className={styles.viewPort}>
         <div className={styles.background}>

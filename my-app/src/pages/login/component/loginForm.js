@@ -12,6 +12,7 @@ import global from '../../../component/global'
 const LoginForm = (props) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [errormessage,setmessage] = useState('');
     const { register, handleSubmit } = useForm();
     const styles = useStyles();
 
@@ -33,13 +34,16 @@ const LoginForm = (props) => {
                 history.push('/main');
             }, 1500)
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            setmessage("password / User Mail Error, Please Try again");
+            setLoading(false);
+        })
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.flexContainer}>
             <TextField fullWidth margin='dense' inputRef={register}
-                required id="email" label="Email" name="email" type="email" />
+                required id="email" label="Email" name="email" type="email" error = {errormessage!=''} helperText = {errormessage} />
             <TextField fullWidth margin='dense' inputRef={register}
                 required id="password" label="Password" name="password" type="password" />
             <div className={styles.buttonWrapper}>

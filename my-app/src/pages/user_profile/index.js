@@ -147,6 +147,9 @@ const invalidData = data => {
 }
   const classes = useStyles()
   const [open, setOpen] = useState(false);
+  const hadleLogout = () =>{
+    history.push('/login');
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -155,7 +158,7 @@ const invalidData = data => {
   };
   const onSubmit = data => {
     setLoading(true);
-    if (data.username=='' && data.photo.length==0){
+    if (data.username=='' && data.photo.length==0 && data.email == ''){
       setLoading(false);
       handleClose();
       return true;
@@ -172,7 +175,9 @@ const invalidData = data => {
         return true;
       })
     }
-
+    if (data.email!=''){
+      new_data.email = data.email;
+    }
     if (data.username!=''){
       if (invalidData(data)) return;
       new_data.username = data.username; 
@@ -193,24 +198,24 @@ const invalidData = data => {
             Setting
       </Button> 
       <Dialog open={open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Change My data</DialogTitle>
+        <DialogTitle id="form-dialog-title">Seeting Panel</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Only Fill in the Field You want to change. mATE 1.0 Support Change Icon feature ^_^!
           </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField fullWidth margin='dense' inputRef={register} 
-                id="username" label="Username" name="username" type="username"
-                error={error.username} helperText={error.username ? 'Incorrect format. Letters, numbers, -, and _ only.' : "Letters, numbers, -, and _ only."} />
-          
           <Form.File type="file" name="photo" ref={register}/>
           </form>
           
         </DialogContent>
+        <Button onClick={hadleLogout} color="primary">
+            Logout
+          </Button>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
+          
           {laoding?
           <Button color="primary">
              <CircularProgress size={24} />
