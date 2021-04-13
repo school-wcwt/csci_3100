@@ -15,7 +15,7 @@ export default function AddPost(props) {
     var targetFilter = { "entityID": props.entityID||"rrr-1296" };
     Upload_Photo(data.photo).then(downloadURL => {
       var edit_data = {
-        "type": 0,
+        "type": 1,
         "rating": data.rating,
         "content": data.content,
         "photo": downloadURL,
