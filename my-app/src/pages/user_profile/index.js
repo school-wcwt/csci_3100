@@ -207,17 +207,6 @@ const SettingDialog = (props) => {
     password: false,
     confirmpw: false,
 });
-  const invalidData = data => {
-    var validName = /^[0-9a-zA-Z_-]+$/;
-    var flag = false;
-    var err = error;
-    if (!validName.test(data.username)) {
-        err.username = true; flag = true;
-    } else err.username = false;
-    setError(err);
-    if (flag) return true 
-    else return false;
-  }
   
   const handleLogout = () =>{
     axios.post('/logout')
@@ -246,10 +235,7 @@ const SettingDialog = (props) => {
       })
     };
 
-    if (data.name!=''){
-      //if (invalidData(data)) return;
-      new_data.name = data.name; 
-    }
+    if (data.name   !='')  new_data.name = data.name; 
     if (data.gender != '')  new_data.gender = data.gender
     if (data.email  !='') new_data.email = data.email
     if (data.phone  !='') new_data.phone = data.phone
@@ -347,8 +333,50 @@ const UserActions = (props) => {
   )
 }
 
+
+const ResversionDialog = (props) => {
+  const classes = useStyles()
+  const { register, handleSubmit, control } = useForm();
+  const [ loading, setLoading ] = useState(false);
+  const onSubmit = data => {
+    /* Time , Remarks*/
+    console.log("data in resversion: " + JSON.stringify(data))
+  };
+
+  return (
+    <div>
+      <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle>Make Resversion</DialogTitle>
+        <DialogContent>
+          <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField  inputRef={register} className={classes.formName}
+              id="Time" label="Time" name="Time" type="Time"/>
+          </form>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField  inputRef={register} className={classes.formName}
+              id="Remarks" label="Remarks" name="Remarks" type="Remarks"/>
+          </form>
+        </DialogContent>
+          <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
+            onClick={handleSubmit(onSubmit)} >
+            Confirm
+          </Button>
+          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        <div className={classes.dialogItem}>
+          <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
+            Cancel
+          </Button>
+        </div>
+      </Dialog>
+    </div>
+  );
+}
 const RestActions = (props) => {
   const classes = useStyles()
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const followed = global.loginedUser.user.followingRest.includes(props.rest._id);
   const handleAddPost = () =>{
     history.push(`/createPost/${props.rest.entityID}`)
@@ -364,9 +392,10 @@ const RestActions = (props) => {
       <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick = {handleAddPost} >
         Add Post
       </Button>
-      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton}>
-        Check-in
+      <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
+        Book Me!
       </Button>
+      <ResversionDialog open={open} handleOpen={handleOpen} handleClose={handleClose}/>
     </div>
     </>
   )
