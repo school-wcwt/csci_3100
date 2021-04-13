@@ -116,6 +116,7 @@ const SearchBar = (props) => {
       </div>
       <Autocomplete
         id="custom-input-demo"
+        style = {{color:"black"}}
         classes={{paper: classes.paper}}
         options={options} loading={loading}
         open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}
