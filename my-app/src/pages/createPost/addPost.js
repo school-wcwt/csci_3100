@@ -12,6 +12,8 @@ export default function AddPost(props) {
   console.log("Inside function Add post func for " +props.entityID);
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
+    data.rating = data.rating > 10 ? 10 : data.rating;
+    data.rating = data.rating < 0 ? 0 : data.rating;
     var targetFilter = { "entityID": props.entityID||"rrr-1296" };
     var rating = parseInt(data.rating);
     rating = rating < 0  ? 0  : rating;
@@ -34,7 +36,7 @@ export default function AddPost(props) {
         <Form className="justify-content-center" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="RestaurantName">
             <Form.Label>Rating</Form.Label>
-            <Form.Control type="text" pattern="[0-9]" placeholder="0 ~ 9" required name="rating" ref={register} />
+            <Form.Control type="number" pattern="[0-9]" placeholder="0 ~ 9" required name="rating" ref={register} />
           </Form.Group>
           <Form.Group controlId="content">
             <Form.Label>Content</Form.Label>
