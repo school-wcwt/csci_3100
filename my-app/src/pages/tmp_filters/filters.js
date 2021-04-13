@@ -5,21 +5,42 @@ my-app\src\pages\followers_page\entity.js
 
 just focus on var fil =???
 */
- 
+
+
+
 const Filter_testing = () => {
   const [entity2, setEntity2] = useState(null);
   const grab_followers = () => {
 
     entityFn.entity_get(global.loginedUser.user.entityID).then(data => {
+      console.log('------------===')
+      console.log(data)
       //===========User type=============
       //fil for ALL users
-      var fil1 = {
+      var fil = {
         'type': 'User'
       }
 
       //fil for following, User
       var fil = {
         '_id': { $in: data.followingUser },
+        'type': 'User'
+      }
+
+
+      //fil for followed, by User
+      var fil = {
+        '_id': { $in: data.followed },
+        'type': 'User'
+      }
+
+
+      //fil for not followed, exclude myself, by user
+      var fil1 = {
+        '_id': {
+          $nin:
+            data.followed.concat(global.loginedUser.user._id)
+        },
         'type': 'User'
       }
 
@@ -34,7 +55,7 @@ const Filter_testing = () => {
 
       //===========Rest type=============
       //fil for ALL Rest
-      var fil1 = {
+      var fil = {
         'type': 'Rest'
       }
 
@@ -62,6 +83,7 @@ const Filter_testing = () => {
   }
   return (
     <div>
+      <h1>Filter testing</h1>
       <button onClick={() => { grab_followers() }}>get_entity
     </button>
 

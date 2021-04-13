@@ -23,15 +23,34 @@ const Entity = () => {
     const grab_followers = () => {
 
       entityFn.entity_get(global.loginedUser.user.entityID).then(data => {
+        console.log('------------===')
+        console.log(data)
         //===========User type=============
         //fil for ALL users
-        var fil1 = {
+        var fil = {
           'type': 'User'
         }
 
         //fil for following, User
         var fil = {
           '_id': { $in: data.followingUser },
+          'type': 'User'
+        }
+
+
+        //fil for followed, by User
+        var fil = {
+          '_id': { $in: data.followed },
+          'type': 'User'
+        }
+
+
+        //fil for not followed, exclude myself, by user
+        var fil1 = {
+          '_id': {
+            $nin:
+              data.followed.concat(global.loginedUser.user._id)
+          },
           'type': 'User'
         }
 
@@ -46,7 +65,7 @@ const Entity = () => {
 
         //===========Rest type=============
         //fil for ALL Rest
-        var fil1 = {
+        var fil = {
           'type': 'Rest'
         }
 
