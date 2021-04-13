@@ -57,13 +57,13 @@ const entity_edit = (edit_data)=>{
       }
     })
     .then ( res =>{
-      console.log('sucess');
       trigChange();
-        console.log(res);
+      return resolve(res)
+        
     })
     .catch(err => {
         console.log(err.message);
-        console.log('error');
+        return reject(err)
     })
   })
 }
