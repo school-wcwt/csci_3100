@@ -15,6 +15,7 @@ const entity_get= (entityID)=>{
     })
     .then ( res =>{
         console.log('sucess');
+        console.log(res.data)
         return resolve(res.data)
     })
     .catch(err => {
@@ -36,6 +37,7 @@ const entity_post = (fil)=>{
     })
    .then ( res =>{
       console.log('sucess');
+      // console.log(res.data)
       return resolve(res.data)
     })
    .catch(err => {
