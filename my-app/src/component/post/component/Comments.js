@@ -1,5 +1,6 @@
 import { darken, makeStyles } from '@material-ui/core/styles'
 import { Avatar, ButtonBase, CardHeader, CardContent, Divider } from '@material-ui/core';
+import history from '../../../pages/history';
 
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
@@ -40,7 +41,7 @@ export default function Comment(props) {
           <Avatar variant='rounded' className={classes.commentAvatar}
             alt={comment.author.entityID} src={comment.author.profPhoto[0]}/>}
           title={
-          <ButtonBase className={classes.infoEntityID}>
+          <ButtonBase className={classes.infoEntityID} onClick = {()=>history.push(`/profile/${comment.author.entityID}`)}>
             <span>{comment.author.username}</span>
             <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
           </ButtonBase>}/>

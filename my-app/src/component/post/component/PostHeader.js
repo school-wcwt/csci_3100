@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, ButtonBase, CardHeader } from '@material-ui/core';
+import history from '../../../pages/history';
 import Rating from '../../Rating'
 
 const useStyles = makeStyles((theme) => ({
@@ -61,14 +62,14 @@ export default function PostHeader(props) {
           src={props.post.author.profPhoto[0]}/>}
       title={
         <div className={classes.infoAuthor}>
-          <ButtonBase className={classes.infoEntityID}>
+          <ButtonBase className={classes.infoEntityID} onClick = {()=>history.push(`/profile/${props.post.author.entityID}`)}>
             <span>{props.post.author.username}</span>
             <span className={classes.infoTag}>{`#${props.post.author.tag}`}</span>
           </ButtonBase>
           <span className={classes.infoPostType}>{props.post.type ? 'reviewed': 'checked-in at' }</span>
         </div>}
       subheader={
-        <ButtonBase className={classes.infoEntityID}>
+        <ButtonBase className={classes.infoEntityID} onClick = {()=>history.push(`/profile/${props.post.target.entityID}`)}>
           <span>{props.post.target.username}</span>
           <span className={classes.infoTag}>{`#${props.post.target.tag}`}</span>
         </ButtonBase>}
