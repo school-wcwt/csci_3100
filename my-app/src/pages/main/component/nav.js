@@ -123,9 +123,12 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant='dense' className={classes.toolBar}>
-          <Typography className={classes.header} onClick={() => handleHistory('/main')}>
+          <IconButton onClick={() => handleHistory('/main')}>
+          <Typography className={classes.header} >
             mATE
           </Typography>
+          </IconButton>
+
           <SearchBar/>
           {/*<IconButton edge='end' className={classes.rightButton}>
             <NotificationsIcon />
