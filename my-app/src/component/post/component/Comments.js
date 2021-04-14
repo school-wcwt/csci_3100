@@ -1,6 +1,11 @@
 import { darken, makeStyles } from '@material-ui/core/styles'
-import { Avatar, ButtonBase, CardHeader, CardContent, Divider } from '@material-ui/core';
+import { Avatar, ButtonBase, CardHeader, CardContent, Divider, IconButton } from '@material-ui/core';
 import history from '../../../pages/history';
+import global from '../../global';
+import CancelIcon from '@material-ui/icons/Cancel';
+import { DeleteForever } from '@material-ui/icons';
+
+const commentFunc = require('../../load_backend/commentFunction');
 
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
@@ -27,6 +32,14 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins',
     color: theme.palette.grey[400],
   },
+  deletebutton:{
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    float: "right",
+
+  },
 }))
 
 export default function Comment(props) {
@@ -45,7 +58,14 @@ export default function Comment(props) {
             <span>{comment.author.username}</span>
             <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
           </ButtonBase>}/>
-        <CardContent className={classes.commentContent}>{comment.content}</CardContent>
+        <CardContent className={classes.commentContent}>
+          {comment.content}
+          {global.loginedUser.user.entityID == comment.author.entityID?
+          <IconButton className = {classes.deletebutton} onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
+                    <DeleteForever />
+          </IconButton>:
+          null}
+        </CardContent>
       </div>
     )}
     </>

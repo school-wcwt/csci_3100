@@ -14,15 +14,12 @@ import { trigChange } from "../socket-client/socket-client";
 
 //GET entity/:entityID
 const post_get= (postID)=>{
-    console.log(postID)
     return new Promise((resolve,reject)=>{
       axios({
         method: 'GET',
         url: '/post/'+postID,
       })
       .then ( res =>{
-          console.log('sucess');
-          console.log(res.data)
           return resolve(res.data)
       })
       .catch(err => {
@@ -40,7 +37,6 @@ const post_get= (postID)=>{
 
 //POST user/:entityID/post/new
 const post_post = (fil) =>{
-    console.log(fil)
     return new Promise((resolve,reject)=>{
         axios({
             method: 'POST',
@@ -50,12 +46,9 @@ const post_post = (fil) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess!!!!!!');
-            console.log(res.data);
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -73,13 +66,10 @@ const post_create = (targetFilter,edit_data) =>{
             }
         })
         .then ( res =>{
-            console.log(res.data)
-            alert("Successful");
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error!!!!!!!!!!!!');
             return reject(err)
         })
@@ -95,13 +85,10 @@ const post_delete = (postID) =>{
             url: '/post/'+postID
         })
         .then ( res =>{
-            console.log('sucess');
-            console.log(res);
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -120,12 +107,10 @@ const post_edit = (postID,edit_data) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess');
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -134,8 +119,6 @@ const post_edit = (postID,edit_data) =>{
 
 //PATCH post/like/:postID
 const post_like = (postID, flag) =>{
-    alert('default: flag=1, please go and delete')
-    var flag =true
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PATCH',
@@ -145,13 +128,10 @@ const post_like = (postID, flag) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess');
-            console.log(res.data)
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })

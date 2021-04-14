@@ -15,8 +15,9 @@ import history from '../history'
 import { Form } from 'react-bootstrap';
 import { Upload_Photo } from '../../component/Upload/upload';
 import DateTimePicker from 'react-datetime-picker';
-import {send_reservation_email_user} from '../../component/email/email';
+import { send_reservation_email_user } from '../../component/email/email';
 const entityFn = require('../../component/load_backend/entityFunction');
+const postFn = require('../../component/load_backend/postFunction');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -221,6 +222,15 @@ const SettingDialog = (props) => {
     confirmpw: false,
   });
 
+  const delete_all_post = () => {
+    postFn.post_post({}).then(posts => {
+      posts.map(async (post, idx) => {
+        await postFn.post_delete(post.postID)
+      })
+    })
+  }
+
+
   const handleLogout = () => {
     axios.post('/logout')
       .then(history.push('/login'));
@@ -247,6 +257,10 @@ const SettingDialog = (props) => {
           return true;
         })
     };
+
+
+
+
 
     if (data.name != '') new_data.name = data.name;
     if (data.gender != '') new_data.gender = data.gender
@@ -310,27 +324,27 @@ const SettingDialog = (props) => {
         </div>
         <DialogTitle>Just let me go.</DialogTitle>
         <div className={classes.dialogItem}>
-          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton}>Delete Account</Button>
+          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={delete_all_post}>Delete All Posts</Button>
         </div>
       </Dialog>
     </div>
   );
 }
 
-const DisplaySingleUser = (props) =>{
+const DisplaySingleUser = (props) => {
   const classes = useStyles()
-  const Clickuser = () =>{
+  const Clickuser = () => {
     props.handleClose();
     history.push(`/profile/${props.userObj.entityID}`);
   }
   return (
-    <Button fullWidth size='small' color="primary" className={classes.dialogButtonSaveList} onClick = {Clickuser}>
+    <Button fullWidth size='small' color="primary" className={classes.dialogButtonSaveList} onClick={Clickuser}>
       <Avatar variant={props.userObj.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar_small}
-          alt={props.userObj.entityID} src={props.userObj.profPhoto[0]}/>
-          <div style = {{marginLeft: "5%"}}>
-          {`${props.userObj.username}`}
-          </div>
-          
+        alt={props.userObj.entityID} src={props.userObj.profPhoto[0]} />
+      <div style={{ marginLeft: "5%" }}>
+        {`${props.userObj.username}`}
+      </div>
+
     </Button>
   )
 }
@@ -338,7 +352,7 @@ const DisplaySingleUser = (props) =>{
 const UserActions = (props) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false);
-  const [openList,setOpenList] = useState(false);
+  const [openList, setOpenList] = useState(false);
   const [entity2, setEntity2] = useState(null);
   const followed = global.loginedUser.user.followingUser.includes(props.user._id);
   const isSelf = global.loginedUser.user.entityID == props.user.entityID;
@@ -351,7 +365,7 @@ const UserActions = (props) => {
           <DialogTitle>Followed List</DialogTitle>
           <DialogContent>
             <DialogContentText> {`${global.loginedUser.user.username} has followed Them. Click to explore more`} </DialogContentText>
-            {entity2? entity2.map((entityObj)=><DisplaySingleUser {...props} userObj = {entityObj}/>): <p>No data</p>}
+            {entity2 ? entity2.map((entityObj) => <DisplaySingleUser {...props} userObj={entityObj} />) : <p>No data</p>}
           </DialogContent>
           <div className={classes.dialogItem}>
             <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
@@ -362,22 +376,23 @@ const UserActions = (props) => {
       </div>
     );
   }
-  const HandleFollow = () =>{
+  const HandleFollow = () => {
     entityFn.entity_follow(props.user.entityID)
-    .then(res=>global.loginedUser.setUser(res))
-    .catch(res=>console.log("Can not follow "+ props.user.entityID))
+      .then(res => global.loginedUser.setUser(res))
+      .catch(res => console.log("Can not follow " + props.user.entityID))
   }
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpenList = () => setOpenList(true);
   const handleCloseList = () => setOpenList(false);
-  const handleSavedList = () =>{
+  const handleSavedList = () => {
     console.log("Loading saved list");
     var fil1 = {
       '_id': {
         $nin:
-        global.loginedUser.user.followed.concat(global.loginedUser.user._id)
+          global.loginedUser.user.followed.concat(global.loginedUser.user._id)
       },
+
       'type': 'User'
     }
     entityFn.entity_post(fil1).then(followedArray => {
@@ -385,7 +400,7 @@ const UserActions = (props) => {
       handleOpenList();
     })
 
-}
+  }
   return (
     <div className={classes.actionRoot}>
       {isSelf
@@ -396,7 +411,7 @@ const UserActions = (props) => {
           {followed ? 'Following' : 'Follow'}
         </Button>}
       {isSelf
-        ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton} onClick = {handleSavedList}>
+        ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton} onClick={handleSavedList}>
           Followed Lists
           </Button>
         : null}
@@ -412,33 +427,33 @@ const ReservationDialog = (props) => {
   const { register, handleSubmit, control } = useForm();
   const [loading, setLoading] = useState(false);
   const [ResDate, setResDate] = useState(new Date());
-  const [error,setError] = useState({Name:false,Phone:false,});
+  const [error, setError] = useState({ Name: false, Phone: false, });
   const onSubmit = data => {
     setLoading(true);
-    if (data.Name == ''){error.Name = true; setError(error); return true}
-    if (data.Phone == ''){error.Phone = true; setError(error); return true}
+    if (data.Name == '') { error.Name = true; setError(error); return true }
+    if (data.Phone == '') { error.Phone = true; setError(error); return true }
     const passdata = {
-      user_email:global.loginedUser.user.email,
-      rest_email:"mate@gmail.com",
-      to_name:data.Name,
-      RestaurantName:props.rest.username,
-      Time:`${ResDate.toDateString()} ${ResDate.toLocaleTimeString()}`,
-      Remarks: `User Phone Number: ${data.Phone} ${data.Remarks||''}` 
+      user_email: global.loginedUser.user.email,
+      rest_email: "mate@gmail.com",
+      to_name: data.Name,
+      RestaurantName: props.rest.username,
+      Time: `${ResDate.toDateString()} ${ResDate.toLocaleTimeString()}`,
+      Remarks: `User Phone Number: ${data.Phone} ${data.Remarks || ''}`
     }
     send_reservation_email_user(passdata)
-    .then(res=>{
-      alert("Please Check Your Email !")
-      setLoading(false);
-      setError({Name:false,Phone:false,})
-      props.handleClose();
-      
-    })
-    .catch(err=>{
-      alert("Fail to send email !")
-      setLoading(false);
-      setError({Name:false,Phone:false,})
-      props.handleClose();
-    })
+      .then(res => {
+        alert("Please Check Your Email !")
+        setLoading(false);
+        setError({ Name: false, Phone: false, })
+        props.handleClose();
+
+      })
+      .catch(err => {
+        alert("Fail to send email !")
+        setLoading(false);
+        setError({ Name: false, Phone: false, })
+        props.handleClose();
+      })
   };
 
   return (
@@ -448,12 +463,12 @@ const ReservationDialog = (props) => {
         <DialogContent>
           <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <DateTimePicker onChange={setResDate} value={ResDate} disableClock={true}/>
+            <DateTimePicker onChange={setResDate} value={ResDate} disableClock={true} />
             <TextField inputRef={register} className={classes.formName}
-              id="Name" fullWidth label="Name" name="Name" type="Name" error={error.Name} helperText = {error.Name?"Please Enter Your Name":null} />
+              id="Name" fullWidth label="Name" name="Name" type="Name" error={error.Name} helperText={error.Name ? "Please Enter Your Name" : null} />
             <TextField fullWidth inputRef={register} className={classes.formName}
               id="Remarks" label="Remarks" name="Remarks" type="Remarks" />
-            <TextField inputRef={register} className={classes.formName} error={error.Phone} helperText = {error.Phone?"Please Enter Your Phone Number":null}
+            <TextField inputRef={register} className={classes.formName} error={error.Phone} helperText={error.Phone ? "Please Enter Your Phone Number" : null}
               id="Phone" label="Phone Number" name="Phone" type="Phone" />
           </form>
         </DialogContent>
@@ -480,15 +495,15 @@ const RestActions = (props) => {
   const handleAddPost = () => {
     history.push(`/createPost?entityID=${props.rest.entityID}`)
   }
-  const HandleFollow = () =>{
-    entityFn.entity_follow(props.rest.entityID)
-    .then(res=>global.loginedUser.setUser(res))
-    .catch(res=>console.log("Can not follow "+ props.rest.entityID))
+  const HandleFollow = () => {
+    entityFn.entity_follow(props.rest.entityID, !followed)
+      .then(res => global.loginedUser.setUser(res))
+      .catch(res => console.log("Can not follow " + props.rest.entityID))
   }
   return (
     <>
       <div className={classes.actionRoot}>
-        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick = {HandleFollow}>
+        <Button variant="contained" color='primary' className={classes.actionPrimaryButton} onClick={HandleFollow}>
           {followed ? 'Following' : 'Follow'}
         </Button>
       </div>

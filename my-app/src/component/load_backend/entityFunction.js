@@ -7,15 +7,12 @@ import { trigChange } from "../socket-client/socket-client";
 
 //GET entity/:entityID
 const entity_get= (entityID)=>{
-  console.log(entityID)
   return new Promise((resolve,reject)=>{
     axios({
       method: 'GET',
       url: '/entity/'+entityID,
     })
     .then ( res =>{
-        console.log('sucess');
-        console.log(res.data)
         return resolve(res.data)
     })
     .catch(err => {
@@ -36,12 +33,9 @@ const entity_post = (fil)=>{
       }
     })
    .then ( res =>{
-      console.log('sucess');
-      // console.log(res.data)
       return resolve(res.data)
     })
    .catch(err => {
-      console.log(err.message);
       console.log('error');
       return reject(err)
     })
@@ -64,7 +58,7 @@ const entity_edit = (edit_data)=>{
         
     })
     .catch(err => {
-        console.log(err.message);
+        console.log('error');
         return reject(err)
     })
   })
@@ -78,7 +72,6 @@ const entity_delete= ()=>{
       url: '/entity/',
     })
     .then ( res =>{
-        console.log('sucess');
         trigChange();
         return resolve(res.data)
     })
@@ -91,8 +84,6 @@ const entity_delete= ()=>{
 
 //PATCH user/follow/:entityID
 const entity_follow = (followID,flag)=>{
-  alert('default: flag=1, please go and delete')
-  var flag= true
   return new Promise((resolve,reject)=>{
     axios({
       method: 'PATCH',
@@ -103,11 +94,9 @@ const entity_follow = (followID,flag)=>{
     })
     .then ( res =>{
       trigChange();
-      console.log(res.data)
       return resolve(res.data)
     })
     .catch(err => {
-        console.log(err.message);
         console.log('error');
         return reject(err)
     })

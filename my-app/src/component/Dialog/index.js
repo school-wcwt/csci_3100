@@ -20,11 +20,40 @@ const useStyles = makeStyles({
     backgroundColor: blue[100],
     color: blue[600],
   },
+  dialogButton: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+  },
+  dialogButtonSaveList: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+    justifyContent: "flex-start",
+  },
+  dialogApply: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+  },
+  dialogApply: {
+    width: '100%',
+    position: 'relative',
+    padding: theme.spacing(0, 3)
+  },
+  dialogItem: {
+    padding: theme.spacing(0, 3, 2)
+  },
 });
 
 function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open } = props;
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -35,29 +64,9 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-      <List>
-        {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <PersonIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={email} />
-          </ListItem>
-        ))}
-
-        <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-          <ListItemAvatar>
-            <Avatar>
-              <AddIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Add account" />
-        </ListItem>
-      </List>
+    <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+      <DialogTitle>Change My Info</DialogTitle>
+      
     </Dialog>
   );
 }

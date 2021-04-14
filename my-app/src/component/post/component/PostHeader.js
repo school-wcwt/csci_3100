@@ -1,16 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, ButtonBase, CardHeader } from '@material-ui/core';
+import { Avatar, ButtonBase, CardHeader,IconButton } from '@material-ui/core';
 import history from '../../../pages/history';
 import Rating from '../../Rating'
+import CancelIcon from '@material-ui/icons/Cancel';
+import global from '../../global';
 
+
+const postFunc = require('../../load_backend/postFunction');
 const useStyles = makeStyles((theme) => ({
   // Card
   header: {
-    '& .MuiCardHeader-action':{
+    '& .MuiCardHeader-action': {
       alignSelf: 'center',
       margin: '0px'
     },
-    '& .MuiCardHeader-avatar':{
+    '& .MuiCardHeader-avatar': {
       marginRight: theme.spacing(1),
     }
   },
@@ -19,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   infoAuthor: {
     display: 'flex',
   },
-  infoDetail : {
+  infoDetail: {
     fontFamily: 'Poppins',
     display: 'flex',
     flexDirection: 'column',
@@ -58,25 +62,32 @@ export default function PostHeader(props) {
   return (
     <CardHeader className={classes.header}
       avatar={
-        <Avatar variant='rounded' alt={props.post.author.entityID} 
-          src={props.post.author.profPhoto[0]}/>}
+        <Avatar variant='rounded' alt={props.post.author.entityID}
+          src={props.post.author.profPhoto[0]} />}
       title={
         <div className={classes.infoAuthor}>
-          <ButtonBase className={classes.infoEntityID} onClick = {()=>history.push(`/profile/${props.post.author.entityID}`)}>
+          <ButtonBase className={classes.infoEntityID} onClick={() => history.push(`/profile/${props.post.author.entityID}`)}>
             <span>{props.post.author.username}</span>
             <span className={classes.infoTag}>{`#${props.post.author.tag}`}</span>
           </ButtonBase>
-          <span className={classes.infoPostType}>{props.post.type ? 'reviewed': 'checked-in at' }</span>
+          <span className={classes.infoPostType}>{props.post.type ? 'reviewed' : 'checked-in at'}</span>
         </div>}
       subheader={
-        <ButtonBase className={classes.infoEntityID} onClick = {()=>history.push(`/profile/${props.post.target.entityID}`)}>
+        <ButtonBase className={classes.infoEntityID} onClick={() => history.push(`/profile/${props.post.target.entityID}`)}>
           <span>{props.post.target.username}</span>
           <span className={classes.infoTag}>{`#${props.post.target.tag}`}</span>
         </ButtonBase>}
       action={
         <div className={classes.infoDetail}>
-          {props.post.rating !== undefined ? <Rating rating={props.post.rating}/> : <Rating rating={0}/>}
+          {props.post.rating !== undefined ? <Rating rating={props.post.rating} /> : <Rating rating={0} />}
           {renderDate(props.post.createdTime)}
+          {global.loginedUser.user.entityID == props.post.author.entityID ?
+            <IconButton onClick={() => { postFunc.post_delete(props.post.postID)}}>
+              Remove
+            </IconButton> :
+            null}
+
+
         </div>}
     />
   )
