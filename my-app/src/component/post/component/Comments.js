@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins',
     color: theme.palette.grey[400],
   },
+  deletebutton:{
+    justifyContent: "flex-end"
+  }
 }))
 
 export default function Comment(props) {
@@ -52,7 +55,7 @@ export default function Comment(props) {
         <CardContent className={classes.commentContent}>
           {comment.content}
           {global.loginedUser.user.entityID == comment.author.entityID?
-          <IconButton onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
+          <IconButton className = {classes.deletebutton} onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
                     <CancelIcon />
           </IconButton>:
           null}
