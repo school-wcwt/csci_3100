@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { darken, makeStyles } from '@material-ui/core/styles';
-import { Menu, MenuItem, AppBar, Toolbar, IconButton, Typography} from '@material-ui/core';
+import { Menu, MenuItem, AppBar, Toolbar, IconButton, Button, Typography} from '@material-ui/core';
 
 import ExploreIcon from '@material-ui/icons/ExploreOutlined'
 import AddIcon from '@material-ui/icons/AddRounded'
@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   header: {
-    ...theme.typography.h6,
     color: theme.palette.primary.main,
     textAlign: 'left',
     marginRight: theme.spacing(2),
+    textTransform: 'none'
   },
   rightButton: {
     color: theme.palette.primary.main,
@@ -123,11 +123,11 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar variant='dense' className={classes.toolBar}>
-          <IconButton onClick={() => handleHistory('/main')}>
-          <Typography className={classes.header} >
-            mATE
-          </Typography>
-          </IconButton>
+          <Button className={classes.header} onClick={() => handleHistory('/main')}>
+            <Typography variant='h6'>
+              mATE
+            </Typography>
+          </Button>
 
           <SearchBar/>
           {/*<IconButton edge='end' className={classes.rightButton}>
