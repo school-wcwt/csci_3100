@@ -3,8 +3,7 @@ import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bo
 import PanelBar from "./panel.js"
 import global from '../../component/global'
 import {WhatsappShareButton, WhatsappIcon,
-EmailShareButton,EmailIcon,
-FacebookShareButton, FacebookIcon} from "react-share";
+EmailShareButton,EmailIcon} from "react-share";
 import { GetMyEntities } from '../services/authService';
 
 const entityFn = require("../../component/load_backend/entityFunction");
@@ -110,9 +109,6 @@ const Entity = () => {
         <EmailIcon></EmailIcon>
         </EmailShareButton>
 
-        <FacebookShareButton url ="Hi! I am using mATE. Eat with me at http://localhost:3000/">
-        <FacebookIcon></FacebookIcon>
-        </FacebookShareButton>
         <h1>Filter testing</h1>
         <button onClick={() => { grab_followers() }}>get_entity
       </button>

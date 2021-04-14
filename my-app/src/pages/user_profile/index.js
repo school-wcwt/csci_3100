@@ -15,6 +15,10 @@ import history from '../history'
 import { Form } from 'react-bootstrap';
 import { Upload_Photo } from '../../component/Upload/upload';
 import DateTimePicker from 'react-datetime-picker';
+
+import {WhatsappShareButton, WhatsappIcon,
+  EmailShareButton,EmailIcon} from "react-share";
+
 import { send_reservation_email_user } from '../../component/email/email';
 const entityFn = require('../../component/load_backend/entityFunction');
 const postFn = require('../../component/load_backend/postFunction');
@@ -325,6 +329,15 @@ const SettingDialog = (props) => {
         <DialogTitle>Just let me go.</DialogTitle>
         <div className={classes.dialogItem}>
           <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={delete_all_post}>Delete All Posts</Button>
+        </div>
+        <div>
+        <WhatsappShareButton url="Hi! I am using mATE. Eat with me at http://localhost:3000/">
+        <WhatsappIcon></WhatsappIcon>
+        </WhatsappShareButton>
+
+        <EmailShareButton url="Hi! I am using mATE. Eat with me at http://localhost:3000/">
+        <EmailIcon></EmailIcon>
+        </EmailShareButton>
         </div>
       </Dialog>
     </div>
