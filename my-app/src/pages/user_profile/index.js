@@ -80,6 +80,20 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.grey[700]
     },
   },
+  actionPrimaryButtonDisabled: {
+    width: '100%',
+    margin: 'auto',
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    backgroundColor: theme.palette.grey[700],
+    color: theme.palette.grey[200],
+    '&:hover': {
+      background: theme.palette.primary.light,
+      color: theme.palette.grey[400]
+    },
+  },
   actionSecondaryButton: {
     width: '290px',
     fontFamily: 'Poppins',
@@ -397,9 +411,9 @@ const UserActions = (props) => {
     );
   }
   const HandleFollow = () => {
-    entityFn.entity_follow(props.user.entityID,!followed)
-      .then(res => global.loginedUser.setUser(res))
-      .catch(res => console.log("Can not follow " + props.user.entityID))
+    entityFn.entity_follow(props.user.entityID, !followed)
+    .then(res => global.loginedUser.setUser(res))
+    .catch(res => console.log("Can not follow " + props.user.entityID))
   }
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -423,9 +437,9 @@ const UserActions = (props) => {
         ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Setting
           </Button>
-        : <Button variant="contained" color='primary' className={classes.actionPrimaryButton} onClick={HandleFollow}>
-          {followed ? 'Following' : 'Follow'}
-        </Button>}
+        : <Button variant="contained" color='primary' className={followed ? classes.actionPrimaryButtonDisabled : classes.actionPrimaryButton} onClick={HandleFollow}>
+            {followed ? 'Unfollow' : 'Follow'}
+          </Button>}
       {isSelf
         ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton} onClick={handleSavedList}>
           Followed Lists
@@ -513,25 +527,25 @@ const RestActions = (props) => {
   }
   const HandleFollow = () => {
     entityFn.entity_follow(props.rest.entityID, !followed)
-      .then(res => global.loginedUser.setUser(res))
-      .catch(res => console.log("Can not follow " + props.rest.entityID))
+    .then(res => global.loginedUser.setUser(res))
+    .catch(res => console.log("Can not follow " + props.rest.entityID))
   }
   return (
     <>
       <div className={classes.actionRoot}>
-        <Button variant="contained" color='primary' className={classes.actionPrimaryButton} onClick={HandleFollow}>
-          {followed ? 'Following' : 'Follow'}
+        <Button variant="contained" color='primary' className={followed ? classes.actionPrimaryButtonDisabled : classes.actionPrimaryButton} onClick={HandleFollow}>
+          {followed ? 'Unfollow' : 'Follow'}
         </Button>
       </div>
       <div className={classes.actionRoot}>
         <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleAddPost} >
           Add Post
-      </Button>
+        </Button>
         <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Book Me!
-      </Button>
-        <ReservationDialog {...props} open={open} handleOpen={handleOpen} handleClose={handleClose} />
+        </Button>
       </div>
+      <ReservationDialog {...props} open={open} handleOpen={handleOpen} handleClose={handleClose} />
     </>
   )
 }
