@@ -101,7 +101,7 @@ export default function RestCard(props) {
           </Tooltip>
           <Typography variant='body1'>{props.rest.name ? props.rest.name : '-'}</Typography>
           {props.rest.post.length !== 0
-            ? <Rating rating={parseInt(props.rest.rating / props.rest.post.length)} /> : <Rating rating={0} />}
+            ? <Rating rating={props.rest.rating / props.rest.post.length} /> : <Rating rating={0} />}
           <Tooltip title={props.rest.address}>
             <LocationOnRounded />
           </Tooltip>
