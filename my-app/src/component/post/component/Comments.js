@@ -2,6 +2,10 @@ import { darken, makeStyles } from '@material-ui/core/styles'
 import { Avatar, ButtonBase, CardHeader, CardContent, Divider, IconButton } from '@material-ui/core';
 import history from '../../../pages/history';
 import global from '../../global';
+import CancelIcon from '@material-ui/icons/Cancel';
+
+const CommentFunc = require('../../load_backend/commentFunction');
+
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
     paddingBottom: theme.spacing(1),
@@ -48,7 +52,7 @@ export default function Comment(props) {
         <CardContent className={classes.commentContent}>
           {comment.content}
           {global.loginedUser.user.entityID == comment.author.entityID?
-          <IconButton >
+          <IconButton onClick = {}>
             
           </IconButton>:
           null}
