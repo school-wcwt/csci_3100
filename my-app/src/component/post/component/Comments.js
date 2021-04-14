@@ -1,7 +1,7 @@
 import { darken, makeStyles } from '@material-ui/core/styles'
-import { Avatar, ButtonBase, CardHeader, CardContent, Divider } from '@material-ui/core';
+import { Avatar, ButtonBase, CardHeader, CardContent, Divider, IconButton } from '@material-ui/core';
 import history from '../../../pages/history';
-
+import global from '../../global';
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
     paddingBottom: theme.spacing(1),
@@ -45,7 +45,14 @@ export default function Comment(props) {
             <span>{comment.author.username}</span>
             <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
           </ButtonBase>}/>
-        <CardContent className={classes.commentContent}>{comment.content}</CardContent>
+        <CardContent className={classes.commentContent}>
+          {comment.content}
+          {global.loginedUser.user.entityID == comment.author.entityID?
+          <IconButton >
+            
+          </IconButton>:
+          null}
+        </CardContent>
       </div>
     )}
     </>
