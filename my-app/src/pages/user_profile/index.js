@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     width: '8rem',
     height: '8rem'
   },
+  avatar_small: {
+    width: '2rem',
+    height: '2rem'
+  },
   infoRoot: {
     display: 'flex',
   },
@@ -85,6 +89,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
     letterSpacing: '2px',
     alignSelf: 'center',
+  },
+  dialogButtonSaveList: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    alignSelf: 'center',
+    float:"left",
   },
   dialogApply: {
     fontFamily: 'Poppins',
@@ -306,9 +318,14 @@ const SettingDialog = (props) => {
 }
 
 const DisplaySingleUser = ({userObj}) =>{
+  const classes = useStyles()
   // button with profPhoto and username, onClick = {()=>history.push('/profile/entityID)}
   return (
-    <p>{`${userObj.entityID} and ${userObj.profPhoto[0]} and ${userObj.username}`}</p>
+    <Button fullWidth size='small' color="primary" className={classes.dialogButtonSaveList} onClick = {() => {history.push(`/profile/${userObj.entityID}`);}}>
+      <Avatar variant={userObj.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar_small}
+          alt={userObj.entityID} src={userObj.profPhoto[0]}/>
+          {`${userObj.username}`}
+    </Button>
   )
 }
 
