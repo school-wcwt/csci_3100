@@ -390,7 +390,7 @@ const UserActions = (props) => {
     );
   }
   const HandleFollow = () => {
-    entityFn.entity_follow(props.user.entityID)
+    entityFn.entity_follow(props.user.entityID,!followed)
       .then(res => global.loginedUser.setUser(res))
       .catch(res => console.log("Can not follow " + props.user.entityID))
   }
@@ -400,15 +400,11 @@ const UserActions = (props) => {
   const handleCloseList = () => setOpenList(false);
   const handleSavedList = () => {
     console.log("Loading saved list");
-    var fil1 = {
-      '_id': {
-        $nin:
-          global.loginedUser.user.followed.concat(global.loginedUser.user._id)
-      },
-
+    var fil = {
+      '_id': { $in: global.loginedUser.user.followingUser },
       'type': 'User'
     }
-    entityFn.entity_post(fil1).then(followedArray => {
+    entityFn.entity_post(fil).then(followedArray => {
       setEntity2(followedArray);
       handleOpenList();
     })
@@ -420,7 +416,7 @@ const UserActions = (props) => {
         ? <Button variant='outlined' color='primary' className={classes.actionSecondaryButton} onClick={handleOpen}>
           Setting
           </Button>
-        : <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick={HandleFollow}>
+        : <Button variant="contained" color='primary' className={classes.actionPrimaryButton} onClick={HandleFollow}>
           {followed ? 'Following' : 'Follow'}
         </Button>}
       {isSelf
