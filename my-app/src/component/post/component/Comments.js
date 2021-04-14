@@ -33,8 +33,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.grey[400],
   },
   deletebutton:{
-    justifyContent: "flex-end"
-  }
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '1rem',
+    letterSpacing: '2px',
+    float: "right",
+
+  },
 }))
 
 export default function Comment(props) {
@@ -57,7 +62,7 @@ export default function Comment(props) {
           {comment.content}
           {global.loginedUser.user.entityID == comment.author.entityID?
           <IconButton className = {classes.deletebutton} onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
-                    <CancelIcon />
+                    <DeleteForever />
           </IconButton>:
           null}
         </CardContent>
