@@ -97,8 +97,6 @@ const entity_follow = (followID)=>{
       url: 'entity/follow/'+followID
     })
     .then ( res =>{
-      console.log('sucessfff');
-      console.log(res);
       trigChange();
       return resolve(res.data)
     })

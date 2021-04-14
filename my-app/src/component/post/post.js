@@ -15,6 +15,7 @@ import PostHeader from './component/PostHeader'
 import ImageDisplay from './component/ImageDisplay' 
 import Hashtags from './component/Hashtags' 
 import Comments from './component/Comments'  
+const EntityFunc = require('../load_backend/entityFunction');
 const PostFunc = require('../load_backend/postFunction');
 const CommentFunc = require('../load_backend/commentFunction');
 
@@ -44,6 +45,7 @@ const Post = (props) => {
   const { register, handleSubmit } = useForm();
   const [loadingLike,setLoadingLike] = useState(false);
   const [loadingComment,setLoadingComment] = useState(false);
+  const [loadingFollow,setLoadingFollow] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -55,6 +57,16 @@ const Post = (props) => {
       setTimeout(() => {
         setLoadingLike(false)
       }, 2000)
+    })
+  }
+  const handleBookMark = () => {
+    if(props.post.like.includes(global.loginedUser.user._id))
+      return true
+    setLoadingFollow(true);
+    EntityFunc.entity_follow(`${props.post.target.entityID}`)
+    .then(res=>{
+      global.loginedUser.setUser(res);
+      setLoadingFollow(false);
     })
   }
   const onSubmit = data => {
@@ -90,13 +102,15 @@ const Post = (props) => {
       <CardActions className={classes.footer}>
         <span className={classes.footerLike}>{`${props.post.like.length} likes`}</span>
         <div>
-          <IconButton onClick={handleLike}>
+          <IconButton onClick={handleLike} >
             {loadingLike ? <CircularProgress size={24} className={classes.buttonProgress} />:
               props.post.like.includes(global.loginedUser.user._id) ? <FavoriteRounded/> : <FavoriteBorderRounded/>
             }
           </IconButton>
-          <IconButton>
-            {global.loginedUser.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
+          
+          <IconButton onClick={handleBookMark} disable = {props.post.like.includes(global.loginedUser.user._id)}>
+            {loadingFollow?<CircularProgress size={24} className={classes.buttonProgress} />:
+            global.loginedUser.user.followingRest.includes(props.post.target._id) ? <BookmarkRounded/> : <BookmarkBorderRounded/>}
           </IconButton>
           <IconButton onClick={handleExpandClick}>
             {expanded ? <AddCommentRounded/> : <AddCommentOutlined/>}
