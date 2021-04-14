@@ -305,12 +305,40 @@ const SettingDialog = (props) => {
   );
 }
 
+const DisplaySingleUser = ({userObj}) =>{
+  // button with profPhoto and username, onClick = {()=>history.push('/profile/entityID)}
+  return (
+    <p>{`${userObj.entityID} and ${userObj.profPhoto[0]} and ${userObj.username}`}</p>
+  )
+}
+
 const UserActions = (props) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false);
+  const [openList,setOpenList] = useState(false);
+  const [entity2, setEntity2] = useState(null);
   const followed = global.loginedUser.user.followingUser.includes(props.user._id);
   const isSelf = global.loginedUser.user.entityID == props.user.entityID;
-  const hasGroupList = props.user.groupList.length !== 0
+  const hasGroupList = props.user.followingUser.length != 0
+  const SavedListDialog = (props) => {
+    const classes = useStyles()
+    return (
+      <div>
+        <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle>Followed List</DialogTitle>
+          <DialogContent>
+            <DialogContentText> {`${global.loginedUser.user.username} has followed Them. Click to explore more`} </DialogContentText>
+            {entity2? entity2.map((entityObj)=><DisplaySingleUser userObj = {entityObj}/>): <p>No data</p>}
+          </DialogContent>
+          <div className={classes.dialogItem}>
+            <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
+              Cancel
+            </Button>
+          </div>
+        </Dialog>
+      </div>
+    );
+  }
   const HandleFollow = () =>{
     entityFn.entity_follow(props.user.entityID)
     .then(res=>global.loginedUser.setUser(res))
@@ -318,7 +346,23 @@ const UserActions = (props) => {
   }
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpenList = () => setOpenList(true);
+  const handleCloseList = () => setOpenList(false);
+  const handleSavedList = () =>{
+    console.log("Loading saved list");
+    var fil1 = {
+      '_id': {
+        $nin:
+        global.loginedUser.user.followed.concat(global.loginedUser.user._id)
+      },
+      'type': 'User'
+    }
+    entityFn.entity_post(fil1).then(followedArray => {
+      setEntity2(followedArray);
+      handleOpenList();
+    })
 
+}
   return (
     <div className={classes.actionRoot}>
       {isSelf
@@ -329,11 +373,12 @@ const UserActions = (props) => {
           {followed ? 'Following' : 'Follow'}
         </Button>}
       {isSelf
-        ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton}>
-          Saved Lists
+        ? <Button variant='outlined' color='primary' disabled={!hasGroupList} className={classes.actionSecondaryButton} onClick = {handleSavedList}>
+          Followed Lists
           </Button>
         : null}
       <SettingDialog open={open} handleOpen={handleOpen} handleClose={handleClose} />
+      <SavedListDialog {...props} open={openList} handleOpen={handleOpenList} handleClose={handleCloseList} />
     </div>
   )
 }
