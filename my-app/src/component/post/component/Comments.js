@@ -1,6 +1,9 @@
 import { darken, makeStyles } from '@material-ui/core/styles'
 import { Avatar, ButtonBase, CardHeader, CardContent, Divider } from '@material-ui/core';
 import history from '../../../pages/history';
+import CancelIcon from '@material-ui/icons/Cancel';
+
+const CommentFunc = require('../../load_backend/commentFunction');
 
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
@@ -45,7 +48,12 @@ export default function Comment(props) {
             <span>{comment.author.username}</span>
             <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
           </ButtonBase>}/>
-        <CardContent className={classes.commentContent}>{comment.content}</CardContent>
+        <CardContent className={classes.commentContent}>
+          <>
+          {comment.content}
+          <button onClick ={()=>{CommentFunc.comment_delete(comment.commentID)}}><CancelIcon></CancelIcon></button>
+          </>
+        </CardContent>
       </div>
     )}
     </>

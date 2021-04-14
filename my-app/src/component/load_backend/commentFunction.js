@@ -11,12 +11,9 @@ const comment_get = (commentID) =>{
             url: `comment/${commentID}`,
         })
         .then ( res =>{
-            console.log('sucess');
-            console.log(res);
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -34,12 +31,9 @@ const comment_post = (fil) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess');
-            console.log(res);
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -60,13 +54,10 @@ const comment_create = (fil,add_data) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess');
-            console.log(res);
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -82,13 +73,10 @@ const comment_delete = (commentID) =>{
             url: `comment/${commentID}`
         })
         .then (res =>{
-            console.log('sucess');
-            console.log(res);
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })
@@ -107,12 +95,10 @@ const comment_edit = (commentID,edit_data) =>{
             }
         })
         .then ( res =>{
-            console.log('sucess');
             trigChange();
             return resolve(res.data)
         })
         .catch(err => {
-            console.log(err.message);
             console.log('error');
             return reject(err)
         })

@@ -85,6 +85,10 @@ const Entity = () => {
           'type': 'Rest'
         }
 
+        //fil for following rest and users
+        var fil1 = {
+          '_id': { $in: data.followingRest.concat(data.followingUser) },
+        }
 
         //then will return the json array
         entityFn.entity_post(fil1).then(data => {
