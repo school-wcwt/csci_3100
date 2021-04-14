@@ -3,6 +3,7 @@ import { Avatar, ButtonBase, CardHeader, CardContent, Divider, IconButton } from
 import history from '../../../pages/history';
 import global from '../../global';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { DeleteForever } from '@material-ui/icons';
 
 const commentFunc = require('../../load_backend/commentFunction');
 
@@ -53,7 +54,7 @@ export default function Comment(props) {
           {comment.content}
           {global.loginedUser.user.entityID == comment.author.entityID?
           <IconButton onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
-                    <CancelIcon />
+                    <DeleteForever />
           </IconButton>:
           null}
         </CardContent>
