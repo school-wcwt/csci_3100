@@ -54,7 +54,7 @@ const RegisterForm = (props) => {
         .then(res => {
             setLoading(false);
             setSuccess(true);
-            // send_validation_email(emaildata);
+            send_validation_email(emaildata);
         })
         .catch(err => console.log(err.message));
     };
