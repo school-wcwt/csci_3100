@@ -67,11 +67,10 @@ const Post = (props) => {
     })
   }
   const handleBookMark = () => {
-    if(props.post.like.includes(global.loginedUser.user._id))
-      return true
     setLoadingFollow(true);
-    EntityFunc.entity_follow(`${props.post.target.entityID}`)
-    .then(res=>{
+    const flag = !global.loginedUser.user.followingRest.includes(props.post.target._id)
+    EntityFunc.entity_follow(`${props.post.target.entityID}`, flag)
+    .then(res => {
       global.loginedUser.setUser(res);
       setLoadingFollow(false);
     })
