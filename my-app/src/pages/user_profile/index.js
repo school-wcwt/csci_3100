@@ -1,7 +1,7 @@
 
-import { Tooltip, Avatar, Button, Divider, withStyles, makeStyles, Typography, IconButton, Popover, CssBaseline, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, FormControl, Select, MenuItem, InputLabel } from "@material-ui/core";
+import { Tooltip, Avatar, Button, Divider, withStyles, makeStyles, Typography, IconButton, Popover, CssBaseline, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, FormControl, Select, MenuItem, InputLabel, useTheme } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
-import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded } from '@material-ui/icons'
+import { LocationOnRounded, PhoneRounded, PhoneDisabledRounded, AlarmRounded, AlarmOffRounded, MailOutlineRounded } from '@material-ui/icons'
 import Rating from '../../component/Rating'
 import global from '../../component/global'
 import Posts from '../../component/post/posts'
@@ -124,6 +124,12 @@ const useStyles = makeStyles((theme) => ({
   formName: {
     flex: 3
   },
+  shareButtons: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: theme.spacing(2)
+  },
   formGender: {
     width: '7rem',
     margin: theme.spacing(1, 0, 0.5, 2),
@@ -226,6 +232,8 @@ const SettingDialog = (props) => {
     confirmpw: false,
   });
 
+  const theme = useTheme();
+
   const delete_all_post = () => {
     postFn.post_post({}).then(posts => {
       posts.map(async (post, idx) => {
@@ -262,10 +270,6 @@ const SettingDialog = (props) => {
         })
     };
 
-
-
-
-
     if (data.name != '') new_data.name = data.name;
     if (data.gender != '') new_data.gender = data.gender
     if (data.email != '') new_data.email = data.email
@@ -283,10 +287,11 @@ const SettingDialog = (props) => {
   return (
     <div>
       <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle>Change My Info</DialogTitle>
+        <DialogTitle>Settings</DialogTitle>
         <DialogContent>
-          <DialogContentText> So, who do you want to be? Just Fill What You Wanna change! </DialogContentText>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle>Change My Identity</DialogTitle>
+          <DialogContentText className={classes.dialogApply}> So, who do you want to be? Just fill what you wanna change!</DialogContentText>
+          <form onSubmit={handleSubmit(onSubmit)} className={classes.dialogItem}>
             <div className={classes.formShared}>
               <TextField margin='dense' inputRef={register} className={classes.formName}
                 id="name" label="Name" name="name" type="name" />
@@ -309,36 +314,38 @@ const SettingDialog = (props) => {
             <DialogContentText>Upload Icon Image</DialogContentText>
             <Form.File type="file" name="photo" ref={register} />
           </form>
+          <div className={classes.dialogApply}>
+            <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
+              onClick={handleSubmit(onSubmit)} >
+              Apply Changes
+            </Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+          </div>
+          <div className={classes.dialogItem}>
+            <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
+              Cancel
+            </Button>
+          </div>
+          <DialogTitle>Find your friends!</DialogTitle>
+          <div className={classes.shareButtons}>
+            <WhatsappShareButton url={`Care to join me at mATE? Let's hang at http://localhost:3000/profile/${global.loginedUser.user.entityID} !`}>
+              <WhatsappIcon size={theme.spacing(6)} bgStyle={{fill: 'none'}} iconFillColor={theme.palette.primary.main}/>
+            </WhatsappShareButton>
+            <EmailShareButton url={`Care to join me at mATE? Let's hang at http://localhost:3000/profile/${global.loginedUser.user.entityID} !`}>
+              <MailOutlineRounded style={{fontSize: theme.spacing(5), color: theme.palette.primary.main}} />
+            </EmailShareButton>
+          </div>
+          <DialogTitle>I can't eat anymore...</DialogTitle>
+          <div className={classes.dialogItem}>
+            <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={handleLogout}>Log out</Button>
+          </div>
+          <DialogTitle>Just let me go.</DialogTitle>
+          <div className={classes.dialogItem}>
+            <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={delete_all_post}>Delete All Posts</Button>
+          </div>
+          
         </DialogContent>
-        <div className={classes.dialogApply}>
-          <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
-            onClick={handleSubmit(onSubmit)} >
-            Apply Changes
-          </Button>
-          {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-        </div>
-        <div className={classes.dialogItem}>
-          <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
-            Cancel
-          </Button>
-        </div>
-        <DialogTitle>I can't eat anymore...</DialogTitle>
-        <div className={classes.dialogItem}>
-          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={handleLogout}>Log out</Button>
-        </div>
-        <DialogTitle>Just let me go.</DialogTitle>
-        <div className={classes.dialogItem}>
-          <Button fullWidth variant='outlined' color='primary' className={classes.dialogButton} onClick={delete_all_post}>Delete All Posts</Button>
-        </div>
-        <div>
-        <WhatsappShareButton url="Hi! I am using mATE. Eat with me at http://localhost:3000/">
-        <WhatsappIcon></WhatsappIcon>
-        </WhatsappShareButton>
-
-        <EmailShareButton url="Hi! I am using mATE. Eat with me at http://localhost:3000/">
-        <EmailIcon></EmailIcon>
-        </EmailShareButton>
-        </div>
+        
       </Dialog>
     </div>
   );
