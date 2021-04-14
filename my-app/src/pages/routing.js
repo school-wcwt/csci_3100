@@ -50,7 +50,7 @@ const Routing = (props) => {
             <Route path='/sock' component={Sock}/>
             <Route path='/panel' component={PanelBar}/>
             <Route path='/discover' component={DiscoverPage}/>
-            <Route path='/createPost/:EntityID' component={CreatePost}/> 
+            <Route path='/createPost' component={CreatePost}/> 
             <Route path='/profile/:EntityID' component={ProfilePage}/>
             <Route component={ErrorPage} />
         </Switch>

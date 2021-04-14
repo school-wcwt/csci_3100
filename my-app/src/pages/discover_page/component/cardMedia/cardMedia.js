@@ -3,7 +3,7 @@ import { darken, makeStyles } from '@material-ui/core/styles';
 import { Carousel } from 'react-bootstrap';
 
 import { Card, CardActionArea, CardContent, CardMedia,
-         Typography, Avatar, Tooltip, IconButton } from '@material-ui/core';
+         Typography, Avatar, Tooltip } from '@material-ui/core';
 import { LocationOnRounded } from '@material-ui/icons'
 
 import Rating from '../../../../component/Rating'

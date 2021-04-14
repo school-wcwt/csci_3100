@@ -13,7 +13,7 @@ const LoginForm = (props) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, control } = useForm();
     const styles = useStyles();
 
     const onSubmit = data => {

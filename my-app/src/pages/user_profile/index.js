@@ -478,7 +478,7 @@ const RestActions = (props) => {
   const handleClose = () => setOpen(false);
   const followed = global.loginedUser.user.followingRest.includes(props.rest._id);
   const handleAddPost = () => {
-    history.push(`/createPost/${props.rest.entityID}`)
+    history.push(`/createPost?entityID=${props.rest.entityID}`)
   }
   const HandleFollow = () =>{
     entityFn.entity_follow(props.rest.entityID)
