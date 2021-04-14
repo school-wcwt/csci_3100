@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import PanelBar from "./panel.js"
 import global from '../../component/global'
-
+import {WhatsappShareButton, WhatsappIcon,
+EmailShareButton,EmailIcon,
+FacebookShareButton, FacebookIcon} from "react-share";
 import { GetMyEntities } from '../services/authService';
 
 const entityFn = require("../../component/load_backend/entityFunction");
@@ -19,6 +21,7 @@ const Entity = () => {
 
 
   const Filter_testing = () => {
+
     const [entity2, setEntity2] = useState(null);
     const grab_followers = () => {
 
@@ -91,8 +94,21 @@ const Entity = () => {
         })
       })
     }
+    //https://www.npmjs.com/package/react-share
     return (
       <div>
+        <a href="https://api.whatsapp.com/send?phone=91XXXXXXXXXX&text=urlencodedtext" target="_blank">WA</a>
+        <WhatsappShareButton url="Hi! I am using mATE. Eat with me at http://localhost:3000/">
+        <WhatsappIcon></WhatsappIcon>
+        </WhatsappShareButton>
+
+        <EmailShareButton url="Hi! I am using mATE. Eat with me at http://localhost:3000/">
+        <EmailIcon></EmailIcon>
+        </EmailShareButton>
+
+        <FacebookShareButton url ="Hi! I am using mATE. Eat with me at http://localhost:3000/">
+        <FacebookIcon></FacebookIcon>
+        </FacebookShareButton>
         <h1>Filter testing</h1>
         <button onClick={() => { grab_followers() }}>get_entity
       </button>
