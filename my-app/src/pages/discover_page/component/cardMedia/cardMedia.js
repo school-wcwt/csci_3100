@@ -8,6 +8,7 @@ import { LocationOnRounded } from '@material-ui/icons'
 
 import Rating from '../../../../component/Rating'
 import Loading from '../../../../component/loading'
+import history from '../../../history'
 import axios from '../../../../axiosConfig'
 
 const useStyles = makeStyles((theme) => ({
@@ -69,6 +70,10 @@ export default function RestCard(props) {
     fetchImage()
   }, [])
 
+  const handleClick = () => {
+    history.push(`/profile/${props.rest.entityID}`)
+  }
+
   if (images == null) return (
     <Card className={classes.root}>
       <Loading/>
@@ -87,7 +92,7 @@ export default function RestCard(props) {
         <Avatar variant='circular' className={classes.avatar}
           alt={props.rest.entityID} src={props.rest.profPhoto[0]} />
       </CardMedia>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         <CardContent className={classes.content}>
           <Tooltip title={`#${props.rest.tag}`} arrow>
             <Typography variant='h5'>
