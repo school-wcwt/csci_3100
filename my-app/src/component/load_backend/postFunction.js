@@ -134,6 +134,8 @@ const post_edit = (postID,edit_data) =>{
 
 //PATCH post/like/:postID
 const post_like = (postID, flag) =>{
+    alert('default: flag=1, please go and delete')
+    var flag =true
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PATCH',
