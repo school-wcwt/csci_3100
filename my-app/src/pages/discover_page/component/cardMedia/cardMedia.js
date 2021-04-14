@@ -3,7 +3,7 @@ import { darken, makeStyles } from '@material-ui/core/styles';
 import { Carousel } from 'react-bootstrap';
 
 import { Card, CardActionArea, CardContent, CardMedia,
-         Typography, Avatar, Tooltip } from '@material-ui/core';
+         Typography, Avatar, Tooltip, IconButton } from '@material-ui/core';
 import { LocationOnRounded } from '@material-ui/icons'
 
 import Rating from '../../../../component/Rating'
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   content: {
-    margin: theme.spacing(5, 0, 2),
+    margin: theme.spacing(5, 0, 0),
     display: 'flex',
     maxWidth: 400,
     flexDirection: 'column',
@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     objectFit: 'contain',
     backgroundColor: darken(theme.palette.background.default, 0.05)
+  },
+  location: {
+    margin: theme.spacing(2),
+    color: theme.palette.grey[400],
   }
 }));
 
@@ -102,9 +106,11 @@ export default function RestCard(props) {
           <Typography variant='body1'>{props.rest.name ? props.rest.name : '-'}</Typography>
           {props.rest.post.length !== 0
             ? <Rating rating={props.rest.rating / props.rest.post.length} /> : <Rating rating={0} />}
+          
           <Tooltip title={props.rest.address}>
-            <LocationOnRounded />
+            <LocationOnRounded className={classes.location}/>
           </Tooltip>
+          
         </CardContent>
       </CardActionArea>
     </Card>
