@@ -133,13 +133,13 @@ const post_edit = (postID,edit_data) =>{
 }
 
 //PATCH post/like/:postID
-const post_like = (postID, addFlag) =>{
+const post_like = (postID, flag) =>{
     return new Promise((resolve,reject)=>{
         axios({
             method: 'PATCH',
             url: "/post/like/"+postID,
             data:{
-                addFlag : addFlag,
+                addFlag : flag,
             }
         })
         .then ( res =>{

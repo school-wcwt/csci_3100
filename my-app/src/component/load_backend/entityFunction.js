@@ -90,14 +90,18 @@ const entity_delete= ()=>{
 }
 
 //PATCH user/follow/:entityID
-const entity_follow = (followID)=>{
+const entity_follow = (followID,flag)=>{
   return new Promise((resolve,reject)=>{
     axios({
       method: 'PATCH',
-      url: 'entity/follow/'+followID
+      url: 'entity/follow/'+followID,
+      data:{
+        addFlag: flag
+      }
     })
     .then ( res =>{
       trigChange();
+      console.log(res.data)
       return resolve(res.data)
     })
     .catch(err => {
