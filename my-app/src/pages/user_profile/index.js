@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
     letterSpacing: '2px',
     alignSelf: 'center',
-    float:"left",
+    justifyContent: "flex-start",
   },
   dialogApply: {
     fontFamily: 'Poppins',
@@ -317,14 +317,20 @@ const SettingDialog = (props) => {
   );
 }
 
-const DisplaySingleUser = ({userObj}) =>{
+const DisplaySingleUser = (props) =>{
   const classes = useStyles()
-  // button with profPhoto and username, onClick = {()=>history.push('/profile/entityID)}
+  const Clickuser = () =>{
+    props.handleClose();
+    history.push(`/profile/${props.userObj.entityID}`);
+  }
   return (
-    <Button fullWidth size='small' color="primary" className={classes.dialogButtonSaveList} onClick = {() => {history.push(`/profile/${userObj.entityID}`);}}>
-      <Avatar variant={userObj.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar_small}
-          alt={userObj.entityID} src={userObj.profPhoto[0]}/>
-          {`${userObj.username}`}
+    <Button fullWidth size='small' color="primary" className={classes.dialogButtonSaveList} onClick = {Clickuser}>
+      <Avatar variant={props.userObj.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar_small}
+          alt={props.userObj.entityID} src={props.userObj.profPhoto[0]}/>
+          <div style = {{marginLeft: "5%"}}>
+          {`${props.userObj.username}`}
+          </div>
+          
     </Button>
   )
 }
@@ -345,7 +351,7 @@ const UserActions = (props) => {
           <DialogTitle>Followed List</DialogTitle>
           <DialogContent>
             <DialogContentText> {`${global.loginedUser.user.username} has followed Them. Click to explore more`} </DialogContentText>
-            {entity2? entity2.map((entityObj)=><DisplaySingleUser userObj = {entityObj}/>): <p>No data</p>}
+            {entity2? entity2.map((entityObj)=><DisplaySingleUser {...props} userObj = {entityObj}/>): <p>No data</p>}
           </DialogContent>
           <div className={classes.dialogItem}>
             <Button fullWidth size='small' color="primary" className={classes.dialogButton} onClick={props.handleClose} >
