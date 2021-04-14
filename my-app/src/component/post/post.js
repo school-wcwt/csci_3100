@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
   footerLike:{
     marginLeft: theme.spacing(1),
     fontWeight: '700',
+  },
+  commentForm:{
+    display: 'flex',
+    alignItems: 'flex-start',
+  },
+  submitComment: {
+
   }
 }))
 
@@ -121,9 +128,9 @@ const Post = (props) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <Divider/>
         <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.commentForm}>
           <InputBase inputRef={register} name = "newComment" variant='filled' fullWidth multiline placeholder={`${global.loginedUser.user.username}'s comment`}/>
-          <IconButton style={{float: "right"}} onClick = {handleSubmit(onSubmit)}>
+          <IconButton className={classes.submitComment} onClick = {handleSubmit(onSubmit)}>
           {loadingComment ? <CircularProgress size={24} className={classes.buttonProgress} />:<SendIcon />}
           </IconButton>
         </form>

@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, ButtonBase, CardHeader,IconButton } from '@material-ui/core';
+import { DeleteForeverRounded } from '@material-ui/icons'
 import history from '../../../pages/history';
 import Rating from '../../Rating'
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -49,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.7rem',
     color: theme.palette.grey[400],
   },
+  actionBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 }))
 
 export default function PostHeader(props) {
@@ -57,6 +63,11 @@ export default function PostHeader(props) {
   const renderDate = (time) => {
     const date = new Date(time);
     return <span className={classes.time}>{`${date.toLocaleDateString('en-GB')} ${date.toLocaleTimeString('it-IT')}`}</span>
+  }
+
+  const handleDelete = () => {
+    postFunc.post_delete(props.post.postID)
+    .then(global.loginedUser.forceRefresh());
   }
 
   return (
@@ -78,16 +89,16 @@ export default function PostHeader(props) {
           <span className={classes.infoTag}>{`#${props.post.target.tag}`}</span>
         </ButtonBase>}
       action={
-        <div className={classes.infoDetail}>
-          {props.post.rating !== undefined ? <Rating rating={props.post.rating} /> : <Rating rating={0} />}
-          {renderDate(props.post.createdTime)}
-          {global.loginedUser.user.entityID == props.post.author.entityID ?
-            <IconButton onClick={() => { postFunc.post_delete(props.post.postID)}}>
-              Remove
-            </IconButton> :
-            null}
-
-
+        <div className={classes.actionBox}>
+          {global.loginedUser.user.entityID == props.post.author.entityID 
+            ? <IconButton onClick={handleDelete}>
+                <DeleteForeverRounded />
+              </IconButton> 
+            : null }
+          <div className={classes.infoDetail}>
+            {props.post.rating !== undefined ? <Rating rating={props.post.rating} /> : <Rating rating={0} />}
+            {renderDate(props.post.createdTime)}
+          </div>
         </div>}
     />
   )

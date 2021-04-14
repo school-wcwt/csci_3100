@@ -46,21 +46,32 @@ const Auth = () =>{
 
 const useLoginUser = () => {
     const [user, setUser] = useState(null);
+
+    const refresh = () => {
+        axios.post('/refresh')
+        .then(res => axios.get(`/entity/${res.data.entityID}`))
+        .then(res => setUser(res.data))
+    }
     
+    const forceRefresh = () => {
+        refresh()
+    }
+
     useEffect(() => {
         const cookies = parseCookie(document.cookie)
         console.log(cookies);
         if (user == null && cookies.refresh_token == undefined)
             history.push('/login');
         else if (user == null && cookies.refresh_token !== undefined)
-            axios.post('/refresh')
-            .then(res => axios.get(`/entity/${res.data.entityID}`))
-            .then(res => setUser(res.data))
+            refresh();
     }, [])
+
+
 
     return {
         user,
-        setUser
+        setUser,
+        forceRefresh,
     }
 }
 
