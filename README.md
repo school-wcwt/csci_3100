@@ -11,9 +11,18 @@ git clone git@github.com:school-wcwt/csci_3100.git
 ```
 ### Run Frontend
 - cd to my-app and run `npm init` and `npm install` and `npm start` (It is for frontend)
-### Run backend
+
+### Run backend (Mongo in local)
 - Check `/my-app/src/port.js` file and see the ***Mongo_port*** 
 - Run `node server.js` in `/backend`
+
+### Run socket-io-server (syn action when to mult-user)
+- cd `socket-io-server/` 
+- Run `node app.js`
+
+### Requirement
+- node version `v15.12.0` or above
+- npm version `7.6.3` or above
 
 ### Commands you may use with ***git***
 - You may update file using `git pull` 
