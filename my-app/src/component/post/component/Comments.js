@@ -4,7 +4,7 @@ import history from '../../../pages/history';
 import global from '../../global';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-const CommentFunc = require('../../load_backend/commentFunction');
+const commentFunc = require('../../load_backend/commentFunction');
 
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
@@ -52,8 +52,8 @@ export default function Comment(props) {
         <CardContent className={classes.commentContent}>
           {comment.content}
           {global.loginedUser.user.entityID == comment.author.entityID?
-          <IconButton onClick = {}>
-            
+          <IconButton onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
+                    <CancelIcon />
           </IconButton>:
           null}
         </CardContent>
