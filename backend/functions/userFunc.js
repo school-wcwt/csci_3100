@@ -21,10 +21,9 @@ var createPost = (authorFilter, targetFilter, data) => {
             await entityFunc.updateEntity(
                 {_id: author._id}, 
                 {$push: {post: {$each: [newPost._id], $position: 0}}})
-            console.log(data);
             if (data.type == 1) // Review
                 await entityFunc.updateEntity(
-                    {_id: target._id}, 
+                    {_id: target._id, type: 'Rest'}, 
                     { $inc:  {rating: data.rating},
                       $push: {post: {$each: [newPost._id], $position: 0}} })
             return resolve(newPost);

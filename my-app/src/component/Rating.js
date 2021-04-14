@@ -1,8 +1,8 @@
 import { StarBorderRounded, StarRounded, StarHalfRounded } from '@material-ui/icons'
 
 export default function Rating({rating}) {
-    const fullStars = ~~(rating/2);
-    const halfStars = rating % 2;
+    const fullStars = parseInt(~~(rating/2));
+    const halfStars = parseInt(rating % 2);
     const emptyStars = 5 - fullStars - halfStars;
     return (
       <div>
