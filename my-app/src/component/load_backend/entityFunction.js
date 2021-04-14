@@ -91,8 +91,6 @@ const entity_delete= ()=>{
 
 //PATCH user/follow/:entityID
 const entity_follow = (followID,flag)=>{
-  alert('default: flag=1, please go and delete')
-  var flag= true
   return new Promise((resolve,reject)=>{
     axios({
       method: 'PATCH',
@@ -103,7 +101,6 @@ const entity_follow = (followID,flag)=>{
     })
     .then ( res =>{
       trigChange();
-      console.log(res.data)
       return resolve(res.data)
     })
     .catch(err => {

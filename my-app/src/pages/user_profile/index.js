@@ -378,6 +378,7 @@ const UserActions = (props) => {
         $nin:
         global.loginedUser.user.followed.concat(global.loginedUser.user._id)
       },
+      
       'type': 'User'
     }
     entityFn.entity_post(fil1).then(followedArray => {
@@ -481,14 +482,14 @@ const RestActions = (props) => {
     history.push(`/createPost/${props.rest.entityID}`)
   }
   const HandleFollow = () =>{
-    entityFn.entity_follow(props.rest.entityID)
+    entityFn.entity_follow(props.rest.entityID,!followed)
     .then(res=>global.loginedUser.setUser(res))
     .catch(res=>console.log("Can not follow "+ props.rest.entityID))
   }
   return (
     <>
       <div className={classes.actionRoot}>
-        <Button variant="contained" disabled={followed} color='primary' className={classes.actionPrimaryButton} onClick = {HandleFollow}>
+        <Button variant="contained"  color='primary' className={classes.actionPrimaryButton} onClick = {HandleFollow}>
           {followed ? 'Following' : 'Follow'}
         </Button>
       </div>
