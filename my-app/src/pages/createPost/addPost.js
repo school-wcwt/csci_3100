@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, React } from 'react';
+import ReactDOM from "react-dom";
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { app } from '../../base';
@@ -9,12 +10,32 @@ var postFn = require("../../component/load_backend/postFunction.js");
 
 
 export default function AddPost(props) {
-  console.log("Inside function Add post func for " +props.entityID);
+  console.log("Inside function Add post func for " + props.entityID);
+
+
+  const [indexes, setIndexes] = useState([]);
+  const [counter, setCounter] = useState(0);
   const { register, handleSubmit } = useForm();
+
+  const addtag = () => {
+    setIndexes(prevIndexes => [...prevIndexes, counter]);
+    setCounter(prevCounter => prevCounter + 1);
+  };
+
+  const removetag = index => () => {
+    setIndexes(prevIndexes => [...prevIndexes.filter(item => item !== index)]);
+    setCounter(prevCounter => prevCounter - 1);
+  };
+
+  const cleartag = () => {
+    setCounter(prevCounter => prevCounter - prevCounter);
+    setIndexes([]);
+  };
+
   const onSubmit = data => {
-    var targetFilter = { "entityID": props.entityID||"rrr-1296" };
+    var targetFilter = { "entityID": props.entityID || "rrr-1296" };
     var rating = parseInt(data.rating);
-    rating = rating < 0  ? 0  : rating;
+    rating = rating < 0 ? 0 : rating;
     rating = rating > 10 ? 10 : rating;
     Upload_Photo(data.photo).then(downloadURL => {
       var edit_data = {
@@ -24,8 +45,9 @@ export default function AddPost(props) {
         "photo": downloadURL,
         "hashtag": data.hashtag_list
       };
-      postFn.post_create(targetFilter, edit_data).then(res=>history.push('/main'));
-      
+      postFn.post_create(targetFilter, edit_data).then(res => history.push('/main'));
+      console.log(edit_data);
+
     })
   }
   return (
@@ -41,18 +63,30 @@ export default function AddPost(props) {
             <Form.Control as="textarea" rows={3} required name="content" placeholder="Please Type here..." ref={register} />
           </Form.Group>
           <Form.Group controlId="hashtag_list">
-            <Form.Label>Hashtag</Form.Label>
-            <Form.Row>
-              <Col>
-                <Form.Control placeholder="#1" type="text" required name="hashtag_list[0]" ref={register} />
-              </Col>
-              <Col>
-                <Form.Control placeholder="#2" type="text" required name="hashtag_list[1]" ref={register} />
-              </Col>
-              <Col>
-                <Form.Control placeholder="#3" type="text" required name="hashtag_list[2]" ref={register} />
-              </Col>
-            </Form.Row>
+
+            {indexes.map(index => {
+              const fieldName = `hashtag_list[${index}]`;
+              return (
+                <fieldset name={fieldName} key={fieldName}>
+
+
+                  <input
+                    type="text"
+                    name={fieldName}
+                    placeholder={`#Hashtag${index + 1}`}
+                    ref={register}
+                    required
+                  />
+
+                </fieldset>
+              );
+            })}
+
+                  <button type="button" onClick={addtag}>
+                    Add tag
+                  </button>
+
+
           </Form.Group>
           <Form.Group>
             <Form.Label>Upload Pictures</Form.Label>
