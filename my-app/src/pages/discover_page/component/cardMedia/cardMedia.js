@@ -1,52 +1,107 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { useState, useEffect } from 'react';
+import { darken, makeStyles } from '@material-ui/core/styles';
+import { Carousel } from 'react-bootstrap';
 
-const useStyles = makeStyles({
+import { Card, CardActionArea, CardContent, CardMedia,
+         Typography, Avatar, Tooltip } from '@material-ui/core';
+import { LocationOnRounded } from '@material-ui/icons'
+
+import Rating from '../../../../component/Rating'
+import Loading from '../../../../component/loading'
+import axios from '../../../../axiosConfig'
+
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: 300,
+    margin: theme.spacing(2, 0),
+    textAlign: 'center',
   },
-  media: {
-    height: 140,
+  photoAndRest: {
+    position: 'relative',
   },
-});
+  content: {
+    margin: theme.spacing(5, 0, 2),
+    display: 'flex',
+    maxWidth: 400,
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: theme.spacing(1),
+  },
+  avatar: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+    position: 'absolute',
+    left: '50%',
+    top: '100%',
+    margin: -theme.spacing(5),
+    zIndex: 1,
+  },
+  carousel: {
+    aspectRatio: 1,
+    width: '100%',
+  },
+  carouselImg: {
+    aspectRatio: 1,
+    overflow: 'hidden',
+    display: 'block',
+    width: '100%',
+    objectFit: 'contain',
+    backgroundColor: darken(theme.palette.background.default, 0.05)
+  }
+}));
 
-export default function MediaCard({image_path}) {
+export default function RestCard(props) {
   const classes = useStyles();
+  const [images, setImages] = useState(null)
 
-  return (
+  const fetchImage = () => {
+    axios.post('/post/', {filter: {target: props.rest._id, type: 1}})
+    .then(res => {
+      if (res.data != null) {
+        let image = []
+        res.data.map(rest => image.push(...rest.photo))
+        setImages(image)
+      } else setImages([])
+    })
+  }
+
+  useEffect(() => {
+    fetchImage()
+  }, [])
+
+  if (images == null) return (
     <Card className={classes.root}>
+      <Loading/>
+    </Card>
+  ) 
+  else return (
+    <Card className={classes.root}>
+      <CardMedia className={classes.photoAndRest}>
+        <Carousel fade className={classes.carousel} indicators={false}>
+          {images.map((image, idx) => (
+              <Carousel.Item>
+                <img className="d-block w-100" src={image} alt={image+idx} className={classes.carouselImg}/>
+              </Carousel.Item>
+          ))}
+        </Carousel>
+        <Avatar variant='circular' className={classes.avatar}
+          alt={props.rest.entityID} src={props.rest.profPhoto[0]} />
+      </CardMedia>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          className={classes.media}
-          square imageUrl ="./1.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
+        <CardContent className={classes.content}>
+          <Tooltip title={`#${props.rest.tag}`} arrow>
+            <Typography variant='h5'>
+              {props.rest.username}
+            </Typography>
+          </Tooltip>
+          <Typography variant='body1'>{props.rest.name ? props.rest.name : '-'}</Typography>
+          {props.rest.post.length !== 0
+            ? <Rating rating={parseInt(props.rest.rating / props.rest.post.length)} /> : <Rating rating={0} />}
+          <Tooltip title={props.rest.address}>
+            <LocationOnRounded />
+          </Tooltip>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
     </Card>
   );
 }
