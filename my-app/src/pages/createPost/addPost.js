@@ -34,7 +34,7 @@ export default function AddPost(props) {
         <Form className="justify-content-center" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="RestaurantName">
             <Form.Label>Rating</Form.Label>
-            <Form.Control type="number" pattern="[0-9]" placeholder="0 ~ 9" required name="rating" ref={register} />
+            <Form.Control type="number" min="0" max="10" placeholder="0 ~ 10" required name="rating" ref={register} />
           </Form.Group>
           <Form.Group controlId="content">
             <Form.Label>Content</Form.Label>
