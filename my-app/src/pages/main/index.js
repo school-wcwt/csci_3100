@@ -8,13 +8,20 @@ import global from '../../component/global'
 import Loading from '../../component/loading'
 
 const Main = (props) => {
-    var postFilter= {}
     if (global.loginedUser.user == null) return <Loading />
     else return (
         <>
             <CssBaseline />
             <NavBar />
-            <Posts filter={postFilter}/> 
+            <Posts filter={{
+                $and: [
+                    {$or: [
+                        {target: {$in: global.loginedUser.user.followingRest}},
+                        {author: {$in: global.loginedUser.user.followingUser}}
+                    ]},
+                    {type: 1}
+                ]
+            }}/> 
         </>
     )
 }
