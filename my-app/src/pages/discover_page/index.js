@@ -45,7 +45,9 @@ const DiscoverPage = (props) => {
 
     const { height, width } = useWindowDimensions();
     const columns = (() => {
-        return (width-64)/316
+        if (rests == null) return 1
+        else if (width > (64+316*rests.length)) return rests.length
+        else return (width-64)/316
     })()
 
     useEffect(() => {
