@@ -4,9 +4,7 @@ const client = new SMTPClient({
 	user: 'mate_welcome@outlook.com',
 	password: 'csci3100e6mATE',
 	host: 'smtp-mail.outlook.com',
-    tls: {
-		ciphers: 'SSLv3',
-	},
+    ssl: true,
 });
 
 function sendAuthEmail(name, tag, entityID, email,  link) {
