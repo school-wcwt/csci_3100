@@ -82,18 +82,19 @@ export default function AddPost(props) {
       if (data['tag-5'] !== '') sendTag.push(data['tag-5']);
       return sendTag
     }
-
+    
     setLoading(true);
     Upload_Photo(data.photo).then(downloadURL => {
-      const sendTag = processData(data);
-      console.log(sendTag);
       const sendData = {
         type: type,
-        hashtag: sendTag,
         photo: downloadURL,
         content: data.content,
         rating: data.rating
-      }
+      };
+      if (data['tag-0'] !== undefined) {
+        const sendTag = processData(data);
+        sendData.hashtag = sendTag;
+      };
       postFn.post_create({ entityID: data.entityID }, sendData)
       .then(res => {
         setLoading(false);
