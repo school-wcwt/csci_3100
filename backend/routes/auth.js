@@ -71,6 +71,7 @@ router.post('/login', (req, res) => {
                 var match = await bcrypt.compare(password, entity.password)
                 if (!match) throw new Error('Incorrect password.')
                 var loginedEntity = await entityFunc.findEntity({entityID: entity.entityID})
+                if (!loginedEntity.verified) throw new Error('Not verified.')
                 return resolve({auth: entity, user: loginedEntity});
             } catch(err) { return reject(err) } })();
         })
@@ -97,7 +98,7 @@ router.post('/login', (req, res) => {
         res.status(200).json(entity.user)
     } catch (err) {
         if (err.message == 'Entity not found.') res.status(404).json(err.message)
-        else if (err.message == 'Incorrect password.') res.status(403).json(err.message)
+        else if (err.message == 'Incorrect password.' || err.message == 'Not verified.') res.status(403).json(err.message)
         else res.status(500).json(err.message);
     }})()
 

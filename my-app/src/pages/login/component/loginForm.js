@@ -35,7 +35,8 @@ const LoginForm = (props) => {
             }, 1500)
         })
         .catch(err => {
-            setError("Invalid email or password. Try again.");
+            if (err.response.data == 'Not verified.') setError(err.response.data);
+            else setError("Invalid email or password. Try again.");
             setLoading(false);
         })
     };
