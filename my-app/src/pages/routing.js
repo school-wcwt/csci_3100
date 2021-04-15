@@ -41,7 +41,7 @@ const Routing = (props) => {
             <Route exact path='/' component={Main} />
             <Route exact path='/main' component={Main} />
             <Route path='/login' component={Login} />
-            <Route path='/auth/:entityID/:authHash' component={Verify}/>
+            <Route path='/auth/:entityID/:authHash+' component={Verify}/>
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
             <Route path='/restRegister' component={RestRegister}/>
