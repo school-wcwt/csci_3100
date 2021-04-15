@@ -14,7 +14,7 @@ function sendAuthEmail(name, tag, entityID, email,  link) {
     client.send({
         text: `Hello ${name},
 
-        
+
     Welcome to be a part of mATE, where you can find your friends and dine!  
         
     This is your tag: #${tag}. You can be identified by the link /profile/${entityID}. But first, let us be your first friend. Click the following link to authenticate your email:
@@ -26,7 +26,7 @@ function sendAuthEmail(name, tag, entityID, email,  link) {
         
 Best wishes,
 mATE team`,
-        from: 'mATE',
+        from: 'mATE <mate_welcome@outlook.com>',
         to: `${name} <${email}>`,
         subject: 'Welcome to mATE!'
     }, (err, message) => {
