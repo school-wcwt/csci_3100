@@ -42,7 +42,7 @@ const Verify = (props) => {
     useEffect(() => {
         const data = {
             entityID: params.entityID,
-            authHash: params.authHash,
+            authHash: params.shift().join(''),
         }
         axios.post('/verify', data)
         .then(res => {
