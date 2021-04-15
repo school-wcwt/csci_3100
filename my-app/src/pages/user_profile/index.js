@@ -249,13 +249,17 @@ const SettingDialog = (props) => {
   const theme = useTheme();
 
   const delete_all_post = () => {
-    postFn.post_post({}).then(posts => {
+    postFn.post_post({author: global.loginedUser.user._id})
+    .then(posts => {
       posts.map(async (post, idx) => {
         await postFn.post_delete(post.postID)
       })
     })
   }
 
+  const deleteUser = () => {
+
+  }
 
   const handleLogout = () => {
     axios.post('/logout')

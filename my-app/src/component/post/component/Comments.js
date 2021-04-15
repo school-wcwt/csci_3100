@@ -3,15 +3,18 @@ import { Avatar, ButtonBase, CardHeader, CardContent, Divider, IconButton } from
 import history from '../../../pages/history';
 import global from '../../global';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { DeleteForever } from '@material-ui/icons';
+import { DeleteForeverRounded } from '@material-ui/icons';
 
 const commentFunc = require('../../load_backend/commentFunction');
 
 const useStyles = makeStyles((theme) => ({
   commentHeader: {
-    paddingBottom: theme.spacing(1),
     '& .MuiCardHeader-avatar':{
       marginRight: theme.spacing(1),
+    },
+    '& .MuiCardHeader-action':{
+      alignSelf: 'center',
+      margin: '-24px -8px',
     }
   },
   commentAvatar:{
@@ -32,14 +35,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins',
     color: theme.palette.grey[400],
   },
-  deletebutton:{
-    fontFamily: 'Poppins',
-    fontWeight: '700',
-    fontSize: '1rem',
-    letterSpacing: '2px',
-    float: "right",
-
-  },
 }))
 
 export default function Comment(props) {
@@ -57,14 +52,15 @@ export default function Comment(props) {
           <ButtonBase className={classes.infoEntityID} onClick = {()=>history.push(`/profile/${comment.author.entityID}`)}>
             <span>{comment.author.username}</span>
             <span className={classes.infoTag}>{`#${comment.author.tag}`}</span>
-          </ButtonBase>}/>
+          </ButtonBase>}
+          action={global.loginedUser.user.entityID == comment.author.entityID
+            ? <IconButton onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
+                <DeleteForeverRounded />
+              </IconButton>
+            : null} />
         <CardContent className={classes.commentContent}>
           {comment.content}
-          {global.loginedUser.user.entityID == comment.author.entityID?
-          <IconButton className = {classes.deletebutton} onClick ={()=>{commentFunc.comment_delete(comment.commentID)}}>
-                    <DeleteForever />
-          </IconButton>:
-          null}
+          
         </CardContent>
       </div>
     )}
