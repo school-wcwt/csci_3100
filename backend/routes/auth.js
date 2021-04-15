@@ -9,6 +9,9 @@ const entityFunc = require('../functions/entityFunc');
 const config = require('../config');
 const verifyAuth = require('../middleware/verifyAuth');
 const Auth = require('../models/Auth');
+const Entity = require('../models/Entity');
+const Rest = require('../models/Rest');
+const User = require('../models/User');
 const emailFnc = require('../middleware/email');
 const MaxRefreshDays = 60;
 
@@ -101,16 +104,28 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-    //emailFnc.send_validation_email( {to_name: req.body.username ,user_email:req.body.email, message:`I am Backend from ${135}`} );
     entityFunc.createEntity({...req.body, type: 'User'})
-    .then(createdEntity => {
-        res.status(201).json(createdEntity);})
+    .then(createdEntity => res.status(201).json(createdEntity))
     .catch(err => {
         if (err.message == 'Email exists.') res.status(409).json(err.message);
         else res.status(500).json(err.message);
     })
-    
-    
+})
+
+router.post('/verify', (req, res) => {
+    (async () => { try {
+        var entity = await Auth.findOne({entityID: req.body.entityID})
+        if (entity == null) throw new Error('Entity not found.')
+        if (req.body.authHash != entity.authHash) throw new Error('Wrong link.')
+        else {
+            await Entity.updateOne({entityID: req.body.entityID, type: 'User'}, {verified: 1})
+            return res.status(200).json('OK')
+        }
+    } catch (err) {
+        if (err.message == 'Entity not found.') res.status(404).json(err.message)
+        else if (err.message == 'Wrong link.') res.status(403).json(err.message)
+        else res.status(500).json(err.message);
+    }})()    
 })
 
 router.post('/logout', verifyAuth.access, (req, res) => {

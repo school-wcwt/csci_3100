@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Rest = require('../models/Rest');
 const Auth = require('../models/Auth');
 const bcrypt = require('bcrypt');
+const email = require('../middleware/email')
 
 var tagGen = (username) => { 
     return new Promise((resolve, reject) => {
@@ -65,7 +66,12 @@ var createEntity = (data) => {
             newEntity.tag = await tagGen(data.username);
             newEntity.entityID = `${data.username}-${newEntity.tag}`;
             var addedEntity = await Entity.create(newEntity);
-            if (data.type == 'User') await Auth.create({...newEntity, entity: addedEntity._id});
+            if (data.type == 'User') {
+                newEntity.authHash = await bcrypt.hash(newEntity.entityID, 10);
+                await Auth.create({...newEntity, entity: addedEntity._id});
+                await email.sendAuthEmail(newEntity.username, newEntity.tag, newEntity.entityID,
+                    newEntity.email, `http://localhost:3000/auth/${newEntity.entityID}/${newEntity.authHash}`);
+            }
             var savedEntity = await findEntity({_id: addedEntity._id})
             return resolve(savedEntity);
         } catch(err) { return reject(err) }})();

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import history from '../history';
 import axios from '../../axiosConfig';
+import { useLocation } from 'react-router-dom'
+import { LaptopWindows } from '@material-ui/icons';
 const entityFn = require("../../component/load_backend/entityFunction");
 
 /*
@@ -46,6 +48,9 @@ const Auth = () =>{
 
 const useLoginUser = () => {
     const [user, setUser] = useState(null);
+    const path = useLocation();
+    const pathName = path.pathname;
+    console.log(pathName)
 
     const refresh = () => {
         axios.post('/refresh')
@@ -60,6 +65,8 @@ const useLoginUser = () => {
     useEffect(() => {
         const cookies = parseCookie(document.cookie)
         console.log(cookies);
+        if (user == null && window.location.pathname.startsWith('/auth'))
+            return;
         if (user == null && cookies.refresh_token == undefined)
             history.push('/login');
         else if (user == null && cookies.refresh_token !== undefined)

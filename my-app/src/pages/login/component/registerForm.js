@@ -54,9 +54,13 @@ const RegisterForm = (props) => {
         .then(res => {
             setLoading(false);
             setSuccess(true);
-            send_validation_email(emaildata);
+            //send_validation_email(emaildata);
         })
-        .catch(err => console.log(err.message));
+        .catch(err => {
+            setLoading(false);
+            setSuccess(false);
+            console.log(err.message)
+        });
     };
 
     return (

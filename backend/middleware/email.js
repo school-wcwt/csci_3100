@@ -1,21 +1,38 @@
-//import emailjs from 'emailjs-com';
-const emailjs = require('emailjs-com');
-//const YOUR_SERVICE_ID = "service_kigbdr9";
-//const YOUR_TEMPLATE_ID = "template_c4tbz8f";
-//const YOUR_USER_ID = "user_kwKrThl3IGwRCEZNIF8Zc";
-// https://dashboard.emailjs.com/admin
-// ac: mateiwelcome@gmail.com
-// pw: csci3100
+const { SMTPClient } = require('emailjs');
 
-function send_validation_email(data) {
-    console.log("Hello");
-    emailjs.send("service_kzjnr6k", "template_gkwgm05", data, "user_ZppA6fucpK6lErmR2miFi")
-    .then((result) => {
-        console.log("Email sent");
-    }, (error) => {
-        console.log(error.text);
+const client = new SMTPClient({
+	user: 'mate_welcome@outlook.com',
+	password: 'csci3100e6mATE',
+	host: 'smtp-mail.outlook.com',
+    tls: {
+		ciphers: 'SSLv3',
+	},
+});
+
+function sendAuthEmail(name, tag, entityID, email,  link) {
+    
+    client.send({
+        text: `Hello ${name},
+
+        
+    Welcome to be a part of mATE, where you can find your friends and dine!  
+        
+    This is your tag: #${tag}. You can be identified by the link /profile/${entityID}. But first, let us be your first friend. Click the following link to authenticate your email:
+        
+    ${link}
+        
+    See you soon!
+        
+        
+Best wishes,
+mATE team`,
+        from: 'mATE',
+        to: `${name} <${email}>`,
+        subject: 'Welcome to mATE!'
+    }, (err, message) => {
+        console.log(err || message);
     });
 }
 
 
-module.exports = {send_validation_email};
+module.exports = { sendAuthEmail };

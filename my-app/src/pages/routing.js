@@ -16,6 +16,7 @@ import PanelBar from './panel_page/panel.js'
 import DiscoverPage from './discover_page/';
 import ProfilePage from './user_profile/index';
 import CreatePost from './createPost/';
+import Verify from './verify/verifyPage';
 import '../component/css/background.css';
 import {GetMyUser, useLoginUser} from './services/authService';
 import axios from '../axiosConfig'
@@ -40,6 +41,7 @@ const Routing = (props) => {
             <Route exact path='/' component={Main} />
             <Route exact path='/main' component={Main} />
             <Route path='/login' component={Login} />
+            <Route path='/auth/:entityID/:authHash' component={Verify}/>
             <Route path='/reservation' component={Reservation}/>
             <Route path='/test_page' component={TestPage}/>
             <Route path='/restRegister' component={RestRegister}/>

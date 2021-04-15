@@ -5,6 +5,7 @@ var AuthSchema = mongoose.Schema({
     entity:       { type: mongoose.Schema.Types.ObjectId, ref:'User', required: true },
     email:        { type: String, required: true, unique: true },
     password:     { type: String, required: true },
+    authHash:     { type: String },
     accessToken:  { type: String, default: '' },
     refreshToken: { type: String, default: '' },
 });
