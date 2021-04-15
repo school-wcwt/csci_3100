@@ -26,7 +26,7 @@ function sendAuthEmail(name, tag, entityID, email,  link) {
         
 Best wishes,
 mATE team`,
-        from: 'mate_welcome@outlook.com',
+        from: 'mate',
         to: `${name} <${email}>`,
         subject: 'Welcome to mATE!'
     }, (err, message) => {
