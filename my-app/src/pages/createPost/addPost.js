@@ -148,7 +148,7 @@ export default function AddPost(props) {
         ))}
         </div>
         : null}
-        <Form.File type="file" name="photo" ref={register} />
+        <Form.File type="file" name="photo" ref={register} multiple/>
         <div className={classes.buttonWrapper}>
           <Button fullWidth variant="contained" disabled={loading} type="submit" 
               color='primary' className={classes.button}>
