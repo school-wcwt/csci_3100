@@ -14,7 +14,7 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - node version `v15.12.0` or above
 - npm version `7.6.3` or above
 - MongoDB SetUp => [Click Me](/backend)
-- 
+
 ### Run Frontend
 - cd to `my-app` and run `npm init` and `npm install` and `npm start`
 
