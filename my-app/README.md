@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with Create React App as initial Start Up But Csci3100's studennt code everything including front-back-end coding 
+# We used Create React App as initial Start Up Only
+# But Csci3100's studennt code everything including front-back-end coding 
 
 ## Available Scripts
 
