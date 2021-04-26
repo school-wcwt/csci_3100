@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - src/pages/user_profile/component/profile.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>src/pages/user_profile/component/profile.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">62.46</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">116</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">14.49</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">0.80</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">import React, { useState, useEffect } from &quot;react&quot;;
+import &#039;bootstrap/dist/css/bootstrap.min.css&#039;;
+import InformCard from &#039;./cardMedia&#039;;
+import { useParams } from &#039;react-router&#039;;
+import {makeStyles,Grid,Paper} from &#039;@material-ui/core&#039;;
+import PeopleIcon from &#039;@material-ui/icons/People&#039;;
+import FavoriteIcon from &#039;@material-ui/icons/Favorite&#039;;
+import ForumIcon from &#039;@material-ui/icons/Forum&#039;;
+import FreeBreakfastIcon from &#039;@material-ui/icons/FreeBreakfast&#039;;
+import {Nav} from &#039;react-bootstrap&#039;;
+import Button from &#039;@material-ui/core/Button&#039;;
+import {Post} from &#039;../../../component/post/post.js&#039;;
+import { CssBaseline } from &#039;@material-ui/core&#039;;
+import {Auth} from &#039;../../services/authService&#039;;
+import {Posts} from &#039;../../../component/post/posts&#039;;
+const useStyles = makeStyles((theme) =&gt; ({
+    paper_style:{
+        display: &#039;flex&#039;,
+        flexWrap: &#039;wrap&#039;,
+        &#039;&amp; &gt; *&#039;: {
+        margin: theme.spacing(1),
+        width: theme.spacing(64),
+        },
+    },
+    Heading_Box_style:{
+        borderBottomStyle: &quot;solid&quot;, 
+        borderColor: &quot;LightCoral&quot;, 
+    },
+    Heading_title:{
+        color: &quot;white&quot;, 
+        fontWeight:100,
+        margin: &quot;0 auto&quot;,
+        textAlign: &quot;center&quot;,
+
+    }, 
+    Number_title:{
+        color: &quot;white&quot;, 
+        fontWeight:1000,
+        margin: &quot;0 auto&quot;,   
+        width:&quot;100%&quot;,
+        height:&quot;100%&quot;,
+
+    }, 
+    icon_style:{
+        height:&quot;100%&quot;,
+        width:&quot;20%&quot;,
+        color: &quot;white&quot;,
+    },
+}));
+const HeaderPaper = ({title,number,color,icon}) =&gt;{
+    const classes = useStyles();
+    return (
+        &lt;Button variant=&quot;contained&quot; size=&quot;large&quot; style ={{backgroundColor: color,}}&gt;
+            &lt;Paper elevation={0}  style = {{backgroundColor: color}}&gt;
+            &lt;Nav className = {classes.Heading_title}&gt;{title}&lt;/Nav&gt;
+            &lt;br/&gt;
+            {icon}
+            &lt;br/&gt;
+            &lt;div className = {classes.Number_title}&gt;
+                &lt;Nav &gt;{number}&lt;/Nav&gt;
+            &lt;/div&gt;
+            &lt;/Paper&gt;
+        &lt;/Button&gt;
+    )
+};
+
+const UserHeading  = ({mydataset}) =&gt; {
+    const classes = useStyles();
+    const title_box = [&quot;Followed Resturant&quot;,&quot;Likes&quot;,&quot;Post Number&quot;,&quot;Follower&quot;];
+    const number = [mydataset.Favourite_Rest, mydataset.likes, mydataset.PostNumber, mydataset.Followers]
+    console.log(&quot;my mumber is &quot;+ number);
+    const color_box = [&quot;#5F9EA0&quot;,&quot;#DC143C&quot;,&quot;#9370DB&quot;,&quot;#FFA500&quot;];
+    return (
+        &lt;div className=&quot;pt-5&quot; &gt;
+        &lt;Grid container spacing={1}&gt;
+            &lt;Grid item xs={4}&gt;
+                &lt;InformCard datainput = {mydataset} /&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={3} className = {classes.Heading_Box_style}&gt;
+                &lt;div className = {classes.paper_style}&gt;
+                &lt;HeaderPaper color = {color_box[0]} title = {title_box[0]} number = {number[0]} icon = {&lt;FreeBreakfastIcon className = {classes.icon_style}/&gt;}/&gt;
+                &lt;HeaderPaper color = {color_box[1]} title = {title_box[1]} number = {number[1]} icon = {&lt;FavoriteIcon className = {classes.icon_style}/&gt;}/&gt;
+                &lt;/div&gt;
+            &lt;/Grid&gt;
+            &lt;Grid item xs={3} className = {classes.Heading_Box_style}&gt;
+                &lt;div className = {classes.paper_style}&gt;
+                &lt;HeaderPaper color = {color_box[2]} title = {title_box[2]} number = {number[2]} icon = {&lt;ForumIcon className = {classes.icon_style}/&gt;}/&gt;
+                &lt;HeaderPaper color = {color_box[3]} title = {title_box[3]} number = {number[3]} icon = {&lt;PeopleIcon className = {classes.icon_style}/&gt;}/&gt;
+                &lt;/div&gt;
+            &lt;/Grid&gt;
+        &lt;/Grid&gt;
+        &lt;/div&gt;
+        
+    );
+};
+//&lt;Posts props = {{filter: mydataset.postID}}/&gt;
+const PostArea =({mydataset})=&gt; {
+    var fil = {}
+    return (
+        &lt;div className=&quot;pt-5&quot;&gt;
+            &lt;Grid container spacing={1}&gt;
+            &lt;Grid item xs={4}&gt;&lt;/Grid&gt;
+            &lt;Grid item xs={6}&gt;
+            &lt;Paper elevation={3} &gt;
+                
+            &lt;/Paper&gt;
+                
+            &lt;/Grid&gt;
+            &lt;/Grid&gt;
+            
+        &lt;/div&gt;
+    )
+}
+export {
+    UserHeading,PostArea
+}</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

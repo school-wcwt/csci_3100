@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - src/pages/createPost/addPost-old.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>src/pages/createPost/addPost-old.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">73.36</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">153</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">20.70</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.20</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">import { useState, React } from &#039;react&#039;;
+import ReactDOM from &quot;react-dom&quot;;
+import { Navbar, Form, Button, FormControl, Nav, Container, Col } from &#039;react-bootstrap&#039;;
+import { useForm, SubmitHandler } from &quot;react-hook-form&quot;;
+import { app } from &#039;../../base&#039;;
+import { Upload_Photo } from &#039;../../component/Upload/upload&#039;;
+import history from &#039;../history&#039;;
+import Loading from &#039;../../component/loading&#039;
+import { useParams } from &#039;react-router&#039;;
+var postFn = require(&quot;../../component/load_backend/postFunction.js&quot;);
+
+const useStyles = makeStyles((theme) =&gt; ({
+  root: {
+    maxWidth: 600,
+    margin: `2rem auto`,
+    padding: theme.spacing(2),
+  },
+  form: {
+    margin: theme.spacing(2, 0)
+  },
+  shared: {
+    display: &#039;flex&#039;,
+    gap: theme.spacing(2),
+  },
+  slider: {
+    width: &#039;100%&#039;,
+  },
+  sharedItem: {
+    flex: 1
+  },
+  formType: {
+    width: &#039;7rem&#039;,
+    margin: theme.spacing(1, 0, 0.5, 2),
+    &#039;&amp; .MuiSelect-select&#039;: {
+      paddingTop: &#039;3px&#039;
+    }
+  },
+  buttonProgress: {
+    position: &#039;absolute&#039;,
+    top: &#039;50%&#039;,
+    left: &#039;50%&#039;,
+    margin: &#039;-12px&#039;
+  },
+  buttonWrapper: {
+      width: &#039;100%&#039;,
+      position: &#039;relative&#039;,
+  },
+  button: {
+    margin: `0.5rem auto`,
+    background: theme.palette.primary.main,
+    fontFamily: &#039;Poppins&#039;,
+    fontWeight: &#039;700&#039;,
+    fontSize: &#039;1rem&#039;,
+    letterSpacing: &#039;2px&#039;,
+    color: theme.palette.grey[200],
+    &#039;&amp;:hover&#039;: {
+        background: theme.palette.primary.light,
+        color: theme.palette.grey[700]
+    }
+  },
+}))
+
+export default function AddPost(props) {
+  console.log(&quot;Inside function Add post func for &quot; + props.entityID);
+
+
+  const [indexes, setIndexes] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const { register, handleSubmit } = useForm();
+
+  const addtag = () =&gt; {
+    setIndexes(prevIndexes =&gt; [...prevIndexes, counter]);
+    setCounter(prevCounter =&gt; prevCounter + 1);
+  };
+
+  const removetag = index =&gt; () =&gt; {
+    setIndexes(prevIndexes =&gt; [...prevIndexes.filter(item =&gt; item !== index)]);
+    setCounter(prevCounter =&gt; prevCounter - 1);
+  };
+
+  const cleartag = () =&gt; {
+    setCounter(prevCounter =&gt; prevCounter - prevCounter);
+    setIndexes([]);
+  };
+
+  const onSubmit = data =&gt; {
+    var targetFilter = { &quot;entityID&quot;: props.entityID || &quot;rrr-1296&quot; };
+    var rating = parseInt(data.rating);
+    rating = rating &lt; 0 ? 0 : rating;
+    rating = rating &gt; 10 ? 10 : rating;
+    Upload_Photo(data.photo).then(downloadURL =&gt; {
+      var edit_data = {
+        &quot;type&quot;: 1,
+        &quot;rating&quot;: rating,
+        &quot;content&quot;: data.content,
+        &quot;photo&quot;: downloadURL,
+        &quot;hashtag&quot;: data.hashtag_list
+      };
+      postFn.post_create(targetFilter, edit_data).then(res =&gt; history.push(&#039;/main&#039;));
+      console.log(edit_data);
+
+    })
+  }
+  
+  
+
+  return (
+    &lt;Container className=&quot;mt-5 pb-5 col-lg-6 bg-light rounded&quot;&gt;
+      &lt;div className=&quot;py-3&quot;&gt;
+        &lt;Form className=&quot;justify-content-center&quot; onSubmit={handleSubmit(onSubmit)}&gt;
+          &lt;Form.Group controlId=&quot;RestaurantName&quot;&gt;
+            &lt;Form.Label&gt;Rating&lt;/Form.Label&gt;
+            &lt;Form.Control type=&quot;number&quot; min=&quot;0&quot; max=&quot;10&quot; placeholder=&quot;0 ~ 10&quot; required name=&quot;rating&quot; ref={register} /&gt;
+          &lt;/Form.Group&gt;
+          &lt;Form.Group controlId=&quot;content&quot;&gt;
+            &lt;Form.Label&gt;Content&lt;/Form.Label&gt;
+            &lt;Form.Control as=&quot;textarea&quot; rows={3} required name=&quot;content&quot; placeholder=&quot;Please Type here...&quot; ref={register} /&gt;
+          &lt;/Form.Group&gt;
+          &lt;Form.Group controlId=&quot;hashtag_list&quot;&gt;
+
+            {indexes.map(index =&gt; {
+              const fieldName = `hashtag_list[${index}]`;
+              return (
+                &lt;fieldset name={fieldName} key={fieldName}&gt;
+
+
+                  &lt;input
+                    type=&quot;text&quot;
+                    name={fieldName}
+                    placeholder={`#Hashtag${index + 1}`}
+                    ref={register}
+                    required
+                  /&gt;
+
+                &lt;/fieldset&gt;
+              );
+            })}
+
+                  &lt;button type=&quot;button&quot; onClick={addtag}&gt;
+                    Add tag
+                  &lt;/button&gt;
+
+
+          &lt;/Form.Group&gt;
+          &lt;Form.Group&gt;
+            &lt;Form.Label&gt;Upload Pictures&lt;/Form.Label&gt;
+            &lt;Form.File type=&quot;file&quot; name=&quot;photo&quot; ref={register} multiple /&gt;
+          &lt;/Form.Group&gt;
+        &lt;/Form&gt;
+      &lt;/div&gt;
+    &lt;/Container&gt;
+  )
+}</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

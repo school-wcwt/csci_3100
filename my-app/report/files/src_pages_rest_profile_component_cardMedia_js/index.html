@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - src/pages/rest_profile/component/cardMedia.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>src/pages/rest_profile/component/cardMedia.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">75.03</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">169</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">14.19</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.08</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">import React from &#039;react&#039;;
+import { makeStyles } from &#039;@material-ui/core/styles&#039;;
+import clsx from &#039;clsx&#039;;
+import Card from &#039;@material-ui/core/Card&#039;;
+import CardHeader from &#039;@material-ui/core/CardHeader&#039;;
+import CardMedia from &#039;@material-ui/core/CardMedia&#039;;
+import CardContent from &#039;@material-ui/core/CardContent&#039;;
+import CardActions from &#039;@material-ui/core/CardActions&#039;;
+import Collapse from &#039;@material-ui/core/Collapse&#039;;
+import Avatar from &#039;@material-ui/core/Avatar&#039;;
+import IconButton from &#039;@material-ui/core/IconButton&#039;;
+import Typography from &#039;@material-ui/core/Typography&#039;;
+import { red } from &#039;@material-ui/core/colors&#039;;
+import FavoriteIcon from &#039;@material-ui/icons/Favorite&#039;;
+import ShareIcon from &#039;@material-ui/icons/Share&#039;;
+import ExpandMoreIcon from &#039;@material-ui/icons/ExpandMore&#039;;
+import MoreVertIcon from &#039;@material-ui/icons/MoreVert&#039;;
+import Button from &#039;@material-ui/core/Button&#039;;
+import Dialog from &#039;@material-ui/core/Dialog&#039;;
+import DialogActions from &#039;@material-ui/core/DialogActions&#039;;
+import DialogContent from &#039;@material-ui/core/DialogContent&#039;;
+import DialogContentText from &#039;@material-ui/core/DialogContentText&#039;;
+import DialogTitle from &#039;@material-ui/core/DialogTitle&#039;;
+import Slide from &#039;@material-ui/core/Slide&#039;;
+import history from &#039;../../history&#039;;
+import axios from &#039;../../../axiosConfig&#039;;
+import AddCommentOutlinedIcon from &#039;@material-ui/icons/AddCommentOutlined&#039;;
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return &lt;Slide direction=&quot;up&quot; ref={ref} {...props} /&gt;;
+});
+
+const AlertDialogSlide = ()=&gt; {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () =&gt; {
+    setOpen(true);
+  };
+
+  const handleClose = () =&gt; {
+    setOpen(false);
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;Button variant=&quot;outlined&quot; color=&quot;primary&quot; onClick={handleClickOpen}&gt;
+        Slide in alert dialog
+      &lt;/Button&gt;
+      &lt;Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby=&quot;alert-dialog-slide-title&quot;
+        aria-describedby=&quot;alert-dialog-slide-description&quot;
+      &gt;
+        &lt;DialogTitle id=&quot;alert-dialog-slide-title&quot;&gt;{&quot;Use Google&#039;s location service?&quot;}&lt;/DialogTitle&gt;
+        &lt;DialogContent&gt;
+          &lt;DialogContentText id=&quot;alert-dialog-slide-description&quot;&gt;
+            Let Google help apps determine location. This means sending anonymous location data to
+            Google, even when no apps are running.
+          &lt;/DialogContentText&gt;
+        &lt;/DialogContent&gt;
+        &lt;DialogActions&gt;
+          &lt;Button onClick={handleClose} color=&quot;primary&quot;&gt;
+            Disagree
+          &lt;/Button&gt;
+          &lt;Button onClick={handleClose} color=&quot;primary&quot;&gt;
+            Agree
+          &lt;/Button&gt;
+        &lt;/DialogActions&gt;
+      &lt;/Dialog&gt;
+    &lt;/div&gt;
+  );
+};
+
+
+const useStyles = makeStyles((theme) =&gt; ({
+  root: {
+    maxWidth: 345,
+    margin:&quot;1%&quot;,
+    marginLeft: &quot;5%&quot;,
+  },
+  media: {
+    height: 0,
+    paddingTop: &#039;56.25%&#039;, // 16:9
+  },
+  expand: {
+    transform: &#039;rotate(0deg)&#039;,
+    marginLeft: &#039;auto&#039;,
+    transition: theme.transitions.create(&#039;transform&#039;, {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: &#039;rotate(180deg)&#039;,
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
+
+
+export default function RecipeReviewCard({datainput}) {
+
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+  const [seeting_expanded, setseeting_expanded] = React.useState(false);
+  const [liked,setliked] = React.useState(false);
+  const handleEditProfile = () =&gt; {
+    setExpanded(!expanded);
+  };
+  const handleSeeting = () =&gt; {
+    setseeting_expanded(!seeting_expanded);
+  };
+  const handleLikeMe = () =&gt;{
+    setliked(!liked);
+    console.log(`Clicked liked to ${datainput.entitiesID}`);
+    axios.patch(`entity/follow/${datainput.entitiesID}`,{&quot;addFlag&quot;:liked}).then(res=&gt;console.log(&quot;Liked&quot;)).catch(err=&gt;console.log(&quot;Can not like&quot;));
+  };
+  const handleLogOut = () =&gt;{
+    history.push(&#039;/login&#039;);
+  }
+  const handleAddComment = () =&gt;{
+    history.push(`/createpost/${datainput.entitiesID}`);
+  }
+  return (
+    &lt;Card className={classes.root}&gt;
+      &lt;CardHeader
+        avatar={
+          &lt;Avatar aria-label=&quot;recipe&quot; className={classes.avatar}&gt;
+            {datainput.UserName[0]}
+          &lt;/Avatar&gt;
+        }
+        action={
+          &lt;IconButton aria-label=&quot;settings&quot; onClick = {handleSeeting}&gt;
+            &lt;MoreVertIcon /&gt;
+          &lt;/IconButton&gt;
+        }
+        title= {datainput.UserName}
+        subheader={`Join Time: ${datainput.JoinTime}`}
+      /&gt;
+      &lt;Collapse in={seeting_expanded} timeout=&quot;auto&quot; unmountOnExit&gt;
+        &lt;div style = {{float: &quot;right&quot;}}&gt;
+        &lt;Button color = &quot;secondary&quot; onClick = {handleEditProfile}&gt;Edit Profile&lt;/Button&gt;
+        &lt;Button color= &quot;secondary&quot; onClick = {handleLogOut}&gt;Log Out&lt;/Button&gt;
+        &lt;/div&gt;
+      &lt;/Collapse&gt;
+      &lt;CardMedia
+        className={classes.media}
+        image={datainput.BigImagePath}
+        title={datainput.BigImagePath}
+      /&gt;
+      &lt;CardContent&gt;
+        &lt;Typography variant=&quot;body2&quot; color=&quot;textSecondary&quot; component=&quot;p&quot;&gt;
+          {!datainput.introduction||datainput.introduction==&quot;&quot; ? &quot;Welcome to my profile. I am new joiner from mATE&quot;: datainput.introduction}
+        &lt;/Typography&gt;
+      &lt;/CardContent&gt;
+      &lt;CardActions disableSpacing&gt;
+        &lt;IconButton aria-label=&quot;add to favorites&quot; onClick = {handleLikeMe}&gt;
+          &lt;FavoriteIcon style = {{color: liked?&quot;red&quot;:&quot;grey&quot;}}/&gt;
+        &lt;/IconButton&gt;
+        &lt;IconButton aria-label=&quot;add comment&quot; onClick= {handleAddComment}&gt;
+          &lt;AddCommentOutlinedIcon /&gt;
+        &lt;/IconButton&gt;
+      &lt;/CardActions&gt;
+    &lt;/Card&gt;
+  );
+}</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
