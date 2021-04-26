@@ -26,6 +26,10 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - cd `socket-io-server/` 
 - Run `node app.js`
 
+### Message For Tutor (Will be deleted After June/2021)
+- If you have some difficulties for creating DataBase or Email Validation. It may not related to coding issue but the environment setup. 
+- We recommend you to email us for quick response or create a new issues for this project 
+
 ### Commands you may use with ***git***
 - You may update file using `git pull` 
 - (you may want to do this every times as your groupmate might have updated something)
