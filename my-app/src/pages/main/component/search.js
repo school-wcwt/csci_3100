@@ -72,7 +72,11 @@ const SearchBar = (props) => {
 
   const chooseEntity = (e, chosen) => {
     if (chosen !== null) {
-      setTimeout(() => {history.push(`/profile/${chosen.entityID}`)}, 500)
+      setTimeout(() => {
+        props.handleHistory(`/profile/${chosen.entityID}`)
+        //history.push(`/profile/${chosen.entityID}`)
+        //history.go();
+      }, 500)
     }
   }
 

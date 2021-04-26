@@ -10,6 +10,8 @@ import Rating from '../../../../component/Rating'
 import Loading from '../../../../component/loading'
 import history from '../../../history'
 import axios from '../../../../axiosConfig'
+import Post from '../../../../component/post/post';
+import Hashtags from '../Hashtags'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,12 +54,13 @@ const useStyles = makeStyles((theme) => ({
   location: {
     margin: theme.spacing(2),
     color: theme.palette.grey[400],
-  }
+  },
 }));
 
 export default function RestCard(props) {
   const classes = useStyles();
   const [images, setImages] = useState(null)
+  const [tags, setTags] = useState(null)
 
   const fetchImage = () => {
     axios.post('/post/', {filter: {target: props.rest._id, type: 1}})
@@ -70,15 +73,26 @@ export default function RestCard(props) {
     })
   }
 
+  const fetchTag = () => {
+    axios.post('/hashtag/', {restFilter: {_id: props.rest._id}})
+    .then(res => {
+      let tags = res.data
+      for (let i = res.data.length; i < 3; i++)
+        tags.push({name: '-', frequency: 0})
+      setTags(tags)
+    })
+  }
+
   useEffect(() => {
     fetchImage()
+    fetchTag()
   }, [])
 
   const handleClick = () => {
     history.push(`/profile/${props.rest.entityID}`)
   }
 
-  if (images == null) return (
+  if (images == null || tags == null) return (
     <Card className={classes.root}>
       <Loading/>
     </Card>
@@ -110,6 +124,10 @@ export default function RestCard(props) {
           <Tooltip title={props.rest.address}>
             <LocationOnRounded className={classes.location}/>
           </Tooltip>
+
+          {tags !== null
+            ? <Hashtags hashtag={tags} limit={3} /> 
+            : null}
           
         </CardContent>
       </CardActionArea>

@@ -91,7 +91,7 @@ export default function PrimarySearchAppBar() {
   const handleHistory = (page) => {
     setTimeout(() => {
       history.push(page);
-      history.go();
+      //history.go();
     }, 500)
   }
 
@@ -129,7 +129,7 @@ export default function PrimarySearchAppBar() {
             </Typography>
           </Button>
 
-          <SearchBar/>
+          <SearchBar handleHistory={handleHistory}/>
           {/*<IconButton edge='end' className={classes.rightButton}>
             <NotificationsIcon />
           </IconButton>*/}

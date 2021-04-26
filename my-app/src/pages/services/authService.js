@@ -68,12 +68,10 @@ const useLoginUser = () => {
         if (user == null && window.location.pathname.startsWith('/auth'))
             return;
         if (user == null && cookies.refresh_token == undefined)
-            history.push('/login');
-        else if (user == null && cookies.refresh_token !== undefined)
-            refresh();
+            return history.push('/login');
+        if (user == null && cookies.refresh_token !== undefined)
+            return refresh();
     }, [])
-
-
 
     return {
         user,

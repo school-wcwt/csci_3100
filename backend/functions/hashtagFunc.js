@@ -12,7 +12,7 @@ var findTag = (filter) => {
 var findTags = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            const tags = await Tag.find(filter).exec()
+            const tags = await Tag.find(filter).sort({frequency: -1}).exec()
             return resolve(tags);
         } catch(err) { return reject(err) }})(); 
     })

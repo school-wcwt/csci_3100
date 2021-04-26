@@ -15,6 +15,7 @@ import history from '../history'
 import { Form } from 'react-bootstrap';
 import { Upload_Photo } from '../../component/Upload/upload';
 import DateTimePicker from 'react-datetime-picker';
+import Hashtags from './component/Hashtags'
 
 import {WhatsappShareButton, WhatsappIcon,
   EmailShareButton,EmailIcon} from "react-share";
@@ -557,56 +558,45 @@ const RestActions = (props) => {
 export default function UserProfile(props) {
   const [fetched, setFetched] = useState(false);
   const [entity, setEntity] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [tags, setTags] = useState(null);
   const classes = useStyles()
   const urlParams = useParams();
   const entityID = urlParams.EntityID;
 
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
   useEffect(() => {
     axios.get(`entity/${entityID}`)
       .then(res => {
-        if (res.data) setEntity(res.data)
-        setFetched(true)
+        if (res.data)
+          setEntity(res.data)
       })
       .catch(err => console.log(err))
   }, [urlParams])
 
+  useEffect(() => {
+    if (entity == null) return;
+    if (entity.type == 'User') return setFetched(true);
+    axios.post('/hashtag/', {restFilter: {_id: entity._id}})
+    .then(res => {
+      let tags = res.data
+      for (let i = res.data.length; i < 6; i++)
+        tags.push({name: '-', frequency: 0})
+      setTags(tags)
+      setFetched(true)
+    })
+  }, [entity])
+
   if (!fetched || global.loginedUser.user == null) return <Loading />
-  else if (fetched && entity == null) return <Error404 />
-  else return (
+  if (fetched && entity == null) return <Error404 />
+  return (
     <>
       <CssBaseline />
       <NavBar />
       <div className={classes.root}>
         <Avatar variant={entity.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar}
           alt={entity.entityID} src={entity.profPhoto[0]} />
-        <Typography variant='h4'
-          onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
-          {entity.username}
-        </Typography>
-        <Popover
-          id="mouse-over-popover"
-          className={classes.popover}
-          classes={{ paper: classes.popoverPaper, }}
-          open={open}
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'center', horizontal: 'left' }}
-          onClose={handlePopoverClose}
-          disableRestoreFocus
-        >
-          <Typography>{`#${entity.tag}`}</Typography>
-        </Popover>
+        <Tooltip title={<Typography>{`#${entity.tag}`}</Typography>}>
+          <Typography variant='h4'>{entity.username}</Typography>
+        </Tooltip>
         {entity.name
           ? <Typography variant='h6'>{entity.name}</Typography> : null}
         {entity.type == 'Rest' && entity.post.length !== 0
@@ -615,6 +605,8 @@ export default function UserProfile(props) {
           ? <UserInfo {...props} user={entity} /> : <RestInfo {...props} rest={entity} />}
         {entity.type == 'User'
           ? <UserActions {...props} user={entity} /> : <RestActions {...props} rest={entity} />}
+        {entity.type == 'Rest' && entity.post.length !== 0
+          ? <Hashtags hashtag={tags} limit={6} /> : null}
       </div>
       <Posts filter={{ _id: { $in: entity.post } }} />
     </>
