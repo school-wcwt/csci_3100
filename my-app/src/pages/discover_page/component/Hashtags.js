@@ -4,12 +4,18 @@ import { Button, CardContent } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   tags : {
-    display: 'inline-flex',
+    display: 'flex',
+    flexDirection: 'column',
     gap: theme.spacing(1),
+    width: '100%'
   },
   tagButton: {
     borderRadius: 30,
     fontSize: '0.8rem',
+    justifyContent: 'space-between',
+    '&:disabled': {
+      color: theme.palette.grey[700]
+    },
   },
 }))
 
@@ -18,7 +24,10 @@ export default function Hashtags(props) {
   return (                    
     <CardContent className={classes.tags}>
       {props.hashtag.slice(0, props.limit).map((tag, i) => (
-        <Button variant='outlined' className={classes.tagButton} key={`tag-${i}`}>{`# ${tag.name}`}</Button>))}
+        <Button variant='outlined' fullWidth disabled className={classes.tagButton} key={`tag-${i}`}>
+          <span>{`#${tag.name}`}</span>
+          <span>{tag.frequency}</span> 
+        </Button>))}
     </CardContent>
   )
 }

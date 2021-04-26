@@ -96,7 +96,7 @@ const Post = (props) => {
         ? <CardMedia><ImageDisplay {...props}/></CardMedia> : null}
 
       {props.post.hashtag && props.post.hashtag.length !== 0
-        ? <Hashtags {...props} /> : null }
+        ? <Hashtags hashtag={props.post.hashtag} limit={6} /> : null }
 
       <Divider/>
       <CardContent>{props.post.content}</CardContent>

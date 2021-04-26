@@ -118,23 +118,23 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) =
 
 // ------ User Hashtag Functions ------
 
-var findTag = (restFilter, name) => {
+var findTag = (restFilter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             var rest = await entityFunc.findEntity(restFilter);
             if (rest == null) throw new Error('Entity not found.');
-            var tag = await hashtagFunc.findTag({entity: rest._id, name: name})
+            var tag = await hashtagFunc.findTag({target: rest._id})
             return resolve(tag);
         } catch(err) { return reject(err) } })();
     })
 }
 
-var findTags = (restFilter, name) => {
+var findTags = (restFilter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
             var rest = await entityFunc.findEntity(restFilter);
             if (rest == null) throw new Error('Entity not found.');
-            var tags = await hashtagFunc.findTags({entity: rest._id, name: name})
+            var tags = await hashtagFunc.findTags({target: rest._id})
             return resolve(tags);
         } catch(err) { return reject(err) } })();
     })

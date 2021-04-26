@@ -17,9 +17,10 @@ git clone git@github.com:school-wcwt/csci_3100.git
 
 ### Run Frontend
 - cd to `my-app` and run `npm init` and `npm install` and `npm start`
+- change the `.env.my-app` file to `.env`. This file define the port of that Frontend Can send request to backend
 
 ### Run backend (Mongo in local)
-- Check `/my-app/src/port.js` file and see the ***Mongo_port*** 
+- change the `.env.backend` to `.env`. This File define the ACCESS & Refresh password and port of MongoDB that are communicating with frontend
 - Run `node server.js` in `/backend`
 
 ### Run socket-io-server (syn action for mult-user)
