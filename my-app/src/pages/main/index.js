@@ -7,6 +7,11 @@ import { CssBaseline, Typography } from '@material-ui/core';
 import global from '../../component/global'
 import Loading from '../../component/loading'
 
+/**
+ * Generate Main Page and Posts for followed user
+ * @MianPageEntry
+ */
+
 const Main = (props) => {
     if (global.loginedUser.user == null) return <Loading />
     else return (

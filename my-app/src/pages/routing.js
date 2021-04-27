@@ -1,5 +1,5 @@
-import {React, Component,useState, useEffect } from 'react';
-import {  Router, Switch, Redirect,Route, Link } from 'react-router-dom';
+import {React } from 'react';
+import {Router, Switch,Route} from 'react-router-dom';
 import Main from './main/';
 import Login from './login/';
 import Reservation from './reservation/';
@@ -11,7 +11,6 @@ import Post from './panel_page/post.js'
 import Comment from './panel_page/comment.js'
 import Hashtag from './panel_page/hashtag.js'
 import Sock from './panel_page/socket-test.js'
-import Search from './main/component/search.js'
 import PanelBar from './panel_page/panel.js'
 import DiscoverPage from './discover_page/';
 import ProfilePage from './user_profile/index';
@@ -19,21 +18,18 @@ import CreatePost from './createPost/';
 import Verify from './verify/verifyPage';
 import '../component/css/background.css';
 import {GetMyUser, useLoginUser} from './services/authService';
-import axios from '../axiosConfig'
-// it is backend path for template I found
-// input box : https://v3.material-ui.com/demos/text-fields/
-
-// -1 not login in ,0 user, 1 rest
-// For Testing purpose, if you want to go specific page without permission, go ./services/authService and set userState to admin
-// {IsLogin()? null:<Redirect to={{ pathname: '/login' }} />}
-
 import history from "./history";
 import global from '../component/global';
-import { Typography } from '@material-ui/core';
-//RestProfilePage
-const Routing = (props) => {
-  global.loginedUser = useLoginUser();
 
+/**
+ * Define all the pages we have and each page will render which function
+ * For User profile, we have profile/YourID to render specific user/restaurent profile
+ * input box reference for all form : https://v3.material-ui.com/demos/text-fields/
+ * @PageManageSystem
+ */
+
+const Routing = (props) => {
+  global.loginedUser = useLoginUser(); // Golbal state, If user not login, null here
   return (
     <Router history={history}>
       <div>

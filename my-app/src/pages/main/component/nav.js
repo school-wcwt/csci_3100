@@ -72,6 +72,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+/**
+ * Handle the bar function on the top of the page
+ * define ui and redirect user to specific page with onclick in each button
+ * @NavBarSystem
+ */
+
 export default function PrimarySearchAppBar() {
   const entityID = global.loginedUser.user.entityID;
   const classes = useStyles();
