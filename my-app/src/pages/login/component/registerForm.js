@@ -4,7 +4,11 @@ import { TextField, CircularProgress, Button } from "@material-ui/core";
 import CheckIcon from '@material-ui/icons/Check';
 import axios from '../../../axiosConfig';
 import useStyles from '../styles/formStyle';
-
+/**
+ * Render RegisterForm UI & handle Registration email Verification 
+ * @param {Object} props 
+ * @returns RegisterForm UI
+ */
 const RegisterForm = (props) => {
     const { register, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false);

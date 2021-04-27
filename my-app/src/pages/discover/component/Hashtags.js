@@ -1,4 +1,3 @@
-//next: use filter
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, CardContent } from '@material-ui/core';
 
@@ -19,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+/**
+ * Generate HashTag Button UI
+ * @param {Object} props 
+ * @param {[ tag:{name:String, 
+ *            frequency:number} ]} props.hashtag 
+ * @return HashTag Buttons
+ */
 export default function Hashtags(props) {
   const classes = useStyles();
   return (                    

@@ -8,7 +8,11 @@ import history from "../../../component/history";
 import useStyles from '../styles/formStyle'
 
 import global from '../../../component/global'
-
+/**
+ * Render Login Page & Handle Login operation
+ * @param {Object} props 
+ * @returns LoginForm UI 
+ */
 const LoginForm = (props) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);

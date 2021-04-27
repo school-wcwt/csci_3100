@@ -9,7 +9,13 @@ import Loading from '../loading.js';
 import Error404 from '../error404.js';
 
 const postFn = require("../load_backend/postFunction.js");
-
+/**
+ * - Generate Posts UI:
+ * - Filter format can be view at route POST user/:entityID/post/new in github backend's readme
+ * @param {Object} props 
+ * @param {Object} props.filter 
+ * @return Posts UI
+ */
 export default function Posts(props) {
   const [fetched, setFetched] = useState(false)
   const [posts, setPosts] = useState(null)

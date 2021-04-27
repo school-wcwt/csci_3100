@@ -5,7 +5,11 @@ import logo from '../../image/logo.png'
 import useStyles from './styles/indexStyle'
 import LoginForm from './component/loginForm'
 import RegisterForm from './component/registerForm'
-
+/**
+ * Render Login Page and clear current user state
+ * @param {Object} props 
+ * @returns Login Page UI
+ */
 const Login = (props) => {
     var [panel, setPanel] = React.useState(0);
     const styles = useStyles(); 

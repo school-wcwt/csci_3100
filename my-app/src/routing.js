@@ -12,10 +12,9 @@ import {GetMyUser, useLoginUser} from 'component/authService';
 import { history, global } from "component";
 
 /**
+ * Pages Manage System:
  * Define all the pages we have and each page will render which function
- * For User profile, we have profile/YourID to render specific user/restaurent profile
- * input box reference for all form : https://v3.material-ui.com/demos/text-fields/
- * @PageManageSystem
+ * @return page
  */
 
 const Routing = (props) => {

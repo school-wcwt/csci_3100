@@ -5,7 +5,7 @@ import { Loading, NavBar, Posts, global } from 'component'
 
 /**
  * Generate Main Page and Posts for followed user
- * @MianPageEntry
+ * @return Main Page UI
  */
 
 const Main = (props) => {

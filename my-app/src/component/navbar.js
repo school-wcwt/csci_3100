@@ -71,9 +71,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * Handle the bar function on the top of the page
+ * Handle the bar function on the top of the page including search function
  * define ui and redirect user to specific page with onclick in each button
- * @NavBarSystem
+ * @return Bar at the top of website
  */
 
 export default function PrimarySearchAppBar() {
