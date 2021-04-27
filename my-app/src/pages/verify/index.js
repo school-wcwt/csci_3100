@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '1rem 6rem'
     },
 }));
-
+/**
+ * To check id the authHash+ part matches the verification for that entityID
+ * @returns VerifyPage (sucess or Fail Page)
+ */
 const Verify = (props) => {
     const styles = useStyles(); 
     const [res, setRes] = useState(null);

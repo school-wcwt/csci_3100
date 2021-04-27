@@ -5,7 +5,11 @@ import PanelBar from "./panel.js"
 import { GetMyEntities } from 'component';
 
 const hashtagFn = require("../../component/load_backend/hashtagFunction");
-
+/**
+ * Dev Check / Debug Page for Hashtag related function
+ * @private
+ * @returns Debug page  
+ */
 const Entity = () => {
   var entitiesID = GetMyEntities();
 
@@ -25,7 +29,6 @@ const Entity = () => {
       }
       catch (err) {
         console.log(err)
-        console.log('---------------')
       }
     }
     return (

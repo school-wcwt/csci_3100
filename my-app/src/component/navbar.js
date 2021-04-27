@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * Handle the bar function on the top of the page including search function
- * define ui and redirect user to specific page with onclick in each button
+ * - Handle the bar function on the top of the page including search function
+ * - Define ui and redirect user to specific page with onclick in each button
  * @return Bar at the top of website
  */
 

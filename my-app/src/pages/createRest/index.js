@@ -130,6 +130,12 @@ const Register_DataBase = data =>{
 })
 };
 
+/**
+ * - Let user fill in Restaurant's data for creation. 
+ * - Then Pass data to DB and redirect user to Main Page After creation
+ * @returns Creat Restaurant Form UI
+ */
+
 const RestForm = (props) => {
     var nummberOfFile = 0;
     const { register, handleSubmit } = useForm();
@@ -179,6 +185,11 @@ const RestForm = (props) => {
     )
 
 }
+/**
+ * - Let user fill in Restaurant's data for creation. 
+ * - Then Pass data to DB and redirect user to Main Page After creation
+ * @returns Creat Restaurant Form Page
+ */
 const CreateRest = ()=>{
     const classes = useStyles();
     Auth();

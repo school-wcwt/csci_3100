@@ -1,6 +1,10 @@
 import {Navbar,Form,Button,FormControl,Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-
+/**
+ * Dev Check / Debug Page for all related function
+ * @private
+ * @returns Debug page  
+ */
 function PanelBar(){
     return(
 <>

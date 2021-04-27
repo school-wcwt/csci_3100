@@ -3,7 +3,11 @@ import { socket, detectChange, trigChange } from "../../component/socket-client.
 import PanelBar from "./panel.js"
 
 const postFn = require("../../component/load_backend/postFunction.js");
-
+/**
+ * Dev Check / Debug Page for Post related function
+ * @private
+ * @returns Debug page  
+ */
 const Post = () => {
     const [entity4, setEntity4] = useState(null);
     useEffect(() => {

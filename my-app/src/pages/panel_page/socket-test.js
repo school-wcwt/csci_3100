@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import { socket, trigChange, detectChange } from "../../component/socket-client.js"
 import { GetMyEntities } from 'component'
 var entitiesID = GetMyEntities();
-
+/**
+ * Dev Check / Debug Page for socket.io related function
+ * @private
+ * @returns Debug page  
+ */
 
 const App = () => {
   const [response, setResponse] = useState('');

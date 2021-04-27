@@ -28,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(4, 4, 2),
     }
 }))
-
+/**
+ * - Generate Discover Page with hightest score Restaurant
+ * - Group the similar HashTag together in Discover Page
+ * @returns list of restaurants' interface
+ */
 const Discover = (props) => {
     const classes = useStyles()
     const [rests, setRests] = useState(null);

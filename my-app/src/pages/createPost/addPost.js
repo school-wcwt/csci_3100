@@ -7,7 +7,10 @@ import { TextField, InputLabel, InputAdornment, Button, Card, Slider, Tabs, Tab,
 import { history, uploadPhoto } from 'component'
 import useStyles from './styles'
 var postFn = require("../../component/load_backend/postFunction.js");
-
+/**
+ * Asking User for Post's data
+ * @returns AddPost's Form
+ */
 export default function AddPost(props) {
   const classes = useStyles();
   const { register, handleSubmit, control } = useForm();

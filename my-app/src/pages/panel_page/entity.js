@@ -8,6 +8,11 @@ import { GetMyEntities } from 'component'
 
 const entityFn = require("../../component/load_backend/entityFunction");
 
+/**
+ * Dev Check / Debug Page for Entity related function
+ * @private
+ * @returns Debug page  
+ */
 const Entity = () => {
   var entitiesID = GetMyEntities();
 
@@ -265,4 +270,4 @@ const Entity = () => {
     </div>
   )
 }
-export default (Entity)
+export default Entity

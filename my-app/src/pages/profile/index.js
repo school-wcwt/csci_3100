@@ -546,7 +546,14 @@ const RestActions = (props) => {
     </>
   )
 }
-
+/**
+ * - Identify if the input EntityID is user or restaurant
+ * - Generate User profile OR Restaurant profile with respect to their role
+ * - Handle Follow, Reservation, changeing data and so on operation inside this page
+ * @param {String} urlParams.EntityID 
+ * @param {Object} props
+ * @returns User / Restaurant's profile page
+ */
 export default function Profile(props) {
   const [fetched, setFetched] = useState(false);
   const [entity, setEntity] = useState(null);
