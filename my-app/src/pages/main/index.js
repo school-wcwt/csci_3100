@@ -3,6 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { CssBaseline, Typography } from '@material-ui/core';
 import { Loading, NavBar, Posts, global } from 'component'
 
+/**
+ * Generate Main Page and Posts for followed user
+ * @MianPageEntry
+ */
+
 const Main = (props) => {
     if (global.loginedUser.user == null) return <Loading />
     else return (
