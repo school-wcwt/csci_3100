@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import RestCard from './component/cardMedia/cardMedia';
+import RestCard from './component/cardMedia';
 import axios from '../../axiosConfig'
 import { Loading, NavBar, global, useWindowDimensions } from 'component'
 import { CssBaseline, GridList, GridListTile, Typography } from '@material-ui/core';

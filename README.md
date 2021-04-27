@@ -33,11 +33,13 @@ git clone git@github.com:school-wcwt/csci_3100.git
 
 ### Stat/Doc Generate
 - Jsdoc (Since we code everything using JSX inside `pages/`, we Jsdoc into that dir)
-  1. cd to src 
+  1. cd to `my-app`
   2. Run `jsdoc pages -r -d=<TypeYourOutputDirName>`
+  3. Example: `jsdoc src -r -d=jsdoc`
 - Plato 
-  1. Run `plato -r -d <outdirName> <targetDirName>`
-
+  1. cd to `my-app`
+  2. Run `plato -r -d <outdirName> <targetDirName>`
+  3. Example: `plato -r -d stat_code src/`
 ### Commands you may use with ***git***
 - You may update file using `git pull` 
 - (you may want to do this every times as your groupmate might have updated something)
