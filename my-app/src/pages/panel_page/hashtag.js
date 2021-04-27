@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Form, Button, FormControl, Nav, Container, Col } from 'react-bootstrap';
 import PanelBar from "./panel.js"
 
-import { GetMyEntities } from '../services/authService';
+import { GetMyEntities } from 'component';
 
 const hashtagFn = require("../../component/load_backend/hashtagFunction");
 

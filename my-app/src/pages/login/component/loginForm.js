@@ -4,7 +4,7 @@ import { TextField, CircularProgress, Button } from "@material-ui/core";
 import CheckIcon from '@material-ui/icons/Check';
 
 import axios from '../../../axiosConfig';
-import history from "../../history";
+import history from "../../../component/history";
 import useStyles from '../styles/formStyle'
 
 import global from '../../../component/global'

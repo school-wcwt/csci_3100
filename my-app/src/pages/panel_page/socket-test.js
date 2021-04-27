@@ -1,7 +1,7 @@
 //https://www.valentinog.com/blog/socket-react/
 import React, { useState, useEffect } from "react";
-import { socket, trigChange, detectChange } from "../../component/socket-client/socket-client.js"
-import { GetMyEntities } from '../services/authService';
+import { socket, trigChange, detectChange } from "../../component/socket-client.js"
+import { GetMyEntities } from 'component'
 var entitiesID = GetMyEntities();
 
 

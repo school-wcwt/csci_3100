@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { socket, trigChange, detectChange } from "../../component/socket-client/socket-client.js"
+import { socket, trigChange, detectChange } from "../../component/socket-client.js"
 import PanelBar from "./panel.js"
 const commentFn = require("../../component/load_backend/commentFunction.js");
 

@@ -6,9 +6,7 @@ import { Autocomplete } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { app } from '../../base';
-import { Upload_Photo } from '../../component/Upload/upload';
-import history from '../history';
-import Loading from '../../component/loading'
+import { Loading, history, uploadPhoto } from 'component';
 import { useParams } from 'react-router';
 var postFn = require("../../component/load_backend/postFunction.js");
 
@@ -84,7 +82,7 @@ export default function AddPost(props) {
     }
     
     setLoading(true);
-    Upload_Photo(data.photo).then(downloadURL => {
+    uploadPhoto(data.photo).then(downloadURL => {
       const sendData = {
         type: type,
         photo: downloadURL,

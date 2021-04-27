@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { socket, detectChange, trigChange } from "../../component/socket-client/socket-client.js";
+import { socket, detectChange, trigChange } from "../../component/socket-client.js";
 import PanelBar from "./panel.js"
 
 const postFn = require("../../component/load_backend/postFunction.js");

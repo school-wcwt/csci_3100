@@ -4,16 +4,9 @@ import PanelBar from "./panel.js"
 import global from '../../component/global'
 import {WhatsappShareButton, WhatsappIcon,
 EmailShareButton,EmailIcon} from "react-share";
-import { GetMyEntities } from '../services/authService';
+import { GetMyEntities } from 'component'
 
 const entityFn = require("../../component/load_backend/entityFunction");
-
-
-
-
-
-
-
 
 const Entity = () => {
   var entitiesID = GetMyEntities();

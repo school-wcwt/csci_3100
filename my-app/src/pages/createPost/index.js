@@ -1,12 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NAVbar from "../main/component/nav.js";
 import AddPost from "./addPost.js";
-import {Auth} from '../services/authService';
+import { Auth } from 'component/authService'
 import { useParams } from 'react-router';
 import { CssBaseline } from '@material-ui/core';
-import global from '../../component/global'
-import Loading from '../../component/loading'
+import { Loading, NavBar, global } from 'component'
 
 const CreatePost = () => {
     Auth();
@@ -16,7 +14,7 @@ const CreatePost = () => {
     return (
         <>
             <CssBaseline />
-            <NAVbar />
+            <NavBar />
             <AddPost/>
         </>
     )

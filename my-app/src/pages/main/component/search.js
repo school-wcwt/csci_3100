@@ -3,7 +3,7 @@ import { darken, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import history from '../../history'
+import history from '../../../component/history'
 
 
 const entityFn = require("../../../component/load_backend/entityFunction");

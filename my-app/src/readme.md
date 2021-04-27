@@ -3,5 +3,5 @@
     |:-------------:|:----------------:|:--------:|
     | /             | `Main`           | Working  |
     | /login        | `Login`          | Completed|
-    | /restregister | `RestRegister`   | Working  |
+    | /createRest   | `CreateRest`     | Working  |
     | /Error        | `ErrorPage   `   | Completed|    

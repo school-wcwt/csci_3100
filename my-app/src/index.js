@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import Routing from './pages/routing.js';
+import Routing from './routing';
 //import './index.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
