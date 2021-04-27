@@ -3,18 +3,19 @@ import { darken, makeStyles } from '@material-ui/core/styles';
 import { Carousel } from 'react-bootstrap';
 
 import { Card, CardActionArea, CardContent, CardMedia,
-         Typography, Avatar, Tooltip } from '@material-ui/core';
+         Typography, Avatar, Tooltip, CircularProgress } from '@material-ui/core';
 import { LocationOnRounded } from '@material-ui/icons'
 
 import {Rating, Loading, history } from 'component'
-import axios from '../../../../axiosConfig'
-import Hashtags from '../Hashtags'
+import axios from '../../../axiosConfig'
+import Hashtags from './Hashtags'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
     margin: theme.spacing(2, 0),
     textAlign: 'center',
+    minHeight: 693,
   },
   photoAndRest: {
     position: 'relative',
@@ -89,13 +90,11 @@ export default function RestCard(props) {
     history.push(`/profile/${props.rest.entityID}`)
   }
 
-  if (images == null || tags == null) return (
+  if (images == null || tags == null) return <Card className={classes.root} />
+  return (
     <Card className={classes.root}>
-      <Loading/>
-    </Card>
-  ) 
-  else return (
-    <Card className={classes.root}>
+
+      {/* Photo and Avatar */}
       <CardMedia className={classes.photoAndRest}>
         <Carousel fade className={classes.carousel} indicators={false}>
           {images.map((image, idx) => (
@@ -107,27 +106,25 @@ export default function RestCard(props) {
         <Avatar variant='circular' className={classes.avatar}
           alt={props.rest.entityID} src={props.rest.profPhoto[0]} />
       </CardMedia>
+
+      {/* Infos */}
       <CardActionArea onClick={handleClick}>
         <CardContent className={classes.content}>
           <Tooltip title={`#${props.rest.tag}`} arrow>
-            <Typography variant='h5'>
-              {props.rest.username}
-            </Typography>
+            <Typography variant='h5'> {props.rest.username} </Typography>
           </Tooltip>
-          <Typography variant='body1'>{props.rest.name ? props.rest.name : '-'}</Typography>
+          <Typography variant='body1'> {props.rest.name ? props.rest.name : '-'} </Typography>
           {props.rest.post.length !== 0
             ? <Rating rating={props.rest.rating / props.rest.post.length} /> : <Rating rating={0} />}
-          
           <Tooltip title={props.rest.address}>
             <LocationOnRounded className={classes.location}/>
           </Tooltip>
-
           {tags !== null
-            ? <Hashtags hashtag={tags} limit={3} /> 
+            ? <Hashtags hashtag={tags} limit={3} />
             : null}
-          
         </CardContent>
       </CardActionArea>
+
     </Card>
   );
 }
