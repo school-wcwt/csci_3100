@@ -31,6 +31,13 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - If you have some difficulties for creating DataBase or Email Validation. It may not related to coding issue but the environment setup. 
 - We recommend you to email us for quick response or create a new issues for this project 
 
+### Stat/Doc Generate
+- Jsdoc (Since we code everything using JSX inside `pages/`, we Jsdoc into that dir)
+  1. cd to src 
+  2. Run `jsdoc pages -r -d=<TypeYourOutputDirName>`
+- Plato 
+  1. Run `plato -r -d <outdirName> <targetDirName>`
+
 ### Commands you may use with ***git***
 - You may update file using `git pull` 
 - (you may want to do this every times as your groupmate might have updated something)
