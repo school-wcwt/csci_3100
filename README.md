@@ -31,6 +31,7 @@ git clone git@github.com:school-wcwt/csci_3100.git
 
 ## Final Step: 
 - Add Mongo and socket's port in your port if your are using Vscode
+- ![AddPort](./ReadMe_img/addPort.png)
 
 ### Message For Tutor (Will be deleted After June/2021)
 - If you have some difficulties for creating DataBase or Email Validation. It may not related to coding issue but the environment setup. 
