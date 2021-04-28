@@ -16,16 +16,21 @@ git clone git@github.com:school-wcwt/csci_3100.git
 - MongoDB SetUp => [Click Me](/backend)
 
 ### Run Frontend
-- cd to `my-app` and run `npm init` and `npm install` and `npm start`
+- cd to `my-app`
 - change the `.env.my-app` file to `.env`. This file define the port of that Frontend Can send request to backend
+- run `npm init` and `npm install` and `npm start`
 
 ### Run backend (Mongo in local)
+- cd to `backend`
 - change the `.env.backend` to `.env`. This File define the ACCESS & Refresh password and port of MongoDB that are communicating with frontend
-- Run `node server.js` in `/backend`
+- Run `node server.js`
 
 ### Run socket-io-server (syn action for mult-user)
-- cd `socket-io-server/` 
+- cd to `socket-io-server` 
 - Run `node app.js`
+
+## Final Step: 
+- Add Mongo and socket's port in your port if your are using Vscode
 
 ### Message For Tutor (Will be deleted After June/2021)
 - If you have some difficulties for creating DataBase or Email Validation. It may not related to coding issue but the environment setup. 
