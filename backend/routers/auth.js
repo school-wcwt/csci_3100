@@ -1,7 +1,10 @@
 /** 
- * Express router providing user related routes
+ * Express router providing {@link User} authentication related routes.
  * @module routers/auth
  * @requires express
+ * @requires jsonwebtoken
+ * @requires bcrypt
+ * @requires cors
  */
 
 var express = require('express');
@@ -22,6 +25,10 @@ const Rest   = require('../models/Rest');
 const User   = require('../models/User');
 
 const MaxRefreshDays = 60;
+
+// ====================
+//   Helper Functions
+// ====================
 
 /**
  * Create a JWT token.
@@ -57,21 +64,14 @@ var extendToken = (payload, durationInDays, parentRT) => {
     };
 }
 
-// ============
-//    Routes
-// ============
-
-/**
- * @callback RouteCallback
- * @global
- * @param {express.Request} req 
- * @param {express.Response} res 
- */
+// ====================
+//        Routes
+// ====================
 
 /**
  * This route refreshs a currently existing refresh token. Through {@link module:middlewares/verifyAuth.refresh}, it checks if the user has received RT0-AT0 pair and stores RT0 into database. It then generates a new RT1-AT1 pair, stores AT1 into database, and sends RT1-AT1 pair and the corresponding logined user back as the response. When the access token (AT1) is received in the next request to the server, RT1 is stored into database, confirming its receipt.
  * @summary Refresh a token. 
- * @static 
+ * @instance 
  * @function POST/refresh
  * @see module:middlewares/verifyAuth.refresh
  * @requires module:middlewares/verifyAuth.refresh
@@ -79,7 +79,7 @@ var extendToken = (payload, durationInDays, parentRT) => {
  * @param {Callback} middleware - Express middleware. 
  * @param {RouteCallback} callback - Express callback.
  * @returns {Entity} 200 - Logined User.
- * @throws 500 - Unknown server error.
+ * @throws 500 - Server error.
  */
 router.post('/refresh', verifyAuth.refresh, (req, res) => {
     (async () => { try {
@@ -114,35 +114,33 @@ router.post('/refresh', verifyAuth.refresh, (req, res) => {
 })
 
 /**
- * @typedef {Object} POSTLoginReqBody
- * @property {Object} filter - Searching filter for the User, an instance of Entity.Schema (User.Schema).
+ * @typedef {Object} POST/login-ReqBody
+ * @property {Object} filter - Searching filter for the User, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @property {String} password - Raw string of password.
  */
-
 /**
- * @callback POSTLoginCallback
- * @param {express.Request<{}, {}, module:routers/auth~POSTLoginReqBody>} req 
- * @param {express.Response} res 
+ * @callback POST/login-Callback
+ * @param {express.Request<{}, {}, module:routers/auth~POST/login-ReqBody>} req - Express request. 
+ * @param {express.Response} res - Express response. 
  */
-
 /**
  * This route logins an User. The User is only logged in if they have the correct entity-password pair and are verified. This route generates a new RT-AT pair, stores AT into database, and sends the RT-AT pair and the corresponding logined user back as the response. When the access token (AT) is received in the next request to the server, RT is stored into database, confirming its receipt.
  * @summary Login an User.
- * @static
+ * @instance
  * @function POST/login
  * @param {String} path - Express path.
- * @param {module:routers/auth~POSTLoginCallback} loginCB - Express callback.
+ * @param {module:routers/auth~POST/login-Callback} callback - Express callback.
  * @returns {Entity} 200 - Logined user.
  * @throws 403 - Incorrect password. / Not verified.
  * @throws 404 - Entity not found.
- * @throws 500 - Unknown server error.
+ * @throws 500 - Server error.
  */
 router.post('/login', (req, res) => {
 
     /**
      * Verify password and verification status.
      * @private
-     * @param {Object} filter - Searching filter for the User, an instance of Entity.Schema (User.Schema).
+     * @param {Object} filter - Searching filter for the User, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
      * @param {string} password - Raw string of password.
      * @returns {Promise<{auth: Entity, user: Entity}>} Logined Entity in Auths and Entities (Users) DB.
      * @throws Entity not found.
@@ -197,7 +195,9 @@ router.post('/login', (req, res) => {
 })
 
 /**
- * @typedef {Object} POSTRegisterReqBody
+ * @typedef {Object} POST/register-ReqBody
+ * @see User
+ * @see Entity
  * @property {String} username
  * @property {String} password 
  * @property {String} email
@@ -206,23 +206,22 @@ router.post('/login', (req, res) => {
  * @property {String[]} [profPhoto]
  * @property {String} gender
  */
-
 /**
- * @callback POSTRegisterCallback
- * @param {express.Request<{}, {}, module:routers/auth~POSTRegisterReqBody>} req 
- * @param {express.Response} res 
+ * @callback POST/register-Callback
+ * @param {express.Request<{}, {}, module:routers/auth~POST/register-ReqBody>} req - Express request. 
+ * @param {express.Response} res - Express response. 
  */
 
 /**
  * Register a new user.
- * @static
+ * @instance
  * @function POST/register
  * @requires module:function/entity.createEntity
  * @param {String} path - Express path.
- * @param {module:routers/auth~POSTRegisterCallback} registerCB - Express callback.
+ * @param {module:routers/auth~POST/register-Callback} callback - Express callback.
  * @returns {Entity} 201 - New User.
  * @throws 409 - Email exists.
- * @throws 500 - Unknown server error.
+ * @throws 500 - Server error.
  */
 router.post('/register', (req, res) => {
     entityFunc.createEntity({...req.body, type: 'User'})
@@ -234,27 +233,27 @@ router.post('/register', (req, res) => {
 })
 
 /**
- * @typedef {Object} POSTVerifyReqBody
+ * @typedef {Object} POST/verify-ReqBody
  * @property {String} entityID - EntityID of the verifying User.
  * @property {String} authHash - Verification hash.
  */
 
 /**
- * @callback POSTVerifyCallback
- * @param {express.Request<{}, {}, module:routers/auth~POSTVerifyReqBody>} req 
- * @param {express.Response} res 
+ * @callback POST/verify-Callback
+ * @param {express.Request<{}, {}, module:routers/auth~POST/verify-ReqBody>} req - Express request. 
+ * @param {express.Response} res - Express response. 
  */
 
 /**
  * Verify an existing user.
- * @static 
+ * @instance 
  * @function POST/verify
  * @param {String} path - Express path.
- * @param {module:routers/auth~POSTVerifyCallback} verifyCB - Express callback.
+ * @param {module:routers/auth~POST/verify-Callback} callback - Express callback.
  * @returns {Entity} 200 - OK.
  * @throws 403 - Wrong link.
  * @throws 404 - Entity not found.
- * @throws 500 - Unknown server error.
+ * @throws 500 - Server error.
  */
 router.post('/verify', (req, res) => {
     (async () => { try {
@@ -274,13 +273,13 @@ router.post('/verify', (req, res) => {
 
 /**
  * Logout an User.
- * @static
+ * @instance
  * @function POST/logout
  * @requires module:middlewares/verifyAuth.access
  * @param {String} path - Express path.
  * @param {RouteCallback} callback - Express callback.
  * @returns {Entity} 200 - OK.
- * @throws 500 - Unknown server error.
+ * @throws 500 - Server error.
  */
 router.post('/logout', verifyAuth.access, (req, res) => {
     const filter = {entityID: res.locals.user.entityID};

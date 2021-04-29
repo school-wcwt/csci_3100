@@ -9,8 +9,8 @@ const Mongoose = require('mongoose');
 /**
  * Read a single Comment.
  * @static
- * @param {Object} filter - Searching filter for the Comment, an instance of Comment.Schema.
- * @returns {Promise<Comment|null>} A Comment after query, an instance of Comment.Schema.
+ * @param {Object} filter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Comment|null>} A Comment after query, an instance of [Comment.Schema]{@link Comment}.
  */
 var findComment = (filter) => {
     return new Promise((resolve, reject) => {
@@ -26,8 +26,8 @@ var findComment = (filter) => {
 /**
  * Read multiple Comments.
  * @static
- * @param {Object} filter - Searching filter for the Comment, an instance of Comment.Schema.
- * @returns {Promise<Comment[]|null>} Comments after query, instances of Comment.Schema.
+ * @param {Object} filter - Searching filter for the Comments, instances of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Comment[]|null>} Comments after query, instances of [Comment.Schema]{@link Comment}.
  */
 var findComments = (filter) => {
     return new Promise((resolve, reject) => {
@@ -47,7 +47,7 @@ var findComments = (filter) => {
  * @param {Mongoose.Types.ObjectId} props.post - Post (Post._id) of the Comment.
  * @param {string} authorEntityID - EntityID of the author.
  * @param {string} content - Content of the Comment.
- * @return {Promise<Comment>} Saved Comment, an instance of Comment.Schema.
+ * @return {Promise<Comment>} Saved Comment, an instance of [Comment.Schema]{@link Comment}.
  */
 var createComment = (props, authorEntityID, content) => {
     return new Promise((resolve, reject) => {
@@ -67,9 +67,9 @@ var createComment = (props, authorEntityID, content) => {
 /**
  * Update a Comment.
  * @static
- * @param {Object} filter - Searching filter for the Comment, an instance of Comment.Schema.
+ * @param {Object} filter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
  * @param {Object} data - Data to update the Comment.
- * @returns {Promise<Comment>} Updated Comment, instances of Comment.Schema.
+ * @returns {Promise<Comment>} Updated Comment, instances of [Comment.Schema]{@link Comment}.
  * @throws {Error} Comment not found.
  */
 var updateComment = (filter, data) => {
@@ -85,8 +85,8 @@ var updateComment = (filter, data) => {
 /**
  * Delete a Comment.
  * @static
- * @param {Object} filter - Searching filter for the Comment, an instance of Comment.Schema.
- * @returns {Promise<Comment>} Deleted Comment, instances of Comment.Schema.
+ * @param {Object} filter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Comment>} Deleted Comment, instances of [Comment.Schema]{@link Comment}.
  * @throws {Error} Comment not found.
  */
 var deleteComment = (filter) => {
@@ -102,7 +102,7 @@ var deleteComment = (filter) => {
 /**
  * Delete a Comment.
  * @static
- * @param {Object} filter - Searching filter for the Comments, instances of Comment.Schema.
+ * @param {Object} filter - Searching filter for the Comments, instances of [Comment.Schema]{@link Comment}.
  * @returns {Promise<Number>} Count of deleted Comments.
  */
 var deleteComments = (filter) => {

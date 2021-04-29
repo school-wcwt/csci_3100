@@ -17,10 +17,10 @@ const hashtagFunc = require('./hashtagFunc');
  * Create a Post and push it under the author (and the target if applicable).
  * @static
  * @see module:functions/post.createPost
- * @param {Object} authorFilter - Searching filter for the author of the Post, an instance of Entity.Schema (User.Schema).
- * @param {Object} targetFilter - Searching filter for the target of the Post, an instance of Entity.Schema (Rest.Schema).
+ * @param {Object} authorFilter - Searching filter for the author of the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target of the Post, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
  * @param {Object} data - Data of the Post.
- * @returns {Promise<Post>} Created Post, an instance of Post.Schema.
+ * @returns {Promise<Post>} Created Post, an instance of [Post.Schema]{@link Post}.
  * @throws Entity not found.
  */
 var createPost = (authorFilter, targetFilter, data) => {
@@ -56,8 +56,8 @@ var createPost = (authorFilter, targetFilter, data) => {
  * Delete a Post and pull it from the author (and the target if applicable).
  * @static
  * @see module:functions/post.deletePost
- * @param {Object} filter - Searching filter for the Post, an instance of Post.Schema.
- * @returns {Promise<Post>} Deleted Post, an instance of Post.Schema.
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post>} Deleted Post, an instance of [Post.Schema]{@link Post}.
  */
 var deletePost = (filter) => {
     return new Promise((resolve, reject) => {
@@ -83,8 +83,8 @@ var deletePost = (filter) => {
  * Update a Post.
  * @static
  * @see module:functions/post.updatePost
- * @param {Object} filter - Searching filter for the Post, an instance of Post.Schema.
- * @returns {Promise<Post>} Updated Post, an instance of Post.Schema.
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
  */
 var updatePost = (filter, data) => {
     return new Promise((resolve, reject) => {
@@ -103,9 +103,9 @@ var updatePost = (filter, data) => {
  * Create a GroupList and push it under the author.
  * @static
  * @see module:functions/groupList.createGroupList
- * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of Entity.Schema (User.Schema).
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @param {string} listName - Name of the GroupList.
- * @returns {Promise<Entity>} Updated Entity (User), an instance of Entity.Schema (User.Schema).
+ * @returns {Promise<Entity>} Updated Entity (User), an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @throws Entity not found.
  */
 var createList = (authorFilter, listName) => {   
@@ -129,9 +129,9 @@ var createList = (authorFilter, listName) => {
  * Delete a GroupList and pull it from the author.
  * @static
  * @see module:functions/groupList.deleteGroupList
- * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of Entity.Schema (User.Schema).
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @param {string} listName - Name of the GroupList.
- * @returns {Promise<Entity>} Deleted Entity (User), an instance of Entity.Schema (User.Schema).
+ * @returns {Promise<Entity>} Deleted Entity (User), an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @throws Entity not found.
  */
 var deleteList = (authorFilter, listName) => {   
@@ -155,10 +155,10 @@ var deleteList = (authorFilter, listName) => {
  * Update a GroupList.
  * @static
  * @see module:functions/groupList.updateGroupList
- * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of Entity.Schema (User.Schema).
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @param {string} listName - Name of the GroupList.
- * @param {Object} data - Data to update the GroupList, an instance of GroupList.Schema.
- * @returns {Promise<Entity>} Updated GroupList, an instance of GroupList.Schema.
+ * @param {Object} data - Data to update the GroupList, an instance of [GroupList.Schema]{@link GroupList}.
+ * @returns {Promise<Entity>} Updated GroupList, an instance of [GroupList.Schema]{@link GroupList}.
  * @throws Entity not found.
  */
 var updateList = (authorFilter, listName, data) => {
@@ -178,11 +178,11 @@ var updateList = (authorFilter, listName, data) => {
  * Update content in a GroupList.
  * @static
  * @see module:functions/groupList.updateGroupList
- * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of Entity.Schema (User.Schema).
- * @param {Object} targetFilter - Searching filter for the target to be modified in the content of GroupList, an instance of Entity.Schema (Rest.Schema).
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target to be modified in the content of GroupList, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
  * @param {string} listName - Name of the GroupList.
  * @param {boolean} addFlag - Whether to add (push) or delete (pull) said target.
- * @returns {Promise<Post>} Created Post, an instance of Post.Schema.
+ * @returns {Promise<Post>} Created Post, an instance of [Post.Schema]{@link Post}.
  * @throws Entity not found.
  */
 var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) => {
@@ -209,9 +209,9 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) =
  * Read a single Hashtag.
  * @static
  * @see module:functions/hashtag.findTag
- * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of Entity.Schema (Rest.Schema).
+ * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
  * @param {string} name - Name of the Hashtag.
- * @returns {Promise<Hashtag|null>} A Hashtag after query, an instance of Hashtag.Schema. 
+ * @returns {Promise<Hashtag|null>} A Hashtag after query, an instance of [Hashtag.Schema]{@link Hashtag}. 
  */
 var findTag = (restFilter, name) => {
     return new Promise((resolve, reject) => {
@@ -232,8 +232,8 @@ var findTag = (restFilter, name) => {
  * Read multiple Hashtags.
  * @static
  * @see module:functions/hashtag.findTag
- * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of Entity.Schema (Rest.Schema).
- * @returns {Promise<Hashtag|null>} Hashtags after query, instances of Hashtag.Schema. 
+ * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @returns {Promise<Hashtag|null>} Hashtags after query, instances of [Hashtag.Schema]{@link Hashtag}. 
  */
 var findTags = (restFilter) => {
     return new Promise((resolve, reject) => {
@@ -254,8 +254,8 @@ var findTags = (restFilter) => {
  * Like or unlike a Post, i.e., push/pull author into/from Post.like.
  * @static
  * @see module:functions/post.updatePost
- * @param {Object} postFilter - Searching filter for the Post, an instance of Post.Schema.
- * @param {Object} authorFilter - Searching filter for the author who liked the Post, an instance of Entity.Schema (User.Schema).
+ * @param {Object} postFilter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} authorFilter - Searching filter for the author who liked the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @param {boolean} addFlag - Whether to add (push) or delete (pull) said author.
  * @throws Entity not found.
  */
@@ -275,10 +275,10 @@ var likePost = (postFilter, authorFilter, addFlag = true) => {
  * Create a comment under a Post.
  * @static
  * @see module:functions/comment.createComment
- * @param {Object} postFilter - Searching filter for the Post, an instance of Post.Schema.
- * @param {Object} authorFilter - Searching filter for the author who commented the Post, an instance of Entity.Schema (User.Schema).
- * @param {boolean} data - Content of the Comment.
- * @returns {Promise<Post>} Updated Post, an instance of Post.Schema.
+ * @param {Object} postFilter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} authorFilter - Searching filter for the author who commented the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {String}} data - Content of the Comment.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
  * @throws Entity not found.
  * @throws Post not found.
  */
@@ -305,8 +305,8 @@ var createComment = (postFilter, authorFilter, data) => {
  * Delete a comment from a Post.
  * @static
  * @see module:functions/comment.deleteComment
- * @param {Object} commentFilter - Searching filter for the Comment, an instance of Comment.Schema.
- * @returns {Promise<Post>} Updated Post, an instance of Post.Schema.
+ * @param {Object} commentFilter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
  * @throws Comment not found.
  */
 var deleteComment = (commentFilter) => {
@@ -325,8 +325,8 @@ var deleteComment = (commentFilter) => {
  * Update a comment.
  * @static
  * @see module:functions/comment.updateComment
- * @param {Object} commentFilter - Searching filter for the Comment, an instance of Comment.Schema.
- * @returns {Promise<Comment>} Updated Comment, an instance of Comment.Schema.
+ * @param {Object} commentFilter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Comment>} Updated Comment, an instance of [Comment.Schema]{@link Comment}.
  * @throws Comment not found.
  */
 var updateComment = (commentFilter, data) => {
@@ -342,10 +342,10 @@ var updateComment = (commentFilter, data) => {
 /**
  * Follow or unfollow an Entity, i.e., modify author and target in Entity.following{User/Rest} and Entity.followed respectively.
  * @static
- * @param {Object} authorFilter - Searching filter for the author of the following action, an instance of Entity.Schema (User.Schema).
- * @param {Object} targetFilter - Searching filter for the target of the following action, an instance of Entity.Schema.
+ * @param {Object} authorFilter - Searching filter for the author of the following action, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target of the following action, an instance of [Entity.Schema]{@link Entity}.
  * @param {boolean} addFlag - Whether to add (push) or delete (pull) said target.
- * @returns {Promise<Entity>} Updated author, an instance of Entity.Schema (User.Schema).
+ * @returns {Promise<Entity>} Updated author, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
  * @throws Entity not found.
  */
 var updateFollow = (authorFilter, targetFilter, addFlag = true) => {

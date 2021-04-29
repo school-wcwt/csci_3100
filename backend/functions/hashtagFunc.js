@@ -9,8 +9,8 @@ const Mongoose = require("mongoose")
 /**
  * Read a single Hashtag.
  * @static
- * @param {Object} filter - Searching filter for the Hashtag, an instance of Hashtag.Schema.
- * @returns {Promise<Tag|null>} A Hashtag after query, an instance of Hashtag.Schema.
+ * @param {Object} filter - Searching filter for the Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
+ * @returns {Promise<Hashtag|null>} A Hashtag after query, an instance of [Hashtag.Schema]{@link Hashtag}.
  */
 var findTag = (filter) => {
     return new Promise((resolve, reject) => {
@@ -24,8 +24,8 @@ var findTag = (filter) => {
 /**
  * Read multiple Hashtags, sorted by descending order of Hashtag.frequency.
  * @static
- * @param {Object} filter - Searching filter for the Hashtags, instances of Hashtag.Schema.
- * @returns {Promise<Tag[]|null>} Hashtags after query, instances of Hashtag.Schema.
+ * @param {Object} filter - Searching filter for the Hashtags, instances of [Hashtag.Schema]{@link Hashtag}.
+ * @returns {Promise<Hashtag[]|null>} Hashtags after query, instances of [Hashtag.Schema]{@link Hashtag}.
  */
 var findTags = (filter) => {
     return new Promise((resolve, reject) => {
@@ -39,8 +39,8 @@ var findTags = (filter) => {
 /**
  * Find or otherwise create a Hashtag.
  * @private
- * @param {Object} data - Data of the tag, an instance of Hashtag.Schema.
- * @returns {Promise<Tag>} Fetched or created Hashtag, an instance of Hashtag.Schema.
+ * @param {Object} data - Data of the tag, an instance of [Hashtag.Schema]{@link Hashtag}.
+ * @returns {Promise<Hashtag>} Fetched or created Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  */
 var findOrCreateTag = (data) => {
     return new Promise((resolve, reject) => {
@@ -56,8 +56,8 @@ var findOrCreateTag = (data) => {
 /**
  * Delete a Hashtag.
  * @private
- * @param {Object} filter - Searching filter for the Hashtag, an instance of Hashtag.Schema.
- * @returns {Promise<Tag>} Deleted Hashtag, an instance of Hashtag.Schema.
+ * @param {Object} filter - Searching filter for the Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
+ * @returns {Promise<Hashtag>} Deleted Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  */
 var deleteTag = (filter) => {
     return new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ var useTags = (props, oldTagsID = [], newTagsName = []) => {
      * Convert name to _id of Hashtags.
      * @param {Object} props - Properties passed from driver function.
      * @param {string[]} names - Names of the Hashtags.
-     * @returns {Promise<Mongoose.Types.ObjectId[]>} List of Hashtag _id. 
+     * @returns {Promise<Mongoose.Types.ObjectId[]>} List of Hashtag _id.
      */
     var fetchTagsID = (props, names) => {
         return new Promise((resolve, reject) => {
@@ -129,7 +129,7 @@ module.exports = {
  * @see {findOrCreateTag} for more information.
  * @deprecated Replaced by findOrCreateTag().
  * @param {Object} data - Data to create the Hashtag.
- * @returns {Promise<Tag>} Created Hashtag, an instance of Hashtag.Schema.
+ * @returns {Promise<Hashtag>} Created Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  */
 var createTag = (data) => {
     return new Promise((resolve, reject) => {
@@ -145,9 +145,9 @@ var createTag = (data) => {
 /**
  * Create a tag. 
  * @deprecated Unused.
- * @param {Object} filter - Searching filter for the Hashtag, an instance of Hashtag.Schema.
+ * @param {Object} filter - Searching filter for the Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  * @param {Object} data - Data to update the Hashtag.
- * @returns {Promise<Tag>} Updated Hashtag, an instance of Hashtag.Schema.
+ * @returns {Promise<Hashtag>} Updated Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  * @throws Tag exists.
  */
 var updateTag = (filter, data) => {

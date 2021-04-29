@@ -9,8 +9,8 @@ const Mongoose = require('mongoose');
 /**
  * Read a GroupList.
  * @static
- * @param {Object} filter - Searching filter for the GroupList, an instance of GroupList.Schema.
- * @return {Promise<GroupList|null>} A GroupList after query, an instance of GroupList.Schema.
+ * @param {Object} filter - Searching filter for the GroupList, an instance of [GroupList.Schema]{@link GroupList}.
+ * @return {Promise<GroupList|null>} A GroupList after query, an instance of [GroupList.Schema]{@link GroupList}.
  */
 var findGroupList = (filter) => {
     return new Promise((resolve, reject) => {
@@ -25,8 +25,8 @@ var findGroupList = (filter) => {
 /**
  * Read multiple GroupLists.
  * @static
- * @param {Object} filter - Searching filter for the GroupLists, instances of GroupList.Schema.
- * @returns {Promise<GroupList[]|null>} GroupLists after query, instances of GroupList.Schema.
+ * @param {Object} filter - Searching filter for the GroupLists, instances of [GroupList.Schema]{@link GroupList}.
+ * @returns {Promise<GroupList[]|null>} GroupLists after query, instances of [GroupList.Schema]{@link GroupList}.
  */
 var findGroupLists = (filter) => {
     return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ var findGroupLists = (filter) => {
  * @param {Object} props - Properties passed from driver function.
  * @param {Mongoose.Types.ObjectId} props.author - Author (Entity._id) of the GroupList.
  * @param {string} name - Name of the GroupList.
- * @returns {Promise<GroupList>} Created GroupList, an instance of GroupList.Schema.
+ * @returns {Promise<GroupList>} Created GroupList, an instance of [GroupList.Schema]{@link GroupList}.
  * @throws List exists.
  */
 var createGroupList = (props, name) => {
@@ -65,10 +65,10 @@ var createGroupList = (props, name) => {
 /**
  * Delete a GroupList.
  * @static
- * @param {Object} filter - Searching filter for the GroupList, an instance of GroupList.Schema. Either by _id or author-name pair.
+ * @param {Object} filter - Searching filter for the GroupList, an instance of [GroupList.Schema]{@link GroupList}. Either by _id or author-name pair.
  * @param {Mongoose.Types.ObjectId} filter.author - Author (Entity._id) of the GroupList.
  * @param {string} filter.name - Name of the GroupList.
- * @returns {Promise<GroupList>} Deleted GroupList, an instance of GroupList.Schema.
+ * @returns {Promise<GroupList>} Deleted GroupList, an instance of [GroupList.Schema]{@link GroupList}.
  * @throws List not found.
  */
  var deleteGroupList = (filter) => {
@@ -84,14 +84,14 @@ var createGroupList = (props, name) => {
 /**
  * Update a GroupList.
  * @static
- * @param {Object} filter - Searching filter for the GroupList, an instance of GroupList.Schema. Either by _id or author-name pair.
+ * @param {Object} filter - Searching filter for the GroupList, an instance of [GroupList.Schema]{@link GroupList}. Either by _id or author-name pair.
  * @param {Mongoose.Types.ObjectId} filter.author - Author (Entity._id) of the GroupList.
  * @param {string} filter.name - Name of the GroupList.
  * @param {Object} [props] - Properties passed from driver function.
  * @param {ObjectId} [props.target] - Target (Entity._id) to be modified in the content of GroupList.
  * @param {boolean} [props.addFlag] - Whether to add (push) or delete (pull) said target.
  * @param {Object} [data] - Data to update the GroupList.
- * @returns {Promsie<GroupList>} Updated GroupList, an instance of GroupList.Schema, with content partially populated.
+ * @returns {Promsie<GroupList>} Updated GroupList, an instance of [GroupList.Schema]{@link GroupList}, with content partially populated.
  * @throws List not found.
  */
 var updateGroupList = (filter, props = null, data = null) => {

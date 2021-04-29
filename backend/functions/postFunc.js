@@ -12,8 +12,8 @@ const Mongoose = require('mongoose')
 /**
  * Read a single Post.
  * @static
- * @param {Object} filter - Searching filter for the Post, an instance of Post.Schema.
- * @returns {Promise<Post|null>} A Post after query, an instance of Post.Schema, with author, target, hashtag, comment, and comment.author partially populated.
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post|null>} A Post after query, an instance of [Post.Schema]{@link Post}, with author, target, hashtag, comment, and comment.author partially populated.
  */
 var findPost = (filter) => {
     return new Promise((resolve, reject) => {
@@ -39,8 +39,8 @@ var findPost = (filter) => {
 /**
  * Read multiple Posts, sorted by descending order of Post.createdTime.
  * @static
- * @param {Object} filter - Searching filter for the Posts, instances of Post.Schema.
- * @returns {Promise<Post[]|null>} Posts after query, instances of Post.Schema, with author, target, hashtag, comment, and comment.author partially populated.
+ * @param {Object} filter - Searching filter for the Posts, instances of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post[]|null>} Posts after query, instances of [Post.Schema]{@link Post}, with author, target, hashtag, comment, and comment.author partially populated.
  */
  var findPosts = (filter) => {
     return new Promise((resolve, reject) => {
@@ -70,8 +70,8 @@ var findPost = (filter) => {
  * @param {Mongoose.Types.ObjectId} props.author - Author (Entity._id (User._id)) of the Post.
  * @param {Mongoose.Types.ObjectId} props.target - Target (Entity._id (Rest._id)) of the Post.
  * @param {string} authorEntityID - Author's entityID of the Post.
- * @param {Object} data - Data of the Post, an instance of Post.Schema.
- * @returns {Promise<Post>} - Created Post, an instance of Post.Schema.
+ * @param {Object} data - Data of the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post>} - Created Post, an instance of [Post.Schema]{@link Post}.
  */
 var createPost = (props, authorEntityID, data) => {
     return new Promise((resolve, reject) => {
@@ -101,8 +101,8 @@ var createPost = (props, authorEntityID, data) => {
 /**
  * Delete a post. Delete or modify related Comments and Hashtags.
  * @static
- * @param {Object} filter - Searching filter for the Post, an instance of Post.Schema.
- * @returns {Promise<Object>} Deleted Post, an instance of Post.Schema.
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Object>} Deleted Post, an instance of [Post.Schema]{@link Post}.
  * @throws Post not found.
  */
  var deletePost = (filter) => {
@@ -122,13 +122,13 @@ var createPost = (props, authorEntityID, data) => {
 /**
  * Update a post.
  * @static
- * @param {Object} filter - Searching filter for the Post, an instance of Post.Schema.
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
  * @param {Object} [props] - Properties passed from driver function.
  * @param {Mongoose.Types.ObjectId} [props.like] - User (Entity._id (User._id)) of the liking action.
  * @param {Mongoose.Types.ObjectId} [props.comment] - User (Entity._id (User._id)) of the commenting action.
  * @param {boolean} [props.addFlag] - Whether to add (push) or delete (pull) said user.
  * @param {Object} [data] Data to update the Post. Optional if it is a case of liking or commenting.
- * @returns {Promise<Post>} Updated Post, an instance of Post.Schema.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
  * @throws Post not found.
  */
 var updatePost = (filter, props = null, data = null) => {
@@ -168,9 +168,9 @@ var updatePost = (filter, props = null, data = null) => {
 /**
  * Read random Posts.
  * @static
- * @param {Object} [filter = {_id: {$exists: true}}] - Searching filter for the random Posts, an instance of Post.Schema. Default as any Post.
+ * @param {Object} [filter = {_id: {$exists: true}}] - Searching filter for the random Posts, an instance of [Post.Schema]{@link Post}. Default as any Post.
  * @param {number} [size = 1] - Number of returning documents.
- * @returns {Promise<Post[]|null>} Filtered random Posts of defined size, instances of Post.Schema. 
+ * @returns {Promise<Post[]|null>} Filtered random Posts of defined size, instances of [Post.Schema]{@link Post}. 
  */
 var randomPosts = (filter = {_id: {$exists: true}}, size = 1) => {
     return new Promise((resolve, reject) => {
