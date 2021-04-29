@@ -23,28 +23,15 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 // http://localhost:3100/entity
 
-const verifyAuth = require('./middleware/verifyAuth');
+const verifyAuth = require('./middlewares/verifyAuth');
 
-app.use('/',                             require('./routes/auth'));
-app.use('/entity',    verifyAuth.access, require('./routes/entity'));
-app.use('/grouplist', verifyAuth.access, require('./routes/groupList'));
-app.use('/post',      verifyAuth.access, require('./routes/post'));
-app.use('/comment',   verifyAuth.access, require('./routes/comment'));
-app.use('/hashtag',   verifyAuth.access, require('./routes/hashtag'));
+app.use('/',                             require('./routers/auth'));
+app.use('/entity',    verifyAuth.access, require('./routers/entity'));
+app.use('/grouplist', verifyAuth.access, require('./routers/groupList'));
+app.use('/post',      verifyAuth.access, require('./routers/post'));
+app.use('/comment',   verifyAuth.access, require('./routers/comment'));
+app.use('/hashtag',   verifyAuth.access, require('./routers/hashtag'));
 
 const PORT = require('./config').backendPort
 console.log(`----------Port: ${PORT}-----------`);
 app.listen(PORT);
-
-/*require('./routes/entityFunc').createEntity({
-    username: 'jon-rest',
-    type: 'Rest',
-    address: '15 Shatin'
-}).then(res => console.log(res));
-
-require('./routes/entityFunc').createEntity({
-    username: 'jon',
-    type: 'User',
-    email: 'jon@test.com',
-    password: 'jonlam'
-}).then(res => console.log(res));*/

@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
 import { trigChange } from "../socket-client";
 
 //GET comment/:commentID
+/**
+ * return comment with commentID in JSON format
+ * @param   {string} commentID  ID of comment
+ * @return {Promise<JSON>} comment in JSON format
+ */
 const comment_get = (commentID) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -21,6 +24,11 @@ const comment_get = (commentID) =>{
 }
 
 //POST comment/
+/**
+ * return comments that satisfy the filter
+ * @param   {JSON} fil  filter for backend
+ * @return {Promise<JSON>[]} array of JSON
+ */
 const comment_post = (fil) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -41,8 +49,13 @@ const comment_post = (fil) =>{
 }
 
 
-
 //POST comment/new
+/**
+ * create comment and return the created comment
+ * @param   {JSON} fil  filter for backend
+ * @param   {string} add_data  comment content
+ * @return {Promise<JSON>} comment in JSON format
+ */
 const comment_create = (fil,add_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -66,6 +79,11 @@ const comment_create = (fil,add_data) =>{
 
 
 //DELETE comment/:commentID
+/**
+ * delete post and return the deleted post
+ * @param   {string} commentID  ID of comment
+ * @return {Promise<JSON>} comment in JSON format
+ */
 const comment_delete = (commentID) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -85,6 +103,12 @@ const comment_delete = (commentID) =>{
 
 
 //PUT user/:entityID/post/:postID/comment/:commentID
+/**
+ * edit post and return the edited post
+ * @param   {string} commentID  ID of comment
+ * @param   {string} edit_data  data to be edited
+ * @return {Promise<JSON>} comment in JSON format
+ */
 const comment_edit = (commentID,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({

@@ -1,27 +1,48 @@
+/** 
+ * CRUD functions of Users.
+ * @module functions/user
+ */
+
 const entityFunc = require('./entityFunc');
 const postFunc = require('./postFunc');
 const commentFunc = require('./commentFunc');
 const groupListFunc = require('./groupListFunc');
 const hashtagFunc = require('./hashtagFunc');
 
-// ------ User Post Function ------
+// =============================
+//      User Post Function
+// =============================
 
+/**
+ * Create a Post and push it under the author (and the target if applicable).
+ * @static
+ * @see module:functions/post.createPost
+ * @param {Object} authorFilter - Searching filter for the author of the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target of the Post, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @param {Object} data - Data of the Post.
+ * @returns {Promise<Post>} Created Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Entity not found.
+ */
 var createPost = (authorFilter, targetFilter, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
+            // Fetch author and target
             var [author, target] = await Promise.all([
                 entityFunc.findEntity(authorFilter), 
                 entityFunc.findEntity(targetFilter)
             ]);
             if (author == null || target == null) throw new Error('Entity not found.');
+            // Create a Post
             const newPost = await postFunc.createPost({
                 author: author._id, 
                 target: target._id
             }, author.entityID, data)
+            // Push the Post under author 
             await entityFunc.updateEntity(
                 {_id: author._id}, 
                 {$push: {post: {$each: [newPost._id], $position: 0}}})
-            if (data.type == 1) // Review
+            // Push the Post under target if it is a review
+            if (data.type == 1)
                 await entityFunc.updateEntity(
                     {_id: target._id, type: 'Rest'}, 
                     { $inc:  {rating: data.rating},
@@ -31,13 +52,23 @@ var createPost = (authorFilter, targetFilter, data) => {
     })
 }
 
+/**
+ * Delete a Post and pull it from the author (and the target if applicable).
+ * @static
+ * @see module:functions/post.deletePost
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post>} Deleted Post, an instance of [Post.Schema]{@link Post}.
+ */
 var deletePost = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
+            // Delete a Post
             var deletedPost = await postFunc.deletePost(filter);
+            // Pull the Post from author
             await entityFunc.updateEntity(
                 {_id: deletedPost.author},
                 {$pull: {post: deletedPost._id}})
+            // Pull the Post from target if it is a review
             if (deletedPost.type == 1)
                 await entityFunc.updateEntity(
                     {_id: deletedPost.target, type: 'Rest'},
@@ -48,6 +79,13 @@ var deletePost = (filter) => {
     })
 }
 
+/**
+ * Update a Post.
+ * @static
+ * @see module:functions/post.updatePost
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ */
 var updatePost = (filter, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -57,14 +95,28 @@ var updatePost = (filter, data) => {
     })
 }
 
-// ------ User GroupList Functions ------
+// =============================
+//    User GroupList Function
+// =============================
 
+/**
+ * Create a GroupList and push it under the author.
+ * @static
+ * @see module:functions/groupList.createGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {string} listName - Name of the GroupList.
+ * @returns {Promise<Entity>} Updated Entity (User), an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @throws Entity not found.
+ */
 var createList = (authorFilter, listName) => {   
     return new Promise((resolve, reject) => {
         (async () => { try {
+            // Fetch author
             const author = await entityFunc.findEntity(authorFilter);
             if (author == null) throw new Error('Entity not found.')
+            // Create a GroupList
             var addedGroupList = await groupListFunc.createGroupList({author: author._id}, listName)
+            // Push the GroupList under author
             var updatedEntity = await entityFunc.updateEntity(
                 {_id: author._id, type: 'User'},
                 {$push: {groupList: addedGroupList._id}});
@@ -73,12 +125,24 @@ var createList = (authorFilter, listName) => {
     })
 }
 
+/**
+ * Delete a GroupList and pull it from the author.
+ * @static
+ * @see module:functions/groupList.deleteGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {string} listName - Name of the GroupList.
+ * @returns {Promise<Entity>} Deleted Entity (User), an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @throws Entity not found.
+ */
 var deleteList = (authorFilter, listName) => {   
     return new Promise((resolve, reject) => {
         (async () => { try {
+            // Fetch author
             const author = await entityFunc.findEntity(authorFilter);
             if (author == null) throw new Error('Entity not found.')
+            // Delete a GroupList
             var deletedGroupList = await groupListFunc.deleteGroupList({author: author._id, name: listName})
+            // Pull the GroupList under author
             var updatedEntity = await entityFunc.updateEntity(
                 {_id: author._id, type: 'User'},
                 {$pull: {groupList: deletedGroupList._id}})
@@ -87,6 +151,16 @@ var deleteList = (authorFilter, listName) => {
     })
 }
 
+/**
+ * Update a GroupList.
+ * @static
+ * @see module:functions/groupList.updateGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {string} listName - Name of the GroupList.
+ * @param {Object} data - Data to update the GroupList, an instance of [GroupList.Schema]{@link GroupList}.
+ * @returns {Promise<Entity>} Updated GroupList, an instance of [GroupList.Schema]{@link GroupList}.
+ * @throws Entity not found.
+ */
 var updateList = (authorFilter, listName, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -100,6 +174,17 @@ var updateList = (authorFilter, listName, data) => {
     })   
 }
 
+/**
+ * Update content in a GroupList.
+ * @static
+ * @see module:functions/groupList.updateGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target to be modified in the content of GroupList, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @param {string} listName - Name of the GroupList.
+ * @param {boolean} addFlag - Whether to add (push) or delete (pull) said target.
+ * @returns {Promise<Post>} Created Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Entity not found.
+ */
 var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -116,19 +201,40 @@ var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) =
     })
 }
 
-// ------ User Hashtag Functions ------
+// =============================
+//     User Hashtag Function
+// =============================
 
-var findTag = (restFilter) => {
+/**
+ * Read a single Hashtag.
+ * @static
+ * @see module:functions/hashtag.findTag
+ * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @param {string} name - Name of the Hashtag.
+ * @returns {Promise<Hashtag|null>} A Hashtag after query, an instance of [Hashtag.Schema]{@link Hashtag}. 
+ */
+var findTag = (restFilter, name) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            var rest = await entityFunc.findEntity(restFilter);
-            if (rest == null) throw new Error('Entity not found.');
-            var tag = await hashtagFunc.findTag({target: rest._id})
+            var filter = name != undefined ? {name} : {};
+            if (restFilter != null) {
+                var rest = await entityFunc.findEntity(restFilter);
+                if (rest == null) throw new Error('Entity not found.');
+                filter.target = rest._id;
+            }
+            var tag = await hashtagFunc.findTag(filter);
             return resolve(tag);
         } catch(err) { return reject(err) } })();
     })
 }
 
+/**
+ * Read multiple Hashtags.
+ * @static
+ * @see module:functions/hashtag.findTag
+ * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @returns {Promise<Hashtag|null>} Hashtags after query, instances of [Hashtag.Schema]{@link Hashtag}. 
+ */
 var findTags = (restFilter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -140,8 +246,19 @@ var findTags = (restFilter) => {
     })
 }
 
-// ------ Inter-user interactions ------
+// =============================
+//    Inter-user interactions
+// =============================
 
+/**
+ * Like or unlike a Post, i.e., push/pull author into/from Post.like.
+ * @static
+ * @see module:functions/post.updatePost
+ * @param {Object} postFilter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} authorFilter - Searching filter for the author who liked the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {boolean} addFlag - Whether to add (push) or delete (pull) said author.
+ * @throws Entity not found.
+ */
 var likePost = (postFilter, authorFilter, addFlag = true) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -154,6 +271,17 @@ var likePost = (postFilter, authorFilter, addFlag = true) => {
     })
 }
 
+/**
+ * Create a comment under a Post.
+ * @static
+ * @see module:functions/comment.createComment
+ * @param {Object} postFilter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} authorFilter - Searching filter for the author who commented the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {String}} data - Content of the Comment.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Entity not found.
+ * @throws Post not found.
+ */
 var createComment = (postFilter, authorFilter, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -161,7 +289,8 @@ var createComment = (postFilter, authorFilter, data) => {
                 entityFunc.findEntity(authorFilter),
                 postFunc.findPost(postFilter),
             ]);
-            if (author == null || post == null) throw new Error('Entity not found.');
+            if (author == null) throw new Error('Entity not found.');
+            if (post == null) throw new Error('Post not found.');
             var comment = await commentFunc.createComment(
                 {author: author._id, post: post._id}, 
                 author.entityID, data);
@@ -172,6 +301,14 @@ var createComment = (postFilter, authorFilter, data) => {
     })
 }
 
+/**
+ * Delete a comment from a Post.
+ * @static
+ * @see module:functions/comment.deleteComment
+ * @param {Object} commentFilter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Comment not found.
+ */
 var deleteComment = (commentFilter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -184,6 +321,14 @@ var deleteComment = (commentFilter) => {
     })
 }
 
+/**
+ * Update a comment.
+ * @static
+ * @see module:functions/comment.updateComment
+ * @param {Object} commentFilter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise<Comment>} Updated Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @throws Comment not found.
+ */
 var updateComment = (commentFilter, data) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
@@ -194,9 +339,19 @@ var updateComment = (commentFilter, data) => {
     })
 }
 
+/**
+ * Follow or unfollow an Entity, i.e., modify author and target in Entity.following{User/Rest} and Entity.followed respectively.
+ * @static
+ * @param {Object} authorFilter - Searching filter for the author of the following action, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target of the following action, an instance of [Entity.Schema]{@link Entity}.
+ * @param {boolean} addFlag - Whether to add (push) or delete (pull) said target.
+ * @returns {Promise<Entity>} Updated author, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @throws Entity not found.
+ */
 var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
+            // Fetch author and target Entity
             var [author, target] = await Promise.all([
                 entityFunc.findEntity(authorFilter), 
                 entityFunc.findEntity(targetFilter)
@@ -205,10 +360,12 @@ var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
             var followType  = target.type == 'User' ? 'followingUser' : 'followingRest';
             var operation   = addFlag ? '$push' : '$pull';
             var [updatedAuthor, _] = await Promise.all([
+                // Push/Pull author into Entity.followingUser or Entity.followingRest
                 entityFunc.updateEntity(
                     {_id: author._id, type: 'User'}, 
                     { [operation]: {[followType]: target._id} }
                 ),
+                // Push/Pull target into Entity.followed
                 entityFunc.updateEntity(
                     {_id: target._id}, 
                     { [operation]: {followed: author._id} }
@@ -219,10 +376,7 @@ var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
     })
 }
 
-// --
-
 module.exports = {
-    //auth,
     createPost,
     deletePost,
     updatePost,
@@ -240,6 +394,4 @@ module.exports = {
     deleteComment,
     updateComment,
     updateFollow,
-
-
 }

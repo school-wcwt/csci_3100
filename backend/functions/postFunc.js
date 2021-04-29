@@ -1,16 +1,24 @@
+/** 
+ * CRUD functions of Posts.
+ * @module functions/post
+ */
+
 const Post = require("../models/Post")
 const { useTags } = require("./hashtagFunc")
 const { deleteComments } = require('./commentFunc');
 
+const Mongoose = require('mongoose')
+
 /**
- * Find multiple posts. Comments and Likes are NOT populated.
- * @param {Object} filter 
- * @returns 
+ * Read a single Post.
+ * @static
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post|null>} A Post after query, an instance of [Post.Schema]{@link Post}, with author, target, hashtag, comment, and comment.author partially populated.
  */
 var findPost = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            const post = await Post.findOne(filter).sort({createdTime: -1})
+            const post = await Post.findOne(filter)
             .populate('author', 'entityID username tag name profPhoto')
             .populate('target', 'entityID username tag name profPhoto')
             .populate('hashtag', 'name')
@@ -29,9 +37,10 @@ var findPost = (filter) => {
 }
 
 /**
- * Find multiple posts. Comments and Likes are NOT populated.
- * @param {Object} filter 
- * @returns 
+ * Read multiple Posts, sorted by descending order of Post.createdTime.
+ * @static
+ * @param {Object} filter - Searching filter for the Posts, instances of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post[]|null>} Posts after query, instances of [Post.Schema]{@link Post}, with author, target, hashtag, comment, and comment.author partially populated.
  */
  var findPosts = (filter) => {
     return new Promise((resolve, reject) => {
@@ -55,13 +64,14 @@ var findPost = (filter) => {
 }
 
 /**
- * Create a new post.
- * @param {Object} props 
- * @param {ObjectId} props.author
- * @param {ObjectId} props.target
- * @param {string} authorEntityID
- * @param {Object} data 
- * @returns 
+ * Create a new Post.
+ * @static
+ * @param {Object} props - Properties passed from driver function.
+ * @param {Mongoose.Types.ObjectId} props.author - Author (Entity._id (User._id)) of the Post.
+ * @param {Mongoose.Types.ObjectId} props.target - Target (Entity._id (Rest._id)) of the Post.
+ * @param {string} authorEntityID - Author's entityID of the Post.
+ * @param {Object} data - Data of the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Post>} - Created Post, an instance of [Post.Schema]{@link Post}.
  */
 var createPost = (props, authorEntityID, data) => {
     return new Promise((resolve, reject) => {
@@ -72,7 +82,7 @@ var createPost = (props, authorEntityID, data) => {
                 ...data,
                 createdTime: Date.now(),
             })
-            // Fetch tags _id
+            // Fetch Hashtags._id
             if (data.hashtag != null) {
                 var hashtag = await useTags(
                     {target: props.target},
@@ -80,7 +90,7 @@ var createPost = (props, authorEntityID, data) => {
                 )
                 newPost.hashtag = hashtag;
             }
-            // Save post
+            // Save into Posts DB
             await newPost.save();
             const savedPost = findPost({_id: newPost._id});
             return resolve(savedPost);
@@ -89,9 +99,11 @@ var createPost = (props, authorEntityID, data) => {
 }
 
 /**
- * Deletes a post and its respective comments. Modify relative tags.
- * @param {Object} filter
- * @returns {Promise<Object>} A promise with a deleted Post.
+ * Delete a post. Delete or modify related Comments and Hashtags.
+ * @static
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise<Object>} Deleted Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Post not found.
  */
  var deletePost = (filter) => {
     return new Promise((resolve, reject) => {
@@ -108,14 +120,16 @@ var createPost = (props, authorEntityID, data) => {
 }
 
 /**
- * Updates a post.
- * @param {Object} filter 
- * @param {Object} [props]
- * @param {ObjectId} [props.like] Entity _id of the initiate user.
- * @param {ObjectId} [props.comment] Entity _id of the initiate user.
- * @param {ObjectId} [props.addFlag]
- * @param {Object} [data] Rest of update data (NOT including like or comment).
- * @returns 
+ * Update a post.
+ * @static
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} [props] - Properties passed from driver function.
+ * @param {Mongoose.Types.ObjectId} [props.like] - User (Entity._id (User._id)) of the liking action.
+ * @param {Mongoose.Types.ObjectId} [props.comment] - User (Entity._id (User._id)) of the commenting action.
+ * @param {boolean} [props.addFlag] - Whether to add (push) or delete (pull) said user.
+ * @param {Object} [data] Data to update the Post. Optional if it is a case of liking or commenting.
+ * @returns {Promise<Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Post not found.
  */
 var updatePost = (filter, props = null, data = null) => {
     return new Promise((resolve, reject) => {
@@ -123,8 +137,9 @@ var updatePost = (filter, props = null, data = null) => {
             // Search existing entity
             const post = await Post.findOne(filter).exec();
             if (post == null) throw new Error('Post not found.');
-            // Query 
+            // Query
             var updateQuery = {$push: {modifiedTime: Date.now()}}
+            // Handle general update cases (NOT of liking or commenting)
             if (data != null) {
                 updateQuery.$set = {...data};
                 if (data.hashtag != null) {
@@ -132,15 +147,17 @@ var updatePost = (filter, props = null, data = null) => {
                     updateQuery.$set.hashtag = hashtag
                 }
             }
+            // Handle liking
             if (props != null && props.like != null) 
                 props.addFlag 
                     ? updateQuery.$push.like = {$each: [props.like], $position: 0}
                     : updateQuery.$pull = {like: props.like};
+            // Handle commenting
             if (props != null && props.comment != null)
                 props.addFlag 
                     ? updateQuery.$push.comment = {$each: [props.comment], $position: 0}
                     : updateQuery.$pull = {comment: props.comment};
-            // Update post
+            // Update in Posts DB
             await Post.updateOne(filter, updateQuery).exec();
             const updatedPost = await findPost({_id: post._id});
             return resolve(updatedPost);
@@ -148,6 +165,13 @@ var updatePost = (filter, props = null, data = null) => {
     })
 }
 
+/**
+ * Read random Posts.
+ * @static
+ * @param {Object} [filter = {_id: {$exists: true}}] - Searching filter for the random Posts, an instance of [Post.Schema]{@link Post}. Default as any Post.
+ * @param {number} [size = 1] - Number of returning documents.
+ * @returns {Promise<Post[]|null>} Filtered random Posts of defined size, instances of [Post.Schema]{@link Post}. 
+ */
 var randomPosts = (filter = {_id: {$exists: true}}, size = 1) => {
     return new Promise((resolve, reject) => {
         (async () => { try {
@@ -229,7 +253,6 @@ var randomPosts = (filter = {_id: {$exists: true}}, size = 1) => {
         } catch(err) { return reject(err) }})(); 
     })
 }
-
 
 module.exports = {
     findPost,

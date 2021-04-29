@@ -1,10 +1,19 @@
+/** 
+ * Express router providing {@link GroupList} related routes.
+ * @module routers/groupList
+ * @deprecated Unused.
+ * @requires express
+ */
+
 var express = require('express');
 var router = express.Router();
 
 const userFunc = require('../functions/userFunc');
 const groupListFunc = require('../functions/groupListFunc');
 
-// Unauthorized Queries
+// ==========================
+//    Unauthorized Queries
+// ==========================
 
 router.get('/:entityID/:listName', (req, res) => {
     groupListFunc.findGroupList({
@@ -26,6 +35,10 @@ router.post('/', (req, res) => {
     })
     .catch(err => { res.status(500).json(err.message) })
 })
+
+// ==========================
+//     Authorized Queries
+// ==========================
 
 router.post('/new', (req, res) => {
     //var filter = req.body.filter == null ? {entityID: req.params.userID} : req.body.filter;

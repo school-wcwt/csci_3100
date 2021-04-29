@@ -1,10 +1,12 @@
 import React from "react";
 import { app } from '../base';
+
 /**
- * - Upload Photo to firebase and return array of URL
- * @param ArrayOfFile
- * @returns [URL]
+ * upload photo and return download URL
+ * @param   {file} photoFileArray  array of photos
+ * @return {Promise<JSON>[]} array of download URL in JSON format
  */
+
 function uploadPhoto(photoFileArray) {
   return Promise.all(Array.from(photoFileArray).map((photo, i) => {
     const storageRef = app.storage().ref();
