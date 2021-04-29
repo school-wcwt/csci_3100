@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
 import { trigChange } from "../socket-client";
 
-/*
-*                           *
-*                           *
-*   Posts 
-*                           *
-*                           *
-*                           *
-*/
-
-//GET entity/:entityID
+//GET post/:postID
+/**
+ * return post that has a certain postID
+ * @param   {string} postID  ID of entity
+ * @return {Promise<JSON>} post in JSON format
+ */
 const post_get= (postID)=>{
     return new Promise((resolve,reject)=>{
       axios({
@@ -35,7 +29,12 @@ const post_get= (postID)=>{
 
 
 
-//POST user/:entityID/post/new
+//POST post/
+/**
+ * return posts that satisfy the filter
+ * @param   {JSON} fil  filter for backend
+ * @return {Promise<JSON>[]} array of posts in JSON format
+ */
 const post_post = (fil) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -55,6 +54,14 @@ const post_post = (fil) =>{
     })
 }
 
+
+//POST /post/new
+/**
+ * create post and return the created post
+ * @param   {JSON} targetFilter  filter of target for backend
+ * @param   {JSON} add_data  data to be created
+ * @return {Promise<JSON>} post in JSON format
+ */
 const post_create = (targetFilter,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -77,7 +84,12 @@ const post_create = (targetFilter,edit_data) =>{
 }
 
 
-//DELETE user/post/:postID
+//DELETE /post/:postID
+/**
+ * delete post and return the deleted post
+ * @param {string} postID ID of post
+ * @return {Promise<JSON>} post in JSON format
+ */
 const post_delete = (postID) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -97,6 +109,12 @@ const post_delete = (postID) =>{
 
 
 //PUT post/:postID
+/**
+ * edit post and return the edited post
+ * @param {string} postID ID of post
+ * @param   {JSON} edit_data  data to be edited
+ * @return {Promise<JSON>} post in JSON format
+ */
 const post_edit = (postID,edit_data) =>{
     return new Promise((resolve,reject)=>{
         axios({
@@ -118,6 +136,12 @@ const post_edit = (postID,edit_data) =>{
 }
 
 //PATCH post/like/:postID
+/**
+ * like post and return the liked post
+ * @param {string} postID ID of post
+ * @param   {string} flag 0: unlike, 1:like
+ * @return {Promise<JSON>} post in JSON format
+ */
 const post_like = (postID, flag) =>{
     return new Promise((resolve,reject)=>{
         axios({
