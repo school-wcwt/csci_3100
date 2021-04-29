@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
 /**
- * @typedef GroupList
+ * @class GroupList
  * @global
- * @property {String} name 
- * @property {mongoose.Types.ObjectId} author - User who owns this GroupList, an instance of [User.Schema]{@link User}.
- * @property {mongoose.Types.ObjectId[]} content - Stored Rests in this GroupList, instances of [Rest.Schema]{@link Rest}.
+ * @param {String} name - Name of the list.
+ * @param {mongoose.Types.ObjectId} author - User who owns this GroupList, an instance of [User.Schema]{@link User}.
+ * @param {mongoose.Types.ObjectId[]} content - Stored Rests in this GroupList, instances of [Rest.Schema]{@link Rest}.
  */
 
 var GroupListSchema = mongoose.Schema({

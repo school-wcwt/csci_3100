@@ -126,8 +126,8 @@ module.exports = {
 
 /**
  * Create a tag.
- * @see {findOrCreateTag} for more information.
- * @deprecated Replaced by findOrCreateTag().
+ * @static
+ * @deprecated Replaced by {@link module:functions/hashtag.findOrCreateTag}.
  * @param {Object} data - Data to create the Hashtag.
  * @returns {Promise<Hashtag>} Created Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  */
@@ -144,6 +144,7 @@ var createTag = (data) => {
 
 /**
  * Create a tag. 
+ * @static
  * @deprecated Unused.
  * @param {Object} filter - Searching filter for the Hashtag, an instance of [Hashtag.Schema]{@link Hashtag}.
  * @param {Object} data - Data to update the Hashtag.

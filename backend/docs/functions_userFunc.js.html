@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>functions/userFunc.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Auth.html">Auth</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Entity.html">Entity</a></li><li><a href="GroupList.html">GroupList</a></li><li><a href="Hashtag.html">Hashtag</a></li><li><a href="Post.html">Post</a></li><li><a href="Rest.html">Rest</a></li><li><a href="Resv.html">Resv</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-functions_comment.html">functions/comment</a><ul class='methods'><li data-type='method'><a href="module-functions_comment.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComments#.deleteComments">deleteComments</a></li><li data-type='method'><a href="module-functions_comment.html#findComment#.findComment">findComment</a></li><li data-type='method'><a href="module-functions_comment.html#findComments#.findComments">findComments</a></li><li data-type='method'><a href="module-functions_comment.html#updateComment#.updateComment">updateComment</a></li></ul></li><li><a href="module-functions_entity.html">functions/entity</a><ul class='methods'><li data-type='method'><a href="module-functions_entity.html#createEntity#.createEntity">createEntity</a></li><li data-type='method'><a href="module-functions_entity.html#deleteEntity#.deleteEntity">deleteEntity</a></li><li data-type='method'><a href="module-functions_entity.html#findEntities#.findEntities">findEntities</a></li><li data-type='method'><a href="module-functions_entity.html#findEntity#.findEntity">findEntity</a></li><li data-type='method'><a href="module-functions_entity.html#randomRests#.randomRests">randomRests</a></li><li data-type='method'><a href="module-functions_entity.html#updateEntity#.updateEntity">updateEntity</a></li><li data-type='method'><a href="module-functions_entity.html#tagGen#~tagGen">tagGen</a></li></ul></li><li><a href="module-functions_groupList.html">functions/groupList</a><ul class='methods'><li data-type='method'><a href="module-functions_groupList.html#createGroupList#.createGroupList">createGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#deleteGroupList#.deleteGroupList">deleteGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupList#.findGroupList">findGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupLists#.findGroupLists">findGroupLists</a></li><li data-type='method'><a href="module-functions_groupList.html#updateGroupList#.updateGroupList">updateGroupList</a></li></ul></li><li><a href="module-functions_hashtag.html">functions/hashtag</a><ul class='methods'><li data-type='method'><a href="module-functions_hashtag.html#createTag#.createTag">createTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#updateTag#.updateTag">updateTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#useTags#.useTags">useTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#deleteTag#~deleteTag">deleteTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findOrCreateTag#~findOrCreateTag">findOrCreateTag</a></li></ul></li><li><a href="module-functions_post.html">functions/post</a><ul class='methods'><li data-type='method'><a href="module-functions_post.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_post.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_post.html#findPost#.findPost">findPost</a></li><li data-type='method'><a href="module-functions_post.html#findPosts#.findPosts">findPosts</a></li><li data-type='method'><a href="module-functions_post.html#randomPosts#.randomPosts">randomPosts</a></li><li data-type='method'><a href="module-functions_post.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-functions_user.html">functions/user</a><ul class='methods'><li data-type='method'><a href="module-functions_user.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_user.html#createList#.createList">createList</a></li><li data-type='method'><a href="module-functions_user.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_user.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_user.html#deleteList#.deleteList">deleteList</a></li><li data-type='method'><a href="module-functions_user.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_user.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_user.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_user.html#likePost#.likePost">likePost</a></li><li data-type='method'><a href="module-functions_user.html#updateComment#.updateComment">updateComment</a></li><li data-type='method'><a href="module-functions_user.html#updateFollow#.updateFollow">updateFollow</a></li><li data-type='method'><a href="module-functions_user.html#updateList#.updateList">updateList</a></li><li data-type='method'><a href="module-functions_user.html#updateListContent#.updateListContent">updateListContent</a></li><li data-type='method'><a href="module-functions_user.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-middlewares_email.html">middlewares/email</a><ul class='methods'><li data-type='method'><a href="module-middlewares_email.html#sendAuthEmail#.sendAuthEmail">sendAuthEmail</a></li></ul></li><li><a href="module-middlewares_verifyAuth.html">middlewares/verifyAuth</a><ul class='methods'><li data-type='method'><a href="module-middlewares_verifyAuth.html#access#.access">access</a></li><li data-type='method'><a href="module-middlewares_verifyAuth.html#refresh#.refresh">refresh</a></li></ul></li><li><a href="module-routers_auth.html">routers/auth</a><ul class='methods'><li data-type='method'><a href="module-routers_auth.html#POST/login#POST/login">POST/login</a></li><li data-type='method'><a href="module-routers_auth.html#POST/logout#POST/logout">POST/logout</a></li><li data-type='method'><a href="module-routers_auth.html#POST/refresh#POST/refresh">POST/refresh</a></li><li data-type='method'><a href="module-routers_auth.html#POST/register#POST/register">POST/register</a></li><li data-type='method'><a href="module-routers_auth.html#POST/verify#POST/verify">POST/verify</a></li><li data-type='method'><a href="module-routers_auth.html#createToken#~createToken">createToken</a></li><li data-type='method'><a href="module-routers_auth.html#extendToken#~extendToken">extendToken</a></li></ul></li><li><a href="module-routers_comment.html">routers/comment</a><ul class='methods'><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#GET/comment/:commentID#GET/comment/:commentID">GET/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment#POST/comment">POST/comment</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment/new#POST/comment/new">POST/comment/new</a></li></ul></li><li><a href="module-routers_entity.html">routers/entity</a><ul class='methods'><li data-type='method'><a href="module-routers_entity.html#DELETE/entity#DELETE/entity">DELETE/entity</a></li><li data-type='method'><a href="module-routers_entity.html#GET/entity/:entityID#GET/entity/:entityID">GET/entity/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#PATCH/entity/follow/:entityID#PATCH/entity/follow/:entityID">PATCH/entity/follow/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity#POST/entity">POST/entity</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/new#POST/entity/new">POST/entity/new</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/random#POST/entity/random">POST/entity/random</a></li><li data-type='method'><a href="module-routers_entity.html#PUT/entity#PUT/entity">PUT/entity</a></li></ul></li><li><a href="module-routers_groupList.html">routers/groupList</a></li><li><a href="module-routers_hashtag.html">routers/hashtag</a><ul class='methods'><li data-type='method'><a href="module-routers_hashtag.html#GET/hashtag/:entityID/:name#GET/hashtag/:entityID/:name">GET/hashtag/:entityID/:name</a></li><li data-type='method'><a href="module-routers_hashtag.html#POST/hashtag#POST/hashtag">POST/hashtag</a></li></ul></li><li><a href="module-routers_post.html">routers/post</a><ul class='methods'><li data-type='method'><a href="module-routers_post.html#DELETE/:postID#DELETE/:postID">DELETE/:postID</a></li><li data-type='method'><a href="module-routers_post.html#GET/post/:postID#GET/post/:postID">GET/post/:postID</a></li><li data-type='method'><a href="module-routers_post.html#PATCH/post/like/:postID#PATCH/post/like/:postID">PATCH/post/like/:postID</a></li><li data-type='method'><a href="module-routers_post.html#POST/post#POST/post">POST/post</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/new#POST/post/new">POST/post/new</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/random#POST/post/random">POST/post/random</a></li><li data-type='method'><a href="module-routers_post.html#PUT/post/:postID#PUT/post/:postID">PUT/post/:postID</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#RouteCallback">RouteCallback</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">functions/userFunc.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+ * CRUD functions of Users.
+ * @module functions/user
+ */
+
+const entityFunc = require('./entityFunc');
+const postFunc = require('./postFunc');
+const commentFunc = require('./commentFunc');
+const groupListFunc = require('./groupListFunc');
+const hashtagFunc = require('./hashtagFunc');
+
+// =============================
+//      User Post Function
+// =============================
+
+/**
+ * Create a Post and push it under the author (and the target if applicable).
+ * @static
+ * @see module:functions/post.createPost
+ * @param {Object} authorFilter - Searching filter for the author of the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target of the Post, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @param {Object} data - Data of the Post.
+ * @returns {Promise&lt;Post>} Created Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Entity not found.
+ */
+var createPost = (authorFilter, targetFilter, data) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            // Fetch author and target
+            var [author, target] = await Promise.all([
+                entityFunc.findEntity(authorFilter), 
+                entityFunc.findEntity(targetFilter)
+            ]);
+            if (author == null || target == null) throw new Error('Entity not found.');
+            // Create a Post
+            const newPost = await postFunc.createPost({
+                author: author._id, 
+                target: target._id
+            }, author.entityID, data)
+            // Push the Post under author 
+            await entityFunc.updateEntity(
+                {_id: author._id}, 
+                {$push: {post: {$each: [newPost._id], $position: 0}}})
+            // Push the Post under target if it is a review
+            if (data.type == 1)
+                await entityFunc.updateEntity(
+                    {_id: target._id, type: 'Rest'}, 
+                    { $inc:  {rating: data.rating},
+                      $push: {post: {$each: [newPost._id], $position: 0}} })
+            return resolve(newPost);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Delete a Post and pull it from the author (and the target if applicable).
+ * @static
+ * @see module:functions/post.deletePost
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise&lt;Post>} Deleted Post, an instance of [Post.Schema]{@link Post}.
+ */
+var deletePost = (filter) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            // Delete a Post
+            var deletedPost = await postFunc.deletePost(filter);
+            // Pull the Post from author
+            await entityFunc.updateEntity(
+                {_id: deletedPost.author},
+                {$pull: {post: deletedPost._id}})
+            // Pull the Post from target if it is a review
+            if (deletedPost.type == 1)
+                await entityFunc.updateEntity(
+                    {_id: deletedPost.target, type: 'Rest'},
+                    { $inc:  {rating: -deletedPost.rating},
+                      $pull: {post: deletedPost._id} })
+            return resolve(deletedPost);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Update a Post.
+ * @static
+ * @see module:functions/post.updatePost
+ * @param {Object} filter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @returns {Promise&lt;Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ */
+var updatePost = (filter, data) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var updatedPost = await postFunc.updatePost(filter, null, data);
+            return resolve(updatedPost);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+// =============================
+//    User GroupList Function
+// =============================
+
+/**
+ * Create a GroupList and push it under the author.
+ * @static
+ * @see module:functions/groupList.createGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {string} listName - Name of the GroupList.
+ * @returns {Promise&lt;Entity>} Updated Entity (User), an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @throws Entity not found.
+ */
+var createList = (authorFilter, listName) => {   
+    return new Promise((resolve, reject) => {
+        (async () => { try {
+            // Fetch author
+            const author = await entityFunc.findEntity(authorFilter);
+            if (author == null) throw new Error('Entity not found.')
+            // Create a GroupList
+            var addedGroupList = await groupListFunc.createGroupList({author: author._id}, listName)
+            // Push the GroupList under author
+            var updatedEntity = await entityFunc.updateEntity(
+                {_id: author._id, type: 'User'},
+                {$push: {groupList: addedGroupList._id}});
+            return resolve(updatedEntity)
+        } catch(err) { return reject(err) }})()
+    })
+}
+
+/**
+ * Delete a GroupList and pull it from the author.
+ * @static
+ * @see module:functions/groupList.deleteGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {string} listName - Name of the GroupList.
+ * @returns {Promise&lt;Entity>} Deleted Entity (User), an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @throws Entity not found.
+ */
+var deleteList = (authorFilter, listName) => {   
+    return new Promise((resolve, reject) => {
+        (async () => { try {
+            // Fetch author
+            const author = await entityFunc.findEntity(authorFilter);
+            if (author == null) throw new Error('Entity not found.')
+            // Delete a GroupList
+            var deletedGroupList = await groupListFunc.deleteGroupList({author: author._id, name: listName})
+            // Pull the GroupList under author
+            var updatedEntity = await entityFunc.updateEntity(
+                {_id: author._id, type: 'User'},
+                {$pull: {groupList: deletedGroupList._id}})
+            return resolve(updatedEntity)
+        } catch(err) { return reject(err) }})()
+    })
+}
+
+/**
+ * Update a GroupList.
+ * @static
+ * @see module:functions/groupList.updateGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {string} listName - Name of the GroupList.
+ * @param {Object} data - Data to update the GroupList, an instance of [GroupList.Schema]{@link GroupList}.
+ * @returns {Promise&lt;Entity>} Updated GroupList, an instance of [GroupList.Schema]{@link GroupList}.
+ * @throws Entity not found.
+ */
+var updateList = (authorFilter, listName, data) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            const author = await entityFunc.findEntity(authorFilter);
+            if (author == null) throw new Error('Entity not found.');
+            var updatedGroupList = await groupListFunc.updateGroupList(
+                {author: author._id, name: listName},
+                null, data)
+            return resolve(updatedGroupList);
+        } catch(err) { return reject(err) } })();
+    })   
+}
+
+/**
+ * Update content in a GroupList.
+ * @static
+ * @see module:functions/groupList.updateGroupList
+ * @param {Object} authorFilter - Searching filter for the author of the GroupList, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target to be modified in the content of GroupList, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @param {string} listName - Name of the GroupList.
+ * @param {boolean} addFlag - Whether to add (push) or delete (pull) said target.
+ * @returns {Promise&lt;Post>} Created Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Entity not found.
+ */
+var updateListContent = (authorFilter, targetFilter, listName, addFlag = true) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var [author, target] = await Promise.all([
+                entityFunc.findEntity(authorFilter), 
+                entityFunc.findEntity(targetFilter)
+            ]);
+            if (author == null || target == null) throw new Error('Entity not found.');
+            var updatedGroupList = await groupListFunc.updateGroupList(
+                {author: author._id, name: listName},
+                {target: target._id, addFlag: addFlag})
+            return resolve(updatedGroupList)
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+// =============================
+//     User Hashtag Function
+// =============================
+
+/**
+ * Read a single Hashtag.
+ * @static
+ * @see module:functions/hashtag.findTag
+ * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @param {string} name - Name of the Hashtag.
+ * @returns {Promise&lt;Hashtag|null>} A Hashtag after query, an instance of [Hashtag.Schema]{@link Hashtag}. 
+ */
+var findTag = (restFilter, name) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var filter = name != undefined ? {name} : {};
+            if (restFilter != null) {
+                var rest = await entityFunc.findEntity(restFilter);
+                if (rest == null) throw new Error('Entity not found.');
+                filter.target = rest._id;
+            }
+            var tag = await hashtagFunc.findTag(filter);
+            return resolve(tag);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Read multiple Hashtags.
+ * @static
+ * @see module:functions/hashtag.findTag
+ * @param {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @returns {Promise&lt;Hashtag|null>} Hashtags after query, instances of [Hashtag.Schema]{@link Hashtag}. 
+ */
+var findTags = (restFilter) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var rest = await entityFunc.findEntity(restFilter);
+            if (rest == null) throw new Error('Entity not found.');
+            var tags = await hashtagFunc.findTags({target: rest._id})
+            return resolve(tags);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+// =============================
+//    Inter-user interactions
+// =============================
+
+/**
+ * Like or unlike a Post, i.e., push/pull author into/from Post.like.
+ * @static
+ * @see module:functions/post.updatePost
+ * @param {Object} postFilter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} authorFilter - Searching filter for the author who liked the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {boolean} addFlag - Whether to add (push) or delete (pull) said author.
+ * @throws Entity not found.
+ */
+var likePost = (postFilter, authorFilter, addFlag = true) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var author = await entityFunc.findEntity(authorFilter);
+            if (author == null) throw new Error('Entity not found.');
+            var updatedPost = await postFunc.updatePost(
+                postFilter, {like: author._id, addFlag: addFlag});
+            return resolve(updatedPost);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Create a comment under a Post.
+ * @static
+ * @see module:functions/comment.createComment
+ * @param {Object} postFilter - Searching filter for the Post, an instance of [Post.Schema]{@link Post}.
+ * @param {Object} authorFilter - Searching filter for the author who commented the Post, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {String}} data - Content of the Comment.
+ * @returns {Promise&lt;Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Entity not found.
+ * @throws Post not found.
+ */
+var createComment = (postFilter, authorFilter, data) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var [author, post] = await Promise.all([
+                entityFunc.findEntity(authorFilter),
+                postFunc.findPost(postFilter),
+            ]);
+            if (author == null) throw new Error('Entity not found.');
+            if (post == null) throw new Error('Post not found.');
+            var comment = await commentFunc.createComment(
+                {author: author._id, post: post._id}, 
+                author.entityID, data);
+            var updatedPost = await postFunc.updatePost(
+                postFilter, {comment: comment._id, addFlag: true}, null);
+            return resolve(updatedPost);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Delete a comment from a Post.
+ * @static
+ * @see module:functions/comment.deleteComment
+ * @param {Object} commentFilter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise&lt;Post>} Updated Post, an instance of [Post.Schema]{@link Post}.
+ * @throws Comment not found.
+ */
+var deleteComment = (commentFilter) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var comment = await commentFunc.deleteComment(commentFilter);
+            if (comment == null) throw new Error('Comment not found.');
+            var updatedPost = await postFunc.updatePost(
+                {_id: comment.post}, {comment: comment._id, addFlag: false}, null);
+            return resolve(updatedPost);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Update a comment.
+ * @static
+ * @see module:functions/comment.updateComment
+ * @param {Object} commentFilter - Searching filter for the Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @returns {Promise&lt;Comment>} Updated Comment, an instance of [Comment.Schema]{@link Comment}.
+ * @throws Comment not found.
+ */
+var updateComment = (commentFilter, data) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            var updatedComment = await commentFunc.updateComment(commentFilter, data);
+            if (updatedComment == null) throw new Error('Comment not found.');
+            return resolve(updatedComment);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+/**
+ * Follow or unfollow an Entity, i.e., modify author and target in Entity.following{User/Rest} and Entity.followed respectively.
+ * @static
+ * @param {Object} authorFilter - Searching filter for the author of the following action, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @param {Object} targetFilter - Searching filter for the target of the following action, an instance of [Entity.Schema]{@link Entity}.
+ * @param {boolean} addFlag - Whether to add (push) or delete (pull) said target.
+ * @returns {Promise&lt;Entity>} Updated author, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @throws Entity not found.
+ */
+var updateFollow = (authorFilter, targetFilter, addFlag = true) => {
+    return new Promise((resolve, reject) => {
+        (async () => { try { 
+            // Fetch author and target Entity
+            var [author, target] = await Promise.all([
+                entityFunc.findEntity(authorFilter), 
+                entityFunc.findEntity(targetFilter)
+            ]);
+            if (author == null || target == null) throw new Error('Entity not found.');
+            var followType  = target.type == 'User' ? 'followingUser' : 'followingRest';
+            var operation   = addFlag ? '$push' : '$pull';
+            var [updatedAuthor, _] = await Promise.all([
+                // Push/Pull author into Entity.followingUser or Entity.followingRest
+                entityFunc.updateEntity(
+                    {_id: author._id, type: 'User'}, 
+                    { [operation]: {[followType]: target._id} }
+                ),
+                // Push/Pull target into Entity.followed
+                entityFunc.updateEntity(
+                    {_id: target._id}, 
+                    { [operation]: {followed: author._id} }
+                )
+            ])
+            return resolve(updatedAuthor);
+        } catch(err) { return reject(err) } })();
+    })
+}
+
+module.exports = {
+    createPost,
+    deletePost,
+    updatePost,
+
+    createList,
+    deleteList,
+    updateList,
+    updateListContent,
+
+    findTag,
+    findTags,
+
+    likePost,
+    createComment,
+    deleteComment,
+    updateComment,
+    updateFollow,
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Apr 29 2021 14:20:57 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

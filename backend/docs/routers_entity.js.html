@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>routers/entity.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Auth.html">Auth</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Entity.html">Entity</a></li><li><a href="GroupList.html">GroupList</a></li><li><a href="Hashtag.html">Hashtag</a></li><li><a href="Post.html">Post</a></li><li><a href="Rest.html">Rest</a></li><li><a href="Resv.html">Resv</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-functions_comment.html">functions/comment</a><ul class='methods'><li data-type='method'><a href="module-functions_comment.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComments#.deleteComments">deleteComments</a></li><li data-type='method'><a href="module-functions_comment.html#findComment#.findComment">findComment</a></li><li data-type='method'><a href="module-functions_comment.html#findComments#.findComments">findComments</a></li><li data-type='method'><a href="module-functions_comment.html#updateComment#.updateComment">updateComment</a></li></ul></li><li><a href="module-functions_entity.html">functions/entity</a><ul class='methods'><li data-type='method'><a href="module-functions_entity.html#createEntity#.createEntity">createEntity</a></li><li data-type='method'><a href="module-functions_entity.html#deleteEntity#.deleteEntity">deleteEntity</a></li><li data-type='method'><a href="module-functions_entity.html#findEntities#.findEntities">findEntities</a></li><li data-type='method'><a href="module-functions_entity.html#findEntity#.findEntity">findEntity</a></li><li data-type='method'><a href="module-functions_entity.html#randomRests#.randomRests">randomRests</a></li><li data-type='method'><a href="module-functions_entity.html#updateEntity#.updateEntity">updateEntity</a></li><li data-type='method'><a href="module-functions_entity.html#tagGen#~tagGen">tagGen</a></li></ul></li><li><a href="module-functions_groupList.html">functions/groupList</a><ul class='methods'><li data-type='method'><a href="module-functions_groupList.html#createGroupList#.createGroupList">createGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#deleteGroupList#.deleteGroupList">deleteGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupList#.findGroupList">findGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupLists#.findGroupLists">findGroupLists</a></li><li data-type='method'><a href="module-functions_groupList.html#updateGroupList#.updateGroupList">updateGroupList</a></li></ul></li><li><a href="module-functions_hashtag.html">functions/hashtag</a><ul class='methods'><li data-type='method'><a href="module-functions_hashtag.html#createTag#.createTag">createTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#updateTag#.updateTag">updateTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#useTags#.useTags">useTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#deleteTag#~deleteTag">deleteTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findOrCreateTag#~findOrCreateTag">findOrCreateTag</a></li></ul></li><li><a href="module-functions_post.html">functions/post</a><ul class='methods'><li data-type='method'><a href="module-functions_post.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_post.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_post.html#findPost#.findPost">findPost</a></li><li data-type='method'><a href="module-functions_post.html#findPosts#.findPosts">findPosts</a></li><li data-type='method'><a href="module-functions_post.html#randomPosts#.randomPosts">randomPosts</a></li><li data-type='method'><a href="module-functions_post.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-functions_user.html">functions/user</a><ul class='methods'><li data-type='method'><a href="module-functions_user.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_user.html#createList#.createList">createList</a></li><li data-type='method'><a href="module-functions_user.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_user.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_user.html#deleteList#.deleteList">deleteList</a></li><li data-type='method'><a href="module-functions_user.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_user.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_user.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_user.html#likePost#.likePost">likePost</a></li><li data-type='method'><a href="module-functions_user.html#updateComment#.updateComment">updateComment</a></li><li data-type='method'><a href="module-functions_user.html#updateFollow#.updateFollow">updateFollow</a></li><li data-type='method'><a href="module-functions_user.html#updateList#.updateList">updateList</a></li><li data-type='method'><a href="module-functions_user.html#updateListContent#.updateListContent">updateListContent</a></li><li data-type='method'><a href="module-functions_user.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-middlewares_email.html">middlewares/email</a><ul class='methods'><li data-type='method'><a href="module-middlewares_email.html#sendAuthEmail#.sendAuthEmail">sendAuthEmail</a></li></ul></li><li><a href="module-middlewares_verifyAuth.html">middlewares/verifyAuth</a><ul class='methods'><li data-type='method'><a href="module-middlewares_verifyAuth.html#access#.access">access</a></li><li data-type='method'><a href="module-middlewares_verifyAuth.html#refresh#.refresh">refresh</a></li></ul></li><li><a href="module-routers_auth.html">routers/auth</a><ul class='methods'><li data-type='method'><a href="module-routers_auth.html#POST/login#POST/login">POST/login</a></li><li data-type='method'><a href="module-routers_auth.html#POST/logout#POST/logout">POST/logout</a></li><li data-type='method'><a href="module-routers_auth.html#POST/refresh#POST/refresh">POST/refresh</a></li><li data-type='method'><a href="module-routers_auth.html#POST/register#POST/register">POST/register</a></li><li data-type='method'><a href="module-routers_auth.html#POST/verify#POST/verify">POST/verify</a></li><li data-type='method'><a href="module-routers_auth.html#createToken#~createToken">createToken</a></li><li data-type='method'><a href="module-routers_auth.html#extendToken#~extendToken">extendToken</a></li></ul></li><li><a href="module-routers_comment.html">routers/comment</a><ul class='methods'><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#GET/comment/:commentID#GET/comment/:commentID">GET/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment#POST/comment">POST/comment</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment/new#POST/comment/new">POST/comment/new</a></li></ul></li><li><a href="module-routers_entity.html">routers/entity</a><ul class='methods'><li data-type='method'><a href="module-routers_entity.html#DELETE/entity#DELETE/entity">DELETE/entity</a></li><li data-type='method'><a href="module-routers_entity.html#GET/entity/:entityID#GET/entity/:entityID">GET/entity/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#PATCH/entity/follow/:entityID#PATCH/entity/follow/:entityID">PATCH/entity/follow/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity#POST/entity">POST/entity</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/new#POST/entity/new">POST/entity/new</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/random#POST/entity/random">POST/entity/random</a></li><li data-type='method'><a href="module-routers_entity.html#PUT/entity#PUT/entity">PUT/entity</a></li></ul></li><li><a href="module-routers_groupList.html">routers/groupList</a></li><li><a href="module-routers_hashtag.html">routers/hashtag</a><ul class='methods'><li data-type='method'><a href="module-routers_hashtag.html#GET/hashtag/:entityID/:name#GET/hashtag/:entityID/:name">GET/hashtag/:entityID/:name</a></li><li data-type='method'><a href="module-routers_hashtag.html#POST/hashtag#POST/hashtag">POST/hashtag</a></li></ul></li><li><a href="module-routers_post.html">routers/post</a><ul class='methods'><li data-type='method'><a href="module-routers_post.html#DELETE/:postID#DELETE/:postID">DELETE/:postID</a></li><li data-type='method'><a href="module-routers_post.html#GET/post/:postID#GET/post/:postID">GET/post/:postID</a></li><li data-type='method'><a href="module-routers_post.html#PATCH/post/like/:postID#PATCH/post/like/:postID">PATCH/post/like/:postID</a></li><li data-type='method'><a href="module-routers_post.html#POST/post#POST/post">POST/post</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/new#POST/post/new">POST/post/new</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/random#POST/post/random">POST/post/random</a></li><li data-type='method'><a href="module-routers_post.html#PUT/post/:postID#PUT/post/:postID">PUT/post/:postID</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#RouteCallback">RouteCallback</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">routers/entity.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+ * Express router providing {@link Entity} related routes.
+ * @module routers/entity
+ * @requires express
+ */
+
+var express = require('express');
+var router = express.Router();
+
+const entityFunc = require('../functions/entityFunc');
+const userFunc = require('../functions/userFunc');
+
+// ==========================
+//    Unauthorized Queries
+// ==========================
+
+/**
+ * @typedef {Object} POST/entity/random-ReqBody
+ * @property {Object} filter - Searching filter for the random Entities, an instance of [Entity.Schema]{@link Entity}.
+ * @property {String} size - Number of returning documents.
+ */
+/**
+ * @callback POST/entity/random-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/entity~POST/entity/random-ReqBody>} req - Express request.
+ * @param {express.Response} res - Express response.
+ */
+/**
+ * Read random Entities.
+ * @instance
+ * @function POST/entity/random
+ * @see module:functions/entity.randomRests
+ * @param {String} path - Express path.
+ * @param {module:routers/entity~POST/entity/random-Callback} callback - Express callback.
+ * @returns {Entity[]} 200 - Random Entities.
+ * @throws 500 - Server error.
+ */
+router.post('/random', (req, res) => {
+    entityFunc.randomRests(req.body.filter, req.body.size)
+    .then(rests => res.status(200).json(rests))
+    .catch(err => res.status(500).json(err.message))
+})
+
+/**
+ * Read a single Entity.
+ * @instance
+ * @function GET/entity/:entityID
+ * @see module:functions/entity.findEntity
+ * @param {String} path - Express path.
+ * @param {RouteCallback} callback - Express callback.
+ * @returns {Entity|null} 200/204 - Entity after query, an instance of [Entity.Schema]{@link Entity}.
+ * @throws 500 - Server error.
+ */
+router.get('/:entityID', (req, res) => { 
+    entityFunc.findEntity({entityID: req.params.entityID})
+    .then(entity => {
+        if (entity == null) return res.status(204).json(null);
+        return res.status(200).json(entity);
+    })
+    .catch(err => res.status(500).json(err.message))
+})
+
+/**
+ * @typedef {Object} POST/entity-ReqBody
+ * @property {Object} filter - Searching filter for the Entities, instances of [Entity.Schema]{@link Entity}.
+ */
+/**
+ * @callback POST/entity-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/entity~POST/entity-ReqBody>} req - Express request.
+ * @param {express.Response} res - Express response.
+ */
+/**
+ * Read multiple Entities.
+ * @instance
+ * @function POST/entity
+ * @see module:functions/entity.findEntities
+ * @param {String} path - Express path.
+ * @param {module:routers/entity~POST/entity-Callback} callback - Express callback.
+ * @returns {Entity[]|null} 200/204 - Entities after query, instances of [Entity.Schema]{@link Entity}.
+ * @throws 500 - Server error.
+ */
+router.post('/', (req, res) => {
+    entityFunc.findEntities(req.body.filter)
+    .then(entities => {
+        if (entities == null) return res.status(204).json(null);
+        return res.status(200).json(entities);     
+    })
+    .catch(err => res.status(500).json(err.message))
+})
+
+// ==========================
+//     Authorized Queries
+// ==========================
+
+/**
+ * @typedef {Object} POST/entity/new-ReqBody 
+ * @description Data of the new Entity, an instance of [Entity.Schema]{@link Entity}.
+ */
+ /**
+ * @callback POST/entity/new-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/entity~POST/entity/new-ReqBody>} req - Express request.
+ * @param {express.Response} res - Express response.
+ */
+/**
+ * Create a new Rest.
+ * @instance
+ * @function POST/entity/new
+ * @see module:functions/entity.createEntity
+ * @param {String} path - Express path.
+ * @param {module:routers/entity~POST/entity/new-Callback} callback - Express callback.
+ * @returns {Rest} 201 - Created Entity, an instance of [Entity.Schema]{@link Entity}.
+ * @throws 500 - Server error.
+ */
+router.post('/new', (req, res) => {
+    entityFunc.createEntity({...req.body, type: 'Rest'})
+    .then(createdEntity => res.status(201).json(createdEntity))
+    .catch(err => res.status(500).json(err.message));
+})
+
+/**
+ * @typedef {Object} PUT/entity-ReqBody
+ * @property {Object} data - Data to update the Entity.
+ */
+/**
+ * @callback PUT/entity-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/entity~PUT/entity-ReqBody>} req - Express request.
+ * @param {express.Response} res - Express response.
+ */
+/**
+ * Update an Entity.
+ * @instance
+ * @function PUT/entity
+ * @see module:functions/entity.updateEntity
+ * @param {String} path - Express path.
+ * @param {module:routers/entity~PUT/entity-Callback} callback - Express callback.
+ * @returns {Entity} 200 - Updated Entity, an instance of [Entity.Schema]{@link Entity}.
+ * @throws 404 - Entity not found.
+ * @throws 409 - Email exists.
+ * @throws 500 - Server error.
+ */
+router.put('/', (req, res) => {
+    var filter = {entityID: res.locals.user.entityID};
+    entityFunc.updateEntity(filter, req.body.data)
+    .then(updatedEntity => res.status(200).json(updatedEntity))
+    .catch(err => {
+        if (err.message == 'Email exists.') res.status(409).json(err.message);
+        else if (err.message == 'Entity not found.') res.status(404).json(err.message);
+        else res.status(500).json(err.message);
+    })
+})
+
+/**
+ * Delete an Entity.
+ * @instance
+ * @function DELETE/entity
+ * @see module:functions/entity.deleteEntity
+ * @param {String} path - Express path.
+ * @param {RouteCallback} callback - Express callback.
+ * @returns {Entity} 200 - Deleted Entity, an instance of [Entity.Schema]{@link Entity}.
+ * @throws 404 - Entity not found.
+ * @throws 500 - Server error.
+ */
+router.delete('/', (req, res) => {
+    var filter = {entityID: res.locals.user.entityID};
+    entityFunc.deleteEntity(filter)
+    .then(deletedEntity => res.status(200).json(deletedEntity))
+    .catch(err => {
+        if (err.message == 'Entity not found.') res.status(404).json(err.message);
+        else res.status(500).json(err.message);
+    })
+})
+
+/**
+ * @typedef {Object} PATCH/entity/follow/entityID-ReqBody
+ * @property {Object} addFlag - Whether to add (push) or delete (pull) the requesting author (Entity/User).
+ */
+/**
+ * @callback PATCH/entity/follow/entityID-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/entity~PATCH/entity/follow/entityID-ReqBody>} req - Express request.
+ * @param {express.Response} res - Express response.
+ */
+/**
+ * Follow or unfollow an Entity.
+ * @instance
+ * @function PATCH/entity/follow/:entityID
+ * @see module:functions/user.updateFollow
+ * @param {String} path - Express path.
+ * @param {module:routers/entity~PATCH/entity/follow/entityID-Callback} callback - Express callback.
+ * @returns {Entity} 200 - Deleted Entity, an instance of [Entity.Schema]{@link Entity}.
+ * @throws 404 - Entity not found.
+ * @throws 500 - Server error.
+ */
+router.patch('/follow/:entityID', (req, res) => {
+    var authorFilter = {entityID: res.locals.user.entityID};
+    var targetFilter = {entityID: req.params.entityID};
+    userFunc.updateFollow(authorFilter, targetFilter, req.body.addFlag)
+    .then(updatedEntity => res.status(200).json(updatedEntity))
+    .catch(err => {
+        if (err.message == 'Entity not found.') res.status(404).json(err.message)
+        else res.status(500).json(err.message)
+    })
+})
+
+
+module.exports = router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Apr 29 2021 14:20:57 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

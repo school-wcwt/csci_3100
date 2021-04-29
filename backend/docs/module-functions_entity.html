@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>functions/entity - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Auth.html">Auth</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Entity.html">Entity</a></li><li><a href="GroupList.html">GroupList</a></li><li><a href="Hashtag.html">Hashtag</a></li><li><a href="Post.html">Post</a></li><li><a href="Rest.html">Rest</a></li><li><a href="Resv.html">Resv</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-functions_comment.html">functions/comment</a><ul class='methods'><li data-type='method'><a href="module-functions_comment.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComments#.deleteComments">deleteComments</a></li><li data-type='method'><a href="module-functions_comment.html#findComment#.findComment">findComment</a></li><li data-type='method'><a href="module-functions_comment.html#findComments#.findComments">findComments</a></li><li data-type='method'><a href="module-functions_comment.html#updateComment#.updateComment">updateComment</a></li></ul></li><li><a href="module-functions_entity.html">functions/entity</a><ul class='methods'><li data-type='method'><a href="module-functions_entity.html#createEntity#.createEntity">createEntity</a></li><li data-type='method'><a href="module-functions_entity.html#deleteEntity#.deleteEntity">deleteEntity</a></li><li data-type='method'><a href="module-functions_entity.html#findEntities#.findEntities">findEntities</a></li><li data-type='method'><a href="module-functions_entity.html#findEntity#.findEntity">findEntity</a></li><li data-type='method'><a href="module-functions_entity.html#randomRests#.randomRests">randomRests</a></li><li data-type='method'><a href="module-functions_entity.html#updateEntity#.updateEntity">updateEntity</a></li><li data-type='method'><a href="module-functions_entity.html#tagGen#~tagGen">tagGen</a></li></ul></li><li><a href="module-functions_groupList.html">functions/groupList</a><ul class='methods'><li data-type='method'><a href="module-functions_groupList.html#createGroupList#.createGroupList">createGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#deleteGroupList#.deleteGroupList">deleteGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupList#.findGroupList">findGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupLists#.findGroupLists">findGroupLists</a></li><li data-type='method'><a href="module-functions_groupList.html#updateGroupList#.updateGroupList">updateGroupList</a></li></ul></li><li><a href="module-functions_hashtag.html">functions/hashtag</a><ul class='methods'><li data-type='method'><a href="module-functions_hashtag.html#createTag#.createTag">createTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#updateTag#.updateTag">updateTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#useTags#.useTags">useTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#deleteTag#~deleteTag">deleteTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findOrCreateTag#~findOrCreateTag">findOrCreateTag</a></li></ul></li><li><a href="module-functions_post.html">functions/post</a><ul class='methods'><li data-type='method'><a href="module-functions_post.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_post.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_post.html#findPost#.findPost">findPost</a></li><li data-type='method'><a href="module-functions_post.html#findPosts#.findPosts">findPosts</a></li><li data-type='method'><a href="module-functions_post.html#randomPosts#.randomPosts">randomPosts</a></li><li data-type='method'><a href="module-functions_post.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-functions_user.html">functions/user</a><ul class='methods'><li data-type='method'><a href="module-functions_user.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_user.html#createList#.createList">createList</a></li><li data-type='method'><a href="module-functions_user.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_user.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_user.html#deleteList#.deleteList">deleteList</a></li><li data-type='method'><a href="module-functions_user.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_user.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_user.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_user.html#likePost#.likePost">likePost</a></li><li data-type='method'><a href="module-functions_user.html#updateComment#.updateComment">updateComment</a></li><li data-type='method'><a href="module-functions_user.html#updateFollow#.updateFollow">updateFollow</a></li><li data-type='method'><a href="module-functions_user.html#updateList#.updateList">updateList</a></li><li data-type='method'><a href="module-functions_user.html#updateListContent#.updateListContent">updateListContent</a></li><li data-type='method'><a href="module-functions_user.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-middlewares_email.html">middlewares/email</a><ul class='methods'><li data-type='method'><a href="module-middlewares_email.html#sendAuthEmail#.sendAuthEmail">sendAuthEmail</a></li></ul></li><li><a href="module-middlewares_verifyAuth.html">middlewares/verifyAuth</a><ul class='methods'><li data-type='method'><a href="module-middlewares_verifyAuth.html#access#.access">access</a></li><li data-type='method'><a href="module-middlewares_verifyAuth.html#refresh#.refresh">refresh</a></li></ul></li><li><a href="module-routers_auth.html">routers/auth</a><ul class='methods'><li data-type='method'><a href="module-routers_auth.html#POST/login#POST/login">POST/login</a></li><li data-type='method'><a href="module-routers_auth.html#POST/logout#POST/logout">POST/logout</a></li><li data-type='method'><a href="module-routers_auth.html#POST/refresh#POST/refresh">POST/refresh</a></li><li data-type='method'><a href="module-routers_auth.html#POST/register#POST/register">POST/register</a></li><li data-type='method'><a href="module-routers_auth.html#POST/verify#POST/verify">POST/verify</a></li><li data-type='method'><a href="module-routers_auth.html#createToken#~createToken">createToken</a></li><li data-type='method'><a href="module-routers_auth.html#extendToken#~extendToken">extendToken</a></li></ul></li><li><a href="module-routers_comment.html">routers/comment</a><ul class='methods'><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#GET/comment/:commentID#GET/comment/:commentID">GET/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment#POST/comment">POST/comment</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment/new#POST/comment/new">POST/comment/new</a></li></ul></li><li><a href="module-routers_entity.html">routers/entity</a><ul class='methods'><li data-type='method'><a href="module-routers_entity.html#DELETE/entity#DELETE/entity">DELETE/entity</a></li><li data-type='method'><a href="module-routers_entity.html#GET/entity/:entityID#GET/entity/:entityID">GET/entity/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#PATCH/entity/follow/:entityID#PATCH/entity/follow/:entityID">PATCH/entity/follow/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity#POST/entity">POST/entity</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/new#POST/entity/new">POST/entity/new</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/random#POST/entity/random">POST/entity/random</a></li><li data-type='method'><a href="module-routers_entity.html#PUT/entity#PUT/entity">PUT/entity</a></li></ul></li><li><a href="module-routers_groupList.html">routers/groupList</a></li><li><a href="module-routers_hashtag.html">routers/hashtag</a><ul class='methods'><li data-type='method'><a href="module-routers_hashtag.html#GET/hashtag/:entityID/:name#GET/hashtag/:entityID/:name">GET/hashtag/:entityID/:name</a></li><li data-type='method'><a href="module-routers_hashtag.html#POST/hashtag#POST/hashtag">POST/hashtag</a></li></ul></li><li><a href="module-routers_post.html">routers/post</a><ul class='methods'><li data-type='method'><a href="module-routers_post.html#DELETE/:postID#DELETE/:postID">DELETE/:postID</a></li><li data-type='method'><a href="module-routers_post.html#GET/post/:postID#GET/post/:postID">GET/post/:postID</a></li><li data-type='method'><a href="module-routers_post.html#PATCH/post/like/:postID#PATCH/post/like/:postID">PATCH/post/like/:postID</a></li><li data-type='method'><a href="module-routers_post.html#POST/post#POST/post">POST/post</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/new#POST/post/new">POST/post/new</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/random#POST/post/random">POST/post/random</a></li><li data-type='method'><a href="module-routers_post.html#PUT/post/:postID#PUT/post/:postID">PUT/post/:postID</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#RouteCallback">RouteCallback</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">functions/entity</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description usertext"><p>CRUD functions of Entities.</p></div>
+            
+
+            
+                
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>CRUD functions of Entities.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".createEntity"><span class="type-signature">(static) </span>createEntity<span class="signature">(data)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Entity.html">Entity</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Create a new Entity.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Data of the new Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        <p>Email exists.</p>
+    
+    </div>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Created Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Entity.html">Entity</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".deleteEntity"><span class="type-signature">(static) </span>deleteEntity<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Entity.html">Entity</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Delete an Entity.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line171">line 171</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Searching filter for the Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        <p>Entity not found.</p>
+    
+    </div>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Deleted Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Entity.html">Entity</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".findEntities"><span class="type-signature">(static) </span>findEntities<span class="signature">(filter, opt<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(Array.&lt;<a href="Entity.html">Entity</a>>|null)>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Read multiple entities.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line70">line 70</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Searching filter for the entities, instances of <a href="Entity.html">Entity.Schema</a>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Searching options.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>select</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Add selection in query.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>populate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{path: 'groupList, select:'name content}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Add population in query.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Entities after query, an instance of <a href="Entity.html">Entity.Schema</a>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;(Array.&lt;<a href="Entity.html">Entity</a>>|null)></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".findEntity"><span class="type-signature">(static) </span>findEntity<span class="signature">(filter, opt<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(<a href="Entity.html">Entity</a>|null)>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Read a single Entity.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Searching filter for the Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Searching options.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>select</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Add selection in query.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>populate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{path: 'groupList, select:'name content}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Add population in query.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>An Entity after query, an instance of <a href="Entity.html">Entity.Schema</a>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;(<a href="Entity.html">Entity</a>|null)></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".randomRests"><span class="type-signature">(static) </span>randomRests<span class="signature">(filter<span class="signature-attributes">opt</span>, size<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(Array.&lt;<a href="Entity.html">Entity</a>>|null)>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Read random Entities.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line188">line 188</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{type: 'Rest'}</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Searching filter for the random Entities, an instance of <a href="Entity.html">Entity.Schema</a>. Default as restaurants.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>1</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Number of returning documents.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Filtered random Entities of defined size, instances of <a href="Entity.html">Entity.Schema</a>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;(Array.&lt;<a href="Entity.html">Entity</a>>|null)></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".updateEntity"><span class="type-signature">(static) </span>updateEntity<span class="signature">(filter, data)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Entity.html">Entity</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Update an Entity.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line137">line 137</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Searching filter for the Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Data to update the Entity.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+    <div class="param-desc usertext">
+    
+        <p>Email exists.</p>
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc usertext">
+    
+        <p>Entity not found.</p>
+    
+    </div>
+
+</li>
+    </ul>
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Updated Entity, an instance of <a href="Entity.html">Entity.Schema</a>.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Entity.html">Entity</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~tagGen"><span class="type-signature">(private, inner) </span>tagGen<span class="signature">(username)</span><span class="type-signature"> &rarr; {Promise.&lt;string>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Generate an unique 4-number tag for an Entity.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="functions_entityFunc.js.html">functions/entityFunc.js</a>, <a href="functions_entityFunc.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Username of the Entity.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>A generated unique tag.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Apr 29 2021 14:20:57 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

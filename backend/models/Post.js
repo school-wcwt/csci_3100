@@ -1,20 +1,20 @@
 var mongoose = require('mongoose');
 
 /**
- * @typedef Post
+ * @class Post
  * @global
- * @property {String} postID
- * @property {Number} type - 0: Check-in; 1: Review.
- * @property {mongoose.Types.ObjectId} author - User created this Post, an instance of [User.Schema]{@link User}.
- * @property {mongoose.Types.ObjectId} target - Rest this Post targets, an instance of [Rest.Schema]{@link Rest}.
- * @property {String} content
- * @property {Date} createdTime
- * @property {Date[]} [modifiedTime] - List of modified time.
- * @property {String[]} [photo] - Links to attached photos. 
- * @property {Number} [rating] - 0 to 10.
- * @property {mongoose.Types.ObjectId[]} [hashtag] - Instances of [Hashtag.Schema]{@link Hashtag}.
- * @property {mongoose.Types.ObjectId[]} [like] - Users liked this Post, instances of [User.Schema]{@link User}.
- * @property {mongoose.Types.ObjectId[]} [comment] - Instances of [Comment.Schema]{@link Comment}.
+ * @param {String} postID - EntityID + Date.now().
+ * @param {Number} type - 0: Check-in; 1: Review.
+ * @param {mongoose.Types.ObjectId} author - User created this Post, an instance of [User.Schema]{@link User}.
+ * @param {mongoose.Types.ObjectId} target - Rest this Post targets, an instance of [Rest.Schema]{@link Rest}.
+ * @param {String} content - Description.
+ * @param {Date} createdTime - Created time.
+ * @param {Date[]} [modifiedTime] - List of modified time.
+ * @param {String[]} [photo] - Links to attached photos. 
+ * @param {Number} [rating] - 0 to 10.
+ * @param {mongoose.Types.ObjectId[]} [hashtag] - Instances of [Hashtag.Schema]{@link Hashtag}.
+ * @param {mongoose.Types.ObjectId[]} [like] - Users liked this Post, instances of [User.Schema]{@link User}.
+ * @param {mongoose.Types.ObjectId[]} [comment] - Instances of [Comment.Schema]{@link Comment}.
  */
 
 var PostSchema = mongoose.Schema({

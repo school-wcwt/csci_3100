@@ -1,19 +1,19 @@
 var mongoose = require('mongoose');
 
 /**
- * @typedef Entity
+ * @class Entity
  * @global
- * @property {String} entityID - Username + tag.
- * @property {String} username 
- * @property {String} tag - 4-digit tag.
- * @property {Number} verified - 0: Unverified; 1: Verified.
- * @property {Date} joinTime
- * @property {String} type - '{@link User}' or '{@link Rest}' which extends Entity.
- * @property {String} [name]
- * @property {String} [phone]
- * @property {String} [profPhoto]
- * @property {mongoose.Types.ObjectId[]} [followed] - Users who followed this Entity, instances of [User.Schema]{@link User}.
- * @property {mongoose.Types.ObjectId[]} [post] - Posts that this User created, or; Posts (Reviews) that belongs to this Rest. Instances of [Post.Schema]{@link Post}.
+ * @param {String} entityID - Username + tag.
+ * @param {String} username - Username.
+ * @param {String} tag - 4-digit tag.
+ * @param {Number} verified - 0: Unverified; 1: Verified.
+ * @param {Date} joinTime - Join time.
+ * @param {String} type - '{@link User}' or '{@link Rest}' which extends Entity.
+ * @param {String} [name] - Real name.
+ * @param {String} [phone] - Phone number.
+ * @param {String} [profPhoto] - Profile photo.
+ * @param {mongoose.Types.ObjectId[]} [followed] - Users who followed this Entity, instances of [User.Schema]{@link User}.
+ * @param {mongoose.Types.ObjectId[]} [post] - Posts that this User created, or; Posts (Reviews) that belongs to this Rest. Instances of [Post.Schema]{@link Post}.
  */
 
 var EntitySchema = mongoose.Schema({

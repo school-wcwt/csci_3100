@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>routers/auth.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Auth.html">Auth</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Entity.html">Entity</a></li><li><a href="GroupList.html">GroupList</a></li><li><a href="Hashtag.html">Hashtag</a></li><li><a href="Post.html">Post</a></li><li><a href="Rest.html">Rest</a></li><li><a href="Resv.html">Resv</a></li><li><a href="User.html">User</a></li></ul><h3>Modules</h3><ul><li><a href="module-functions_comment.html">functions/comment</a><ul class='methods'><li data-type='method'><a href="module-functions_comment.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_comment.html#deleteComments#.deleteComments">deleteComments</a></li><li data-type='method'><a href="module-functions_comment.html#findComment#.findComment">findComment</a></li><li data-type='method'><a href="module-functions_comment.html#findComments#.findComments">findComments</a></li><li data-type='method'><a href="module-functions_comment.html#updateComment#.updateComment">updateComment</a></li></ul></li><li><a href="module-functions_entity.html">functions/entity</a><ul class='methods'><li data-type='method'><a href="module-functions_entity.html#createEntity#.createEntity">createEntity</a></li><li data-type='method'><a href="module-functions_entity.html#deleteEntity#.deleteEntity">deleteEntity</a></li><li data-type='method'><a href="module-functions_entity.html#findEntities#.findEntities">findEntities</a></li><li data-type='method'><a href="module-functions_entity.html#findEntity#.findEntity">findEntity</a></li><li data-type='method'><a href="module-functions_entity.html#randomRests#.randomRests">randomRests</a></li><li data-type='method'><a href="module-functions_entity.html#updateEntity#.updateEntity">updateEntity</a></li><li data-type='method'><a href="module-functions_entity.html#tagGen#~tagGen">tagGen</a></li></ul></li><li><a href="module-functions_groupList.html">functions/groupList</a><ul class='methods'><li data-type='method'><a href="module-functions_groupList.html#createGroupList#.createGroupList">createGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#deleteGroupList#.deleteGroupList">deleteGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupList#.findGroupList">findGroupList</a></li><li data-type='method'><a href="module-functions_groupList.html#findGroupLists#.findGroupLists">findGroupLists</a></li><li data-type='method'><a href="module-functions_groupList.html#updateGroupList#.updateGroupList">updateGroupList</a></li></ul></li><li><a href="module-functions_hashtag.html">functions/hashtag</a><ul class='methods'><li data-type='method'><a href="module-functions_hashtag.html#createTag#.createTag">createTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#updateTag#.updateTag">updateTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#useTags#.useTags">useTags</a></li><li data-type='method'><a href="module-functions_hashtag.html#deleteTag#~deleteTag">deleteTag</a></li><li data-type='method'><a href="module-functions_hashtag.html#findOrCreateTag#~findOrCreateTag">findOrCreateTag</a></li></ul></li><li><a href="module-functions_post.html">functions/post</a><ul class='methods'><li data-type='method'><a href="module-functions_post.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_post.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_post.html#findPost#.findPost">findPost</a></li><li data-type='method'><a href="module-functions_post.html#findPosts#.findPosts">findPosts</a></li><li data-type='method'><a href="module-functions_post.html#randomPosts#.randomPosts">randomPosts</a></li><li data-type='method'><a href="module-functions_post.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-functions_user.html">functions/user</a><ul class='methods'><li data-type='method'><a href="module-functions_user.html#createComment#.createComment">createComment</a></li><li data-type='method'><a href="module-functions_user.html#createList#.createList">createList</a></li><li data-type='method'><a href="module-functions_user.html#createPost#.createPost">createPost</a></li><li data-type='method'><a href="module-functions_user.html#deleteComment#.deleteComment">deleteComment</a></li><li data-type='method'><a href="module-functions_user.html#deleteList#.deleteList">deleteList</a></li><li data-type='method'><a href="module-functions_user.html#deletePost#.deletePost">deletePost</a></li><li data-type='method'><a href="module-functions_user.html#findTag#.findTag">findTag</a></li><li data-type='method'><a href="module-functions_user.html#findTags#.findTags">findTags</a></li><li data-type='method'><a href="module-functions_user.html#likePost#.likePost">likePost</a></li><li data-type='method'><a href="module-functions_user.html#updateComment#.updateComment">updateComment</a></li><li data-type='method'><a href="module-functions_user.html#updateFollow#.updateFollow">updateFollow</a></li><li data-type='method'><a href="module-functions_user.html#updateList#.updateList">updateList</a></li><li data-type='method'><a href="module-functions_user.html#updateListContent#.updateListContent">updateListContent</a></li><li data-type='method'><a href="module-functions_user.html#updatePost#.updatePost">updatePost</a></li></ul></li><li><a href="module-middlewares_email.html">middlewares/email</a><ul class='methods'><li data-type='method'><a href="module-middlewares_email.html#sendAuthEmail#.sendAuthEmail">sendAuthEmail</a></li></ul></li><li><a href="module-middlewares_verifyAuth.html">middlewares/verifyAuth</a><ul class='methods'><li data-type='method'><a href="module-middlewares_verifyAuth.html#access#.access">access</a></li><li data-type='method'><a href="module-middlewares_verifyAuth.html#refresh#.refresh">refresh</a></li></ul></li><li><a href="module-routers_auth.html">routers/auth</a><ul class='methods'><li data-type='method'><a href="module-routers_auth.html#POST/login#POST/login">POST/login</a></li><li data-type='method'><a href="module-routers_auth.html#POST/logout#POST/logout">POST/logout</a></li><li data-type='method'><a href="module-routers_auth.html#POST/refresh#POST/refresh">POST/refresh</a></li><li data-type='method'><a href="module-routers_auth.html#POST/register#POST/register">POST/register</a></li><li data-type='method'><a href="module-routers_auth.html#POST/verify#POST/verify">POST/verify</a></li><li data-type='method'><a href="module-routers_auth.html#createToken#~createToken">createToken</a></li><li data-type='method'><a href="module-routers_auth.html#extendToken#~extendToken">extendToken</a></li></ul></li><li><a href="module-routers_comment.html">routers/comment</a><ul class='methods'><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#DELETE/comment/:commentID#DELETE/comment/:commentID">DELETE/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#GET/comment/:commentID#GET/comment/:commentID">GET/comment/:commentID</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment#POST/comment">POST/comment</a></li><li data-type='method'><a href="module-routers_comment.html#POST/comment/new#POST/comment/new">POST/comment/new</a></li></ul></li><li><a href="module-routers_entity.html">routers/entity</a><ul class='methods'><li data-type='method'><a href="module-routers_entity.html#DELETE/entity#DELETE/entity">DELETE/entity</a></li><li data-type='method'><a href="module-routers_entity.html#GET/entity/:entityID#GET/entity/:entityID">GET/entity/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#PATCH/entity/follow/:entityID#PATCH/entity/follow/:entityID">PATCH/entity/follow/:entityID</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity#POST/entity">POST/entity</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/new#POST/entity/new">POST/entity/new</a></li><li data-type='method'><a href="module-routers_entity.html#POST/entity/random#POST/entity/random">POST/entity/random</a></li><li data-type='method'><a href="module-routers_entity.html#PUT/entity#PUT/entity">PUT/entity</a></li></ul></li><li><a href="module-routers_groupList.html">routers/groupList</a></li><li><a href="module-routers_hashtag.html">routers/hashtag</a><ul class='methods'><li data-type='method'><a href="module-routers_hashtag.html#GET/hashtag/:entityID/:name#GET/hashtag/:entityID/:name">GET/hashtag/:entityID/:name</a></li><li data-type='method'><a href="module-routers_hashtag.html#POST/hashtag#POST/hashtag">POST/hashtag</a></li></ul></li><li><a href="module-routers_post.html">routers/post</a><ul class='methods'><li data-type='method'><a href="module-routers_post.html#DELETE/:postID#DELETE/:postID">DELETE/:postID</a></li><li data-type='method'><a href="module-routers_post.html#GET/post/:postID#GET/post/:postID">GET/post/:postID</a></li><li data-type='method'><a href="module-routers_post.html#PATCH/post/like/:postID#PATCH/post/like/:postID">PATCH/post/like/:postID</a></li><li data-type='method'><a href="module-routers_post.html#POST/post#POST/post">POST/post</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/new#POST/post/new">POST/post/new</a></li><li data-type='method'><a href="module-routers_post.html#POST/post/random#POST/post/random">POST/post/random</a></li><li data-type='method'><a href="module-routers_post.html#PUT/post/:postID#PUT/post/:postID">PUT/post/:postID</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#RouteCallback">RouteCallback</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">routers/auth.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+ * Express router providing {@link User} authentication related routes.
+ * @module routers/auth
+ * @requires express
+ * @requires jsonwebtoken
+ * @requires bcrypt
+ * @requires cors
+ */
+
+var express = require('express');
+var router  = express.Router();
+
+const jwt    = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const Mongoose = require('mongoose')
+const cors   = require('cors');
+
+const config     = require('../config');
+const verifyAuth = require('../middlewares/verifyAuth');
+const entityFunc = require('../functions/entityFunc');
+
+const Auth   = require('../models/Auth');
+const Entity = require('../models/Entity');
+const Rest   = require('../models/Rest');
+const User   = require('../models/User');
+
+const MaxRefreshDays = 60;
+
+// ====================
+//   Helper Functions
+// ====================
+
+/**
+ * Create a JWT token.
+ * @private
+ * @param {String} entityID - User.entityID
+ * @param {Mongoose.Types.ObjectId} entity_id - User._id
+ * @param {String|Number} duration - Valid duration of the token.
+ * @param {String} parentRT - The parent of a refresh token (RT) or the associated RT of the access token, in form of label.
+ * @param {String} secret - Signature of the token.
+ * @returns {String} Created JWT token.
+ */
+var createToken = (entityID, entity_id, duration, parentRT, secret) => {
+    var payload = { entityID, entity_id, duration, parentRT };
+    return jwt.sign(payload, secret, { expiresIn: duration });
+}
+
+/**
+ * Extend the period of a JWT refresh token.
+ * @private
+ * @param {Object} payload - Payload of the token.
+ * @param {Number} durationInDays - Extending duration in number of days.
+ * @param {String} parentRT - The parent of the refresh token.
+ * @returns {{token: String, label: String}} Created JWT refresh token and its label (in DB).
+ */
+var extendToken = (payload, durationInDays, parentRT) => {
+    newExp = payload.exp + (durationInDays * 24 * 3600);
+    maxExp = payload.iat + (MaxRefreshDays * 24 * 3600);
+    payload.exp = newExp &lt;= maxExp ? newExp : maxExp;
+    payload.parentRT = parentRT;
+    return {
+        token: jwt.sign(payload, config.refreshSecret), 
+        label: `RT-${payload.iat}-${payload.exp}`
+    };
+}
+
+// ====================
+//        Routes
+// ====================
+
+/**
+ * This route refreshs a currently existing refresh token. Through {@link module:middlewares/verifyAuth.refresh}, it checks if the user has received RT0-AT0 pair and stores RT0 into database. It then generates a new RT1-AT1 pair, stores AT1 into database, and sends RT1-AT1 pair and the corresponding logined user back as the response. When the access token (AT1) is received in the next request to the server, RT1 is stored into database, confirming its receipt.
+ * @summary Refresh a token. 
+ * @instance 
+ * @function POST/refresh
+ * @see module:middlewares/verifyAuth.refresh
+ * @requires module:middlewares/verifyAuth.refresh
+ * @param {String} path - Express path.
+ * @param {Callback} middleware - Express middleware. 
+ * @param {RouteCallback} callback - Express callback.
+ * @returns {Entity} 200 - Logined User.
+ * @throws 500 - Server error.
+ */
+router.post('/refresh', verifyAuth.refresh, (req, res) => {
+    (async () => { try {
+        let entityID = res.locals.user.entityID;
+        let entity_id = res.locals.user.entity_id;
+        let decoded = res.locals.user;
+        // Extend current token - 2 weeks
+        let refresh_token_raw = extendToken(
+            res.locals.user, 14, 
+            `RT-${decoded.iat}-${decoded.exp}`);
+        let refresh_token = refresh_token_raw.token;
+        // Create new access token - 1 hour
+        let access_token = createToken(
+            entityID, entity_id, '1h',
+            refresh_token_raw.label, config.accessSecret);
+        // Store access token in Auths DB
+        await Auth.updateOne({entity: entity_id}, {accessToken: access_token}).exec();
+        // Fetch User info
+        let user = await entityFunc.findEntity({_id: entity_id});
+        // Set cookies in response
+        res.cookie('refresh_token', refresh_token, {
+            maxAge: 14 * 60 * 60 * 1000,
+            httpOnly: false,
+        })
+        res.cookie('access_token', access_token, {
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true,
+        })
+        res.status(200).json(user)
+    } catch (err) { res.status(500).json(err.message) }
+    })()
+})
+
+/**
+ * @typedef {Object} POST/login-ReqBody
+ * @property {Object} filter - Searching filter for the User, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+ * @property {String} password - Raw string of password.
+ */
+/**
+ * @callback POST/login-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/auth~POST/login-ReqBody>} req - Express request. 
+ * @param {express.Response} res - Express response. 
+ */
+/**
+ * This route logins an User. The User is only logged in if they have the correct entity-password pair and are verified. This route generates a new RT-AT pair, stores AT into database, and sends the RT-AT pair and the corresponding logined user back as the response. When the access token (AT) is received in the next request to the server, RT is stored into database, confirming its receipt.
+ * @summary Login an User.
+ * @instance
+ * @function POST/login
+ * @param {String} path - Express path.
+ * @param {module:routers/auth~POST/login-Callback} callback - Express callback.
+ * @returns {Entity} 200 - Logined user.
+ * @throws 403 - Incorrect password. / Not verified.
+ * @throws 404 - Entity not found.
+ * @throws 500 - Server error.
+ */
+router.post('/login', (req, res) => {
+
+    /**
+     * Verify password and verification status.
+     * @private
+     * @param {Object} filter - Searching filter for the User, an instance of [Entity.Schema]{@link Entity} ([User.Schema]{@link User}).
+     * @param {string} password - Raw string of password.
+     * @returns {Promise&lt;{auth: Entity, user: Entity}>} Logined Entity in Auths and Entities (Users) DB.
+     * @throws Entity not found.
+     * @throws Incorrect password.
+     * @throws Not verified.
+     */
+    var auth = (filter, password) => {
+        return new Promise((resolve, reject) => {
+            (async () => { try {
+                // Fetch Entity and compare password
+                var entity = await Auth.findOne(filter).exec();
+                if (entity == null) throw new Error('Entity not found.');
+                var match = await bcrypt.compare(password, entity.password)
+                if (!match) throw new Error('Incorrect password.')
+                // Only allow login if verified
+                var loginedEntity = await entityFunc.findEntity({entityID: entity.entityID})
+                if (!loginedEntity.verified) throw new Error('Not verified.')
+                return resolve({auth: entity, user: loginedEntity});
+            } catch(err) { return reject(err) } })();
+        })
+    }
+
+    (async () => { try {
+        // Verify password and verification status
+        var entity = await auth(req.body.filter, req.body.password);
+        // Create new refresh (2 weeks) and access token (1 hour)
+        let refresh_token = createToken(
+            entity.user.entityID, entity.user._id, '14d',
+            entity.auth.refreshToken, config.refreshSecret);
+        let decoded = await jwt.verify(refresh_token, config.refreshSecret)
+        let access_token = createToken(
+            entity.user.entityID, entity.user._id, '1h',
+            `RT-${decoded.iat}-${decoded.exp}`, config.accessSecret);
+        // Store access token in Auths DB
+        await Auth.updateOne({entity: entity.user._id}, {accessToken: access_token}).exec();
+        // Set cookies in response
+        res.cookie('refresh_token', refresh_token, {
+            maxAge: 14 * 24 * 60 * 60 * 1000,
+            httpOnly: false,
+        })
+        res.cookie('access_token', access_token, {
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true,
+        })
+        res.status(200).json(entity.user)
+    } catch (err) {
+        if (err.message == 'Entity not found.') res.status(404).json(err.message)
+        else if (err.message == 'Incorrect password.' || err.message == 'Not verified.') res.status(403).json(err.message)
+        else res.status(500).json(err.message);
+    }})()
+
+})
+
+/**
+ * @typedef {Object} POST/register-ReqBody
+ * @see User
+ * @see Entity
+ * @property {String} username
+ * @property {String} password 
+ * @property {String} email
+ * @property {String} [name]
+ * @property {String} [phone]
+ * @property {String[]} [profPhoto]
+ * @property {String} gender
+ */
+/**
+ * @callback POST/register-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/auth~POST/register-ReqBody>} req - Express request. 
+ * @param {express.Response} res - Express response. 
+ */
+
+/**
+ * Register a new user.
+ * @instance
+ * @function POST/register
+ * @requires module:function/entity.createEntity
+ * @param {String} path - Express path.
+ * @param {module:routers/auth~POST/register-Callback} callback - Express callback.
+ * @returns {Entity} 201 - New User.
+ * @throws 409 - Email exists.
+ * @throws 500 - Server error.
+ */
+router.post('/register', (req, res) => {
+    entityFunc.createEntity({...req.body, type: 'User'})
+    .then(createdEntity => res.status(201).json(createdEntity))
+    .catch(err => {
+        if (err.message == 'Email exists.') res.status(409).json(err.message);
+        else res.status(500).json(err.message);
+    })
+})
+
+/**
+ * @typedef {Object} POST/verify-ReqBody
+ * @property {String} entityID - EntityID of the verifying User.
+ * @property {String} authHash - Verification hash.
+ */
+
+/**
+ * @callback POST/verify-Callback
+ * @param {express.Request&lt;{}, {}, module:routers/auth~POST/verify-ReqBody>} req - Express request. 
+ * @param {express.Response} res - Express response. 
+ */
+
+/**
+ * Verify an existing user.
+ * @instance 
+ * @function POST/verify
+ * @param {String} path - Express path.
+ * @param {module:routers/auth~POST/verify-Callback} callback - Express callback.
+ * @returns {Entity} 200 - OK.
+ * @throws 403 - Wrong link.
+ * @throws 404 - Entity not found.
+ * @throws 500 - Server error.
+ */
+router.post('/verify', (req, res) => {
+    (async () => { try {
+        var entity = await Auth.findOne({entityID: req.body.entityID})
+        if (entity == null) throw new Error('Entity not found.')
+        if (req.body.authHash != entity.authHash) throw new Error('Wrong link.')
+        else {
+            await Entity.updateOne({entityID: req.body.entityID, type: 'User'}, {verified: 1})
+            return res.status(200).json('OK.')
+        }
+    } catch (err) {
+        if (err.message == 'Entity not found.') res.status(404).json(err.message)
+        else if (err.message == 'Wrong link.') res.status(403).json(err.message)
+        else res.status(500).json(err.message);
+    }})()    
+})
+
+/**
+ * Logout an User.
+ * @instance
+ * @function POST/logout
+ * @requires module:middlewares/verifyAuth.access
+ * @param {String} path - Express path.
+ * @param {RouteCallback} callback - Express callback.
+ * @returns {Entity} 200 - OK.
+ * @throws 500 - Server error.
+ */
+router.post('/logout', verifyAuth.access, (req, res) => {
+    const filter = {entityID: res.locals.user.entityID};
+    Auth.updateOne(filter, {accessToken: '', refreshToken: ''}).exec()
+    .then(resp => {
+        res.clearCookie('refresh_token');
+        res.clearCookie('access_token');
+        res.status(200).json('OK.')
+    })
+    .catch(err => res.status(500).json(err.message));
+})
+
+module.exports = router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Apr 29 2021 14:20:57 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

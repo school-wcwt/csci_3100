@@ -2,17 +2,16 @@ var mongoose = require('mongoose');
 var Entity = require('./Entity');
 
 /**
- * @typedef RestType
+ * @class Rest
+ * @extends Entity
+ * @description Rest extends Entity. Discriminate by Entity.type = 'Rest'.
  * @global
- * @property {String} address
- * @property {Number} rating - Sum of rating.
- * @property {String} [status] - Opening status. 'Open', 'Closed', or 'Terminated'.
- * @property {String[][]} [openingHr] - Monday to Sunday, open to close.
- * @property {mongoose.Types.ObjectId[]} [admin] - Admins that can modify this Rest, instances of [User.Schema]{@link User}.
- * @property {mongoose.Types.ObjectId[]} [resv] - Resvs (Reservations) this Rest has, instaces of [Resv.Schema]{@link Resv}.
- * 
- * @typedef {Entity | RestType} Rest
- * @description Extends Entity. Discriminate by Entity.type = 'Rest'.
+ * @param {String} address - Address.
+ * @param {Number} rating - Sum of rating.
+ * @param {String} [status] - Opening status. 'Open', 'Closed', or 'Terminated'.
+ * @param {String[][]} [openingHr] - Monday to Sunday, open to close.
+ * @param {mongoose.Types.ObjectId[]} [admin] - Admins that can modify this Rest, instances of [User.Schema]{@link User}.
+ * @param {mongoose.Types.ObjectId[]} [resv] - Resvs (Reservations) this Rest has, instaces of [Resv.Schema]{@link Resv}.
  */
 
 var RestSchema = mongoose.Schema({

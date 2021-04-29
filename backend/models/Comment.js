@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 
 /**
- * @typedef Comment
+ * @class Comment
  * @global
- * @property {String} commentID - Unique. EntityID + Date.now().
- * @property {Mongoose.Types.ObjectId} author - Author of the comment.
- * @property {Mongoose.Types.ObjectId} post - Post the comment linked to.
- * @property {String} content
- * @property {Date} time - Created time.
+ * @param {String} commentID - Unique. EntityID + Date.now().
+ * @param {Mongoose.Types.ObjectId} author - Author of the comment.
+ * @param {Mongoose.Types.ObjectId} post - Post the comment linked to.
+ * @param {String} content - Content of the comment.
+ * @param {Date} time - Created time.
  */
 
 var CommentSchema = mongoose.Schema({

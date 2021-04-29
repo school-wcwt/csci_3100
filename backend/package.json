@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "docdash": "^1.2.0",
     "dotenv": "^8.2.0",
     "emailjs": "^3.4.0",
     "emailjs-com": "^2.6.4",
