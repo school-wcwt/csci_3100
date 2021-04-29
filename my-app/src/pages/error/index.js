@@ -13,7 +13,11 @@ function Link_Word({message,link}){
   </a>
   )
 }
-
+/**
+ * 
+ * @param {string} message your error message
+ * @returns error page
+ */
 function ErrorPage({message}) {
   if (!message){message = "This Place is Coming Soon";}
   return (
