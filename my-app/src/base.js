@@ -12,4 +12,7 @@ const firebaseConfig = {
     measurementId: "G-RP7QYX8JMW"
   };
   // Initialize Firebase
+  /**
+   * - use of photo storage in firebase
+   */
   export const app = firebase.initializeApp(firebaseConfig);
