@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM, { render } from "react-dom";
 import axios from '../../axiosConfig';
 import { trigChange } from "../socket-client";
 
-//Last update 7/4/2021
-
 //GET entity/:entityID
+/**
+ * return entity that has a certain entityID
+ * @param   {string} entityID  ID of entity
+ * @return {Promise<JSON>} entity in JSON format
+ */
 const entity_get= (entityID)=>{
   return new Promise((resolve,reject)=>{
     axios({
@@ -23,6 +24,11 @@ const entity_get= (entityID)=>{
 }
 
 //POST entity/
+/**
+ * return entities that satisfy the filter
+ * @param   {JSON} fil  filter for backend
+ * @return {Promise<JSON>[]} array of entity in JSON format
+ */
 const entity_post = (fil)=>{
   return new Promise((resolve,reject)=>{
     axios({
@@ -43,6 +49,11 @@ const entity_post = (fil)=>{
 }
 
 //PUT entity/
+/**
+ * edit entity and return the edited entity
+ * @param   {JSON} edit_data  data to be edited
+ * @return {Promise<JSON>} entity in JSON format
+ */
 const entity_edit = (edit_data)=>{
   return new Promise((resolve,reject)=>{
     axios({
@@ -65,6 +76,10 @@ const entity_edit = (edit_data)=>{
 }
 
 //DELETE entity/
+/**
+ * delete entity and return the deleted entity
+ * @return {Promise<JSON>} entity in JSON format
+ */
 const entity_delete= ()=>{
   return new Promise((resolve,reject)=>{
     axios({
@@ -83,6 +98,13 @@ const entity_delete= ()=>{
 }
 
 //PATCH user/follow/:entityID
+/**
+ * follow entity and return the followed entity
+ * @param   {string} followID  ID of target entity
+ * @param   {string} flag 0: unfollow, 1:follow
+ * @return {Promise<JSON>} entity in JSON format
+ */
+
 const entity_follow = (followID,flag)=>{
   return new Promise((resolve,reject)=>{
     axios({
