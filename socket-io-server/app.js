@@ -17,6 +17,10 @@ const io = require('socket.io')(server, {
   }
 });
 
+//connect
+//message from FromClient means: something is updated
+//message from FromAPI: tell other clients to update
+//details in my-app
 io.on("connection", (socket) => {
   console.log('New Connection')
   socket.on("FromClient", data => {
