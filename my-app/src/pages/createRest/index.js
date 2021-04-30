@@ -166,7 +166,7 @@ const RestForm = (props) => {
             <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
             <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
         </div>
-        <Form.File type="file" name="photo" ref={register}/>
+        <Form.File type="file" name="photo" ref={register} accept="image/png, image/jpeg"/>
         <br/>
         <div className={classes.sharedRow}>
             <Button variant="contained" type="submit" size="large" onClick = {handleSubmit(onSubmit)} className={classes.main_button_style}>

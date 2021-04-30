@@ -323,7 +323,7 @@ const SettingDialog = (props) => {
             <TextField fullWidth margin='dense' inputRef={register}
               id="phone" label="Phone" name="phone" />
             <DialogContentText>Upload Icon Image</DialogContentText>
-            <Form.File type="file" name="photo" ref={register} />
+            <Form.File type="file" name="photo" ref={register} accept="image/png, image/jpeg"/>
           </form>
           <div className={classes.dialogApply}>
             <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
