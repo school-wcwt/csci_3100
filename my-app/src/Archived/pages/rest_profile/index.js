@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from '../../axiosConfig';
-import Navbar from "../main/component/nav";
+import Navbar from "component/Navbar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InformCard from './component/cardMedia';
 import { useParams } from 'react-router';

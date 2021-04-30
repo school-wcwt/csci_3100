@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { darken, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { InputBase } from '@material-ui/core';
+import { Button, IconButton, InputBase } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import history from '../../../component/history'
+import axios from 'axiosConfig'
 
-
-const entityFn = require("../../../component/load_backend/entityFunction");
+const entityFn = require("component/load_backend/entityFunction");
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -33,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  tagButton: { 
+    fontWeight: "700",
+    marginRight: theme.spacing(1),
+  },
   inputRoot: {
     color: 'inherit',
   },
@@ -55,9 +58,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '700',
     flex: 4
   },
+  optionTagName: {
+    color: theme.palette.grey[700],
+    fontSize: '0,8em',
+    flex: 2,
+    textAlign: 'right',
+  },
   optionTag: {
     color: theme.palette.grey[400],
-    flex: 1,
+    fontSize: '0.8em',
+    flex: 2,
     textAlign: 'right',
   }
 }));
@@ -67,25 +77,44 @@ const SearchBar = (props) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [byTag, setByTag] = useState(false);
 
-  useEffect(() => { if (!open) setOptions([]) }, [open]);
+  useEffect(() => { 
+    if (!open) setOptions([]) 
+    return () => setOptions([])
+  }, [open]);
+
+  const handleMode = () => {
+    setOpen(false); 
+    setByTag(!byTag);
+  }
 
   const chooseEntity = (e, chosen) => {
     if (chosen !== null) {
       setTimeout(() => {
-        props.handleHistory(`/profile/${chosen.entityID}`)
-        //history.push(`/profile/${chosen.entityID}`)
-        //history.go();
+        props.handleHistory(`/profile/${byTag ? chosen.target.entityID : chosen.entityID}`)
       }, 500)
     }
   }
 
+  const fetchTagDB = (e, input) => {
+    if (input == '') return setOptions([]);
+    setLoading(true);
+    axios.post('/hashtag', {filter: {name: {$regex: '^'+input, $options: 'i'}}})
+    .then(res => {
+      setOptions(res.data)
+      setLoading(false)
+    })
+    .catch(err => console.log(err))
+  }
+
   const fetchDatabase = (e, input) => {
+    if (input == '') return setOptions([]);
     setLoading(true);
     var filter = {
       $or: [
-        { "entityID": { $regex: '^' + input } },
-        { "username": { $regex: '^' + input } }
+        { "entityID": { $regex: '^' + input, $options: 'i' } },
+        { "username": { $regex: '^' + input, $options: 'i' } }
       ]
     };
     entityFn.entity_post(filter)
@@ -99,21 +128,25 @@ const SearchBar = (props) => {
   const renderList = (option) => {
     return (
       <>
-        <div className={classes.optionName}>{option.username}</div>
-        <div className={classes.optionTag}>{`#${option.tag}`}</div> 
+        <div className={classes.optionName}>{byTag ? `${option.target.username} #${option.target.tag}` : option.username}</div>
+        <div className={classes.optionTag}>{byTag ? `${option.name} - ${option.frequency}` : `#${option.tag}`}</div>
       </>
     )
   }
 
   const renderInputBox = (params) => (
     <InputBase 
-      fullWidth placeholder="Search…"
+      fullWidth placeholder={byTag ? "Searching by tags..." : "Searching entities..."}
       ref={params.InputProps.ref} inputProps={params.inputProps}
       classes={{ root: classes.inputRoot, input: classes.inputInput, }}
     />
   )
 
   return (
+    <>
+    {byTag
+      ? <IconButton className={classes.tagButton} onClick={handleMode}><SearchIcon/></IconButton>
+      : <Button className={classes.tagButton} onClick={handleMode}> <SearchIcon/> tag</Button>}
     <div className={classes.search}>
       <div className={classes.searchIcon}>
         <SearchIcon />
@@ -125,14 +158,15 @@ const SearchBar = (props) => {
         options={options} loading={loading}
         open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}
         onChange={chooseEntity}
-        onInputChange={fetchDatabase}
+        onInputChange={byTag ? fetchTagDB : fetchDatabase}
         getOptionSelected={(opt, val) => {
           return opt.entityID == val.entityID
         }}
-        getOptionLabel={x => x.entityID} renderOption={renderList}
+        getOptionLabel={byTag ? x => x.name : x => x.entityID} renderOption={renderList}
         renderInput={renderInputBox}
       />
     </div>
+    </>
   )
 } 
 

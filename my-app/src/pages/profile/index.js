@@ -603,7 +603,7 @@ export default function Profile(props) {
           ? <UserInfo {...props} user={entity} /> : <RestInfo {...props} rest={entity} />}
         {entity.type == 'User'
           ? <UserActions {...props} user={entity} /> : <RestActions {...props} rest={entity} />}
-        {entity.type == 'Rest' && entity.post.length !== 0
+        {entity.type == 'Rest' && entity.post.length !== 0 && tags !== null
           ? <Hashtags hashtag={tags} limit={6} /> : null}
       </div>
       <Posts filter={{ _id: { $in: entity.post } }} />

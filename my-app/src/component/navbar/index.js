@@ -8,8 +8,8 @@ import AddLocationIcon from '@material-ui/icons/AddLocationOutlined'
 import PostAddIcon from '@material-ui/icons/PostAddRounded'
 import AccountCircle from '@material-ui/icons/AccountCircleRounded'
 
-import { Loading, global, history } from './'
-import SearchBar from '../pages/main/component/search'
+import { Loading, global, history } from '../index'
+import SearchBar from './search'
 
 
 const useStyles = makeStyles((theme) => ({
