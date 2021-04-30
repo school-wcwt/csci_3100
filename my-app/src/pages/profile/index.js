@@ -572,8 +572,7 @@ export default function Profile(props) {
   }, [urlParams])
 
   useEffect(() => {
-    if (entity == null) return;
-    if (entity.type == 'User') return setFetched(true);
+    if (entity == null || entity.type == 'User') return setFetched(true);
     axios.post('/hashtag/', {restFilter: {_id: entity._id}})
     .then(res => {
       let tags = res.data

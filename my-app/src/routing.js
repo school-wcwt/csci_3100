@@ -9,7 +9,7 @@ import Sock from './pages/panel_page/socket-test.js'
 import PanelBar from './pages/panel_page/panel.js'
 
 import {GetMyUser, useLoginUser} from 'component/authService';
-import { history, global } from "component";
+import { history, global, Error404 } from "component";
 
 /**
  * Pages Manage System:
@@ -44,7 +44,7 @@ const Routing = (props) => {
             <Route path='/sock'                      component={Sock}/>
             <Route path='/panel'                     component={PanelBar}/>
                
-            <Route component={Error} />
+            <Route component={Error404} />
         </Switch>
       </div>
     </Router>

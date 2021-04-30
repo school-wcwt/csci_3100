@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, Box, CssBaseline } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import logo from '../image/logo.png'
+import { global, NavBar } from 'component'
 
 
 const useStyles = makeStyles((theme) => ({ 
@@ -33,7 +34,10 @@ const useStyles = makeStyles((theme) => ({
 const Error404 = (props) => {
     const styles = useStyles(); 
 
+    if (global.loginedUser.user == null) return <></>
     return (
+        <>
+        <NavBar/>
         <div className={styles.viewPort}>
         <div className={styles.background}>
             <CssBaseline/>
@@ -48,6 +52,7 @@ const Error404 = (props) => {
             <Box m={4} pt={4}/>
         </div>
         </div>
+        </>
     )
 }
 

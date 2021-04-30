@@ -36,7 +36,6 @@ export default function Posts(props) {
   }, [props.filter])
 
   if (!fetched) return <Loading/>
-  else if (fetched && posts == null) return <Error404/>
   else return (
     posts.map(data2 => {
       return <Post post={data2} {...props} key={data2.postID}/>
