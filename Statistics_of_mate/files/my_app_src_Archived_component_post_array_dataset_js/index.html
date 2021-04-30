@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - my-app/src/Archived/component/post/array_dataset.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>my-app/src/Archived/component/post/array_dataset.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">40.80</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">127</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">3.33</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">0.55</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">[
+    {
+        &quot;photo&quot;: [
+            &quot;https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.41670335592495844%2F0.416703355924958441.jpg?alt=media&amp;token=20b15c4c-383e-4d75-8389-7e2bcb909b5b&quot;,
+            &quot;https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.18556657675031518%2F0.185566576750315182.png?alt=media&amp;token=7d9ffa18-fd0d-4784-8cb7-2ed5a809840e&quot;
+        ],
+        &quot;modifiedTime&quot;: [
+            &quot;2021-04-07T18:08:07.860Z&quot;
+        ],
+        &quot;hashtag&quot;: [
+            {
+                &quot;_id&quot;: &quot;606d6ab809d22f29107b89e5&quot;,
+                &quot;name&quot;: &quot;hash1&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606dded3bf62314a103ac65c&quot;,
+                &quot;name&quot;: &quot;bee2&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606dded3bf62314a103ac65d&quot;,
+                &quot;name&quot;: &quot;cat3&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606dded3bf62314a103ac65e&quot;,
+                &quot;name&quot;: &quot;four4&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606dded3bf62314a103ac65f&quot;,
+                &quot;name&quot;: &quot;foiwefj5&quot;
+            }
+        ],
+        &quot;like&quot;: [],
+        &quot;comment&quot;: [
+            {
+                &quot;_id&quot;: &quot;606df507bf62314a103ac666&quot;,
+                &quot;commentID&quot;: &quot;usern-1424-1617818887828&quot;,
+                &quot;author&quot;: {
+                    &quot;profPhoto&quot;: [],
+                    &quot;type&quot;: &quot;User&quot;,
+                    &quot;_id&quot;: &quot;606b3b30ab2e811e0c8bd2f7&quot;,
+                    &quot;username&quot;: &quot;usern&quot;,
+                    &quot;tag&quot;: &quot;1424&quot;,
+                    &quot;entityID&quot;: &quot;usern-1424&quot;
+                },
+                &quot;post&quot;: &quot;606dded3bf62314a103ac65b&quot;,
+                &quot;content&quot;: &quot;some text&quot;,
+                &quot;time&quot;: &quot;2021-04-07T18:08:07.828Z&quot;,
+                &quot;__v&quot;: 0
+            }
+        ],
+        &quot;_id&quot;: &quot;606dded3bf62314a103ac65b&quot;,
+        &quot;postID&quot;: &quot;usern-1424-1617813203859&quot;,
+        &quot;author&quot;: {
+            &quot;profPhoto&quot;: [],
+            &quot;type&quot;: &quot;User&quot;,
+            &quot;_id&quot;: &quot;606b3b30ab2e811e0c8bd2f7&quot;,
+            &quot;username&quot;: &quot;usern&quot;,
+            &quot;tag&quot;: &quot;1424&quot;,
+            &quot;entityID&quot;: &quot;usern-1424&quot;
+        },
+        &quot;target&quot;: {
+            &quot;profPhoto&quot;: [],
+            &quot;type&quot;: &quot;Rest&quot;,
+            &quot;_id&quot;: &quot;605a1bc56bf76f7ff6ecfdd3&quot;,
+            &quot;username&quot;: &quot;jon-rest&quot;,
+            &quot;tag&quot;: &quot;1296&quot;,
+            &quot;entityID&quot;: &quot;jon-rest-1296&quot;
+        },
+        &quot;type&quot;: 0,
+        &quot;content&quot;: &quot;content&quot;,
+        &quot;createdTime&quot;: &quot;2021-04-07T16:33:23.859Z&quot;,
+        &quot;__v&quot;: 0
+    },
+    {
+        &quot;photo&quot;: [
+            &quot;https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.6639191101497417%2F0.66391911014974171.jpg?alt=media&amp;token=289d6d62-2567-45ab-97ea-3c7e30f16707&quot;,
+            &quot;https://firebasestorage.googleapis.com/v0/b/csci3100-2bab5.appspot.com/o/0.014446559852700158%2F0.0144465598527001582.png?alt=media&amp;token=4e8a5037-f079-4694-bc50-83f3ecdd1f86&quot;
+        ],
+        &quot;modifiedTime&quot;: [],
+        &quot;hashtag&quot;: [
+            {
+                &quot;_id&quot;: &quot;606de676bf62314a103ac661&quot;,
+                &quot;name&quot;: &quot;afwe1&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606de676bf62314a103ac662&quot;,
+                &quot;name&quot;: &quot;qwe12&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606de676bf62314a103ac663&quot;,
+                &quot;name&quot;: &quot;rr3&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606de676bf62314a103ac664&quot;,
+                &quot;name&quot;: &quot;a444&quot;
+            },
+            {
+                &quot;_id&quot;: &quot;606de676bf62314a103ac665&quot;,
+                &quot;name&quot;: &quot;235&quot;
+            }
+        ],
+        &quot;like&quot;: [],
+        &quot;comment&quot;: [],
+        &quot;_id&quot;: &quot;606de676bf62314a103ac660&quot;,
+        &quot;postID&quot;: &quot;usern-1424-1617815158871&quot;,
+        &quot;author&quot;: {
+            &quot;profPhoto&quot;: [],
+            &quot;type&quot;: &quot;User&quot;,
+            &quot;_id&quot;: &quot;606b3b30ab2e811e0c8bd2f7&quot;,
+            &quot;username&quot;: &quot;usern&quot;,
+            &quot;tag&quot;: &quot;1424&quot;,
+            &quot;entityID&quot;: &quot;usern-1424&quot;
+        },
+        &quot;target&quot;: {
+            &quot;profPhoto&quot;: [],
+            &quot;type&quot;: &quot;Rest&quot;,
+            &quot;_id&quot;: &quot;605a1bc56bf76f7ff6ecfdd3&quot;,
+            &quot;username&quot;: &quot;jon-rest&quot;,
+            &quot;tag&quot;: &quot;1296&quot;,
+            &quot;entityID&quot;: &quot;jon-rest-1296&quot;
+        },
+        &quot;type&quot;: 0,
+        &quot;content&quot;: &quot;conttente2&quot;,
+        &quot;createdTime&quot;: &quot;2021-04-07T17:05:58.871Z&quot;,
+        &quot;__v&quot;: 0
+    }
+]</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

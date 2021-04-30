@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - my-app/src/pages/createPost/addPost.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>my-app/src/pages/createPost/addPost.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">64.80</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">116</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">31.42</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.22</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">import { useState } from &#039;react&#039;
+import { Form } from &#039;react-bootstrap&#039;
+import { useForm, Controller } from &quot;react-hook-form&quot;
+import { TextField, InputLabel, InputAdornment, Button, Card, Slider, Tabs, Tab, CircularProgress } from &#039;@material-ui/core&#039;
+
+
+import { history, uploadPhoto } from &#039;component&#039;
+import useStyles from &#039;./styles&#039;
+var postFn = require(&quot;../../component/load_backend/postFunction.js&quot;);
+var entityFn = require(&#039;component/load_backend/entityFunction&#039;);
+/**
+ * Asking User for Post&#039;s data
+ * @returns AddPost&#039;s Form
+ */
+export default function AddPost(props) {
+  const classes = useStyles();
+  const { register, handleSubmit, control } = useForm();
+  const [ loading, setLoading ] = useState(false);
+  const [ type, setType ] = useState(0);
+  const [ error, setError ] = useState(null);
+
+  const params = new URLSearchParams(window.location.search).get(&#039;entityID&#039;)
+  const entityID = params !== null ? params : &#039;&#039;;
+
+  const onSubmit = data =&gt; {
+    const processData = data =&gt; {
+      var sendTag = [];
+      if (data[&#039;tag-0&#039;] !== &#039;&#039;) sendTag.push(data[&#039;tag-0&#039;]);
+      if (data[&#039;tag-1&#039;] !== &#039;&#039;) sendTag.push(data[&#039;tag-1&#039;]);
+      if (data[&#039;tag-2&#039;] !== &#039;&#039;) sendTag.push(data[&#039;tag-2&#039;]);
+      if (data[&#039;tag-3&#039;] !== &#039;&#039;) sendTag.push(data[&#039;tag-3&#039;]);
+      if (data[&#039;tag-4&#039;] !== &#039;&#039;) sendTag.push(data[&#039;tag-4&#039;]);
+      if (data[&#039;tag-5&#039;] !== &#039;&#039;) sendTag.push(data[&#039;tag-5&#039;]);
+      return sendTag
+    }
+    
+    (async() =&gt; { try { 
+      setLoading(true);
+      const entity = await entityFn.entity_get(data.entityID)
+      if (entity == null || entity.type !== &#039;Rest&#039;) throw new Error(&#039;Invalid restaurant ID.&#039;); 
+      const downloadURL = await uploadPhoto(data.photo)
+      const sendData = {
+        type: type,
+        photo: downloadURL,
+        content: data.content,
+        rating: data.rating
+      };
+      if (data[&#039;tag-0&#039;] !== undefined) {
+        const sendTag = processData(data);
+        sendData.hashtag = sendTag;
+      };
+      const res = await postFn.post_create({ entityID: data.entityID }, sendData)
+      if (res.data !== null) {
+        setLoading(false);
+        history.push(&#039;/main&#039;)
+      }
+    } catch (err) { 
+      console.log(err);
+      if (err.message == &#039;Invalid restaurant ID.&#039;) setError(err.message)
+      else if (err.name == &#039;FirebaseError&#039;) alert(&quot;Invalid file type (size: &lt;5MB, type: image).&quot;);
+      setLoading(false); 
+    }})();
+  }
+  
+  return (
+    &lt;Card className={classes.root}&gt;
+
+      &lt;Tabs textColor=&quot;primary&quot; indicatorColor=&quot;primary&quot; variant=&#039;fullWidth&#039;
+        value={type} onChange={(e,val) =&gt; setType(val)}&gt;
+        &lt;Tab label=&quot;Check-in&quot; value={0}/&gt;
+        &lt;Tab label=&quot;Review&quot; value={1}/&gt;
+      &lt;/Tabs&gt;
+
+      &lt;form onSubmit={handleSubmit(onSubmit)} className={classes.form}&gt;
+        &lt;div className={classes.shared}&gt;
+          &lt;TextField fullWidth margin=&#039;dense&#039; inputRef={register} className={classes.twoCol} error={error}
+            required id=&quot;entityID&quot; label=&quot;Restaurant ID&quot; name=&quot;entityID&quot; defaultValue={entityID} helperText={error}/&gt;
+          { type 
+            ? &lt;div className={classes.twoCol}&gt;
+                &lt;InputLabel shrink&gt;Rating&lt;/InputLabel&gt;
+                &lt;Controller render={props =&gt; (
+                  &lt;Slider {...props} step={1} marks max={10} className={classes.slider}
+                    onChange={(_, value) =&gt; {props.onChange(value);}}
+                    valueLabelDisplay=&quot;auto&quot; /&gt;
+                )} control={control} name=&#039;rating&#039; defaultValue={5} /&gt;
+              &lt;/div&gt;
+            : null}
+        &lt;/div&gt;
+
+        &lt;TextField fullWidth margin=&#039;dense&#039; inputRef={register} multiline rowsMax={4}
+          required id=&quot;content&quot; label=&quot;Content&quot; name=&quot;content&quot; /&gt;
+
+        { type /* Tags */
+          ? &lt;div className={classes.sharedTags}&gt;
+              {[...Array(6)].map((x, i) =&gt; (
+                &lt;TextField margin=&#039;dense&#039; inputRef={register} required={i==0} className={classes.threeCol}
+                  id={`tag-${i}`} label={`Tag ${i+1}`} name={`tag-${i}`} key={`tag-${i}`}
+                  InputProps={{startAdornment: &lt;InputAdornment position=&quot;start&quot;&gt;#&lt;/InputAdornment&gt;}}/&gt;
+              ))}
+            &lt;/div&gt;
+          : null}
+        
+        &lt;Form.File id=&quot;upload&quot; type=&quot;file&quot; name=&quot;photo&quot; accept=&quot;image/png, image/jpeg&quot; ref={register} multiple/&gt;
+
+        &lt;div className={classes.buttonWrapper}&gt;
+          &lt;Button fullWidth variant=&quot;contained&quot; disabled={loading} type=&quot;submit&quot; 
+              color=&#039;primary&#039; className={classes.button}&gt;
+            Add Post
+          &lt;/Button&gt;
+          {loading &amp;&amp; &lt;CircularProgress size={24} className={classes.buttonProgress} /&gt;}
+        &lt;/div&gt;
+
+      &lt;/form&gt;
+    &lt;/Card&gt;
+  )
+}</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

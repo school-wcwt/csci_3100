@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - my-app/src/Archived/pages/main/component/appBar/appBar.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>my-app/src/Archived/pages/main/component/appBar/appBar.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">60.24</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">233</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">14.91</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.23</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">import React from &#039;react&#039;;
+import { fade, makeStyles } from &#039;@material-ui/core/styles&#039;;
+import AppBar from &#039;@material-ui/core/AppBar&#039;;
+import Toolbar from &#039;@material-ui/core/Toolbar&#039;;
+import IconButton from &#039;@material-ui/core/IconButton&#039;;
+import Typography from &#039;@material-ui/core/Typography&#039;;
+import InputBase from &#039;@material-ui/core/InputBase&#039;;
+import Badge from &#039;@material-ui/core/Badge&#039;;
+import MenuItem from &#039;@material-ui/core/MenuItem&#039;;
+import Menu from &#039;@material-ui/core/Menu&#039;;
+import MenuIcon from &#039;@material-ui/icons/Menu&#039;;
+import SearchIcon from &#039;@material-ui/icons/Search&#039;;
+import AccountCircle from &#039;@material-ui/icons/AccountCircle&#039;;
+import MailIcon from &#039;@material-ui/icons/Mail&#039;;
+import NotificationsIcon from &#039;@material-ui/icons/Notifications&#039;;
+import MoreIcon from &#039;@material-ui/icons/MoreVert&#039;;
+
+const useStyles = makeStyles((theme) =&gt; ({
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    display: &#039;none&#039;,
+    [theme.breakpoints.up(&#039;sm&#039;)]: {
+      display: &#039;block&#039;,
+    },
+  },
+  search: {
+    position: &#039;relative&#039;,
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    &#039;&amp;:hover&#039;: {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: &#039;100%&#039;,
+    [theme.breakpoints.up(&#039;sm&#039;)]: {
+      marginLeft: theme.spacing(3),
+      width: &#039;auto&#039;,
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: &#039;100%&#039;,
+    position: &#039;absolute&#039;,
+    pointerEvents: &#039;none&#039;,
+    display: &#039;flex&#039;,
+    alignItems: &#039;center&#039;,
+    justifyContent: &#039;center&#039;,
+  },
+  inputRoot: {
+    color: &#039;inherit&#039;,
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create(&#039;width&#039;),
+    width: &#039;100%&#039;,
+    [theme.breakpoints.up(&#039;md&#039;)]: {
+      width: &#039;20ch&#039;,
+    },
+  },
+  sectionDesktop: {
+    display: &#039;none&#039;,
+    [theme.breakpoints.up(&#039;md&#039;)]: {
+      display: &#039;flex&#039;,
+    },
+  },
+  sectionMobile: {
+    display: &#039;flex&#039;,
+    [theme.breakpoints.up(&#039;md&#039;)]: {
+      display: &#039;none&#039;,
+    },
+  },
+}));
+
+export default function PrimarySearchAppBar() {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) =&gt; {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () =&gt; {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () =&gt; {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) =&gt; {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = &#039;primary-search-account-menu&#039;;
+  const renderMenu = (
+    &lt;Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: &#039;top&#039;, horizontal: &#039;right&#039; }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: &#039;top&#039;, horizontal: &#039;right&#039; }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    &gt;
+      &lt;MenuItem onClick={handleMenuClose}&gt;My favourite List&lt;/MenuItem&gt;
+      &lt;MenuItem onClick={handleMenuClose}&gt;My account&lt;/MenuItem&gt;
+      &lt;MenuItem onClick={handleMenuClose}&gt;My account&lt;/MenuItem&gt;
+    &lt;/Menu&gt;
+  );
+
+  const mobileMenuId = &#039;primary-search-account-menu-mobile&#039;;
+  const renderMobileMenu = (
+    &lt;Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: &#039;top&#039;, horizontal: &#039;right&#039; }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: &#039;top&#039;, horizontal: &#039;right&#039; }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    &gt;
+      &lt;MenuItem&gt;
+        &lt;IconButton aria-label=&quot;show 4 new mails&quot; color=&quot;inherit&quot;&gt;
+          &lt;Badge badgeContent={4} color=&quot;secondary&quot;&gt;
+            &lt;MailIcon /&gt;
+          &lt;/Badge&gt;
+        &lt;/IconButton&gt;
+        &lt;p&gt;Messages&lt;/p&gt;
+      &lt;/MenuItem&gt;
+      &lt;MenuItem&gt;
+        &lt;IconButton aria-label=&quot;show 11 new notifications&quot; color=&quot;inherit&quot;&gt;
+          &lt;Badge badgeContent={11} color=&quot;secondary&quot;&gt;
+            &lt;NotificationsIcon /&gt;
+          &lt;/Badge&gt;
+        &lt;/IconButton&gt;
+        &lt;p&gt;Notifications&lt;/p&gt;
+      &lt;/MenuItem&gt;
+      &lt;MenuItem onClick={handleProfileMenuOpen}&gt;
+        &lt;IconButton
+          aria-label=&quot;account of current user&quot;
+          aria-controls=&quot;primary-search-account-menu&quot;
+          aria-haspopup=&quot;true&quot;
+          color=&quot;inherit&quot;
+        &gt;
+          &lt;AccountCircle /&gt;
+        &lt;/IconButton&gt;
+        &lt;p&gt;Profile&lt;/p&gt;
+      &lt;/MenuItem&gt;
+    &lt;/Menu&gt;
+  );
+
+  return (
+    &lt;div className={classes.grow}&gt;
+      &lt;AppBar position=&quot;static&quot;&gt;
+        &lt;Toolbar&gt;
+          &lt;IconButton
+            edge=&quot;start&quot;
+            className={classes.menuButton}
+            color=&quot;inherit&quot;
+            aria-label=&quot;open drawer&quot;
+          &gt;
+            &lt;MenuIcon /&gt;
+          &lt;/IconButton&gt;
+          &lt;Typography className={classes.title} variant=&quot;h6&quot; noWrap&gt;
+            mATE 
+          &lt;/Typography&gt;
+          &lt;div className={classes.search}&gt;
+            &lt;div className={classes.searchIcon}&gt;
+              &lt;SearchIcon /&gt;
+            &lt;/div&gt;
+            &lt;InputBase
+              placeholder=&quot;Search…&quot;
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ &#039;aria-label&#039;: &#039;search&#039; }}
+            /&gt;
+          &lt;/div&gt;
+          &lt;div className={classes.grow} /&gt;
+          &lt;div className={classes.sectionDesktop}&gt;
+            &lt;IconButton aria-label=&quot;show 4 new mails&quot; color=&quot;inherit&quot;&gt;
+              &lt;Badge badgeContent={4} color=&quot;secondary&quot;&gt;
+                &lt;MailIcon /&gt;
+              &lt;/Badge&gt;
+            &lt;/IconButton&gt;
+            &lt;IconButton aria-label=&quot;show 17 new notifications&quot; color=&quot;inherit&quot;&gt;
+              &lt;Badge badgeContent={17} color=&quot;secondary&quot;&gt;
+                &lt;NotificationsIcon /&gt;
+              &lt;/Badge&gt;
+            &lt;/IconButton&gt;
+            &lt;IconButton
+              edge=&quot;end&quot;
+              aria-label=&quot;account of current user&quot;
+              aria-controls={menuId}
+              aria-haspopup=&quot;true&quot;
+              onClick={handleProfileMenuOpen}
+              color=&quot;inherit&quot;
+            &gt;
+              &lt;AccountCircle /&gt;
+            &lt;/IconButton&gt;
+          &lt;/div&gt;
+          &lt;div className={classes.sectionMobile}&gt;
+            &lt;IconButton
+              aria-label=&quot;show more&quot;
+              aria-controls={mobileMenuId}
+              aria-haspopup=&quot;true&quot;
+              onClick={handleMobileMenuOpen}
+              color=&quot;inherit&quot;
+            &gt;
+              &lt;MoreIcon /&gt;
+            &lt;/IconButton&gt;
+          &lt;/div&gt;
+        &lt;/Toolbar&gt;
+      &lt;/AppBar&gt;
+      {renderMobileMenu}
+      {renderMenu}
+    &lt;/div&gt;
+  );
+}</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
