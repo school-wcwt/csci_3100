@@ -16,3 +16,17 @@ const firebaseConfig = {
    * - use of photo storage in firebase
    */
   export const app = firebase.initializeApp(firebaseConfig);
+  
+/*
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read;
+      // Only allow uploads of any image file that's less than 5MB
+      allow write: if request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+  }
+}
+*/
