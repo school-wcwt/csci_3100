@@ -9,6 +9,7 @@ import { history, uploadPhoto } from 'component'
 import { Auth } from 'component/authService'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {Form} from 'react-bootstrap';
+import {NavBar} from 'component'
 
 const useStyles = makeStyles((theme) => ({ 
     bgImg:{
@@ -18,51 +19,42 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        width: "100%",
         height: "100vh",
     },
-
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItmes: 'center',
+    },
     paper_style: {
-        position: "relative",
-        top:"12%",
-        left:"26%",
-        width:"45%",
-        backgroundColor : "rgb(255, 255, 255,0.85)",
-        },
-
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: "96%",
+        maxWidth: 600,
+        margin: theme.spacing(4),
+        padding: theme.spacing(2),
+        backgroundColor: "rgb(255, 255, 255,0.85)",
+    },
+    sharedRow: {
+        display: 'inline-flex',
+        width: "100%",
+        gap: theme.spacing(2),
     },
     textField_small: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: "47%",
+        flex: 1,
     },
-    main_buttom_style: {
-        margin: theme.spacing(1),
-        height: "8vh",
-        width: "55%",
-        [theme.breakpoints.up("lg")]: {
-            width: "55%",
-        }
+    main_button_style: {
+        flex: 1,
+        fontWeight: 700,
+        fontFamily: "Poppins",
+        color: theme.palette.grey[200],
+        backgroundColor: theme.palette.primary.main,
     },
-    buttom_style: {
-        margin: theme.spacing(1),
-        height: "8vh",
-        width: "40%",
-        [theme.breakpoints.up("lg")]: {
-            width: "40%",
-        }
+    button_style: {
+        flex: 1,
+        fontWeight: 700,
+        fontFamily: "Poppins",
+        color: theme.palette.grey[700],
     },
     welcome_message:{
-        color: "LightCoral", 
-        fontWeight:800,
-        margin: "0 auto",
-        padding: "2%",
-        paddingLeft:"5%",
-
+        ...theme.typography.h6
     },
     upload_button:{
         '& > *': {
@@ -74,11 +66,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TextBox = ({label,dataName,type,register}) => {
+const TextBox = ({required, label,dataName,type,register}) => {
     const classes = useStyles();
     if (!type)  type = "text";
     return (
-        <TextField className={classes.textField} margin="normal" variant="outlined" inputRef={register}
+        <TextField fullWidth required={required} margin="normal" inputRef={register}
         id={dataName} label = {label} name = {dataName} type={type} />
     );
 }
@@ -86,7 +78,7 @@ const TextBoxSmall = ({label,dataName,type,defaultValue,register}) => {
     const classes = useStyles();
     if (!type)  type = "text";
     return (
-        <TextField className={classes.textField_small} margin="normal" variant="outlined" inputRef={register}
+        <TextField className={classes.textField_small} margin="normal" inputRef={register}
         id={dataName} label = {label} name = {dataName} type={type} defaultValue={defaultValue}/>
     );
 }
@@ -164,23 +156,27 @@ const RestForm = (props) => {
   //defaultValue
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-        <Nav className={classes.welcome_message} >Welcome to Create a new Restaurant. Please Fill in the Following Information</Nav>
-        <TextBox label = "Restaurant Name" dataName ="RestName" register = {register}/>
-        <TextBox label = "Email (For reservation )" dataName ="email" type = "email" register = {register}/>
-        <TextBox label = "Address" dataName ="Address" register = {register}/>
-        <TextBox label = "Any Nick name or Chinese Name" dataName ="nickName" register = {register}/>
+        <Nav className={classes.welcome_message}> Enter a new restaurant!</Nav>
+        <TextBox required label = "English Name" dataName ="RestName" register = {register}/>
+        <TextBox label = "Chinese Name" dataName ="nickName" register = {register}/>
+        <TextBox required label = "Email" dataName ="email" type = "email" register = {register}/>
+        <TextBox required label = "Address" dataName ="Address" register = {register}/>
         <TextBox label = "Contact Number" dataName ="phone" type = "phone" register = {register}/>
-        <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
-        <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
+        <div className={classes.sharedRow}>
+            <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
+            <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
+        </div>
         <Form.File type="file" name="photo" ref={register}/>
         <br/>
-        <Button variant="contained" type="submit" size="large" color="primary" onClick = {handleSubmit(onSubmit)} className={classes.main_buttom_style} component="span" >
-        <Nav className={classes.welcome_message} style={{color:"#FFF8DC"}}>Create Restaurant Now</Nav>
-        </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
-        <Button variant="contained" size="large" color="secondary" className={classes.buttom_style} component="span" onClick = {CancelOnCick} >
-        <Nav className={classes.welcome_message} style={{color:"#FFF8DC"}}>Cancel</Nav>
-        </Button>
+        <div className={classes.sharedRow}>
+            <Button variant="contained" type="submit" size="large" onClick = {handleSubmit(onSubmit)} className={classes.main_button_style}>
+                Create Restaurant Now
+            </Button>
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} 
+            <Button variant="outlined" size="large" className={classes.button_style} onClick = {CancelOnCick} >
+                Cancel
+            </Button>
+        </div>
     </form>
     )
 
@@ -193,13 +189,17 @@ const RestForm = (props) => {
 const CreateRest = ()=>{
     const classes = useStyles();
     Auth();
-    return (        
+    return (
+        <>
+        <NavBar/>
         <div className = {classes.bgImg}>
+            <div className={classes.root}>
             <Paper className = {classes.paper_style} elevation={3} variant="outlined">
-            <RestForm/>
+                <RestForm/>
             </Paper>
+            </div>
         </div>
-
+        </>
     )
 }
 

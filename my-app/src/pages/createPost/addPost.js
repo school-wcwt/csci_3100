@@ -7,6 +7,7 @@ import { TextField, InputLabel, InputAdornment, Button, Card, Slider, Tabs, Tab,
 import { history, uploadPhoto } from 'component'
 import useStyles from './styles'
 var postFn = require("../../component/load_backend/postFunction.js");
+var entityFn = require('component/load_backend/entityFunction');
 /**
  * Asking User for Post's data
  * @returns AddPost's Form
@@ -16,6 +17,7 @@ export default function AddPost(props) {
   const { register, handleSubmit, control } = useForm();
   const [ loading, setLoading ] = useState(false);
   const [ type, setType ] = useState(0);
+  const [ error, setError ] = useState(null);
 
   const params = new URLSearchParams(window.location.search).get('entityID')
   const entityID = params !== null ? params : '';
@@ -32,7 +34,33 @@ export default function AddPost(props) {
       return sendTag
     }
     
-    setLoading(true);
+    (async() => { try { 
+      setLoading(true);
+      const entity = await entityFn.entity_get(data.entityID)
+      if (entity == null || entity.type !== 'Rest') throw new Error('Invalid restaurant ID.'); 
+      const downloadURL = await uploadPhoto(data.photo)
+      const sendData = {
+        type: type,
+        photo: downloadURL,
+        content: data.content,
+        rating: data.rating
+      };
+      if (data['tag-0'] !== undefined) {
+        const sendTag = processData(data);
+        sendData.hashtag = sendTag;
+      };
+      const res = await postFn.post_create({ entityID: data.entityID }, sendData)
+      if (res.data !== null) {
+        setLoading(false);
+        history.push('/main')
+      }
+    } catch (err) { 
+      console.log(err) 
+      setError(err.message);
+      setLoading(false); 
+    }})();
+
+    /*setLoading(true);
     uploadPhoto(data.photo)
     .then(downloadURL => {
       const sendData = {
@@ -50,7 +78,7 @@ export default function AddPost(props) {
         setLoading(false);
         history.push('/main');
       })
-    })
+    })*/
   }
   
   return (
@@ -64,8 +92,8 @@ export default function AddPost(props) {
 
       <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
         <div className={classes.shared}>
-          <TextField fullWidth margin='dense' inputRef={register} className={classes.twoCol}
-            required id="entityID" label="Restaurant ID" name="entityID" defaultValue={entityID}/>
+          <TextField fullWidth margin='dense' inputRef={register} className={classes.twoCol} error={error}
+            required id="entityID" label="Restaurant ID" name="entityID" defaultValue={entityID} helperText={error}/>
           { type 
             ? <div className={classes.twoCol}>
                 <InputLabel shrink>Rating</InputLabel>
