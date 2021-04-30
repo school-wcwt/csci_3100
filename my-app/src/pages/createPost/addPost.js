@@ -56,7 +56,8 @@ export default function AddPost(props) {
       }
     } catch (err) { 
       console.log(err) 
-      setError(err.message);
+      alert("Invalid File Type (size: <5MB , type: image) ");
+      //setError(err.message);
       setLoading(false); 
     }})();
 
@@ -119,7 +120,7 @@ export default function AddPost(props) {
             </div>
           : null}
         
-        <Form.File type="file" name="photo" ref={register} multiple/>
+        <Form.File id="upload" type="file" name="photo" accept="image/png, image/jpeg" ref={register} multiple/>
 
         <div className={classes.buttonWrapper}>
           <Button fullWidth variant="contained" disabled={loading} type="submit" 
