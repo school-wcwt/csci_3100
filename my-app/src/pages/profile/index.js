@@ -373,7 +373,7 @@ const DisplaySingleUser = (props) => {
       <Avatar variant={props.userObj.type == 'User' ? 'rounded' : 'circular'} className={classes.avatar_small}
         alt={props.userObj.entityID} src={props.userObj.profPhoto[0]} />
       <div style={{ marginLeft: "5%" }}>
-        {`${props.userObj.username}`}
+        {`${props.userObj.username} ${props.userObj.type == 'User' ? '(User)':'[Restautant]'}`}
       </div>
 
     </Button>
@@ -418,10 +418,17 @@ const UserActions = (props) => {
   const handleCloseList = () => setOpenList(false);
   const handleSavedList = () => {
     console.log("Loading saved list");
+    /*
     var fil = {
       '_id': { $in: global.loginedUser.user.followingUser },
       'type': 'User'
-    }
+    }*/
+    var fil = {
+      $or: [
+        {'_id': { $in: global.loginedUser.user.followingUser }},
+        {'_id': { $in: global.loginedUser.user.followingRest }}
+    ]}
+    
     entityFn.entity_post(fil).then(followedArray => {
       setEntity2(followedArray);
       handleOpenList();
