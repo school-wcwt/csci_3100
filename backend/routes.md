@@ -1,5 +1,7 @@
 # All avaliable routes
 
+Not all updated.
+
 * Auth 
     * [`POST` login](#post-login)
     * [`POST` register](#post-register)

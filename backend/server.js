@@ -21,8 +21,6 @@ mongoose.connect('mongodb://'+username+':'+password+'@localhost/csci3100');
 
 // ========== Helper Functions ===============
 
-// http://localhost:3100/entity
-
 const verifyAuth = require('./middlewares/verifyAuth');
 
 app.use('/',                             require('./routers/auth'));
