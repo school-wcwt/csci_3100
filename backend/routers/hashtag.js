@@ -8,6 +8,7 @@ var express = require('express');
 var router = express.Router();
 
 const userFunc = require('../functions/userFunc');
+const hashtagFunc = require('../functions/hashtagFunc');
 
 /**
  * Read a single Hashtag.
@@ -35,6 +36,7 @@ router.get('/:entityID/:name', (req, res) => {
 /**
  * @typedef {Object} POST/hashtag-ReqBody
  * @property {Object} restFilter - Searching filter for the Rest (Hashtag.target) of the Hashtag, an instance of [Entity.Schema]{@link Entity} ([Rest.Schema]{@link Rest}).
+ * @property {String} name - Name of the Hashtag.
  */
 /**
  * @callback POST/hashtag-Callback
@@ -50,10 +52,14 @@ router.get('/:entityID/:name', (req, res) => {
  * @param {module:routers/hashtag~POST/hashtag-Callback} callback - Express callback.
  * @returns {Hashtag[]|null} 200/204 - Hashtags after query, instances of [Hashtag.Schema]{@link Hashtag}.
  * @throws 404 - Entity not found.
- * @throws 500 - Server error.
+ * @throws 500 - Server error. / Invalid req.body.
  */
 router.post('/', (req, res) => {
-    userFunc.findTags(req.body.restFilter)
+    var query = hashtagFunc.findTags({})
+    if (req.body.restFilter !== undefined) { query = userFunc.findTags(req.body.restFilter) }
+    else if (req.body.filter !== undefined) { query = hashtagFunc.findTags(req.body.filter) };
+    
+    query
     .then(tags => {
         if (tags == null) res.status(204).json(tags)
         else res.status(200).json(tags)

@@ -30,7 +30,8 @@ var findTag = (filter) => {
 var findTags = (filter) => {
     return new Promise((resolve, reject) => {
         (async () => { try { 
-            const tags = await Hashtag.find(filter).sort({frequency: -1}).exec()
+            const tags = await Hashtag.find(filter).sort({frequency: -1})
+            .populate('target', 'entityID username tag').exec()
             return resolve(tags);
         } catch(err) { return reject(err) }})(); 
     })
