@@ -55,31 +55,11 @@ export default function AddPost(props) {
         history.push('/main')
       }
     } catch (err) { 
-      console.log(err) 
-      alert("Invalid File Type (size: <5MB , type: image) ");
-      //setError(err.message);
+      console.log(err);
+      if (err.message == 'Invalid restaurant ID.') setError(err.message)
+      else if (err.name == 'FirebaseError') alert("Invalid file type (size: <5MB, type: image).");
       setLoading(false); 
     }})();
-
-    /*setLoading(true);
-    uploadPhoto(data.photo)
-    .then(downloadURL => {
-      const sendData = {
-        type: type,
-        photo: downloadURL,
-        content: data.content,
-        rating: data.rating
-      };
-      if (data['tag-0'] !== undefined) {
-        const sendTag = processData(data);
-        sendData.hashtag = sendTag;
-      };
-      postFn.post_create({ entityID: data.entityID }, sendData)
-      .then(res => {
-        setLoading(false);
-        history.push('/main');
-      })
-    })*/
   }
   
   return (
