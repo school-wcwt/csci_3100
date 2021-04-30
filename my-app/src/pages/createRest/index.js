@@ -85,41 +85,30 @@ const TextBoxSmall = ({label,dataName,type,defaultValue,register}) => {
 
 const Register_DataBase = data =>{
 
-
-    uploadPhoto(data.photo).then(downloadURL => {
-
-
-    console.log("Process on Create Rest");
-    const mydata = {
-        type: "Rest",
-        username: data.RestName,
-        address: data.Address,
-        email :data.email,
-        name: data.nickName?data.nickName:data.RestName,
-        phone: data.phone?data.phone.trim():0,
-        profPhoto: downloadURL,
-        status: data.status?data.status:"Aviliable",
-        openingHr: [data.starttime,data.endtime],
-    };
-    console.log(JSON.stringify(mydata))
-    axios(
-        {
-        method: 'POST',
-        url: '/entity/new',
-        data: mydata
-    }
-    )
-    .then(res => {
-        console.log(res);
-        alert("Register sucess");
-        history.push(`/profile/${res.data.entityID}`);
-
+    uploadPhoto(data.photo)
+    .then(downloadURL => {
+        console.log("Process on Create Rest");
+        const mydata = {
+            type: "Rest",
+            username: data.RestName,
+            address: data.Address,
+            email :data.email,
+            name: data.nickName?data.nickName:data.RestName,
+            phone: data.phone?data.phone.trim():0,
+            profPhoto: downloadURL,
+            status: data.status?data.status:"Aviliable",
+            openingHr: [data.starttime,data.endtime],
+        };
+        console.log(JSON.stringify(mydata))
+        axios.post('/entity/new', mydata)
+        .then(res => {
+            console.log(res);
+            alert("Register sucess");
+            history.push(`/profile/${res.data.entityID}`);
+        })
+        .catch(err => console.log(err.message));
     })
-    .catch(err => {
-        console.log(err.message);
-    })
-
-})
+    .catch(err => alert("Invalid file type (size: <5MB, type: image)."))
 };
 
 /**
@@ -166,7 +155,7 @@ const RestForm = (props) => {
             <TextBoxSmall label = "Opening Hour" defaultValue="09:00"  dataName = "starttime" variant="outlined" register = {register}/>
             <TextBoxSmall label = "Closing Hour" defaultValue="20:00"  dataName = "endtime" variant="outlined" register = {register}/>
         </div>
-        <Form.File type="file" name="photo" ref={register}/>
+        <Form.File type="file" name="photo" accept="image/png, image/jpeg" ref={register}/>
         <br/>
         <div className={classes.sharedRow}>
             <Button variant="contained" type="submit" size="large" onClick = {handleSubmit(onSubmit)} className={classes.main_button_style}>

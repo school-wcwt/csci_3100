@@ -286,10 +286,12 @@ const SettingDialog = (props) => {
     if (data.email != '') new_data.email = data.email
     if (data.phone != '') new_data.phone = data.phone
     if (data.photo.length != 0) {
-      uploadPhoto(data.photo).then(downloadURL => {
+      uploadPhoto(data.photo)
+      .then(downloadURL => {
         new_data.profPhoto = downloadURL
         update_entities();
       })
+      .catch(err => alert("Invalid file type (size: <5MB, type: image)."));
     }
     else {
       update_entities();
@@ -323,7 +325,7 @@ const SettingDialog = (props) => {
             <TextField fullWidth margin='dense' inputRef={register}
               id="phone" label="Phone" name="phone" />
             <DialogContentText>Upload Icon Image</DialogContentText>
-            <Form.File type="file" name="photo" ref={register} />
+            <Form.File type="file" name="photo" accept="image/png, image/jpeg" ref={register} />
           </form>
           <div className={classes.dialogApply}>
             <Button fullWidth color="primary" variant='contained' disabled={loading} className={classes.dialogButton}
