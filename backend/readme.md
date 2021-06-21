@@ -1,6 +1,5 @@
 # All avaliable routes
-
-Not all updated.
+### JSDocs in-code are exported as webpage in [/docs](./docs)
 
 * Auth 
     * [`POST` login](#post-login)
